@@ -3,11 +3,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
+var db = require('./models');
 
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
 var itemsRouter = require('./routes/items');
+var catalogRouter = require('./routes/catalog');
+
 
 var app = express();
 // app.set('views', path.join(__dirname, 'views'));
@@ -36,5 +39,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
+app.use('/catalog', catalogRouter);
 
-module.exports = app;
+
+app.listen(3000, function() {
+  console.log('DATEBASE SYNCED');
+  db.sequelize.sync();
+});
+
+// module.exports = app;

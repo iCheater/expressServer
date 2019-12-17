@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -14,6 +14,9 @@
     "node-sass-middleware": "0.11.0",
     "nodemon": "^2.0.2",
     "nunjucks": "^3.2.0",
-    "reload": "^3.0.3"
+    "pg": "^7.15.0",
+    "pg-hstore": "^2.3.3",
+    "reload": "^3.0.3",
+    "sequelize": "^5.21.3"
   }
 }

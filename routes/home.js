@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
     title: 'Express' ,
     auth: true,
   };
-  res.render('index', { title: 'Express' });
+  res.render('home', { title: 'Express' });
 });
 
 

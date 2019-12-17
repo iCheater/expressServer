@@ -6,16 +6,20 @@
 
 body
   //padding: 50px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  margin: 0
+  padding: 0
+  font: 14px 'Roboto', sans-serif
 
 a
   color: #00B7FF
 
-.header__inner
-  display: flex
-  justify-content: space-between
-  align-items: center
-  height: 87px
+.header
+  background-color: #f8f8f8
+  .header__inner
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 87px
 
 
 .btn__menu
@@ -37,6 +41,9 @@ a
   .logo__text
     font-size: 30px
     font-weight: 700
+    color: #ED3312
+  .text
+    color: #f2e81a
 
 
 .menu__list
@@ -48,4 +55,353 @@ a
   a
     color: #2f3f54
     font-weight: 700
-    font-family: 'Open Sans', sans-serif
+
+
+//Catalog
+.main__content
+  margin: 30px 0
+
+.catalog
+  display: flex
+  justify-content: space-between
+
+.catalog__filters
+  margin-right: 20px
+  &-item
+    li a
+      display: block
+      width: 150px
+      padding: 5px 20px
+      margin-bottom: 20px
+
+.catalog__bar
+  display: flex
+  justify-content: space-between
+  flex-wrap: wrap
+  .catalog__item
+    //height: 200px
+    width: 150px
+    margin-right: 20px
+    margin-bottom: 30px
+
+
+.item__img
+  height: 150px
+  //border: 1px solid #ED3312
+
+.item__info
+  margin: 10px 0
+  padding: 0 5px
+
+.item__price-container
+  display: flex
+  justify-content: space-between
+  margin-top: 10px
+
+
+.block__item
+  display: flex
+  justify-content: flex-start
+  &-info
+    width: 400px
+    margin-left: 30px
+  .item__title
+    margin-bottom: 20px
+  .items__btns
+    margin: 20px auto
+    button
+      width: 110px
+      padding: 5px 20px
+      margin-right: 20px
+      text-align: center
+  .items__info-contain
+    .item__links
+      margin: 20px auto
+      a span
+        padding: 5px
+        vertical-align: center
+    .item__contain-descr
+      padding: 20px
+      border: 5px dashed rgba(237, 51, 18, 0.45)
+
+
+//Top slider
+.slider
+  position: relative
+  overflow: hidden
+  max-width: 100%
+  margin: 30px auto
+
+
+
+.slider__wrapper
+  position: relative
+  overflow: hidden
+
+
+/* стили для контейнера слайдов */
+.slider__items
+  display: flex
+  transition: transform 0.6s ease
+
+
+/* стили для слайдов */
+.slider__item
+  flex: 0 0 100%
+  max-width: 100%
+
+
+/* стили для кнопок "вперед" и "назад" */
+.slider__control
+  position: absolute
+  top: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 40px
+  color: #fff
+  text-align: center
+  opacity: 0.5
+  height: 50px
+  transform: translateY(-50%)
+  background: rgba(0, 0, 0, 0.2)
+
+
+.slider__control:hover,
+.slider__control:focus
+  color: #fff
+  text-decoration: none
+  outline: 0
+  opacity: 0.9
+
+
+.slider__control_prev
+  left: 120px
+
+
+.slider__control_next
+  right: 120px
+
+
+.slider__control::before
+  content: ""
+  display: inline-block
+  width: 20px
+  height: 20px
+  background: transparent no-repeat center center
+  background-size: 100% 100%
+
+
+.slider__control_prev::before
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")
+
+
+.slider__control_next::before
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E")
+
+
+/* стили для индикаторов */
+.slider__indicators
+  position: absolute
+  right: 0
+  bottom: 10px
+  left: 0
+  z-index: 15
+  display: flex
+  justify-content: center
+  padding-left: 0
+  list-style: none
+  margin: 0 15%
+
+
+.slider__indicators li
+  box-sizing: content-box
+  flex: 0 1 auto
+  width: 30px
+  height: 4px
+  margin-right: 3px
+  margin-left: 3px
+  text-indent: -999px
+  cursor: pointer
+  background-color: rgba(255, 255, 255, 0.5)
+  background-clip: padding-box
+  border-top: 10px solid transparent
+  border-bottom: 10px solid transparent
+
+
+.slider__indicators li.active
+  background-color: #fff
+
+
+
+
+
+.footer
+  padding-top: 45px
+  background-color: #f8f8f8
+  font-size: 13px
+  &__inner
+    padding-bottom: 30px
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin: 0 -15px
+
+  &__col
+    padding: 0 15px
+    &--first
+      width: 40%
+
+    &--second
+      width: 29%
+
+    &--third
+      width: 22%
+
+  &__logo
+    color: #ccc
+    font-weight: 700
+    font-size: 40px
+    margin-bottom: 30px
+
+  &__text
+    color: #999
+    margin-bottom: 30px
+    a
+      color: #ED3312
+
+  &__social
+    margin-bottom: 25px
+    &-header
+      color: #333
+      size: 14px
+      border-bottom: 1px solid #e5e5e5
+      padding-bottom: 15px
+      span
+        font-weight: 700
+        size: 18px
+
+    &-content
+      padding-top: 15px
+      color: #999
+      font-weight: 300
+      font-style: italic
+      a
+        display: inline-block
+        vertical-align: middle
+        margin-left: 10px
+        font-size: 18px
+        color: #ED3312
+
+
+  &__title
+    text-transform: uppercase
+    font-weight: 700
+      //font-size: 14px
+    margin-bottom: 30px
+    margin-top: 20px
+
+  &__view
+    display: block
+    color: #333
+    font-weight: 300
+    font-style: italic
+    font-size: 13px
+    margin-top: 20px
+
+  .copyright
+    font-size: 14px
+    border-top: 1px solid #e5e5e5
+    padding: 20px 0
+    text-align: center
+    span
+      color: #ED3312
+
+
+.subscribe
+  width: 100%
+  max-width: 380px
+  display: flex
+  flex-wrap: wrap
+  &__input
+    width: 60%
+    background-color: #fff
+    border: 1px solid #e7e7e7
+    border-right: 0
+    height: 40px
+
+    padding: 12px
+    color: #333
+    font-weight: 300
+    font-style: italic
+
+    line-height: 1.1
+    &::placeholder
+      color: #ccc
+
+    &:focus
+      outline: 0
+      border-color: #ED3312
+
+  &__btn
+    width: 40%
+    text-transform: uppercase
+    color: #fff
+    font-weight: 700
+    font-size: 14px
+    background-color: #ED3312
+    height: 40px
+    border: 0
+    cursor: pointer
+    padding: 12px 30px
+    line-height: 1.1
+    transition: background .2s linear
+    &:hover
+      background-color: rgba(237, 51, 18, 0.64)
+
+    &:focus
+      outline: 0
+
+
+.blogs
+  &__item
+    display: flex
+    margin-bottom: 20px
+    margin-top: 15px
+    align-items: center
+
+  &__img
+    width: 120px
+    height: 80px
+
+  &__content
+    padding-left: 20px
+
+  &__title
+    display: block
+    margin-bottom: 5px
+    color: #333
+    text-transform: uppercase
+    font-size: 12px
+    line-height: 1.5
+    &:hover
+      text-decoration: underline
+
+  &__date
+  color: #999
+  font-weight: 300
+  font-style: italic
+  font-size: 13px
+
+
+.instagram
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  &__item
+    width: 33%
+    border-bottom: 1px solid #fff
+    img
+      display: block
+      max-width: 100%
+      height: auto

@@ -1,0 +1,88 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+    <div class="main__content">
+        <div class="container">
+            {#        <!-- хлебные крошки  -->#}
+            <div class="catalog">
+                <div class="catalog__filters">
+                    <ul class="catalog__filters-item">
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                        <li><a>Category__1</a></li>
+                    </ul>
+                </div>
+                <!-- Catalog bar -->
+                <div class="catalog__bar">
+
+                    {% for user in users %}
+                        <div class="catalog__item">
+                            <div class="item__img">
+                                <img src="https://placehold.it/150x150">
+                            </div>
+
+                            <div class="item__info">
+                                <div class="item__name">
+                                    <a href="#">{{ user.username }} id: {{ user.email }}</a>
+                                </div>
+                                <div class="item__price-container">
+                                    <div class="item__price">
+                                        <span><span><span class="price"> id: {{ user.id }} </span>руб</span></span>
+                                    </div>
+                                    <a class="item__to-basket" title="Положить в корзину">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                    <a class="item__to-favorite" title="Избранное">
+                                        <i class="fas fa-heart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+{##}
+{% endblock %}
+
+
+{#<div class="catalog__item">#}
+{#    <div class="item__img">#}
+{#        <img src="https://placehold.it/150x150">#}
+{#    </div>#}
+
+{#    <div class="item__info">#}
+{#        <div class="item__name">#}
+{#            <a href="#">Product__1 Product__1</a>#}
+{#        </div>#}
+{#        <div class="item__price-container">#}
+{#            <div class="item__price">#}
+{#                <span><span><span class="price">200 </span>руб</span></span>#}
+{#            </div>#}
+{#            <a class="item__to-basket" title="Положить в корзину">#}
+{#                <i class="fas fa-shopping-cart"></i>#}
+{#            </a>#}
+{#            <a class="item__to-favorite" title="Избранное">#}
+{#                <i class="fas fa-heart"></i>#}
+{#            </a>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
