@@ -8,7 +8,7 @@ sudo -u postgres createuser --interactive // type shop_server
 sudo -u postgres createdb shop_server_db // type shop_server_db
 sudo adduser shop_server //create linux user with password shop_server
 sudo -u shop_server psql shop_server_db
-"shop_server_db=# \password shop_server //change password
+"shop_server_db=# \password shop_server //change password to "shop_server"
 
 
 Install pgAdmin or DBeaver ;) https://wiki.postgresql.org/wiki/Apt
