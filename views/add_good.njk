@@ -1,0 +1,95 @@
+{% extends "layout.njk" %}
+
+{% block javascript %}
+<script src="/post.js"></script>
+{% endblock %}
+
+ {% block content %}
+
+     <section class="loader">
+         <div class="container">
+             <div class="loader__inner">
+                 <form id="myForm" enctype="multipart/form-data" method="post" action="/goods/add" name="fileinfo">
+
+                     <div class="form-group">
+                         <label for="name">Name</label>
+                         <input type="text" name="name" required>
+                     </div>
+                     <div class="form-group">
+                         <label for="price">Price</label>
+                         <input type="text" name="price" required>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="exampleFormControlTextarea1" for="description">Description</label>
+                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="description"></textarea>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="exampleFormControlFile1">Example file input</label>
+                         <input type="file" class="form-control-file" id="exampleFormControlFile1" name="mURL" size="45">
+                     </div>
+
+                     <div class="col-md-5 mb-3">
+                         <label for="category">Category</label>
+                         <select class="custom-select d-block w-100" id="country" required>
+                             <option> Please select a valid category.</option>
+                             <option value="category_1">category_1</option>
+                             <option value="category_2">category_2</option>
+                             <option value="category_3">category_3</option>
+                         </select>
+                         <div class="select-arrow"></div>
+                         <div class="invalid-feedback">
+                             Please select a valid category.
+                         </div>
+                     </div>
+
+
+                     <button class="btn btn-primary btn-lg btn-block" onclick="loadDoc()" type="button">load to server</button>
+                 </form>
+             </div>
+         </div>
+     </section>
+
+
+
+{#     <section class="loader">#}
+{#         <div class="container">#}
+{#             <div class="loader__inner">#}
+{#                 <form id="myForm" enctype="multipart/form-data" method="post" action="/goods/add" name="fileinfo">#}
+{#                     <div class="block">#}
+{#                         <label for="name">Название</label>#}
+{#                         <input type="text" name="name" required>#}
+{#                     </div>#}
+
+{#                     <div class="block">#}
+{#                         <label for="price">Цена</label>#}
+{#                         <input type="text" name="price" required>#}
+{#                     </div>#}
+
+{#                     <div class="block">#}
+{#                         <label for="price">Описание товара</label>#}
+{#                         <textarea name="description"  cols="50" rows="5"></textarea>#}
+{#                     </div>#}
+
+{#                     <div class="block">#}
+{#                         <label for="price">Фото </label>#}
+{#                         <input type="hidden" name="max_file_size" value="10000">#}
+{#                         <input type="file" name="mURL" size="45">#}
+{#                     </div>#}
+
+{#                     <label for="category">Раздел товара</label>#}
+{#                     <select name="category">#}
+{#                         <option>Выберите раздел товара</option>#}
+{#                         <option value="category_1">category_1</option>#}
+{#                         <option value="category_2">category_2</option>#}
+{#                         <option value="category_3">category_3</option>#}
+{#                     </select>#}
+{#                     <div class="select-arrow"></div>#}
+
+{#                     <button onclick="loadDoc()" type="button">Загрузить на сервер</button>#}
+{#                 </form>#}
+{#             </div>#}
+{#         </div>#}
+{#     </section>#}
+ {% endblock %}

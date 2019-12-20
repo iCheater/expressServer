@@ -16,7 +16,7 @@ body {
 
 .container {
   max-width: 1170px;
-  margin: 0 auto;
+  margin: 0 auto 50px;
   padding: 0 15px; }
 
 ul {
@@ -224,6 +224,27 @@ a {
 
 .slider__indicators li.active {
   background-color: #fff; }
+
+.services .services__inner {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px; }
+  .services .services__inner .block__services {
+    width: 50%;
+    height: 250px;
+    margin: 5px;
+    text-align: center;
+    position: relative; }
+    .services .services__inner .block__services span {
+      text-transform: uppercase;
+      font-weight: 700;
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%); }
+  .services .services__inner .services-link {
+    background-color: rgba(237, 51, 18, 0.5); }
+  .services .services__inner .catalog-link {
+    background-color: rgba(242, 232, 26, 0.51); }
 
 .footer {
   padding-top: 45px;

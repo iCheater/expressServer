@@ -1,5 +1,7 @@
 {% extends "layout.njk" %}
 
+
+
 {% block content %}
 
     <div class="main__content">
@@ -22,19 +24,20 @@
                 <!-- Catalog bar -->
                 <div class="catalog__bar">
 
-                    {% for user in users %}
+                    {% for good in goods %}
                         <div class="catalog__item">
                             <div class="item__img">
-                                <img src="https://placehold.it/150x150">
+                                <img src=" {{ good.mURL }}">
+{#                                {{ good.mURL }}#}
                             </div>
 
                             <div class="item__info">
                                 <div class="item__name">
-                                    <a href="#">{{ user.username }} id: {{ user.email }}</a>
+                                    <a href="#">{{ good.name }}</a>
                                 </div>
                                 <div class="item__price-container">
                                     <div class="item__price">
-                                        <span><span><span class="price"> id: {{ user.id }} </span>руб</span></span>
+                                        <span><span><span class="price">{{ good.price }} </span>руб</span></span>
                                     </div>
                                     <a class="item__to-basket" title="Положить в корзину">
                                         <i class="fas fa-shopping-cart"></i>
