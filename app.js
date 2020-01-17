@@ -19,7 +19,7 @@ var blogRouter = require('./routes/blog');
 var goodsRouter = require('./routes/goods');
 var signupRouter = require('./routes/signup');
 var loginRouter = require('./routes/login');
-var adminRouter = require('./routes/admin_page');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 // app.set('views', path.join(__dirname, 'views'));/
@@ -65,7 +65,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         // expires: 24 * 60 * 60 * 1000 // 24 hours
-        expires: 10 * 60 * 1000 // 10мин hours
+        expires: 20 * 60 * 1000 // 10мин hours
     }
 }));
 

@@ -1,17 +1,30 @@
 var express = require('express');
 var router = express.Router();
 var good = require('./../models').Good;
-// var User = db.User;
 
-/* GET goods page. */
+// var User = db.User;
+var sessionChecker = require('./../middleware/sessionChecker');
+
+router.use(sessionChecker);
+
 router.get('/', function(req, res, next) {
     var params = {
         title: 'Express' ,
         auth: true,
+        goods: null
     };
-    console.log('asss');
+    // console.log('asss');
     // res.render('goods', { title: 'Express' });
-    res.send('это гет запрос');
+    console.log(good);
+    good.findAll({ limit: 10 })
+        .then(data => {
+            let rawData = data.map(e => e.get({row:true}));
+            // console.table(rawData);
+            // console.log(rawData);
+            params.goods = rawData;
+            res.render('goods', params);
+            }
+        )
 });
 
 router.get('/add/', function(req, res, next) {
