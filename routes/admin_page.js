@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var sessionChecker = require('./../middleware/sessionChecker');
 // var admin_page = require('./../models').Admin;
 
-router.get('/', function(req, res, next) {
+router.use(sessionChecker);
 
-    console.log('asss');
-    // res.send('это гет запрос');
-    res.render('admin_page');
+router.use(function (req, res, next) {
+    console.log('admin router !! Time:', Date.now());
+    next()
+});
+
+router.get('/', function(req, res, next) {
+    res.render('admin');
 });
 
 module.exports = router;

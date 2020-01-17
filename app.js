@@ -9,6 +9,8 @@ var session = require('express-session');
 var morgan = require('morgan');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+var sessionChecker = require('./middleware/sessionChecker');
+
 var indexRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
 var itemsRouter = require('./routes/items');
@@ -79,20 +81,19 @@ app.use((req, res, next) => {
 });
 
 
-// middleware function to check for logged-in users
-var sessionChecker = (req, res, next) => {
-    if (!req.session.user && !req.cookies.user_sid) {
-        res.redirect('/login');
-    } else {
-        next();
-    }
-};
+// var sessionChecker = (req, res, next) => {
+//     if (!req.session.user && !req.cookies.user_sid) {
+//         res.redirect('/login');
+//     } else {
+//         next();
+//     }
+// };
 
 
 // route for Home-Page
-app.get('/admin', sessionChecker, (req, res) => {
-    res.render('admin_page');
-});
+// app.get('/admin', sessionChecker, (req, res) => {
+//     res.render('admin_page');
+// });
 
 
 app.use('/', indexRouter);
@@ -103,7 +104,7 @@ app.use('/blog/', blogRouter);
 app.use('/goods/', goodsRouter);
 app.use('/signup/', signupRouter);
 app.use('/login/', loginRouter);
-app.use('/admin_page/', adminRouter);
+app.use('/admin/', adminRouter);
 
 app.listen(3000, function () {
     console.log('DATEBASE SYNCED');
