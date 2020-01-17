@@ -7,7 +7,7 @@ var db = require('./models');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var morgan = require('morgan');
-
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 var indexRouter = require('./routes/home');
 var usersRouter = require('./routes/users');
@@ -16,12 +16,11 @@ var catalogRouter = require('./routes/catalog');
 var blogRouter = require('./routes/blog');
 var goodsRouter = require('./routes/goods');
 var signupRouter = require('./routes/signup');
+var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin_page');
 
-
-
 var app = express();
-// app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'views'));/
 // app.set('view engine', 'html');
 
 // set morgan to log info about our requests for development use.
@@ -37,7 +36,7 @@ app.set('view engine', 'njk');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
 app.use(sassMiddleware({
     src: path.join(__dirname, 'public/stylesheets/'),
     dest: path.join(__dirname, 'public'),
@@ -58,11 +57,16 @@ app.use(session({
     key: 'user_sid',
     secret: 'somerandonstuffs',
     resave: false,
+    store: new SequelizeStore({
+        db: db.sequelize
+    }),
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+        // expires: 24 * 60 * 60 * 1000 // 24 hours
+        expires: 10 * 60 * 1000 // 10мин hours
     }
 }));
+
 
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
@@ -75,6 +79,21 @@ app.use((req, res, next) => {
 });
 
 
+// middleware function to check for logged-in users
+var sessionChecker = (req, res, next) => {
+    if (!req.session.user && !req.cookies.user_sid) {
+        res.redirect('/login');
+    } else {
+        next();
+    }
+};
+
+
+// route for Home-Page
+app.get('/admin', sessionChecker, (req, res) => {
+    res.render('admin_page');
+});
+
 
 app.use('/', indexRouter);
 app.use('/users/', usersRouter);
@@ -83,6 +102,7 @@ app.use('/catalog/', catalogRouter);
 app.use('/blog/', blogRouter);
 app.use('/goods/', goodsRouter);
 app.use('/signup/', signupRouter);
+app.use('/login/', loginRouter);
 app.use('/admin_page/', adminRouter);
 
 app.listen(3000, function () {

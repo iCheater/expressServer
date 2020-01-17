@@ -32,6 +32,8 @@ find process and kill it
 
 > kill -9 process_id
 
+> fuser -k 8080/tcp
+
 
 
 

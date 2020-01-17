@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         username: {
             type: DataTypes.STRING,
             unique: false,
-            allowNull: false
+            allowNull: true
         },
         email: {
             type: DataTypes.STRING,
@@ -18,25 +18,29 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         }
     }, {
-        classMethods: {
-            associate: function(models) {
-                User.hasMany(models.Task);
-                User.hasMany(models.Order);
-            }
-        },
+        // classMethods: {
+        //     associate: function(models) {
+        //         User.hasMany(models.Task);
+        //         User.hasMany(models.Order);
+        //     }
+        // },
         hooks: {
             beforeCreate: (user) => {
                 const salt = bcrypt.genSaltSync();
                 user.password = bcrypt.hashSync(user.password, salt);
             }
         },
-        instanceMethods: {
-            validPassword: function(password) {
-                return bcrypt.compareSync(password, this.password);
-            }
-        }
+        // instanceMethods: {
+        //     validPassword: function(password) {
+        //
+        //     }
+        // }
     });
-var test =1;
+
+    User.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.password);
+    };
+
     return User;
 };
 
