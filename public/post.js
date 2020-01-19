@@ -10,7 +10,7 @@ function loadDoc() {
     console.log(obj);
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/goods/add', true);
+    xhr.open("POST", '/admin/goods/add', true);
     xhr.setRequestHeader("Content-type", "application/json");
 
     xhr.onreadystatechange = function () {

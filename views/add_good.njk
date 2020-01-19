@@ -5,11 +5,19 @@
 {% endblock %}
 
  {% block content %}
+     <nav aria-label="breadcrumb">
+         <ol class="breadcrumb">
+             <li class="breadcrumb-item"><a href="/">Home</a></li>
+             <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+             <li class="breadcrumb-item"><a href="/admin/goods">Goods</a></li>
+             <li class="breadcrumb-item active" aria-current="page">Add goods</li>
+         </ol>
+     </nav>
 
      <section class="loader">
          <div class="container">
              <div class="loader__inner">
-                 <form id="myForm" enctype="multipart/form-data" method="post" action="/goods/add" name="fileinfo">
+                 <form id="myForm" enctype="multipart/form-data" method="post" action="/admin/goods/add" name="fileinfo">
 
                      <div class="form-group">
                          <label for="name">Name</label>
@@ -32,11 +40,11 @@
 
                      <div class="col-md-5 mb-3">
                          <label for="category">Category</label>
-                         <select class="custom-select d-block w-100" id="country" required>
+                         <select name="category" class="custom-select d-block w-100" id="country" required>
                              <option> Please select a valid category.</option>
-                             <option value="category_1">category_1</option>
-                             <option value="category_2">category_2</option>
-                             <option value="category_3">category_3</option>
+                             {%  for category in categories %}
+                                 <option value="{{ category.id }}"> {{ category.id }} - {{ category.name }} {{ category.description }}</option>
+                             {% endfor %}
                          </select>
                          <div class="select-arrow"></div>
                          <div class="invalid-feedback">

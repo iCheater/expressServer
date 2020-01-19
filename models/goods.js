@@ -8,10 +8,17 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         // classMethods: {
         //     associate: function(models) {
-        //         User.hasMany(models.Task)
+        //         Good.belongsToMany(models.Category, { through: 'goodCategory' })
         //     }
         // }
     });
+    // Good.associate = function(models) {
+    //     models.Good.belongsToMany(models.Category, {
+    //         through: 'goodCategory',
+    //         foreignKey: 'goodId',
+    //         as: 'wat?'
+    //     })
+    // };
 
     return Good;
 };

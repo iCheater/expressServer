@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var good = require('./../models').Good;
+var category = require('./../models').Сategory;
 
 // var User = db.User;
 var sessionChecker = require('./../middleware/sessionChecker');
@@ -9,14 +10,11 @@ router.use(sessionChecker);
 
 router.get('/', function(req, res, next) {
     var params = {
-        title: 'Express' ,
-        auth: true,
         goods: null
     };
-    // console.log('asss');
-    // res.render('goods', { title: 'Express' });
+
     console.log(good);
-    good.findAll({ limit: 10 })
+    good.findAll({ limit: 15 })
         .then(data => {
             let rawData = data.map(e => e.get({row:true}));
             // console.table(rawData);
@@ -28,13 +26,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add/', function(req, res, next) {
-    var params = {
-        title: 'Express' ,
-        auth: true,
-    };
     console.log('add good');
-    res.render('add_good');
-    // res.send('это гет запрос add good');
+    var params = {
+        categories: null,
+    };
+
+    category.findAll().then(data => {
+        params.categories = data.map(e => e.get({row:true}));
+        console.table(params.categories );
+        res.render('add_good', params);
+    })
 });
 
 router.post('/add', function (req, res) {

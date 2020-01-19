@@ -96,15 +96,19 @@ app.use((req, res, next) => {
 // });
 
 
+//public
 app.use('/', indexRouter);
 app.use('/users/', usersRouter);
 app.use('/items/', itemsRouter);
 app.use('/catalog/', catalogRouter);
 app.use('/blog/', blogRouter);
-app.use('/goods/', goodsRouter);
+// app.use('/goods/', goodsRouter);
+//auth
 app.use('/signup/', signupRouter);
 app.use('/login/', loginRouter);
+//admin
 app.use('/admin/', adminRouter);
+app.use('/admin/goods/', goodsRouter);
 
 app.listen(3000, function () {
     console.log('DATEBASE SYNCED');

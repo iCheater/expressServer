@@ -1,0 +1,28 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+{#    <nav aria-label="breadcrumb">#}
+{#        <ol class="breadcrumb">#}
+{#            <li class="breadcrumb-item"><a href="/">Home</a></li>#}
+{#            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>#}
+{#            <li class="breadcrumb-item active" aria-current="page">Goods</li>#}
+{#        </ol>#}
+{#    </nav>#}
+
+    <a href="/admin/goods/add">Add good</a></li>
+    <table>
+        {% for task in tasks %}
+            <tr>
+                <td class="tableTd">{{ task.id }}</td>
+                <td class="tableTd">{{ task.name }}</td>
+                <td class="tableTd">{{ task.price or "null"}}</td>
+                {#            <td>{{ good.description }}</td>#}
+                {#            <td>{{ good.category }}</td>#}
+                <td class="tableTd">{{ task.createdAt }}</td>
+                <td class="tableTd">{{ task.updatedAt }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+{#https://sequelize.org/master/#}
