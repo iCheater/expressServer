@@ -9,20 +9,19 @@
 {#        </ol>#}
 {#    </nav>#}
 
-    <a href="/admin/goods/add">Add good</a></li>
+    <form action="/add">
+        ToDo<br>
+        <input type="text" name="title" value="random todo"><br>
+        <input type="submit" value="Submit">
+    </form>
     <table>
         {% for task in tasks %}
             <tr>
                 <td class="tableTd">{{ task.id }}</td>
-                <td class="tableTd">{{ task.name }}</td>
-                <td class="tableTd">{{ task.price or "null"}}</td>
-                {#            <td>{{ good.description }}</td>#}
-                {#            <td>{{ good.category }}</td>#}
-                <td class="tableTd">{{ task.createdAt }}</td>
-                <td class="tableTd">{{ task.updatedAt }}</td>
+                <td class="tableTd">{{ task.title }}</td>
+                <td class="tableTd">{{ task.UserId }}</td>
             </tr>
         {% endfor %}
     </table>
 
 {% endblock %}
-{#https://sequelize.org/master/#}

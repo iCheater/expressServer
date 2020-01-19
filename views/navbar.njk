@@ -19,8 +19,13 @@
                     <li><a href="#">ABOUT US</a></li>
                     <li><a href="#">CATALOG</a></li>
                     <li><a href="#">BLOG</a></li>
-                    <li><a href="/admin">ADMIN</a></li>
-                    <li><a href="/login">LOGIN</a></li>
+                    <li><a href="/admin">ADMIN_PANEL</a></li>
+{#                    <li><a href="{{ user.id or '/login'}}">{{ (user.name | upper ) or "LOGIN" }}</a></li>#}
+                    {% if user | length %}
+                        <li><a href="/profile">{{ (user.name | upper ) }}</a></li>
+                    {% else %}
+                        <li><a href="/login">LOGIN</a></li>
+                    {% endif %}
                     <li> <a class="nav__link" href="#">
                             <i class="fas fa-shopping-cart"></i>
                         </a></li>

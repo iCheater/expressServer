@@ -19,6 +19,8 @@ router.get('/', function(req, res, next) {
             let rawData = data.map(e => e.get({row:true}));
             // console.table(rawData);
             // console.log(rawData);
+            // console.log(jane.toJSON()); // This is good!
+            // console.log(JSON.stringify(jane, null, 4)); // This is also good!
             params.goods = rawData;
             res.render('goods', params);
             }
@@ -61,7 +63,6 @@ router.post('/add', function (req, res) {
             res.json(msg);
         });
     // res.send('POST request to the homepage');
-
 });
 
 

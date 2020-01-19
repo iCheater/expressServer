@@ -13,10 +13,11 @@ router.post('/', function (req, res) {
     console.log('Got body:', req.body);
 
     var params = {
-        username: req.body.login,
+        username: req.body.username,
         password: req.body.password,
         email: req.body.email
     };
+    console.table(params);
     User.create(params)
         .then(function (user) {
             var msg = {
@@ -31,6 +32,7 @@ router.post('/', function (req, res) {
             res.redirect('/');
         })
         .catch(error => {
+            console.error(error);
             res.json(error);
                  // res.redirect('/err');
          });

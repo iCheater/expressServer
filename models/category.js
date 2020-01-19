@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Category = sequelize.define("Сategory", {
+    var Category = sequelize.define("Category", {
         name: DataTypes.STRING,
         description: DataTypes.TEXT,
     }, {
@@ -11,13 +11,13 @@ module.exports = function(sequelize, DataTypes) {
         // }
     });
 
-    // Category.associate = function(models) {
-    //     models.Category.belongsToMany(models.Good, {
-    //         through: 'goodCategory',
-    //         foreignKey: 'categoryId',
-    //         as: 'days'
-    //     })
-    // };
+    Category.associate = function(models) {
+        models.Category.belongsToMany(models.Good, {
+            through: 'goodCategory',
+            foreignKey: 'categoryId',
+            // as: 'days'
+        })
+    };
 
     return Category;
 };
