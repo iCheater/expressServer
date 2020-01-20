@@ -10,12 +10,11 @@ module.exports = function(sequelize, DataTypes) {
         //     }
         // }
     });
-
     Category.associate = function(models) {
         models.Category.belongsToMany(models.Good, {
             through: 'goodCategory',
             foreignKey: 'categoryId',
-            // as: 'days'
+            as: 'categories'
         })
     };
 

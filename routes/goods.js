@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var good = require('./../models').Good;
-var category = require('./../models').Сategory;
+var category = require('./../models').Category;
 
 // var User = db.User;
 var sessionChecker = require('./../middleware/sessionChecker');
@@ -42,6 +42,7 @@ router.get('/add/', function(req, res, next) {
 
 router.post('/add', function (req, res) {
     console.log('Got body:', req.body);
+    console.log(category);
     // console.log('Got body:', req);
 
     var params = {
@@ -49,9 +50,19 @@ router.post('/add', function (req, res) {
         price: req.body.price,
         description: req.body.description,
         mURL: req.body.mURL,
-        category: req.body.category
+        // category: req.body.category
+        categories: [
+            { id: 1, name:'testcat1' },
+            { id: 2, name: 'testcat2' },
+        ]
     };
-    good.create(params)
+    var includeParams = {
+        include: [{
+            as: 'categories',
+            association: category
+        }]
+    };
+    good.create(params, includeParams)
         .then(function (good) {
             // res.json(good);
             var msg = {

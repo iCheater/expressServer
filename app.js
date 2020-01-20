@@ -20,6 +20,7 @@ var loginRouter = require('./routes/login');
 var adminRouter = require('./routes/admin');
 var taskRouter = require('./routes/tasks');
 var profileRouter = require('./routes/profile');
+var categoriesRouter = require('./routes/categories');
 
 var app = express();
 app.use(morgan('dev'));
@@ -59,7 +60,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         // expires: 24h * 60min * 60sec * 1000ms // 24 hours
-        expires: 60 * 60 * 1000 // 10мин hours
+        expires: 24 * 60 * 60 * 1000 // 10мин hours
     }
 }));
 
@@ -88,6 +89,7 @@ app.use('/login/', loginRouter);
 app.use('/admin/', adminRouter);
 app.use('/admin/goods/', goodsRouter);
 app.use('/admin/tasks/', taskRouter);
+app.use('/admin/categories/', categoriesRouter);
 
 // app.listen(3000, function () {
 //     console.log('DATEBASE SYNCED');

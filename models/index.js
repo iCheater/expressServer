@@ -8,6 +8,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
+//todo why import indexw
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -20,7 +21,8 @@ fs.readdirSync(__dirname)
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
   .forEach(file => {
-    const model = sequelize['import'](path.join(__dirname, file));
+    // const model = sequelize['import'](path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize);
     db[model.name] = model;
   });
 
@@ -39,3 +41,4 @@ module.exports = db;
 
 //usefull link
 // https://gist.github.com/zcaceres/83b554ee08726a734088d90d455bc566
+// https://scotch.io/tutorials/getting-started-with-node-express-and-postgres-using-sequelize

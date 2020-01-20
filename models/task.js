@@ -13,5 +13,21 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
+    // ////
+    // class Task extends sequelize.Model {
+    //     static associate(models){
+    //
+    //     }
+    // }
+    //
+    // ///
+    // Task.init({
+    //     title: DataTypes.STRING
+    // }, {
+    //     sequelize,
+    //     modelName: 'task'
+    // });
+
+
     return Task;
 };

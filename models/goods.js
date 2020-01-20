@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         price: DataTypes.FLOAT,
         mURL: DataTypes.STRING,
         description: DataTypes.TEXT,
-        category: DataTypes.STRING
+        // category: DataTypes.STRING
     }, {
         // classMethods: {
         //     associate: function(models) {
@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         models.Good.belongsToMany(models.Category, {
             through: 'goodCategory',
             foreignKey: 'goodId',
-            // as: 'wat?'
+            as: 'goods'
         })
     };
 
