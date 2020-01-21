@@ -40,6 +40,10 @@ router.get('/add/', function(req, res, next) {
     })
 });
 
+// console.log(john.get({
+//     plain: true ..//todo check it!
+// })
+
 router.post('/add', function (req, res) {
     console.log('Got body:', req.body);
     console.log(category);

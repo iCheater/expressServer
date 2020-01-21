@@ -21,6 +21,7 @@ var adminRouter = require('./routes/admin');
 var taskRouter = require('./routes/tasks');
 var profileRouter = require('./routes/profile');
 var categoriesRouter = require('./routes/categories');
+var testRouter = require('./routes/test');
 
 var app = express();
 app.use(morgan('dev'));
@@ -90,6 +91,10 @@ app.use('/admin/', adminRouter);
 app.use('/admin/goods/', goodsRouter);
 app.use('/admin/tasks/', taskRouter);
 app.use('/admin/categories/', categoriesRouter);
+//
+app.use('/test', testRouter);
+
+
 
 // app.listen(3000, function () {
 //     console.log('DATEBASE SYNCED');
@@ -102,7 +107,7 @@ function sync() {
     console.log('DATEBASE SYNCED');
     db.sequelize.sync({
         // force: true, // This creates the table, dropping it first if it already existed
-        // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
+        alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
     });
 }
 sync();

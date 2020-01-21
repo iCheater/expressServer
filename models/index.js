@@ -22,7 +22,7 @@ fs.readdirSync(__dirname)
   })
   .forEach(file => {
     // const model = sequelize['import'](path.join(__dirname, file));
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize);
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize );
     db[model.name] = model;
   });
 
@@ -30,6 +30,29 @@ Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
+});
+
+const { User, Task, Project } = db;
+
+// hasOne vs belongsTo
+// User.hasOne(Project); // creates userID in Projects, but nothing in Users
+// User.belongsTo(Project);  // creates projectID in User, but nothing in Project
+
+// hasMany vs belongsToMany
+Task.hasMany(User, { as: 'workers'}); // Will add taskId to User model and ...getWorkers wtf?
+// Task.belongsTo(User,{foreignKey: 'user_id', }); // Will also add userId to Task model
+
+
+
+User.create({
+  username: 'test',
+  email: 'test@mai.ru',
+  password: 'test',
+});
+User.create({
+  username: 'admin',
+  email: 'admin@admin.ru',
+  password: 'admin',
 });
 
 db.sequelize = sequelize;

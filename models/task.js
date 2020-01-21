@@ -1,33 +1,19 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+const DataTypes = require('sequelize').DataTypes;
+
+module.exports = (sequelize) => {
     var Task = sequelize.define('Task', {
         title: DataTypes.STRING
     });
 
-    Task.associate = function (models) {
-        models.Task.belongsTo(models.User, {
-            onDelete: "CASCADE",
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
-
-    // ////
-    // class Task extends sequelize.Model {
-    //     static associate(models){
-    //
-    //     }
-    // }
-    //
-    // ///
-    // Task.init({
-    //     title: DataTypes.STRING
-    // }, {
-    //     sequelize,
-    //     modelName: 'task'
-    // });
-
+    // Task.associate = function (models) {
+    //     models.Task.belongsTo(models.User, {
+    //         onDelete: "CASCADE",
+    //         foreignKey: {
+    //             allowNull: false
+    //         }
+    //     });
+    // };
 
     return Task;
 };

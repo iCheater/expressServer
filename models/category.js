@@ -1,4 +1,6 @@
-module.exports = function(sequelize, DataTypes) {
+const DataTypes = require('sequelize').DataTypes;
+
+module.exports = (sequelize) => {
     var Category = sequelize.define("Category", {
         name: DataTypes.STRING,
         description: DataTypes.TEXT,
