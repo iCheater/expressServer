@@ -32,28 +32,60 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
-const { User, Task, Project } = db;
+const { User, Task, Project, Address, Tag } = db;
+
 
 // hasOne vs belongsTo
 // User.hasOne(Project); // creates userID in Projects, but nothing in Users
 // User.belongsTo(Project);  // creates projectID in User, but nothing in Project
 
 // hasMany vs belongsToMany
-Task.hasMany(User, { as: 'workers'}); // Will add taskId to User model and ...getWorkers wtf?
-// Task.belongsTo(User,{foreignKey: 'user_id', }); // Will also add userId to Task model
+// Task.hasMany(User, { as: 'workers'}); // Will add taskId to User model and  task.getWorkers
+
+//Belongs-To-Many
+// Project.belongsToMany(User, {through: 'UserProject'});
+// User.belongsToMany(Project, {through: 'UserProject'});
+// User.hasMany(Address);
+User.hasMany(Tag, { as: 'tags'});
+// Project.hasMany(Tag);
+Project.User = Project.belongsTo(User, {as: 'user'});
+User.Addresses = User.hasMany(Address, {as: 'addresses'});
 
 
+// User.create({
+//   username: 'test',
+//   email: 'test@mai.ru',
+//   password: 'test',
+// });
+// User.create({
+//   username: 'admin',
+//   email: 'admin@admin.ru',
+//   password: 'admin',
+// });
+// Task.create({
+//   title: 'new task!!',
+// });
 
-User.create({
-  username: 'test',
-  email: 'test@mai.ru',
-  password: 'test',
-});
-User.create({
-  username: 'admin',
-  email: 'admin@admin.ru',
-  password: 'admin',
-});
+// Project.create({
+//   name: 'ChairProject',
+//   user: {
+//     username: 'admin2',
+//     email: 'admin@admin.ru2',
+//     password: 'admin',
+//     addresses: [{
+//       type: 'home',
+//       line1: '100 Main St.',
+//       city: 'Austin',
+//       state: 'TX',
+//       zip: '78704'
+//     }]
+//   }
+// }, {
+//   include: [{
+//     association: Project.User,
+//     include: [ User.Addresses ]
+//   }]
+// });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

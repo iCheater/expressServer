@@ -12,13 +12,13 @@ module.exports = (sequelize) => {
         //     }
         // }
     });
-    Category.associate = function(models) {
-        models.Category.belongsToMany(models.Good, {
-            through: 'goodCategory',
-            foreignKey: 'categoryId',
-            as: 'categories'
-        })
-    };
+    // Category.associate = function(models) {
+    //     models.Category.belongsToMany(models.Good, {
+    //         through: 'goodCategory',
+    //         foreignKey: 'categoryId',
+    //         as: 'categories'
+    //     })
+    // };
 
     return Category;
 };

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 // var db = require('./../models');
 // var Task = db.Task;
-var { Task, User} = require('./../models');
+var { Task, User, Project, Address, Tag} = require('./../models');
 
 router.get('/findAll', function (req, res, next) {
     Task.findAll({raw: true})
@@ -29,6 +29,7 @@ router.get('/findByPk', function (req, res, next) {
         });
 });
 
+// Task.hasMany(User, { as: 'workers'});
 router.get('/get', function (req, res, next) {
     Task.findAll({
         where: {
@@ -38,24 +39,75 @@ router.get('/get', function (req, res, next) {
             model: User,
             as: 'workers'
         }]
-    })
-        .then( (task) => {
-            // task[0].getWorkers().then(console.log);
-            console.log('(/home/cheater/projects/expressServer/node_modules/bluebird/js/release/async.js:86:9)')
-            // console.log(task);
+    }).then( (task) => {
             res.json(task);
         });
 });
 
 router.get('/create', function (req, res) {
-    console.log('name:', req.params.name);
+    // console.log('Project.User:', Project.User);
 
+    // User.Addresses = User.hasMany(Address, {as: 'addresses'});
     User.create({
-        username: req.params.name,
-        email: 'test@mai.ru'
+        username: 'admin2',
+        email: 'admin@admin.ru2',
+        password: 'admin',
+        addresses: [{
+            type: '333asd',
+            line1: '100 Main St.',
+            line2: '112312312300 Main St.',
+            city: 'jopa',
+            state: 'TX',
+            zip: '78704'
+        }]
+    },{
+        include: [{
+            // include: [ User.Addresses ],
+            association: User.Addresses,
+        }]
     })
-        .then( user => {
-            res.json(user);
+
+    // User.hasMany(Tag, { as: 'tags'});
+    // User.create({
+    //     username: 'admin2',
+    //     email: 'admin@admin.ru2',
+    //     password: 'admin',
+    //     tags: [
+    //         { name: 'Alpha'},
+    //         { name: 'Beta'}
+    //     ]
+    // }, {
+    //     include: [{
+    //         model: Tag,
+    //         as: 'tags'
+    //     }]
+    // })
+
+    // Project.User = Project.belongsTo(User, {as: 'user'});
+    // User.Addresses = User.hasMany(Address, {as: 'addresses'});
+    // Project.create({
+    //     name: 'ChairProject',
+    //     user: {
+    //         username: 'admin2',
+    //         email: 'admin@admin.ru2',
+    //         password: 'admin',
+    //         addresses: [{
+    //             type: '33333333',
+    //             line1: '100 Main St.',
+    //             line2: '100 Main St.',
+    //             city: 'Austin',
+    //             state: 'TX',
+    //             zip: '78704'
+    //         }]
+    //     }
+    // }, {
+    //     include: [{
+    //         association: Project.User,
+    //         include: [ User.Addresses ]
+    //     }]
+    // })
+        .then( dataFromDb => {
+            res.json(dataFromDb);
         })
 });
 module.exports = router;
