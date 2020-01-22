@@ -1,72 +1,56 @@
-var express = require('express');
-var router = express.Router();
-var good = require('./../models').Good;
-var category = require('./../models').Category;
-
-// var User = db.User;
-var sessionChecker = require('./../middleware/sessionChecker');
+const express = require('express');
+const router = express.Router();
+const { Good, Category } = require('./../models');
+const sessionChecker = require('./../middleware/sessionChecker');
 
 router.use(sessionChecker);
 
-router.get('/', function(req, res, next) {
-    var params = {
-        goods: null
-    };
-
-    console.log(good);
-    good.findAll({ limit: 15 })
+router.get('/', function (req, res, next) {
+    Good.findAll({ limit: 15 })
         .then(data => {
-            let rawData = data.map(e => e.get({row:true}));
-            // console.table(rawData);
-            // console.log(rawData);
-            // console.log(jane.toJSON()); // This is good!
-            // console.log(JSON.stringify(jane, null, 4)); // This is also good!
-            params.goods = rawData;
-            res.render('goods', params);
+                let rawData = data.map(e => e.get({ row: true }));
+                // console.table(rawData);
+                // console.log(rawData);
+                // console.log(jane.toJSON()); // This is good!
+                // console.log(JSON.stringify(jane, null, 4)); // This is also good!
+                res.render('goods', { goods: rawData });
             }
-        )
+        );
 });
 
-router.get('/add/', function(req, res, next) {
-    console.log('add good');
-    var params = {
-        categories: null,
+router.get('/add/', function (req, res, next) {
+
+    let params = {
+        categories: null
     };
 
-    category.findAll().then(data => {
-        params.categories = data.map(e => e.get({row:true}));
-        console.table(params.categories );
+    Category.findAll().then(data => {
+        params.categories = data.map(e => e.get({ row: true }));
+        console.table(params.categories);
         res.render('add_good', params);
-    })
+    });
 });
-
-// console.log(john.get({
-//     plain: true ..//todo check it!
-// })
 
 router.post('/add', function (req, res) {
-    console.log('Got body:', req.body);
-    console.log(category);
-    // console.log('Got body:', req);
 
-    var params = {
+    let params = {
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
         mURL: req.body.mURL,
         // category: req.body.category
         categories: [
-            { id: 1, name:'testcat1' },
-            { id: 2, name: 'testcat2' },
+            { id: 1, name: 'testcat1' },
+            { id: 2, name: 'testcat2' }
         ]
     };
-    var includeParams = {
+    let includeParams = {
         include: [{
             as: 'categories',
             association: category
         }]
     };
-    good.create(params, includeParams)
+    Good.create(params, includeParams)
         .then(function (good) {
             // res.json(good);
             var msg = {
@@ -77,9 +61,6 @@ router.post('/add', function (req, res) {
 
             res.json(msg);
         });
-    // res.send('POST request to the homepage');
 });
-
-
 
 module.exports = router;

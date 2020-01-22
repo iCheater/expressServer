@@ -9,19 +9,8 @@ var session = require('express-session');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 
-var indexRouter = require('./routes/home');
-var usersRouter = require('./routes/users');
-var itemsRouter = require('./routes/items');
-var catalogRouter = require('./routes/catalog');
-var blogRouter = require('./routes/blog');
-var goodsRouter = require('./routes/goods');
-var signupRouter = require('./routes/signup');
-var loginRouter = require('./routes/login');
-var adminRouter = require('./routes/admin');
-var taskRouter = require('./routes/tasks');
-var profileRouter = require('./routes/profile');
-var categoriesRouter = require('./routes/categories');
-var testRouter = require('./routes/test');
+
+var router = require('./routes');
 
 var app = express();
 app.use(morgan('dev'));
@@ -75,24 +64,25 @@ app.use((req, res, next) => {
 });
 
 //public
-app.use('/', indexRouter);
-app.use('/users/', usersRouter);
-app.use('/items/', itemsRouter);
-app.use('/catalog/', catalogRouter);
-app.use('/blog/', blogRouter);
-// app.use('/goods/', goodsRouter);
-// app.use('/profile/', profileRouter);
-
-//auth
-app.use('/signup/', signupRouter);
-app.use('/login/', loginRouter);
-//admin
-app.use('/admin/', adminRouter);
-app.use('/admin/goods/', goodsRouter);
-app.use('/admin/tasks/', taskRouter);
-app.use('/admin/categories/', categoriesRouter);
+app.use('/', router);
+// app.use('/users/', usersRouter);
+// app.use('/items/', itemsRouter);
+// app.use('/catalog/', catalogRouter);
+// app.use('/blog/', blogRouter);
+// // app.use('/goods/', goodsRouter);
+// // app.use('/profile/', profileRouter);
+// app.use('/orders/', orderRouter);
 //
-app.use('/test', testRouter);
+// //auth
+// app.use('/signup/', signupRouter);
+// app.use('/login/', loginRouter);
+// //admin
+// app.use('/admin/', adminRouter);
+// app.use('/admin/goods/', goodsRouter);
+// app.use('/admin/tasks/', taskRouter);
+// app.use('/admin/categories/', categoriesRouter);
+// //
+// app.use('/test', testRouter);
 
 
 

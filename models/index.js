@@ -11,28 +11,36 @@ const db = {};
 //todo why import indexw
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+    sequelize = new Sequelize(process.env[config.use_env_variable], config);
+}
+else {
+    sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
 fs.readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    // const model = sequelize['import'](path.join(__dirname, file));
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize );
-    db[model.name] = model;
-  });
+    .filter(file => {
+        return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
+    })
+    .forEach(file => {
+        // const model = sequelize['import'](path.join(__dirname, file));
+        const model = require(path.join(__dirname, file))(sequelize, Sequelize);
+        db[model.name] = model;
+    });
 
 Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
-const { User, Task, Project, Address, Tag } = db;
+const {
+    User,
+    Task,
+    Project,
+    Address,
+    Tag,
+    Order
+} = db;
 
 
 // hasOne vs belongsTo
@@ -46,11 +54,11 @@ const { User, Task, Project, Address, Tag } = db;
 // Project.belongsToMany(User, {through: 'UserProject'});
 // User.belongsToMany(Project, {through: 'UserProject'});
 // User.hasMany(Address);
-User.hasMany(Tag, { as: 'tags'});
+User.hasMany(Tag, { as: 'tags' });
+User.hasMany(Order, { as: 'orders' });
 // Project.hasMany(Tag);
-Project.User = Project.belongsTo(User, {as: 'user'});
-User.Addresses = User.hasMany(Address, {as: 'addresses'});
-
+Project.User = Project.belongsTo(User, { as: 'user' });
+User.Addresses = User.hasMany(Address, { as: 'addresses' });
 
 // User.create({
 //   username: 'test',
@@ -91,8 +99,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
-
-
 
 //usefull link
 // https://gist.github.com/zcaceres/83b554ee08726a734088d90d455bc566

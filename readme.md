@@ -15,7 +15,7 @@ in postgress console:
 
     >"shop_server_db=# \password shop_server //change password to "shop_server"
 
-### 2. Install pgAdmin or [DBeaver ;)]( https://wiki.postgresql.org/wiki/Apt) 
+### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5) 
 
 ___
 ### Usefull

@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     var Tag = sequelize.define("Tag", {
         name: DataTypes.STRING,
     }, {
-        tableName: 'tag'
+        // tableName: 'Tag' // in base
     });
 
 
