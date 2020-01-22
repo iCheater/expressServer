@@ -47,7 +47,7 @@ router.post('/add', function (req, res) {
     let includeParams = {
         include: [{
             as: 'categories',
-            association: category
+            association: Category
         }]
     };
     Good.create(params, includeParams)

@@ -39,7 +39,9 @@ const {
     Project,
     Address,
     Tag,
-    Order
+    Order,
+    Good,
+    Category
 } = db;
 
 
@@ -54,6 +56,9 @@ const {
 // Project.belongsToMany(User, {through: 'UserProject'});
 // User.belongsToMany(Project, {through: 'UserProject'});
 // User.hasMany(Address);
+Good.belongsToMany(Category, {through: "GoodCategory", as: 'goods'});
+Category.belongsToMany(Good, {through: "GoodCategory", as: 'categories'});
+
 User.hasMany(Tag, { as: 'tags' });
 User.hasMany(Order, { as: 'orders' });
 // Project.hasMany(Tag);

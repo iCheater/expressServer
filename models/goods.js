@@ -12,13 +12,13 @@ module.exports = function(sequelize, DataTypes) {
         //     }
         // }
     });
-    Good.associate = function(models) {
-        models.Good.belongsToMany(models.Category, {
-            through: 'goodCategory',
-            foreignKey: 'goodId',
-            as: 'goods'
-        })
-    };
+    // Good.associate = function(models) {
+    //     models.Good.belongsToMany(models.Category, {
+    //         through: 'goodCategory',
+    //         foreignKey: 'goodId',
+    //         as: 'goods'
+    //     })
+    // };
 
     return Good;
 };
