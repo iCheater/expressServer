@@ -15,7 +15,9 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  Good.findByPk({ limit: 15 })
+  console.log(req.params)
+  console.log(req.params.id)
+  Good.findByPk(req.params.id)
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
       // console.table(rawData);
@@ -23,20 +25,22 @@ router.get('/:id', (req, res, next) => {
       // console.log(jane.toJSON()); // This is good!
       // console.log(JSON.stringify(jane, null, 4)); // This is also good!
       res.render('admin/goods', { goods: rawData })
+    }).catch(error => {
+      res.json(error)
     })
 })
-
-router.get('/add/', (req, res, next) => {
-  const params = {
-    categories: null
-  }
-
-  Category.findAll().then(data => {
-    params.categories = data.map(e => e.get({ row: true }))
-    console.table(params.categories)
-    res.render('add_good', params)
-  })
-})
+// https://www.tutorialspoint.com/expressjs/expressjs_restful_apis.htm
+// router.get('/add/', (req, res, next) => {
+//   const params = {
+//     categories: null
+//   }
+//
+//   Category.findAll().then(data => {
+//     params.categories = data.map(e => e.get({ row: true }))
+//     console.table(params.categories)
+//     res.render('add_good', params)
+//   })
+// })
 
 router.post('/add', (req, res) => {
   const params = {

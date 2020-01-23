@@ -31,22 +31,27 @@ module.exports = (sequelize) => {
     // }
   })
 
-  User.prototype.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password)
+  User.prototype.validPassword = (password) => {
+    console.log('password === this.password', password === this.password)
+    console.log('password', password)
+    console.log('this.password', this.password)
+
+    return password === this.password
+    // return bcrypt.compareSync(password, this.password)
   }
 
   // User.associate = function(models) {
   //     models.User.hasMany(models.Task);
   // };
 
-  // User.create({
-  //     username: 'admin',
-  //     email: 'admin@admin.ru',
-  //     password: 'password'
-  // })
-  //     .then(user => {
-  //         console.log(user.get());
-  //     });
+  User.create({
+    username: 'admin',
+    email: 'admin@admin.ru',
+    password: 'admin'
+  })
+    .then(user => {
+      console.log(user.get())
+    })
 
   return User
 }

@@ -33,6 +33,8 @@ find process and kill it
 
 > npx sequelize migration:generate --name [modelname]
 > npx sequelize-cli seed:generate --name demo-user
+>
+>https://www.tutorialspoint.com/expressjs/expressjs_restful_apis.htm
 
 
 

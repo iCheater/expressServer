@@ -13,11 +13,11 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   // res.render('login', { title: 'Express' });
-  var username = req.body.username
-  var password = req.body.password
+  const username = req.body.username
+  const password = req.body.password
   console.log(username, password)
   User.findOne({ where: { username: username } }).then((user) => {
-    // console.log(user);
+    console.log(user)
     if (!user) {
       console.log('!user', user)
       res.redirect('/login')
