@@ -1,26 +1,40 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var morgan = require('morgan'); // logger
-var sassMiddleware = require('node-sass-middleware');
-var db = require('./models');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const morgan = require('morgan'); // logger
+const sassMiddleware = require('node-sass-middleware');
+const db = require('./models');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const fs = require('fs');
 
+const router = require('./routes');
 
-
-var router = require('./routes');
-
-var app = express();
+const app = express();
 app.use(morgan('dev'));
 
-var nunjucks = require('nunjucks');
+const nunjucks = require('nunjucks');
 nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
 app.set('view engine', 'njk');
+///////////////////////////////////////////
+// app.set('views', path.join(__dirname, './views/'));
+
+// console.log(path.join(__dirname, './views'));
+//
+// fs.readdirSync(path.join(__dirname, './views/'), (err, items) => {
+//     console.log(i, items);
+//     if (err) {
+//         return console.log('Unable to scan directory: ' + err);
+//     }
+//
+//     for (let i=0; i < items.length; i++) {
+//         console.log(items[i]);
+//     }
+// });
 
 app.use(sassMiddleware({
     src: path.join(__dirname, 'public/stylesheets/'),
@@ -63,26 +77,8 @@ app.use((req, res, next) => {
     next();
 });
 
-//public
+
 app.use('/', router);
-// app.use('/users/', usersRouter);
-// app.use('/items/', itemsRouter);
-// app.use('/catalog/', catalogRouter);
-// app.use('/blog/', blogRouter);
-// // app.use('/goods/', goodsRouter);
-// // app.use('/profile/', profileRouter);
-// app.use('/orders/', orderRouter);
-//
-// //auth
-// app.use('/signup/', signupRouter);
-// app.use('/login/', loginRouter);
-// //admin
-// app.use('/admin/', adminRouter);
-// app.use('/admin/goods/', goodsRouter);
-// app.use('/admin/tasks/', taskRouter);
-// app.use('/admin/categories/', categoriesRouter);
-// //
-// app.use('/test', testRouter);
 
 
 
@@ -93,12 +89,13 @@ app.use('/', router);
 //         alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
 //     });
 // });
-function sync() {
-    console.log('DATEBASE SYNCED');
-    db.sequelize.sync({
-        // force: true, // This creates the table, dropping it first if it already existed
-        // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
-    });
-}
-sync();
+
+// function sync() {
+//     console.log('DATEBASE SYNCED');
+//     db.sequelize.sync({
+//         // force: true, // This creates the table, dropping it first if it already existed
+//         // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
+//     });
+// }
+// sync();
 module.exports = app;

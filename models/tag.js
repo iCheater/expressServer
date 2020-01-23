@@ -1,13 +1,12 @@
-const DataTypes = require('sequelize').DataTypes;
+const DataTypes = require('sequelize').DataTypes
 
 module.exports = (sequelize) => {
-    var Tag = sequelize.define("Tag", {
-        name: DataTypes.STRING,
-    }, {
-        // tableName: 'Tag' // in base
-    });
+  var Tag = sequelize.define('Tag', {
+    name: DataTypes.STRING
+  }, {
+    // tableName: 'Tag' // in base
+  })
 
-
-    return Tag;
-};
+  return Tag
+}
 // https://sequelize-guides.netlify.com/getting-started/

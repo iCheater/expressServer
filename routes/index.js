@@ -1,42 +1,30 @@
-'use strict';
-const indexRouter = require('./home');
-const usersRouter = require('./users');
-const itemsRouter = require('./items');
-const catalogRouter = require('./catalog');
-const blogRouter = require('./blog');
-const goodsRouter = require('./goods');
-const signupRouter = require('./signup');
-const loginRouter = require('./login');
-const adminRouter = require('./admin');
-const taskRouter = require('./tasks');
+'use strict'
+const homeRouter = require('./home')
 
-const categoriesRouter = require('./categories');
-const testRouter = require('./test');
-// const orderRouter = require('./orders');
-// const profileRouter = require('./profile');
+const adminRouter = require('./admin/')
+const catalogRouter = require('./catalog')
+const testRouter = require('./test')
+const profileRouter = require('./profile')
+const authRouter = require('./auth')
 
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-router.use('/', indexRouter);
+router.use('/', homeRouter)
+router.use('/', authRouter)
 
-router.use('/users/', usersRouter);
-router.use('/items/', itemsRouter);
-router.use('/catalog/', catalogRouter);
-router.use('/blog/', blogRouter);
-router.use('/goods/', goodsRouter);
-// router.use('/profile/', profileRouter);
-router.use('/orders/', indexRouter);
+// todo страница profile
+// просмотр текущего заказа
+// Просмотр истории заказов,
+// Посмотреть содержимое корзины
+// Посмотреть отложенные товары
+// Изменить профиль(данные, адреса, пароль, почта, телефоны)
+router.use('/profile/', profileRouter)
+router.use('/catalog/', catalogRouter)
 
-//auth
-router.use('/signup/', signupRouter);
-router.use('/login/', loginRouter);
 // //admin
-router.use('/admin/', adminRouter);
-router.use('/admin/goods/', goodsRouter);
-router.use('/admin/tasks/', taskRouter);
-router.use('/admin/categories/', categoriesRouter);
-// //
-router.use('/test', testRouter);
+router.use('/admin/', adminRouter)
 
-module.exports = router;
+router.use('/test', testRouter)
+
+module.exports = router

@@ -17,6 +17,9 @@ in postgress console:
 
 ### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5) 
 
+### 3. Install [NVM)]( https://github.com/nvm-sh/nvm )
+> nvm install --lts
+
 ___
 ### Usefull
 [node-express-sequelize-postgresql-association GIST](https://gist.github.com/thgaskell/e4decde53572664b182e)
@@ -28,6 +31,8 @@ find process and kill it
 
 > fuser -k 3000/tcp
 
+> npx sequelize migration:generate --name [modelname]
+> npx sequelize-cli seed:generate --name demo-user
 
 
 

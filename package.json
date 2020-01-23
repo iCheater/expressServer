@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www"
+    "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www" ,
+    "lint": "eslint ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -12,6 +13,7 @@
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",
     "express": "^4.16.4",
+    "express-routes-visualizer": "^0.2.4",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
     "morgan": "^1.9.1",
@@ -23,5 +25,13 @@
     "reload": "^3.0.3",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
