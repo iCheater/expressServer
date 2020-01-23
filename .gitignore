@@ -2,7 +2,7 @@
 package-lock.json
 public/*.css
 public/*.map
-#.idea/*
+.idea/*
 
 # Logs
 #logs
