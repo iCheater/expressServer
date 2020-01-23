@@ -1,19 +1,20 @@
-var express = require('express')
-var router = express.Router()
+const express = require('express')
+const router = express.Router()
 // var db = require('./../models');
 // var Task = db.Task;
-var { Task, User, Project, Address, Tag } = require('./../models')
+// eslint-disable-next-line no-unused-vars
+const { Task, User, Project, Address, Tag } = require('./../models')
 
-router.get('/findAll', function (req, res, next) {
+router.get('/findAll', (req, res, next) => {
   Task.findAll({ raw: true })
-    .then(function (users) {
+    .then((users) => {
       console.table(users)
       // res.json('catalog', {users: users});
       res.json(users)
     })
 })
 
-router.get('/findByPk', function (req, res, next) {
+router.get('/findByPk', (req, res, next) => {
   Task.findByPk(1, {
     raw: true,
     include: [{
@@ -30,7 +31,7 @@ router.get('/findByPk', function (req, res, next) {
 })
 
 // Task.hasMany(User, { as: 'workers'});
-router.get('/get', function (req, res, next) {
+router.get('/get', (req, res, next) => {
   Task.findAll({
     where: {
       id: 1
@@ -44,7 +45,7 @@ router.get('/get', function (req, res, next) {
   })
 })
 
-router.get('/create', function (req, res) {
+router.get('/create', (req, res) => {
   // console.log('Project.User:', Project.User);
 
   // User.Addresses = User.hasMany(Address, {as: 'addresses'});

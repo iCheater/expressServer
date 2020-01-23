@@ -20,5 +20,11 @@ module.exports = {
     semi: 2,
     "prefer-const": 2,
     "padded-blocks": 1,
+    "prefer-arrow-callback": 2,
+    "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "none",
+      ignoreRestSiblings: true
+    }]
   }
-}
+};

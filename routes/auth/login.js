@@ -3,20 +3,20 @@ const router = express.Router()
 const { User } = require('../../models')
 
 // /* GET loader page. */
-router.get('/', function (req, res, next) {
-  var params = {
-    title: 'Express',
-    auth: true
-  }
+router.get('/', (req, res, next) => {
+  // var params = {
+  //   title: 'Express',
+  //   auth: true
+  // }
   res.render('auth/login', { title: 'Express' })
 })
 
-router.post('/', function (req, res, next) {
+router.post('/', (req, res, next) => {
   // res.render('login', { title: 'Express' });
   var username = req.body.username
   var password = req.body.password
   console.log(username, password)
-  User.findOne({ where: { username: username } }).then(function (user) {
+  User.findOne({ where: { username: username } }).then((user) => {
     // console.log(user);
     if (!user) {
       console.log('!user', user)

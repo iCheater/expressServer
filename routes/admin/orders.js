@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Order } = require('../../models')
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   // User.findAll({
   //     include: [ Task ]
   // }).then(function(users) {
@@ -27,7 +27,7 @@ router.get('/', function (req, res) {
   })
 })
 
-router.get('/add', function (req, res) {
+router.get('/add', (req, res) => {
   console.log('Got body:', req.body)
   // console.log('Got body:', req);
 

@@ -3,16 +3,16 @@ const router = express.Router()
 const { User } = require('../../models')
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
   User.findAll({ raw: true })
-    .then(function (users) {
+    .then((users) => {
       console.table(users)
       // res.render('catalog', {users: users});
       res.json(users)
     })
 })
 
-router.get('/add/:name', function (req, res) {
+router.get('/add/:name', (req, res) => {
   console.log('name:', req.params.name)
 
   var userParams = {
@@ -20,7 +20,7 @@ router.get('/add/:name', function (req, res) {
     email: 'test@mai.ru'
   }
   User.create(userParams)
-    .then(function (user) {
+    .then((user) => {
       res.json(user)
     })
 })

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www" ,
+    "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www",
     "lint": "eslint ./bin/www"
   },
   "dependencies": {

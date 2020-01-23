@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Good, Category } = require('../../models')
 
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
   Good.findAll({ limit: 15 })
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
@@ -11,11 +11,22 @@ router.get('/', function (req, res, next) {
       // console.log(jane.toJSON()); // This is good!
       // console.log(JSON.stringify(jane, null, 4)); // This is also good!
       res.render('admin/goods', { goods: rawData })
-    }
-    )
+    })
 })
 
-router.get('/add/', function (req, res, next) {
+router.get('/:id', (req, res, next) => {
+  Good.findByPk({ limit: 15 })
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      // console.table(rawData);
+      // console.log(rawData);
+      // console.log(jane.toJSON()); // This is good!
+      // console.log(JSON.stringify(jane, null, 4)); // This is also good!
+      res.render('admin/goods', { goods: rawData })
+    })
+})
+
+router.get('/add/', (req, res, next) => {
   const params = {
     categories: null
   }
@@ -27,7 +38,7 @@ router.get('/add/', function (req, res, next) {
   })
 })
 
-router.post('/add', function (req, res) {
+router.post('/add', (req, res) => {
   const params = {
     name: req.body.name,
     price: req.body.price,
@@ -35,8 +46,14 @@ router.post('/add', function (req, res) {
     mURL: req.body.mURL,
     // category: req.body.category
     categories: [
-      { id: 1, name: 'testcat1' },
-      { id: 2, name: 'testcat2' }
+      {
+        id: 1,
+        name: 'testcat1'
+      },
+      {
+        id: 2,
+        name: 'testcat2'
+      }
     ]
   }
   const includeParams = {
@@ -46,7 +63,7 @@ router.post('/add', function (req, res) {
     }]
   }
   Good.create(params, includeParams)
-    .then(function (good) {
+    .then((good) => {
       // res.json(good);
       var msg = {
         message: 'form data loaded',

@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const { User, Task } = require('../../models')
+const { Task } = require('../../models')
 
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
   // User.findAll({
   //     include: [ Task ]
   // }).then(function(users) {
@@ -11,7 +11,7 @@ router.get('/', function (req, res) {
   //         users: users
   //     });
   // });
-  Task.findAll({ limit: 15 }).then(function (tasks) {
+  Task.findAll({ limit: 15 }).then((tasks) => {
     const rawData = tasks.map(e => e.get({ row: true }))
     console.table(rawData)
     res.render('admin/task', {

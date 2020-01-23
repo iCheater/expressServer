@@ -2,9 +2,9 @@ var express = require('express')
 var router = express.Router()
 var good = require('./../models').Good
 /* GET catalog page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
   good.findAll({ raw: true })
-    .then(function (goods) {
+    .then((goods) => {
       console.table(goods)
       res.render('catalog', { goods: goods })
     })
