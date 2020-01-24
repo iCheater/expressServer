@@ -7,6 +7,8 @@ const db = require('./models')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const multer = require('multer')
+const upload = multer()
 
 const router = require('./routes')
 
@@ -28,12 +30,12 @@ app.use(sassMiddleware({
 }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+// for parsing application/json
 app.use(bodyParser.json())
-// initialize body-parser to parse incoming parameters requests to req.body
+// // for parsing application/xwww-form-urlencoded (parse incoming parameters requests to req.body)
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-
+// for parsing multipart/form-data
+app.use(upload.array())
 // initialize cookie-parser to allow us access the cookies stored in the browser.
 app.use(cookieParser())
 
@@ -63,20 +65,23 @@ app.use((req, res, next) => {
 
 app.use('/', router)
 
-// app.listen(3000, function () {
-//     console.log('DATEBASE SYNCED');
-//     db.sequelize.sync({
-//         // force: true, // This creates the table, dropping it first if it already existed
-//         alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
-//     });
-// });
+// app.use((req, res, next) => {
+//   res.status(404)
+//
+//   // respond with html page
+//   if (req.accepts('html')) {
+//     res.render('404', { url: req.url })
+//     return
+//   }
+//
+//   // respond with json
+//   if (req.accepts('json')) {
+//     res.send({ error: 'Not found' })
+//     return
+//   }
+//
+//   // default to plain-text. send()
+//   res.type('txt').send('Not found')
+// })
 
-// function sync() {
-//     console.log('DATEBASE SYNCED');
-//     db.sequelize.sync({
-//         // force: true, // This creates the table, dropping it first if it already existed
-//         // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
-//     });
-// }
-// sync();
 module.exports = app

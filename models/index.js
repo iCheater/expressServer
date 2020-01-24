@@ -39,7 +39,7 @@ const {
   Address,
   Tag,
   Order,
-  Good,
+  Product,
   Category
 } = db
 
@@ -54,8 +54,11 @@ const {
 // Project.belongsToMany(User, {through: 'UserProject'});
 // User.belongsToMany(Project, {through: 'UserProject'});
 // User.hasMany(Address);
-Good.belongsToMany(Category, { through: 'GoodCategory', as: 'goods' })
-Category.belongsToMany(Good, { through: 'GoodCategory', as: 'categories' })
+Product.belongsToMany(Category, { through: 'productCategory', foreignKey: 'productId' })
+Category.belongsToMany(Product, { through: 'productCategory' })
+
+// Product.categories = Category.belongsToMany(Product, { through: 'productCategory' })
+// Product.categories = Category.belongsToMany(Product, { through: 'productCategory', as: 'categories' })
 
 User.hasMany(Tag, { as: 'tags' })
 User.hasMany(Order, { as: 'orders' })

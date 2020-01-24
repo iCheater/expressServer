@@ -1,4 +1,4 @@
-var sessionChecker = (req, res, next) => {
+const sessionChecker = (req, res, next) => {
   console.log('sessionChecker')
   if (!req.session.user && !req.cookies.user_sid) {
     res.redirect('/login')

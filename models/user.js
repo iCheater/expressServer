@@ -18,40 +18,34 @@ module.exports = (sequelize) => {
       allowNull: false
     }
   }, {
-    // hooks: {
-    //     beforeCreate: (user) => {
-    //         const salt = bcrypt.genSaltSync();
-    //         user.password = bcrypt.hashSync(user.password, salt);
-    //     }
-    // },
-    // instanceMethods: {
-    //     validPassword: function(password) {
-    //         return bcrypt.compareSync(password, this.password);
-    //     }
-    // }
+    hooks: {
+      beforeCreate: async (user) => {
+        const salt = await bcrypt.genSalt(10)
+        user.password = await bcrypt.hash(user.password, salt)
+      }
+    }
   })
 
-  User.prototype.validPassword = (password) => {
+  // todo there is no-return-await
+  User.prototype.validPassword = function (password) {
     console.log('password === this.password', password === this.password)
     console.log('password', password)
     console.log('this.password', this.password)
-
-    return password === this.password
-    // return bcrypt.compareSync(password, this.password)
+    console.log('this', this)
+    // return password === this.password
+    return bcrypt.compare(password, this.password)
   }
-
-  // User.associate = function(models) {
-  //     models.User.hasMany(models.Task);
-  // };
 
   User.create({
     username: 'admin',
     email: 'admin@admin.ru',
     password: 'admin'
   })
-    .then(user => {
-      console.log(user.get())
-    })
+  User.create({
+    username: 'test',
+    email: 'test@test.ru',
+    password: 'test'
+  })
 
   return User
 }

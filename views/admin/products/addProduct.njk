@@ -1,4 +1,4 @@
-{% extends "layout.njk" %}
+{% extends "../../layout.njk" %}
 
 {% block javascript %}
 <script src="/post.js"></script>
@@ -9,15 +9,15 @@
          <ol class="breadcrumb">
              <li class="breadcrumb-item"><a href="/">Home</a></li>
              <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-             <li class="breadcrumb-item"><a href="/admin/goods">Goods</a></li>
-             <li class="breadcrumb-item active" aria-current="page">Add goods</li>
+             <li class="breadcrumb-item"><a href="/admin/products">Products</a></li>
+             <li class="breadcrumb-item active" aria-current="page">Add product</li>
          </ol>
      </nav>
 
      <section class="loader">
          <div class="container">
              <div class="loader__inner">
-                 <form id="myForm" enctype="multipart/form-data" method="post" action="/admin/goods/add" name="fileinfo">
+                 <form id="myForm" enctype="multipart/form-data" method="post" action="/admin/products" >
 
                      <div class="form-group">
                          <label for="name">Name</label>
@@ -52,8 +52,9 @@
                          </div>
                      </div>
 
-
-                     <button class="btn btn-primary btn-lg btn-block" onclick="loadDoc()" type="button">load to server</button>
+{#                        use it for post request#}
+{#                     <button class="btn btn-primary btn-lg btn-block" onclick="loadDoc()" type="button">load to server</button>#}
+                     <button class="btn btn-primary btn-lg btn-block" type="submit">load to server</button>
                  </form>
              </div>
          </div>
