@@ -10,7 +10,7 @@
              <li class="breadcrumb-item"><a href="/">Home</a></li>
              <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
              <li class="breadcrumb-item"><a href="/admin/products">Products</a></li>
-             <li class="breadcrumb-item active" aria-current="page">Add product</li>
+             <li class="breadcrumb-item active" aria-current="page">{{ editOrAdd }} product</li>
          </ol>
      </nav>
 
@@ -21,29 +21,32 @@
 
                      <div class="form-group">
                          <label for="name">Name</label>
-                         <input type="text" name="name" required>
+                         <input type="text" name="name" value="{{ product.name }}" required>
                      </div>
                      <div class="form-group">
                          <label for="price">Price</label>
-                         <input type="text" name="price" required>
+                         <input type="text" name="price" value="{{ product.price }}" required>
                      </div>
 
                      <div class="form-group">
                          <label for="exampleFormControlTextarea1" for="description">Description</label>
-                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="description"></textarea>
+                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="description" {{ product.descrtiption }}></textarea>
                      </div>
 
                      <div class="form-group">
                          <label for="exampleFormControlFile1">Example file input</label>
-                         <input type="file" class="form-control-file" id="exampleFormControlFile1" name="mURL" size="45">
+                         <input type="file" class="form-control-file" id="exampleFormControlFile1" name="mURL" size="45" {{ product.mURL }}>
                      </div>
 
                      <div class="col-md-5 mb-3">
                          <label for="category">Category</label>
-                         <select name="category" class="custom-select d-block w-100" id="country" required>
-                             <option> Please select a valid category.</option>
+                         <select name="category" class="custom-select d-block w-100 " id="country" required multiple>
+                             <option> Выберите категории</option>
                              {%  for category in categories %}
                                  <option value="{{ category.id }}"> {{ category.id }} - {{ category.name }} {{ category.description }}</option>
+                             {% endfor %}
+                             {%  for category in product.Categories %}
+                                 <option selected value="{{ category.id }}"> {{ category.id }} - {{ category.name }} {{ category.description }}</option>
                              {% endfor %}
                          </select>
                          <div class="select-arrow"></div>

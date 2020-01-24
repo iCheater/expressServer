@@ -4,31 +4,52 @@ const { Product, Category } = require('../../models')
 
 //
 router.get('/', (req, res) => {
-  Product.findAll({ limit: 15 })
+  Product.findAll({ limit: 4 })
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
-      // console.table(rawData);
-      // console.log(rawData);
-      // console.log(jane.toJSON()); // This is good!
-      // console.log(JSON.stringify(jane, null, 4)); // This is also good!
+      // const rawData = data.get({ row: true })
+      console.log(rawData)
+
       res.render('admin/products/products', { products: rawData })
     })
 })
 
 router.get('/add/', (req, res) => {
-  Category.findAll().then(data => {
-    const categories = data.map(e => e.get({ row: true }))
-    res.render('admin/products/addProduct', { categories: categories })
+  Category.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('admin/products/addProduct', {
+        editOrAdd: 'Add',
+        categories: rawData
+      })
+      // res.render('admin/products/products', { products: rawData })
+    })
+
+})
+router.get('/edit/:id', (req, res) => {
+  // how to chain?
+  Product.findByPk(req.params.id, {
+    include: [{ model: Category }]
+  }).then(product => {
+    // res.json(product)
+    // const tableProduct = product.map(e => e.get({ row: true }))
+    console.table(product.get({ row: true }))
+    res.render('admin/products/addProduct', {
+      product: product,
+      editOrAdd: 'Edit'
+    })
   })
 })
 
 router.get('/:id', (req, res, next) => {
-  console.log(req.params)
-  console.log(req.params.id)
-  Product.findByPk(req.params.id)
+  Product.findByPk(req.params.id, {
+    include: [{ model: Category }]
+  })
     .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      res.render('admin/goods', { goods: rawData })
+      data.setCategories([2])
+      res.json(data)
+      // res.render('admin/products/product', { goods: rawData })
     }).catch(error => {
     // res.status(404).send({ error: error })
     //   res.json(req)
@@ -43,35 +64,22 @@ router.get('/:id', (req, res, next) => {
 
 // create
 router.post('/', (req, res) => {
-  console.log(req.body)
   Product.create({
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    mURL: req.body.mURL,
-    // category: req.body.category
-    Categories: [
-      { name: 'qwer' },
-      { name: 'asdfasdf' }
-    ]
+    mURL: req.body.mURL
   }, {
-    include: [{
-      // as: 'products',
-      // association: Product.categories,
-      model: Category
-    }]
+    include: [{ model: Category }]
   })
-    .then((product) => {
-      console.log(product)
-      product.addCategory(1)
+    .then(product => {
+      // console.log(product)
+      product.setCategories(req.body.category)
       res.json(product)
-      // const data = product.map(e => e.get({ row: true }))
-      // console.table(product.get())
-      // res.json(product)
     }).catch((error) => {
       console.log(error)
     })
 })
-  // .findOrCreate({where: {username: 'sdepold'}
+// .findOrCreate({where: {username: 'sdepold'}
 
 module.exports = router
