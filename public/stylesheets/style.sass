@@ -13,9 +13,6 @@ body
 a
   color: #00B7FF
 
-.tableTd
-  border: black 1px solid
-
 .header
   background-color: #f8f8f8
   .header__inner
@@ -60,9 +57,13 @@ a
     font-weight: 700
 
 
+#main-content
+  min-height: 70vh
+
 //Catalog
 .main__content
   margin: 30px 0
+
 
 .catalog
   display: flex
@@ -104,9 +105,11 @@ a
 
 .block__item
   display: flex
-  justify-content: flex-start
+  justify-content: space-around
+  &-photo
+    width: 48%
   &-info
-    width: 400px
+    width: 48%
     margin-left: 30px
   .item__title
     margin-bottom: 20px
@@ -127,6 +130,17 @@ a
       padding: 20px
       border: 5px dashed rgba(237, 51, 18, 0.45)
 
+
+//Admin
+.product_table
+  border: black 1px solid
+  text-align: center
+  th
+    background-color: rgba(129, 207, 255, 0.33)
+    padding: 5px 10px
+  .tableTd
+    border: black 1px solid
+    padding: 5px 10px
 
 //Top slider
 .slider
@@ -269,6 +283,10 @@ a
   padding-top: 45px
   background-color: #f8f8f8
   font-size: 13px
+  //position: absolute
+  //bottom: 0
+  //right: 0
+  //left: 0
   &__inner
     padding-bottom: 30px
     display: flex

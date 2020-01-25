@@ -1,6 +1,7 @@
 {% extends "../../layout.njk" %}
 
 {% block content %}
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -9,20 +10,33 @@
         </ol>
     </nav>
 
-    <a href="/admin/products/add">Add product</a></li>
-<table>
-    {% for product in products %}
-        <tr>
-            <td class="tableTd"><a href="/admin/products/{{ product.id }}">{{ product.id }} </a></td>
-            <td class="tableTd">{{ product.name }}</td>
-            <td class="tableTd">{{ product.price or "null"}}</td>
-{#            <td>{{ good.description }}</td>#}
-{#            <td>{{ good.category }}</td>#}
-            <td class="tableTd">{{ product.createdAt }}</td>
-            <td class="tableTd">{{ product.updatedAt }}</td>
-            <td class="tableTd"><a href="/admin/products/edit/{{ product.id }}">edit</a></td>
-        </tr>
-    {% endfor %}
-</table>
+    <div class="container">
+        <a href="/admin/products/add">Add product</a></li>
+        <table class="product_table">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>price</th>
+                <th>create</th>
+                <th>update</th>
+                <th colspan="3"></th>
+            </tr>
+            {% for product in products %}
+                <tr>
+                    <td class="tableTd"><a href="/admin/products/{{ product.id }}">{{ product.id }}</a></td>
+                    <td class="tableTd">{{ product.name }}</td>
+                    <td class="tableTd">{{ product.price or "null"}}</td>
+        {#            <td>{{ good.description }}</td>#}
+        {#            <td>{{ good.category }}</td>#}
+                    <td class="tableTd">{{ product.createdAt }}</td>
+                    <td class="tableTd">{{ product.updatedAt }}</td>
+                    <td class="tableTd"><a href="/admin/products/edit/{{ product.id }}">edit</a></td>
+                    <td class="tableTd"><a href="/admin/products/preview/{{ product.id }}">preview</a></td>
+                    <td class="tableTd"><a href="/admin/products/delete/{{ product.id }}">delete</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
 
 {% endblock %}
