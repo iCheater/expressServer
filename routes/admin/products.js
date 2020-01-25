@@ -7,9 +7,7 @@ router.get('/', (req, res) => {
   Product.findAll({ limit: 4 })
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
-      // const rawData = data.get({ row: true })
       console.log(rawData)
-
       res.render('admin/products/products', { products: rawData })
     })
 })
@@ -21,12 +19,9 @@ router.get('/add/', (req, res) => {
       console.log(rawData)
       res.render('admin/products/addProduct', {
         editOrAdd: 'Add',
-        categories: rawData,
-        method: 'post'
+        categories: rawData
       })
-      // res.render('admin/products/products', { products: rawData })
     })
-
 })
 // edit page
 router.get('/edit/:id', (req, res) => {
@@ -39,13 +34,12 @@ router.get('/edit/:id', (req, res) => {
     console.table(product.get({ row: true }))
     res.render('admin/products/addProduct', {
       product: product,
-      editOrAdd: 'Edit',
-      method: 'patch'
+      editOrAdd: 'Edit'
     })
   })
 })
 
-router.patch('/:id', (req, res) => {
+router.post('/edit/:id', (req, res) => {
 
   console.log('///////////////')
   Product.update({
@@ -91,7 +85,7 @@ router.get('/:id', (req, res, next) => {
   // res.status(404)
 })
 
-// create (must redirect to product preview page
+// create (
 router.post('/', (req, res) => {
   Product.create({
     name: req.body.name,
