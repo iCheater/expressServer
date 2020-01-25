@@ -10,6 +10,7 @@ const authRouter = require('./auth')
 const express = require('express')
 const router = express.Router()
 
+
 router.use('/', homeRouter)
 router.use('/', authRouter)
 
@@ -25,7 +26,12 @@ router.use('/catalog/', catalogRouter)
 // //admin
 router.use('/admin/', adminRouter)
 
+// test
 router.use('/test', testRouter)
+
+
+
+
 
 router.use((req, res) => {
   res.status(404)
@@ -45,6 +51,7 @@ router.use((req, res) => {
   // default to plain-text. send()
   res.type('txt').send('Not found')
 })
+
 
 // router.use((req, res) => {
 //   res.status(500)

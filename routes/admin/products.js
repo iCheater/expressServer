@@ -26,7 +26,6 @@ router.get('/add/', (req, res) => {
       })
       // res.render('admin/products/products', { products: rawData })
     })
-
 })
 // edit page
 router.get('/edit/:id', (req, res) => {
@@ -114,5 +113,10 @@ router.delete('/', (req, res) => {
   console.log('delete')
 })
 // .findOrCreate({where: {username: 'sdepold'}
+
+// preview
+router.get('/preview/:id', (req, res, next) => {
+  res.render('admin/products/product', {  })
+})
 
 module.exports = router

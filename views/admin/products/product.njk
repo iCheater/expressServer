@@ -1,0 +1,53 @@
+{% extends "../../layout.njk" %}
+
+{% block content %}
+<div class="container">
+    <div class="block__item">
+        <div class="block__item-photo">
+            <img src="https://placehold.it/500x500" alt="#">
+        </div>
+
+        <div class="block__item-info">
+            <div class="item__title">
+                Product__1 Product__1
+            </div>
+
+            <div class="item__price">
+                <span><span><span class="price">200 </span>руб</span></span>
+            </div>
+
+            <div class="items__btns">
+                <button>Купить</button>
+                <button>В корзину</button>
+            </div>
+
+            <div class="items__info-contain">
+                <p>
+                    Contain: tree, metal.
+                </p>
+                <p>
+                    Size: 200x200cm.
+                </p>
+                <div class="item__links">
+                    <a class="item__to-favorite" title="Избранное">
+                        <i class="fas fa-heart">
+                            <span>Добавить в избранное</span>
+                        </i>
+                    </a>
+                    <a class="item__to-social" title="Поделиться">
+                        <i class="fas fa-share-alt">
+                            <span>Поделиться</span>
+                        </i>
+                    </a>
+                </div>
+
+                <div class="item__contain-descr">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla faucibus auctor est at vulputate. Nullam nisi lectus, faucibus id pretium eu, feugiat at felis. Curabitur malesuada interdum ante, vel pharetra eros cursus a. Nullam cursus egestas tristique. Ut efficitur lacus nisl, at egestas sapien eleifend sed. Nullam maximus nulla eu purus mattis ullamcorper. Donec a pulvinar ante, eu tincidunt mi.
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
