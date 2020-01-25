@@ -1,0 +1,28 @@
+{% extends "../../layout.njk" %}
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Products</li>
+        </ol>
+    </nav>
+
+    <a href="/admin/products/add">Add product</a></li>
+<table>
+    {% for product in products %}
+        <tr>
+            <td class="tableTd"><a href="/admin/products/{{ product.id }}">{{ product.id }} </a></td>
+            <td class="tableTd">{{ product.name }}</td>
+            <td class="tableTd">{{ product.price or "null"}}</td>
+{#            <td>{{ good.description }}</td>#}
+{#            <td>{{ good.category }}</td>#}
+            <td class="tableTd">{{ product.createdAt }}</td>
+            <td class="tableTd">{{ product.updatedAt }}</td>
+            <td class="tableTd"><a href="/admin/products/edit/{{ product.id }}">edit</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

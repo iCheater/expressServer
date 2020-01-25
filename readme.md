@@ -15,7 +15,10 @@ in postgress console:
 
     >"shop_server_db=# \password shop_server //change password to "shop_server"
 
-### 2. Install pgAdmin or [DBeaver ;)]( https://wiki.postgresql.org/wiki/Apt) 
+### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5) 
+
+### 3. Install [NVM)]( https://github.com/nvm-sh/nvm )
+> nvm install --lts
 
 ___
 ### Usefull
@@ -28,6 +31,10 @@ find process and kill it
 
 > fuser -k 3000/tcp
 
+> npx sequelize migration:generate --name [modelname]
+> npx sequelize-cli seed:generate --name demo-user
+>
+>https://www.tutorialspoint.com/expressjs/expressjs_restful_apis.htm
 
 
 

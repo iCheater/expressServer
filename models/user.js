@@ -1,79 +1,51 @@
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
+const { DataTypes } = require('sequelize')
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = (sequelize) => {
+  const User = sequelize.define('User', {
+    username: {
+      type: DataTypes.STRING,
+      // unique: true,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      // unique: true,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
+    hooks: {
+      beforeCreate: async (user) => {
+        const salt = await bcrypt.genSalt(10)
+        user.password = await bcrypt.hash(user.password, salt)
+      }
+    }
+  })
 
-    var User = sequelize.define("User", {
-        username: {
-            type: DataTypes.STRING,
-            unique: false,
-            allowNull: true
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
-        }
-    }, {
-        // classMethods: {
-        //     associate: function(models) {
-        //         User.hasMany(models.Task);
-        //         User.hasMany(models.Order);
-        //     }
-        // },
-        hooks: {
-            beforeCreate: (user) => {
-                const salt = bcrypt.genSaltSync();
-                user.password = bcrypt.hashSync(user.password, salt);
-            }
-        },
-        // instanceMethods: {
-        //     validPassword: function(password) {
-        //
-        //     }
-        // }
-    });
+  // todo there is no-return-await
+  User.prototype.validPassword = function (password) {
+    console.log('password === this.password', password === this.password)
+    console.log('password', password)
+    console.log('this.password', this.password)
+    console.log('this', this)
+    // return password === this.password
+    return bcrypt.compare(password, this.password)
+  }
 
-    User.prototype.validPassword = function (password) {
-        return bcrypt.compareSync(password, this.password);
-    };
+  User.create({
+    username: 'admin',
+    email: 'admin@admin.ru',
+    password: 'admin'
+  })
+  User.create({
+    username: 'test',
+    email: 'test@test.ru',
+    password: 'test'
+  })
 
-    User.associate = function(models) {
-        models.User.hasMany(models.Task);
-    };
-
-    return User;
-};
-
-//
-// var User = sequelize.define('users', {
-//     username: {
-//         type: Sequelize.STRING,
-//         unique: true,
-//         allowNull: false
-//     },
-//     email: {
-//         type: Sequelize.STRING,
-//         unique: true,
-//         allowNull: false
-//     },
-//     password: {
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     }
-// }, {
-//     hooks: {
-//         beforeCreate: (user) => {
-//             const salt = bcrypt.genSaltSync();
-//             user.password = bcrypt.hashSync(user.password, salt);
-//         }
-//     },
-//     instanceMethods: {
-//         validPassword: function(password) {
-//             return bcrypt.compareSync(password, this.password);
-//         }
-//     }
-// });
+  return User
+}
