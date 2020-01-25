@@ -109,4 +109,9 @@ router.delete('/', (req, res) => {
 })
 // .findOrCreate({where: {username: 'sdepold'}
 
+// preview
+router.get('/preview/:id', (req, res, next) => {
+  res.render('admin/products/product', {  })
+})
+
 module.exports = router
