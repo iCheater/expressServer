@@ -1,14 +1,14 @@
 
 function loadDoc () {
-  var elements = document.getElementById('myForm').elements
-  var obj = {}
-  for (var i = 0; i < elements.length; i++) {
-    var item = elements.item(i)
+  const elements = document.getElementById('myForm').elements
+  const obj = {}
+  for (let i = 0; i < elements.length; i++) {
+    let item = elements.item(i)
     obj[item.name] = item.value
   }
   console.log(obj)
 
-  var xhr = new XMLHttpRequest()
+  const xhr = new XMLHttpRequest()
   xhr.open('POST', '/admin/goods/add', true)
   xhr.setRequestHeader('Content-type', 'application/json')
 

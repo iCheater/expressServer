@@ -16,7 +16,7 @@
      <section class="loader">
          <div class="container">
              <div class="loader__inner">
-                 <form id="myForm" enctype="multipart/form-data" method="post" action="/admin/products" >
+                 <form id="myForm" enctype="multipart/form-data" method="put" action="/admin/products/{{ id }}" >
 
                      <div class="form-group">
                          <label for="name">Name</label>
@@ -56,7 +56,9 @@
 
 {#                        use it for post request#}
 {#                     <button class="btn btn-primary btn-lg btn-block" onclick="loadDoc()" type="button">load to server</button>#}
-                     <button class="btn btn-primary btn-lg btn-block" type="submit">load to server</button>
+                     <button class="btn btn-primary btn-lg btn-block" onclick="event.preventDefault(); AJAXSubmit('myForm');" type="submit">load to server</button>
+{#                     <button class="btn btn-primary btn-lg btn-block" type="submit">load to server</button>#}
+{#                     <button class="btn btn-primary btn-lg btn-block" type="submit" onsubmit="AJAXSubmit(this); return false;" >load to server</button>#}
                  </form>
              </div>
          </div>

@@ -26,6 +26,7 @@ router.get('/add/', (req, res) => {
 // edit page
 router.get('/edit/:id', (req, res) => {
   // how to chain?
+  console.log(req.params.id)
   Product.findByPk(req.params.id, {
     include: [{ model: Category }]
   }).then(product => {
@@ -34,14 +35,15 @@ router.get('/edit/:id', (req, res) => {
     console.table(product.get({ row: true }))
     res.render('admin/products/addProduct', {
       product: product,
-      editOrAdd: 'Edit'
+      editOrAdd: 'Edit',
+      id: req.params.id
     })
   })
 })
 
-router.post('/edit/:id', (req, res) => {
-
+router.put('/:id', (req, res) => {
   console.log('///////////////')
+  console.log(req.body)
   Product.update({
     name: req.body.name,
     price: req.body.price,
@@ -54,14 +56,16 @@ router.post('/edit/:id', (req, res) => {
     include: [{ model: Category }]
   })
     .then(([rowsUpdate, [updatedProduct]]) => {
-      console.table(rowsUpdate)
-      console.table(updatedProduct)
+      // res.redirect('/admin/products')
+      res.redirect('/')
+      console.table('rowsUpdate', rowsUpdate)
+      console.table('updatedProduct', updatedProduct)
       // console.log(product)
       // product.setCategories(req.body.category)
       // res.json(product)
     }).catch((error) => {
-    console.log(error)
-  })
+      console.log(error)
+    })
 })
 
 // get by id
@@ -103,7 +107,7 @@ router.post('/', (req, res) => {
       console.log(error)
     })
 })
-
+// https://jsonapi.org/format/#crud-deleting
 router.delete('/', (req, res) => {
   console.log('delete')
 })
@@ -111,7 +115,7 @@ router.delete('/', (req, res) => {
 
 // preview
 router.get('/preview/:id', (req, res, next) => {
-  res.render('admin/products/product', {  })
+  res.render('admin/products/product', { })
 })
 
 module.exports = router
