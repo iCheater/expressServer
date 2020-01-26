@@ -6,6 +6,7 @@ const catalogRouter = require('./catalog')
 const testRouter = require('./test')
 const profileRouter = require('./profile')
 const authRouter = require('./auth')
+const ordersRouter = require('./admin/orders')
 
 const express = require('express')
 const router = express.Router()
@@ -25,6 +26,9 @@ router.use('/catalog/', catalogRouter)
 
 // //admin
 router.use('/admin/', adminRouter)
+
+// //admin //orders
+router.use('/orders/', ordersRouter)
 
 // test
 router.use('/test', testRouter)

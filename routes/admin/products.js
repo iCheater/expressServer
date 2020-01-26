@@ -43,7 +43,6 @@ router.get('/edit/:id', (req, res) => {
 
 router.put('/:id', (req, res) => {
   console.log('///////////////')
-  console.log(req.body)
   Product.update({
     name: req.body.name,
     price: req.body.price,
@@ -64,8 +63,8 @@ router.put('/:id', (req, res) => {
       // product.setCategories(req.body.category)
       // res.json(product)
     }).catch((error) => {
-      console.log(error)
-    })
+    console.log(error)
+  })
 })
 
 // get by id
@@ -80,16 +79,16 @@ router.get('/:id', (req, res, next) => {
     }).catch(error => {
     // res.status(404).send({ error: error })
     //   res.json(req)
-      const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-      res.render('404', {
-        message: error,
-        url: fullUrl
-      })
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+    res.render('404', {
+      message: error,
+      url: fullUrl
     })
+  })
   // res.status(404)
 })
 
-// create (
+// create
 router.post('/', (req, res) => {
   Product.create({
     name: req.body.name,
@@ -104,18 +103,35 @@ router.post('/', (req, res) => {
       product.setCategories(req.body.category)
       res.json(product)
     }).catch((error) => {
-      console.log(error)
-    })
+    console.log(error)
+  })
 })
 // https://jsonapi.org/format/#crud-deleting
-router.delete('/', (req, res) => {
-  console.log('delete')
+router.delete('/:id', (req, res) => {
+
+  // Product.destroy({
+  //   where: { id: req.params.id }
+  // })
+  //   .then(rowDeleted => { // rowDeleted will return number of rows deleted
+  //     if (rowDeleted === 1) {
+  //       res.redirect('/')
+  //     }
+  //   })
+  //   .catch(err => {
+  //   console.log(err)
+  //
+  // })
+  res.json(200, { redirect: '/admin/products' })
+  // res.method = 'GET'
+  // res.redirect(303,'/admin/products')
+
+  //
 })
 // .findOrCreate({where: {username: 'sdepold'}
 
 // preview
 router.get('/preview/:id', (req, res, next) => {
-  res.render('admin/products/product', { })
+  res.render('admin/products/product')
 })
 
 module.exports = router
