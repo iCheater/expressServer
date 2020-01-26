@@ -11,7 +11,6 @@ const ordersRouter = require('./admin/orders')
 const express = require('express')
 const router = express.Router()
 
-
 router.use('/', homeRouter)
 router.use('/', authRouter)
 
@@ -24,6 +23,7 @@ router.use('/', authRouter)
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)
 
+// router.use((req, res, next) => { setTimeout(next, 3000) })
 // //admin
 router.use('/admin/', adminRouter)
 
@@ -32,10 +32,6 @@ router.use('/orders/', ordersRouter)
 
 // test
 router.use('/test', testRouter)
-
-
-
-
 
 router.use((req, res) => {
   res.status(404)
@@ -55,7 +51,6 @@ router.use((req, res) => {
   // default to plain-text. send()
   res.type('txt').send('Not found')
 })
-
 
 // router.use((req, res) => {
 //   res.status(500)

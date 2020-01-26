@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www",
+    "dev": "node ./bin/www",
+    "sass": "node-sass -w public/stylesheets/sass/ -o public/stylesheets/css/",
     "lint": "eslint ./bin/www"
   },
   "dependencies": {

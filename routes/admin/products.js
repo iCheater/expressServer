@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { Product, Category } = require('../../models')
 
-// get all page
 router.get('/', (req, res) => {
   Product.findAll({ limit: 4 })
     .then(data => {
@@ -11,7 +10,25 @@ router.get('/', (req, res) => {
       res.render('admin/products/products', { products: rawData })
     })
 })
-// create page
+router.get('/:id', (req, res, next) => {
+  Product.findByPk(req.params.id, {
+    include: [{ model: Category }]
+  })
+    .then(data => {
+      data.setCategories([2])
+      res.json(data)
+      // res.render('admin/products/product', { goods: rawData })
+    }).catch(error => {
+    // res.status(404).send({ error: error })
+    //   res.json(req)
+      const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
+      res.render('404', {
+        message: error,
+        url: fullUrl
+      })
+    })
+  // res.status(404)
+})
 router.get('/add/', (req, res) => {
   Category.findAll()
     .then(data => {
@@ -23,7 +40,6 @@ router.get('/add/', (req, res) => {
       })
     })
 })
-// edit page
 router.get('/edit/:id', (req, res) => {
   // how to chain?
   console.log(req.params.id)
@@ -40,9 +56,28 @@ router.get('/edit/:id', (req, res) => {
     })
   })
 })
+router.get('/preview/:id', (req, res, next) => {
+  res.render('admin/products/product')
+})
 
+router.post('/', (req, res) => {
+  Product.create({
+    name: req.body.name,
+    price: req.body.price,
+    description: req.body.description,
+    mURL: req.body.mURL
+  }, {
+    include: [{ model: Category }]
+  })
+    .then(product => {
+      // console.log(product)
+      product.setCategories(req.body.category)
+      res.json(product)
+    }).catch((error) => {
+      console.log(error)
+    })
+})
 router.put('/:id', (req, res) => {
-  console.log('///////////////')
   Product.update({
     name: req.body.name,
     price: req.body.price,
@@ -63,75 +98,26 @@ router.put('/:id', (req, res) => {
       // product.setCategories(req.body.category)
       // res.json(product)
     }).catch((error) => {
-    console.log(error)
-  })
-})
-
-// get by id
-router.get('/:id', (req, res, next) => {
-  Product.findByPk(req.params.id, {
-    include: [{ model: Category }]
-  })
-    .then(data => {
-      data.setCategories([2])
-      res.json(data)
-      // res.render('admin/products/product', { goods: rawData })
-    }).catch(error => {
-    // res.status(404).send({ error: error })
-    //   res.json(req)
-    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
-    res.render('404', {
-      message: error,
-      url: fullUrl
+      console.log(error)
     })
-  })
-  // res.status(404)
 })
-
-// create
-router.post('/', (req, res) => {
-  Product.create({
-    name: req.body.name,
-    price: req.body.price,
-    description: req.body.description,
-    mURL: req.body.mURL
-  }, {
-    include: [{ model: Category }]
-  })
-    .then(product => {
-      // console.log(product)
-      product.setCategories(req.body.category)
-      res.json(product)
-    }).catch((error) => {
-    console.log(error)
-  })
-})
-// https://jsonapi.org/format/#crud-deleting
 router.delete('/:id', (req, res) => {
-
-  // Product.destroy({
-  //   where: { id: req.params.id }
-  // })
-  //   .then(rowDeleted => { // rowDeleted will return number of rows deleted
-  //     if (rowDeleted === 1) {
-  //       res.redirect('/')
-  //     }
-  //   })
-  //   .catch(err => {
-  //   console.log(err)
-  //
-  // })
-  res.json(200, { redirect: '/admin/products' })
-  // res.method = 'GET'
-  // res.redirect(303,'/admin/products')
-
-  //
-})
-// .findOrCreate({where: {username: 'sdepold'}
-
-// preview
-router.get('/preview/:id', (req, res, next) => {
-  res.render('admin/products/product')
+  Product.destroy({
+    where: { id: req.params.id }
+  })
+    .then(rowDeleted => { // rowDeleted will return number of rows deleted
+      if (rowDeleted === 1) {
+        res.json(200, { links: { self: req.originalUrl } })
+      }
+      if (rowDeleted === 0) {
+        res.json(404, { links: { self: req.originalUrl } })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      // bad json api practice
+      res.json(500, err)
+    })
 })
 
 module.exports = router

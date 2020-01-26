@@ -1,3 +1,7 @@
+The goal of this project is to create an online store using a modern technological stack.
+We use express, sequelize, nunjucks.
+We adhere to the JSON.API standard.
+
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04) 
 
 example:
