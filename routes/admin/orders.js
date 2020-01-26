@@ -14,16 +14,15 @@ router.get('/', (req, res) => {
   Order.findAll({
     limit: 15,
     where: {
-      UserId: 1
+      // UserId: 1
     }
   }).then((data) => {
     const tableData = data.map(e => e.get({ row: true }))
     console.table(tableData)
-    res.json(tableData)
-    // res.render('task', {
-    //     title: 'Sequelize: Express Example',
-    //     tasks: data
-    // });
+    // res.json(tableData)
+    res.render('admin/orders', {
+      orders: tableData
+    });
   })
 })
 

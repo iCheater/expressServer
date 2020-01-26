@@ -1,5 +1,8 @@
 {% extends "../../layout.njk" %}
 
+{% block script %}
+    <script src="/scripts/delete.js"></script>
+{% endblock %}
 {% block content %}
 
     <nav aria-label="breadcrumb">
@@ -30,9 +33,9 @@
         {#            <td>{{ good.category }}</td>#}
                     <td class="tableTd">{{ product.createdAt }}</td>
                     <td class="tableTd">{{ product.updatedAt }}</td>
-                    <td class="tableTd"><a href="/admin/products/edit/{{ product.id }}">edit</a></td>
+                    <td class="tableTd"><a class="text-success" href="/admin/products/edit/{{ product.id }}">edit</a></td>
                     <td class="tableTd"><a href="/admin/products/preview/{{ product.id }}">preview</a></td>
-                    <td class="tableTd"><a href="/admin/products/delete/{{ product.id }}">delete</a></td>
+                    <td class="tableTd"><a class="text-danger deleteBtn" href="/admin/products/{{ product.id }}">delete</a></td>
                 </tr>
             {% endfor %}
         </table>

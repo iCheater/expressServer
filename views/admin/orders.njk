@@ -1,0 +1,42 @@
+{% extends "../layout.njk" %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Orders</li>
+        </ol>
+    </nav>
+
+    <div class="container">
+        <a href="/admin/products/add">Add product</a></li>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th># order</th>
+                <th>Client name</th>
+                <th>Address</th>
+                <th>Number of goods</th>
+                <th>Total (USD)</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            {% for order in orders %}
+                <tr>
+                    <td class="tableTd"><a href="/admin/orders/{{ order.id }}">{{ order.id }}</a></td>
+                    <td class="tableTd">{{ order.userName }}</td>
+                    <td class="tableTd">{{ order.address }}</td>
+                    <td class="tableTd">{{ productsId }}</td>
+                    <td class="tableTd">{{ order.sum or "null"}}</td>
+                    <td class="tableTd"><a href="/admin/orders/status/{{ order.id }}">status</a></td>
+                    <td class="tableTd"><a class="text-success" href="/admin/orders/preview/{{ order.id }}">preview</a></td>
+                    <td class="tableTd"><a class="text-danger" href="/admin/orders/delete/{{ order.id }}">archive</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+{% endblock %}
