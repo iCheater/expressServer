@@ -1,3 +1,257 @@
 {% extends "layout.njk" %}
 
-{{ user }}
+{#{{ user }}#}
+
+{% block content %}
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Edit Profile</h4>
+                        </div>
+                        <div class="content">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Никнейм</label>
+                                            <input type="text" class="form-control" placeholder="Никнейм" value="Никнейм">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email</label>
+                                            <input type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Имя</label>
+                                            <input type="text" class="form-control" placeholder="Имя" value="Имя">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Фамилия</label>
+                                            <input type="text" class="form-control" placeholder="Фамилия" value="Фамилия">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Адрес</label>
+                                            <input type="text" class="form-control" placeholder="Адрес доставки" value="улица, дом, корпус, квартира">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Город</label>
+                                            <input type="text" class="form-control" placeholder="Город" value="Город">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Страна</label>
+                                            <input type="text" class="form-control" placeholder="Страна" value="Страна">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Индекс</label>
+                                            <input type="number" class="form-control" placeholder="Индекс">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>About Me</label>
+                                            <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card card-user">
+                        <div class="image">
+                            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
+                        </div>
+                        <div class="content">
+                            <div class="author">
+                                <a href="#">
+                                    <img class="avatar border-gray" src="https://placehold.it/130x130" alt="..."/>
+
+                                    <h4 class="title">Mike Andrew<br />
+                                        <small>michael24</small>
+                                    </h4>
+                                </a>
+                            </div>
+                            <p class="description text-center"> "Lamborghini Mercy <br>
+                                Your chick she so thirsty <br>
+                                I'm in that two seat Lambo"
+                            </p>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{#    <section class="user-profile section">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-md-4 offset-md-1 col-lg-4 offset-lg-0">#}
+{#                    <div class="sidebar">#}
+{#                        <!-- User Widget -->#}
+{#                        <div class="widget user-dashboard-profile profile-promo">#}
+{#                            <!-- User Image -->#}
+{#                            <div class="profile-thumb">#}
+{#                                <img src="https://placehold.it/130x130" alt="" class="rounded-circle">#}
+{#                            </div>#}
+{#                            <!-- User Name -->#}
+{#                            <h5 class="text-center">Samanta Doe</h5>#}
+
+{#                        </div>#}
+{#                        <!-- Dashboard Links -->#}
+{#                        <div class="widget user-dashboard-menu">#}
+{#                            <ul>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-user"></i> My Ads</a></li>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-bookmark-o"></i> Favourite Ads <span>5</span></a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-file-archive-o"></i>Archeved Ads <span>12</span></a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-bolt"></i> Pending Approval<span>23</span></a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-cog"></i> Logout</a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#"><i class="fa fa-power-off"></i>Delete Account</a>#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
+{#                <div class="col-md-8 col-12 grid-margin">#}
+{#                        <div class="card">#}
+{#                            <div class="card-body">#}
+{#                                <h4 class="card-title">Профиль</h4>#}
+{#                                <form class="form-sample">#}
+{#                                    <p class="card-description">#}
+{#                                        Персональная информация#}
+{#                                    </p>#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group row">#}
+{#                                                <label class="col-sm-3 col-form-label">Имя</label>#}
+{#                                                <div class="col-sm-9">#}
+{#                                                    <input type="text" class="form-control" />#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group row">#}
+{#                                                <label class="col-sm-3 col-form-label">Фамилия</label>#}
+{#                                                <div class="col-sm-9">#}
+{#                                                    <input type="text" class="form-control" />#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+
+{#                                        <div class="col-md-6">#}
+{#                                            <div class="form-group row">#}
+{#                                                <label class="col-sm-3 col-form-label">День рождения</label>#}
+{#                                                <div class="col-sm-9">#}
+{#                                                    <input class="form-control" placeholder="dd/mm/yyyy"/>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+
+
+
+{#                                    <p class="card-description">#}
+{#                                        Address#}
+{#                                    </p>#}
+
+
+{#                                </form>#}
+{#                                <!-- Change Password -->#}
+{#                                <div class="widget change-password">#}
+{#                                    <h3 class="widget-header user">Edit Password</h3>#}
+{#                                    <form action="#">#}
+{#                                        <!-- Current Password -->#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="current-password">Current Password</label>#}
+{#                                            <input type="password" class="form-control" id="current-password">#}
+{#                                        </div>#}
+{#                                        <!-- New Password -->#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="new-password">New Password</label>#}
+{#                                            <input type="password" class="form-control" id="new-password">#}
+{#                                        </div>#}
+{#                                        <!-- Confirm New Password -->#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="confirm-password">Confirm New Password</label>#}
+{#                                            <input type="password" class="form-control" id="confirm-password">#}
+{#                                        </div>#}
+{#                                        <!-- Submit Button -->#}
+{#                                        <button class="btn btn-transparent">Change Password</button>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                                <!-- Change Email Address -->#}
+{#                                <div class="widget change-email mb-0">#}
+{#                                    <h3 class="widget-header user">Edit Email Address</h3>#}
+{#                                    <form action="#">#}
+{#                                        <!-- Current Password -->#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="current-email">Current Email</label>#}
+{#                                            <input type="email" class="form-control" id="current-email">#}
+{#                                        </div>#}
+{#                                        <!-- New email -->#}
+{#                                        <div class="form-group">#}
+{#                                            <label for="new-email">New email</label>#}
+{#                                            <input type="email" class="form-control" id="new-email">#}
+{#                                        </div>#}
+{#                                        <!-- Submit Button -->#}
+{#                                        <button class="btn btn-success">Change email</button>#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+
+{#                    </div>#}
+
+{#                </div>#}
+{#            </div>#}
+{#    </section>#}
+
+{% endblock %}
