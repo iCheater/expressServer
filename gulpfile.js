@@ -26,7 +26,10 @@ const paths = {
 //     .pipe(concat('vendor.js'))
 //     .pipe(gulp.dest('build/vendor.js'))
 // });
-
+gulp.task('clean', () => {
+  return gulp.src(paths.dist, { read: false })
+    .pipe(clean())
+})
 gulp.task('nodemon', cb => {
   let started = false
   return nodemon({
@@ -52,47 +55,29 @@ gulp.task('sass', () => {
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest(paths.distSASS))
 })
-gulp.task('sass:watch', () => {
-  gulp.watch(paths.srcSASS, ['sass'])
+
+gulp.task('watch', () => {
+  gulp.watch(paths.srcSASS, gulp.series('sass'))
+  gulp.watch(paths.srcImages, gulp.series('cp-images'))
+  gulp.watch(paths.srcCSS, gulp.series('cp-css'))
+  gulp.watch(paths.srcJS, gulp.series('cp-js'))
 })
-gulp.task('default', gulp.parallel('browser-sync', 'sass:watch'))
-
-// gulp.task('startBrowserSync', (done) => {
-//   browserSync.init({
-//     proxy: 'http://localhost:5000',
-//     files: ['public/**/*.*'],
-//     browser: 'google chrome',
-//     port: 7000
-//   }, done)
-// })
-
+gulp.task('cp-css', () => {
+  return gulp.src(paths.srcCSS)
+    .pipe(gulp.dest(paths.dist))
+})
+gulp.task('cp-js', () => {
+  return gulp.src(paths.srcJS)
+    .pipe(gulp.dest(paths.distJS))
+})
 gulp.task('cp-images', () => {
   return gulp.src([paths.srcImages])
     .pipe(gulp.dest(paths.dist))
 })
 
-gulp.task('watch', () => {
-  gulp.watch(paths.srcImages, ['cp-images'])
-})
+gulp.task('cp-all', gulp.parallel('cp-js', 'cp-css', 'cp-images'))
 
-gulp.task('clean', () => {
-  return gulp.src(paths.dist, { read: false })
-    .pipe(clean())
-})
-
-
-
-gulp.task('css', () => {
-  return gulp.src(paths.srcCSS)
-    .pipe(gulp.dest(paths.dist))
-})
-
-gulp.task('js', () => {
-  return gulp.src(paths.srcJS)
-    .pipe(gulp.dest(paths.distJS))
-})
-
-gulp.task('copy', gulp.parallel('js', 'css', 'cp-images'))
+gulp.task('dev', gulp.parallel('cp-all', 'browser-sync', 'watch'))
 
 if (process.env.NODE_ENV === 'prod') {
   // exports.build = series(

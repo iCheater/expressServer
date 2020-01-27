@@ -3,10 +3,10 @@ const router = express.Router()
 const { Product, Category } = require('../../models')
 
 router.get('/', (req, res) => {
-  Product.findAll({ limit: 4 })
+  Product.findAll({ limit: 100 })
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
+      // console.log(rawData)
       res.render('admin/products/products', { products: rawData })
     })
 })
