@@ -234,6 +234,12 @@ a {
   .services .services__inner .catalog-link {
     background-color: rgba(242, 232, 26, 0.51); }
 
+.profile-promo {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  text-align: center; }
+
 .footer {
   padding-top: 45px;
   background-color: #f8f8f8;
