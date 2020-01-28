@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan') // logger
-// const sassMiddleware = require('node-sass-middleware')
 const db = require('./models')
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -22,26 +21,6 @@ nunjucks.configure('views', {
 })
 app.set('view engine', 'njk')
 
-// app.use(sassMiddleware({
-//   src: path.join(__dirname, 'public/stylesheets/'),
-//   dest: path.join(__dirname, 'public'),
-//
-//   indentedSyntax: true, // true = .sass and false = .scss
-//   sourceMap: true,
-//   debug: true,
-//   force: true,
-//   beepOnError: true,
-//   error: function (err) {
-//     console.log(err)
-//   },
-//   // log: function (severity, key, value) { winston.log(severity, 'node-sass-middleware   %s : %s', key, value); }
-//   log: function (severity, key, val, me) {
-//     console.log(severity)
-//     console.log(key)
-//     console.log(val)
-//     console.log(me)
-//   }
-// }))
 app.use(express.static(path.join(__dirname, 'public')))
 // for parsing application/json
 app.use(bodyParser.json())
@@ -77,24 +56,5 @@ app.use((req, res, next) => {
 })
 
 app.use('/', router)
-
-// app.use((req, res, next) => {
-//   res.status(404)
-//
-//   // respond with html page
-//   if (req.accepts('html')) {
-//     res.render('404', { url: req.url })
-//     return
-//   }
-//
-//   // respond with json
-//   if (req.accepts('json')) {
-//     res.send({ error: 'Not found' })
-//     return
-//   }
-//
-//   // default to plain-text. send()
-//   res.type('txt').send('Not found')
-// })
 
 module.exports = app

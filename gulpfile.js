@@ -5,9 +5,23 @@ const clean = require('gulp-clean')
 // const concat = require('gulp-concat')
 // const uglify = require('gulp-uglify')
 const nodemon = require('gulp-nodemon')
+const rename = require('gulp-rename')
 const browserSync = require('browser-sync').create()
+const ifEnv = require('gulp-if-env')
+const notify = require('gulp-notify')
+const cleanCSS = require('gulp-clean-css')
+const sourcemaps = require('gulp-sourcemaps')
+const autoprefixer = require('gulp-autoprefixer')
 // https://getinstance.info/articles/tools/9-gulp-plugins/
 // https://github.com/gimm/gulp-live-server
+// https://alferov.github.io/awesome-gulp/
+
+// https://gist.github.com/renarsvilnis/ab8581049a3efe4d03d8
+// todo https://github.com/gulp-community/gulp-cached
+// todo https://www.npmjs.com/package/gulp-uglify
+// todo https://www.npmjs.com/package/browserify
+// todo https://www.npmjs.com/package/gulp-size
+// todo https://github.com/hughsk/gulp-duration
 
 const paths = {
   srcCSS: 'src/stylesheets/**/*.css',
@@ -15,19 +29,13 @@ const paths = {
   srcSASS: 'src/stylesheets/sass/*.sass',
   srcImages: 'src/**/*.{gif,jpg,png,svg,ico}',
   distCSS: './public/',
-  dist: './public',
+  dist: './public/',
   distSASS: './public/css/',
   distJS: './public/scripts/'
 }
 
-// examples!!!
-// gulp.task('vendor', function() {
-//   return gulp.src('vendor/*.js')
-//     .pipe(concat('vendor.js'))
-//     .pipe(gulp.dest('build/vendor.js'))
-// });
 gulp.task('clean', () => {
-  return gulp.src(paths.dist, { read: false })
+  return gulp.src(paths.dist + '*', { read: false })
     .pipe(clean())
 })
 gulp.task('nodemon', cb => {
@@ -48,19 +56,24 @@ gulp.task('browser-sync', gulp.series('nodemon', () => {
     files: ['public/**/*.*'],
     port: 5000
   })
-})
-)
+}))
+
 gulp.task('sass', () => {
   return gulp.src(paths.srcSASS)
-    .pipe(sass().on('error', sass.logError))
+    .pipe(ifEnv('dev', sourcemaps.init()))
+    .pipe(sass({
+      // style: 'expanded',
+      style: 'compressed'
+    }).on('error', sass.logError))
+    .pipe(autoprefixer())
+    // .pipe(gulp.dest(paths.distSASS))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(cleanCSS())
+    // .pipe(livereload(server))
+    .pipe(ifEnv('dev', sourcemaps.init()))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.distSASS))
-})
-
-gulp.task('watch', () => {
-  gulp.watch(paths.srcSASS, gulp.series('sass'))
-  gulp.watch(paths.srcImages, gulp.series('cp-images'))
-  gulp.watch(paths.srcCSS, gulp.series('cp-css'))
-  gulp.watch(paths.srcJS, gulp.series('cp-js'))
+    .pipe(notify({ message: 'Sass task complete' }))
 })
 gulp.task('cp-css', () => {
   return gulp.src(paths.srcCSS)
@@ -74,21 +87,24 @@ gulp.task('cp-images', () => {
   return gulp.src([paths.srcImages])
     .pipe(gulp.dest(paths.dist))
 })
+gulp.task('watch', () => {
+  gulp.watch(paths.srcSASS, gulp.series('sass'))
+  gulp.watch(paths.srcImages, gulp.series('cp-images'))
+  gulp.watch(paths.srcCSS, gulp.series('cp-css'))
+  gulp.watch(paths.srcJS, gulp.series('cp-js'))
+})
 
-gulp.task('cp-all', gulp.parallel('cp-js', 'cp-css', 'cp-images'))
+gulp.task('set-dev-node-env', (cb) => {
+  // process.env.NODE_ENV = 'dev'
+  ifEnv.set('dev')
+  cb()
+})
+gulp.task('set-prod-node-env', (cb) => {
+  // process.env.NODE_ENV = 'prod'
+  ifEnv.set('prod')
+  cb()
+})
 
-gulp.task('dev', gulp.parallel('cp-all', 'browser-sync', 'watch'))
-
-if (process.env.NODE_ENV === 'prod') {
-  // exports.build = series(
-  //   clean,
-  //   parallel(
-  //     cssTranspile,
-  //     series(jsTranspile, jsBundle)
-  //   ),
-  //   parallel(cssMinify, jsMinify),
-  //   publish
-  // )
-} else {
-  // exports.build = series(transpile, livereload)
-}
+gulp.task('cp-all', gulp.parallel('cp-js', 'cp-css', 'cp-images', 'sass'))
+gulp.task('dev', gulp.series('set-dev-node-env', gulp.parallel('cp-all', 'browser-sync', 'watch')))
+gulp.task('prod', gulp.series('clean', 'set-prod-node-env', gulp.parallel('cp-all')))

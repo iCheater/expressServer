@@ -1,3 +1,4 @@
+const faker = require('faker')
 const express = require('express')
 const router = express.Router()
 // var db = require('./../models');
@@ -43,6 +44,27 @@ router.get('/get', (req, res, next) => {
   }).then((task) => {
     res.json(task)
   })
+})
+router.get('/gen', (req, res) => {
+  const data = [
+    {
+      username: 'admin',
+      email: 'admin@admin.ru',
+      password: 'admin'
+    }
+  ]
+
+  User.bulkCreate(data, { returning: true })
+    .then(() => {
+      // (if you try to immediately return the Model after bulkCreate, the ids may all show up as 'null')
+      return User.findAll()
+    })
+    .then((response) => {
+      res.json(response)
+    })
+    .catch((error) => {
+      res.json(error)
+    })
 })
 
 router.get('/create', (req, res) => {
