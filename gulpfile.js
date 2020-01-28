@@ -108,3 +108,4 @@ gulp.task('set-prod-node-env', (cb) => {
 gulp.task('cp-all', gulp.parallel('cp-js', 'cp-css', 'cp-images', 'sass'))
 gulp.task('dev', gulp.series('set-dev-node-env', gulp.parallel('cp-all', 'browser-sync', 'watch')))
 gulp.task('prod', gulp.series('clean', 'set-prod-node-env', gulp.parallel('cp-all')))
+gulp.task('default', gulp.series('dev'))
