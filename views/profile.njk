@@ -6,8 +6,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="container d-flex mt-5">
 
-    <div class="content">
+
+    <div class="col-md-2">
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action">Личный кабинет</a>
+            <a href="#" class="list-group-item list-group-item-action">Избранное</a>
+            <a href="#" class="list-group-item list-group-item-action">История покупок</a>
+            <a href="#" class="list-group-item list-group-item-action">Отзывы</a>
+            <a href="#" class="list-group-item list-group-item-action">Настройки</a>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <div class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
@@ -121,5 +134,6 @@
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
