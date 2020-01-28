@@ -6,7 +6,8 @@ const clean = require('gulp-clean')
 // const uglify = require('gulp-uglify')
 const nodemon = require('gulp-nodemon')
 const rename = require('gulp-rename')
-const browserSync = require('browser-sync').create()
+const browserSync = require('browser-sync')
+const reload = browserSync.reload
 const ifEnv = require('gulp-if-env')
 const notify = require('gulp-notify')
 const cleanCSS = require('gulp-clean-css')
@@ -39,23 +40,32 @@ gulp.task('clean', () => {
     .pipe(clean())
 })
 gulp.task('nodemon', cb => {
-  let started = false
+  let called = false
   return nodemon({
     script: './bin/www',
-    ext: 'js njk'
+    ext: 'js njk',
+    ignore: [
+      'gulpfile.js',
+      'node_modules/'
+    ]
   }).on('start', () => {
-    if (!started) {
+    if (!called) {
+      called = true
       cb()
-      started = true
     }
+  }).on('restart', () => {
+    setTimeout(() => {
+      reload({ stream: false })
+    }, 1000)
   })
 })
-gulp.task('browser-sync', gulp.series('nodemon', () => {
-  browserSync.init(null, {
+gulp.task('browser-sync', gulp.series('nodemon', (cb) => {
+  browserSync({
     proxy: 'http://localhost:3000',
     files: ['public/**/*.*'],
-    port: 5000
-  })
+    port: 5000,
+    notify: true
+  }, cb)
 }))
 
 gulp.task('sass', () => {
