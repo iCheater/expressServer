@@ -1,6 +1,7 @@
 'use strict'
 const faker = require('faker')
 const { User } = require('./../models')
+// sequelize db:seed --seed 20200129202618-addresss.js
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const user = await User.findOne({
