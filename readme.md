@@ -35,10 +35,18 @@ find process and kill it
 
 > fuser -k 3000/tcp
 
-> npx sequelize migration:generate --name [modelname]
-> npx sequelize-cli seed:generate --name demo-user
->
 >https://www.tutorialspoint.com/expressjs/expressjs_restful_apis.htm
+
+
+> One day we will use full power of migrations https://gist.github.com/vapurrmaid/a111bf3fc0224751cb2f76532aac2465
+> npx sequelize migration:generate --name [modelname]
+> npx sequelize-cli seed:generate --name users
+> sequelize seed:create --name my-seed-file
+>
+> sequelize db:seed:all
+> npx sequelize-cli db:seed:undo:all
+> npx sequelize-cli db:seed:undo --seed name-of-seed-as-in-data
+> npx sequelize-cli db:seed --seed 20191011121208-update-feature.js
 
 
 
