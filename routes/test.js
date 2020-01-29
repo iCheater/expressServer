@@ -20,8 +20,8 @@ router.get('/findByPk', (req, res, next) => {
     raw: true,
     include: [{
       model: User,
-      as: 'workers'
-    }]
+      as: 'workers',
+    }],
   })
     .then((task) => {
       console.log(task.getworkers)
@@ -35,12 +35,12 @@ router.get('/findByPk', (req, res, next) => {
 router.get('/get', (req, res, next) => {
   Task.findAll({
     where: {
-      id: 1
+      id: 1,
     },
     include: [{
       model: User,
-      as: 'workers'
-    }]
+      as: 'workers',
+    }],
   }).then((task) => {
     res.json(task)
   })
@@ -48,19 +48,50 @@ router.get('/get', (req, res, next) => {
 router.get('/gen', (req, res) => {
   const data = [
     {
+      id: 12,
       username: 'admin',
       email: 'admin@admin.ru',
-      password: 'admin'
-    }
+      password: 'admin',
+    },
+    {
+      id: 11,
+      username: 'test',
+      email: 'test@test.ru',
+      password: 'test',
+    },
   ]
+  for (let i = 0; i < 10; i++) {
+    const obj = {}
+    obj.username = faker.name.findName()
+    obj.email = faker.internet.email()
+    obj.password = faker.internet.email()
+    obj.addresses = [{
+      type: 'самовывоз',
+      line1: faker.address.streetAddress(),
+      line2: faker.address.secondaryAddress(),
+      city: faker.address.city(),
+      state: faker.address.state(),
+      zip: faker.address.zipCode(),
+    }]
+    data.push(obj)
+  }
 
-  User.bulkCreate(data, { returning: true })
-    .then(() => {
-      // (if you try to immediately return the Model after bulkCreate, the ids may all show up as 'null')
-      return User.findAll()
-    })
-    .then((response) => {
-      res.json(response)
+  User.bulkCreate(data, {
+    returning: true,
+    individualHooks: true,
+    include: [{
+      model: Address,
+      as: 'addresses',
+      // association: User,
+    }],
+  })
+    .then((data) => {
+      console.log('here', data)
+      res.json(data)
+    //   return User.findAll()
+    // })
+    // .then((response) => {
+    //   res.json(response)
     })
     .catch((error) => {
       res.json(error)
@@ -81,13 +112,13 @@ router.get('/create', (req, res) => {
       line2: '112312312300 Main St.',
       city: 'jopa',
       state: 'TX',
-      zip: '78704'
-    }]
+      zip: '78704',
+    }],
   }, {
     include: [{
       // include: [ User.Addresses ],
-      association: User.Addresses
-    }]
+      association: User.Addresses,
+    }],
   })
 
   // User.hasMany(Tag, { as: 'tags'});

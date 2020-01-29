@@ -1,6 +1,7 @@
 /config/config.json
 package-lock.json
 /public/*
+public/
 .idea/*
 
 # Dependency directories

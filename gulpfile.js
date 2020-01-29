@@ -53,10 +53,6 @@ gulp.task('nodemon', cb => {
       called = true
       cb()
     }
-  }).on('restart', () => {
-    setTimeout(() => {
-      reload({ stream: false })
-    }, 1000)
   })
 })
 gulp.task('browser-sync', gulp.series('nodemon', (cb) => {
@@ -83,7 +79,7 @@ gulp.task('sass', () => {
     .pipe(ifEnv('dev', sourcemaps.init()))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.distSASS))
-    .pipe(notify({ message: 'Sass task complete' }))
+    // .pipe(notify({ message: 'Sass task complete' }))
 })
 gulp.task('cp-css', () => {
   return gulp.src(paths.srcCSS)

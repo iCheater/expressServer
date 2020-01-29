@@ -6,24 +6,24 @@ module.exports = (sequelize) => {
     username: {
       type: DataTypes.STRING,
       // unique: true,
-      allowNull: false
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,
-      // unique: true,
-      allowNull: false
+      unique: true,
+      allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   }, {
     hooks: {
       beforeCreate: async (user) => {
         const salt = await bcrypt.genSalt(10)
         user.password = await bcrypt.hash(user.password, salt)
-      }
-    }
+      },
+    },
   })
 
   // todo there is no-return-await
@@ -35,17 +35,6 @@ module.exports = (sequelize) => {
     // return password === this.password
     return bcrypt.compare(password, this.password)
   }
-
-  User.create({
-    username: 'admin',
-    email: 'admin@admin.ru',
-    password: 'admin'
-  })
-  User.create({
-    username: 'test',
-    email: 'test@test.ru',
-    password: 'test'
-  })
 
   return User
 }

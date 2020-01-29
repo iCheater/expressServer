@@ -62,47 +62,15 @@ Category.belongsToMany(Product, { through: 'productCategory' })
 
 User.hasMany(Tag, { as: 'tags' })
 User.hasMany(Order, { as: 'orders' })
+
+User.hasMany(Address, { as: 'addresses', foreignKey: 'user_id' })
+Address.belongsTo(User, { })
 // Project.hasMany(Tag);
 Project.User = Project.belongsTo(User, { as: 'user' })
-User.Addresses = User.hasMany(Address, { as: 'addresses' })
-
-// User.create({
-//   username: 'test',
-//   email: 'test@mai.ru',
-//   password: 'test',
-// });
-// User.create({
-//   username: 'admin',
-//   email: 'admin@admin.ru',
-//   password: 'admin',
-// });
-// Task.create({
-//   title: 'new task!!',
-// });
-
-// Project.create({
-//   name: 'ChairProject',
-//   user: {
-//     username: 'admin2',
-//     email: 'admin@admin.ru2',
-//     password: 'admin',
-//     addresses: [{
-//       type: 'home',
-//       line1: '100 Main St.',
-//       city: 'Austin',
-//       state: 'TX',
-//       zip: '78704'
-//     }]
-//   }
-// }, {
-//   include: [{
-//     association: Project.User,
-//     include: [ User.Addresses ]
-//   }]
-// });
+// User.Addresses = User.hasMany(Address, { as: 'addresses' })
 
 sequelize.sync({
-  // force: true, // This creates the table, dropping it first if it already existed
+  force: true, // This creates the table, dropping it first if it already existed
   // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
 })
 

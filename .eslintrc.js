@@ -25,6 +25,7 @@ module.exports = {
       "vars": "all",
       "args": "none",
       ignoreRestSiblings: true
-    }]
+    }],
+    "comma-dangle": ["error", "always-multiline"],
   }
 };
