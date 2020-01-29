@@ -3,6 +3,12 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
   const User = sequelize.define('User', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      unique: true,
+    },
     username: {
       type: DataTypes.STRING,
       // unique: true,
@@ -18,6 +24,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   }, {
+    underscored: true,
     hooks: {
       beforeCreate: async (user) => {
         const salt = await bcrypt.genSalt(10)

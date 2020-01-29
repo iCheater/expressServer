@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 })
 router.get('/:id', (req, res, next) => {
   Product.findByPk(req.params.id, {
-    include: [{ model: Category }]
+    include: [{ model: Category }],
   })
     .then(data => {
       data.setCategories([2])
@@ -24,7 +24,7 @@ router.get('/:id', (req, res, next) => {
       const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl
       res.render('404', {
         message: error,
-        url: fullUrl
+        url: fullUrl,
       })
     })
   // res.status(404)
@@ -36,7 +36,7 @@ router.get('/add/', (req, res) => {
       console.log(rawData)
       res.render('admin/products/addProduct', {
         editOrAdd: 'Add',
-        categories: rawData
+        categories: rawData,
       })
     })
 })
@@ -44,7 +44,7 @@ router.get('/edit/:id', (req, res) => {
   // how to chain?
   console.log(req.params.id)
   Product.findByPk(req.params.id, {
-    include: [{ model: Category }]
+    include: [{ model: Category }],
   }).then(product => {
     // res.json(product)
     // const tableProduct = product.map(e => e.get({ row: true }))
@@ -52,7 +52,7 @@ router.get('/edit/:id', (req, res) => {
     res.render('admin/products/addProduct', {
       product: product,
       editOrAdd: 'Edit',
-      id: req.params.id
+      id: req.params.id,
     })
   })
 })
@@ -65,9 +65,9 @@ router.post('/', (req, res) => {
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    mURL: req.body.mURL
+    mURL: req.body.mURL,
   }, {
-    include: [{ model: Category }]
+    include: [{ model: Category }],
   })
     .then(product => {
       // console.log(product)
@@ -83,11 +83,11 @@ router.put('/:id', (req, res) => {
     price: req.body.price,
     description: req.body.description,
     mURL: req.body.mURL,
-    Category: req.body.category
+    Category: req.body.category,
   }, {
     returning: true,
     where: { id: req.params.id },
-    include: [{ model: Category }]
+    include: [{ model: Category }],
   })
     .then(([rowsUpdate, [updatedProduct]]) => {
       // res.redirect('/admin/products')
@@ -103,7 +103,7 @@ router.put('/:id', (req, res) => {
 })
 router.delete('/:id', (req, res) => {
   Product.destroy({
-    where: { id: req.params.id }
+    where: { id: req.params.id },
   })
     .then(rowDeleted => { // rowDeleted will return number of rows deleted
       if (rowDeleted === 1) {

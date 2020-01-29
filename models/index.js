@@ -40,7 +40,7 @@ const {
   Tag,
   Order,
   Product,
-  Category
+  Category,
 } = db
 
 // hasOne vs belongsTo
@@ -63,8 +63,16 @@ Category.belongsToMany(Product, { through: 'productCategory' })
 User.hasMany(Tag, { as: 'tags' })
 User.hasMany(Order, { as: 'orders' })
 
+// User.hasMany(Address, { as: 'addresses', foreignKey: { name: 'user_id' } })
+// Address.belongsTo(User, { foreignKey: { name: 'user_id' } })
+
+// works perfectly!!
+// User.hasMany(Address, { as: 'addresses' })
+// Address.belongsTo(User)
+
 User.hasMany(Address, { as: 'addresses', foreignKey: 'user_id' })
-Address.belongsTo(User, { })
+Address.belongsTo(User, { foreignKey: 'user_id' })
+
 // Project.hasMany(Tag);
 Project.User = Project.belongsTo(User, { as: 'user' })
 // User.Addresses = User.hasMany(Address, { as: 'addresses' })

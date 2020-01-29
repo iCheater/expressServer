@@ -11,11 +11,11 @@ module.exports = (sequelize) => {
       validate: {
         isNumeric: true,
         isInt: true,
-        msg: 'Must be an integer number'
-      }
+        msg: 'Must be an integer number',
+      },
     },
     name: DataTypes.STRING,
-    description: DataTypes.TEXT
+    description: DataTypes.TEXT,
   }, {
   })
 

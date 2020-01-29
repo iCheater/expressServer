@@ -15,14 +15,14 @@ router.get('/', (req, res) => {
     limit: 15,
     where: {
       // UserId: 1
-    }
+    },
   }).then((data) => {
     const tableData = data.map(e => e.get({ row: true }))
     console.table(tableData)
     // res.json(tableData)
     res.render('admin/orders', {
-      orders: tableData
-    });
+      orders: tableData,
+    })
   })
 })
 
@@ -38,7 +38,7 @@ router.get('/add', (req, res) => {
     name: 'name of wtf',
     email: 'mail@mail.ru',
     phone: 'phone',
-    UserId: 1
+    UserId: 1,
   })
     .then((good) => {
       // res.json(good);

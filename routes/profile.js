@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
   User.findByPk(req.session.user.id).then((user) => {
     // res.json(user)
     res.render('profile', {
-        user: user
-    });
+      user: user,
+    })
   })
 })
 
