@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
   User.findByPk(req.session.user.id).then((user) => {
     // res.json(user)
     res.render('profile/profile', {
-        user: user
-    });
+      user: user
+    })
   })
 })
 
@@ -24,7 +24,7 @@ router.get('/edit/', (req, res) => {
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
       console.log(rawData)
-      res.render("profile/edit", {
+      res.render('profile/edit', {
         editOrAdd: 'Edit',
         user: rawData
       })
