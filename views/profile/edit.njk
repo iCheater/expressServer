@@ -1,6 +1,5 @@
-{#{% extends "profile.njk" %}#}
-{#   ;)   это лол #}
 {% extends "./profile.njk" %}
+
 {% block main_profile %}
     <div class="content">
         <div class="container-fluid">
@@ -10,7 +9,7 @@
                         <div class="header">
                             <h4 class="title">Edit Profile</h4>
                         </div>
-                        <div class="content">
+                        <div class="content m-2">
                             <form>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -81,7 +80,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                <button type="submit" class="btn btn-info btn-fill pull-right m-1">Update Profile</button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>
@@ -90,16 +89,14 @@
 
                 <div class="col-md-4">
                     <div class="card card-user">
-                        <div class="image">
-                            <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
-                        </div>
+
                         <div class="content">
                             <div class="author">
                                 <a href="#">
-                                    <img class="avatar border-gray" src="https://placehold.it/130x130" alt="..."/>
-                                    <button type="submit" class="btn btn-info btn-fill pull-right mb-3">Change avatar</button>
+                                    <img class="avatar border-gray d-block mx-auto m-3" src="https://placehold.it/130x130" alt="..."/>
+                                    <button type="submit" class="btn btn-info btn-fill d-block mx-auto m-3 ">Change avatar</button>
 
-                                    <h4 class="title">Mike Andrew<br />
+                                    <h4 class="title text-center">Mike Andrew<br />
                                         <small>michael24</small>
                                     </h4>
                                 </a>

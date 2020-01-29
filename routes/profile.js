@@ -15,17 +15,48 @@ router.get('/', (req, res) => {
 })
 
 router.get('/edit/', (req, res) => {
-  // User.findByPk(req.session.user.id).then((user) => {
-  //   res.render('/edit/:id', {
-  //     user: user
-  //   });
-  // })
   User.findAll()
     .then(data => {
       const rawData = data.map(e => e.get({ row: true }))
       console.log(rawData)
       res.render('profile/edit', {
         editOrAdd: 'Edit',
+        user: rawData
+      })
+    })
+})
+
+router.get('/favorites/', (req, res) => {
+  User.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('profile/favorites', {
+        editOrAdd: 'Favorites',
+        user: rawData
+      })
+    })
+})
+
+router.get('/history/', (req, res) => {
+  User.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('profile/history', {
+        editOrAdd: 'History',
+        user: rawData
+      })
+    })
+})
+
+router.get('/reviews/', (req, res) => {
+  User.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('profile/reviews', {
+        editOrAdd: 'reviews',
         user: rawData
       })
     })
