@@ -7,9 +7,8 @@ router.use(sessionChecker)
 
 router.get('/', (req, res) => {
   User.findByPk(req.session.user.id).then((user) => {
-    // res.json(user)
     res.render('profile/profile', {
-      user: user
+      user: user,
     })
   })
 })
@@ -21,7 +20,7 @@ router.get('/edit/', (req, res) => {
       console.log(rawData)
       res.render('profile/edit', {
         editOrAdd: 'Edit',
-        user: rawData
+        user: rawData,
       })
     })
 })
@@ -33,7 +32,7 @@ router.get('/favorites/', (req, res) => {
       console.log(rawData)
       res.render('profile/favorites', {
         editOrAdd: 'Favorites',
-        user: rawData
+        user: rawData,
       })
     })
 })
@@ -45,7 +44,7 @@ router.get('/history/', (req, res) => {
       console.log(rawData)
       res.render('profile/history', {
         editOrAdd: 'History',
-        user: rawData
+        user: rawData,
       })
     })
 })
@@ -57,7 +56,7 @@ router.get('/reviews/', (req, res) => {
       console.log(rawData)
       res.render('profile/reviews', {
         editOrAdd: 'reviews',
-        user: rawData
+        user: rawData,
       })
     })
 })
