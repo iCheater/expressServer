@@ -11,7 +11,7 @@ const router = express.Router()
 // })
 
 router.get('/', (req, res, next) => {
-  res.render('admin/adminLayout')
+  res.render('admin/mainBlock')
 })
 
 module.exports = router
