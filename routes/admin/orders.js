@@ -11,6 +11,8 @@ router.get('/', (req, res) => {
   //         users: users
   //     });
   // });
+
+  const pagination = [1, 2, 3, 4, '...', 99]
   Order.findAll({
     limit: 15,
     where: {
@@ -22,9 +24,29 @@ router.get('/', (req, res) => {
     // res.json(tableData)
     res.render('admin/orders', {
       orders: tableData,
+      pagination: pagination,
     })
   })
 })
+router.get('/page/1', (req, res) => {
+  const pagination = [1, 2, 3, 4, '...', 99]
+  Order.findAll({
+    limit: 15,
+    where: {
+      // UserId: 1
+    },
+  }).then((data) => {
+    const tableData = data.map(e => e.get({ row: true }))
+    console.table(tableData)
+    // res.json(tableData)
+    res.render('admin/orders', {
+      orders: tableData,
+      pagination: pagination,
+    })
+  })
+})
+
+
 
 router.get('/add', (req, res) => {
   console.log('Got body:', req.body)

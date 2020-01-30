@@ -1,11 +1,9 @@
 {% extends "../layout.njk" %}
 
 {% block content %}
-<div class="container">
+<div class="container p-1">
     <div class="row">
-        {% block menu %}
-            {% include "./menu.njk" %}
-        {% endblock %}
+        {% include "./menu.njk" %}
         {% block mbk %}{% endblock %}
     </div>
 </div>

@@ -1,21 +1,22 @@
-{% extends "../layout.njk" %}
+{% extends "./adminLayout.njk" %}
 
  {% block preScript %}
-    <script src="scripts/tabAndPagination.js"></script>
+    <script src="/scripts/tabAndPagination.js"></script>
  {% endblock %}
 
-{% block content %}
+{% block mbk %}
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Orders</li>
-        </ol>
-    </nav>
 
-    <div class="container">
 
+
+    <div class="col-md-10 w-100 mt-2">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Orders</li>
+            </ol>
+        </nav>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -215,13 +216,16 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">6</a></li>
-                        <li class="page-item"><a href="#" class="page-link">7</a></li>
+                        {% for page in pagination %}
+                            <li class="page-item active"><a href="/admin/orders/{{ page }}" class="page-link">{{page}}</a></li>
+                        {% endfor %}
+
+{#                        <li class="page-item"><a href="#" class="page-link">2</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">3</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">4</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">5</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">6</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">7</a></li>#}
                         <li class="page-item">
                             <a href="#" class="page-link" aria-label="Следующая">
                                 <span aria-hidden="true">&raquo;</span>
