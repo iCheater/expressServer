@@ -2,7 +2,7 @@ The goal of this project is to create an online store using a modern technologic
 We use express, sequelize, nunjucks.
 We adhere to the JSON.API standard.
 
-### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04) 
+### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
 
 example:
 login\password: shop_server\shop_server_db
@@ -19,7 +19,7 @@ in postgress console:
 
     >"shop_server_db=# \password shop_server //change password to "shop_server"
 
-### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5) 
+### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5)
 
 ### 3. Install [NVM)]( https://github.com/nvm-sh/nvm )
 > nvm install --lts
@@ -43,7 +43,7 @@ find process and kill it
 > npx sequelize-cli seed:generate --name users
 > sequelize seed:create --name my-seed-file
 >
-> sequelize db:seed:all
+> npx sequelize-cli db:seed:all
 > npx sequelize-cli db:seed:undo:all
 > npx sequelize-cli db:seed:undo --seed name-of-seed-as-in-data
 > npx sequelize-cli db:seed --seed 20191011121208-update-feature.js

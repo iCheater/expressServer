@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -e js,html,njk,sass --delay 2 ./bin/www",
-    "dev": "node ./bin/www",
+    "sync": "node ./models/index.js sync",
+    "prestart": "",
+    "start": "gulp",
+    "poststart": "",
+    "seed": "npx sequelize-cli db:seed:all",
+    "unseed": "npx sequelize-cli db:seed:undo:all",
     "sass": "node-sass -w src/stylesheets/sass/ -o public/stylesheets/css/",
     "lint": "eslint ./bin/www"
   },
@@ -34,8 +38,7 @@
     "pg-hstore": "^2.3.3",
     "reload": "^3.0.3",
     "save-dev": "0.0.1-security",
-    "sequelize": "^5.21.3",
-    "sequelize-cli": "^5.5.1"
+    "sequelize": "^5.21.3"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
@@ -52,7 +55,8 @@
     "gulp-notify": "^3.2.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "sequelize-cli": "^5.5.1"
   },
   "browserslist": [
     "last 2 version",

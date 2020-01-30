@@ -6,8 +6,6 @@ module.exports = function (sequelize) {
     promoCode: DataTypes.STRING,
     comment: DataTypes.STRING,
     shipping: DataTypes.STRING,
-    productsId: DataTypes.STRING,
-    sum: DataTypes.INTEGER,
     email: DataTypes.STRING,
     phone: DataTypes.STRING,
     status: DataTypes.STRING,

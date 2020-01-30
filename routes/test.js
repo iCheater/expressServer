@@ -46,87 +46,24 @@ router.get('/get', (req, res, next) => {
   })
 })
 
-router.get('/gen', (req, res) => {
-  Product.create({
-    name: faker.commerce.product(),
-    price: faker.commerce.price(0, 9999, 2),
-    mURL: faker.image.abstract(),
-    description: faker.commerce.productName(),
-  }, { include: [{ model: Category }] })
-    .then(data => { data.setCategories([1, 2]) })
-    .then(data => {
-      const users = [
-        User.create({
-          username: 'admin',
-          email: 'admin@admin.ru',
-          password: 'admin',
-          addresses: [{
-            type: 'самовывоз',
-            line1: faker.address.streetAddress(),
-            line2: faker.address.secondaryAddress(),
-            city: faker.address.city(),
-            state: faker.address.state(),
-            zip: faker.address.zipCode(),
-          }],
-        }, {
-          include: [{
-            model: Address,
-            as: 'addresses',
-          }],
-        }),
-        User.create({
-          username: 'test',
-          email: 'test@test.ru',
-          password: 'test',
-          addresses: [{
-            type: 'самовывоз',
-            line1: faker.address.streetAddress(),
-            line2: faker.address.secondaryAddress(),
-            city: faker.address.city(),
-            state: faker.address.state(),
-            zip: faker.address.zipCode(),
-          }],
-        }, {
-          include: [{
-            model: Address,
-            as: 'addresses',
-          }],
-        }),
-        Category.bulkCreate([
-          { name: 'из дерева', description: 'фанера 3мм-5мм' },
-          { name: 'из акрила', description: 'акрил 3мм-5мм' },
-          { name: 'другое', description: 'разный материал' },
-        ]),
-      ]
-      for (let i = 0; i < 10; i++) {
-        users.push(User.create({
-          username: faker.name.findName(),
-          email: faker.internet.email(),
-          password: faker.name.findName(),
-          addresses: [{
-            type: 'самовывоз',
-            line1: faker.address.streetAddress(),
-            line2: faker.address.secondaryAddress(),
-            city: faker.address.city(),
-            state: faker.address.state(),
-            zip: faker.address.zipCode(),
-          }],
-        }, {
-          include: [{
-            model: Address,
-            as: 'addresses',
-          }],
-        }))
-      }
-
-      return Promise.all(users)
-        .then(result => {
-          res.json(result)
-        }).catch(err => {
-          res.json(err)
-        })
-    })
-})
+// router.get('/gen', (req, res) => {
+//   Product.create({
+//     name: faker.commerce.product(),
+//     price: faker.commerce.price(0, 9999, 2),
+//     mURL: faker.image.abstract(),
+//     description: faker.commerce.productName(),
+//   }, { include: [{ model: Category }] })
+//     .then(data => { data.setCategories([1, 2]) })
+//
+//
+//   return Promise.all(users)
+//     .then(result => {
+//       res.json(result)
+//     })
+//     .catch(err => {
+//       res.json(err)
+//     })
+// })
 
 router.get('/bulk_unfinished', (req, res) => {
   // todo ask somemody about it
