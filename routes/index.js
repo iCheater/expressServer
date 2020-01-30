@@ -20,6 +20,7 @@ router.use('/', authRouter)
 // Посмотреть содержимое корзины
 // Посмотреть отложенные товары
 // Изменить профиль(данные, адреса, пароль, почта, телефоны)
+
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)
 

@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     // console.log('session', req.session.user)
     params.user = {
       name: req.session.user.username,
-      id: req.session.user.id
+      id: req.session.user.id,
     }
   }
 

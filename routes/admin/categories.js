@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
       // console.log(JSON.stringify(jane, null, 4)); // This is also good!
       params.categories = data.map(e => e.get({ row: true }))
       res.render('categories', params)
-    }
+    },
     )
 })
 

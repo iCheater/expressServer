@@ -6,16 +6,16 @@ module.exports = {
       name: 'cats',
       description: 'thats for animals',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }, {
       name: 'dogs',
       description: 'thats for animals',
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
     }], {})
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Categories', null, {})
-  }
+  },
 }

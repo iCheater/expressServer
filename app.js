@@ -17,7 +17,7 @@ app.use(morgan('dev'))
 const nunjucks = require('nunjucks')
 nunjucks.configure('views', {
   autoescape: true,
-  express: app
+  express: app,
 })
 app.set('view engine', 'njk')
 
@@ -37,13 +37,13 @@ app.use(session({
   secret: 'somerandonstuffs',
   resave: false,
   store: new SequelizeStore({
-    db: db.sequelize
+    db: db.sequelize,
   }),
   saveUninitialized: false,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
-    expires: 24 * 60 * 60 * 1000 // 10мин hours
-  }
+    expires: 24 * 60 * 60 * 1000, // 10мин hours
+  },
 }))
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
