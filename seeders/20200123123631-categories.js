@@ -2,17 +2,28 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Categories', [{
-      name: 'cats',
-      description: 'thats for animals',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }, {
-      name: 'dogs',
-      description: 'thats for animals',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }], {})
+    const categories = [
+      {
+        name: 'из дерева',
+        description: 'фанера 3мм-5мм',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'из акрила',
+        description: 'акрил 3мм-5мм',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'другое',
+        description: 'разный материал',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]
+
+    return queryInterface.bulkInsert('Categories', categories, {})
   },
 
   down: (queryInterface, Sequelize) => {

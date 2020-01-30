@@ -23,6 +23,15 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+
   }, {
     underscored: true,
     hooks: {
