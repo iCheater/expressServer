@@ -55,6 +55,7 @@ app.use((req, res, next) => {
   next()
 })
 
+// app.disable('x-powered-by')
 app.use('/', router)
 
 module.exports = app

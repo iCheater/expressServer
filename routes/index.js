@@ -53,6 +53,8 @@ router.use((req, res) => {
   res.type('txt').send('Not found')
 })
 
+// router.all('/api/*', requireAuthentication)
+
 // router.use((req, res) => {
 //   res.status(500)
 //
