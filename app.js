@@ -8,7 +8,10 @@ const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const multer = require('multer')
 const upload = multer()
+const redis = require('redis')
 
+const RedisStore = require('connect-redis')(session)
+const redisClient = redis.createClient()
 const router = require('./routes')
 
 const app = express()
@@ -36,9 +39,10 @@ app.use(session({
   key: 'user_sid',
   secret: 'somerandonstuffs',
   resave: false,
-  store: new SequelizeStore({
-    db: db.sequelize,
-  }),
+  // store: new SequelizeStore({
+  //   db: db.sequelize,
+  // }),
+  store: new RedisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
   saveUninitialized: false,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
