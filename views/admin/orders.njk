@@ -64,23 +64,27 @@
                 </table>
                 <nav>
                     <ul class="pagination">
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Предыдущая">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">4</a></li>
-                        <li class="page-item"><a href="#" class="page-link">5</a></li>
-                        <li class="page-item"><a href="#" class="page-link">6</a></li>
-                        <li class="page-item"><a href="#" class="page-link">7</a></li>
-                        <li class="page-item">
-                            <a href="#" class="page-link" aria-label="Следующая">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+{#                        <li class="page-item">#}
+{#                            <a href="/admin/orders/page/{{ activePage - 1 }}" class="page-link" aria-label="Предыдущая">#}
+{#                                <span aria-hidden="true">&laquo;</span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="page-item {{ "active" if page.active }} "><a href="/admin/orders/page/{{ page.num }}" class="page-link"> &laquo; </a></li>#}
+                        {% for page in pagination %}
+                            <li class="page-item {{ "active" if page.active }} "><a href="/admin/orders/page/{{ page.num }}" class="page-link">{{ page.num}}</a></li>
+                        {% endfor %}
+{#                        <li class="page-item active"><a href="#" class="page-link">1</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">2</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">3</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">4</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">5</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">...</a></li>#}
+{#                        <li class="page-item"><a href="#" class="page-link">{{ totalPages }}</a></li>#}
+{#                        <li class="page-item">#}
+{#                            <a href="#" class="page-link" aria-label="Следующая">#}
+{#                                <span aria-hidden="true">&raquo;</span>#}
+{#                            </a>#}
+{#                        </li>#}
                     </ul>
                 </nav>
             </div>
@@ -216,16 +220,14 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        {% for page in pagination %}
-                            <li class="page-item active"><a href="/admin/orders/{{ page }}" class="page-link">{{page}}</a></li>
-                        {% endfor %}
 
-{#                        <li class="page-item"><a href="#" class="page-link">2</a></li>#}
-{#                        <li class="page-item"><a href="#" class="page-link">3</a></li>#}
-{#                        <li class="page-item"><a href="#" class="page-link">4</a></li>#}
-{#                        <li class="page-item"><a href="#" class="page-link">5</a></li>#}
-{#                        <li class="page-item"><a href="#" class="page-link">6</a></li>#}
-{#                        <li class="page-item"><a href="#" class="page-link">7</a></li>#}
+
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">4</a></li>
+                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                        <li class="page-item"><a href="#" class="page-link">6</a></li>
+                        <li class="page-item"><a href="#" class="page-link">7</a></li>
                         <li class="page-item">
                             <a href="#" class="page-link" aria-label="Следующая">
                                 <span aria-hidden="true">&raquo;</span>

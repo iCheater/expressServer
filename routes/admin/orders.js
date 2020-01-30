@@ -28,25 +28,49 @@ router.get('/', (req, res) => {
     })
   })
 })
-router.get('/page/1', (req, res) => {
-  const pagination = [1, 2, 3, 4, '...', 99]
-  Order.findAll({
-    limit: 15,
-    where: {
-      // UserId: 1
-    },
+router.get('/page/:page', (req, res) => {
+  const elemsPerPage = 10
+
+  Order.findAndCountAll({
+    // where: {},
+    // order: [],
+    limit: elemsPerPage,
+    offset: elemsPerPage * (req.params.page - 1),
   }).then((data) => {
-    const tableData = data.map(e => e.get({ row: true }))
-    console.table(tableData)
-    // res.json(tableData)
+    const pagination = []
+    const totalPages = data.count / elemsPerPage
+
+    for (let i = 1; i < 4; i++) {
+      // console.log('i', i)
+      pagination.push({
+        num: i,
+        active: (parseInt(req.params.page) === i),
+      })
+    }
+    pagination.push({
+      num: '...',
+    }, {
+      num: totalPages,
+    })
+    pagination.unshift({
+      num: '<<',
+    })
+    pagination.push({
+      num: '>>',
+    })
+
+    console.log(pagination)
+    // console.log()
+
     res.render('admin/orders', {
-      orders: tableData,
+      orders: data.rows,
+      totalPages: totalPages,
+      activePage: req.params.page,
+      elemsPerPage: elemsPerPage,
       pagination: pagination,
     })
   })
 })
-
-
 
 router.get('/add', (req, res) => {
   console.log('Got body:', req.body)
