@@ -6,8 +6,12 @@ const router = express.Router()
 //     next()
 // });
 
+// router.get('/', (req, res, next) => {
+//   res.render('admin/admin')
+// })
+
 router.get('/', (req, res, next) => {
-  res.render('admin/admin')
+  res.render('admin/adminLayout')
 })
 
 module.exports = router
