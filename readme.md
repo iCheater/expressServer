@@ -24,12 +24,9 @@ in postgress console:
 
 ### 3. Install [redis)]( https://tecadmin.net/install-redis-ubuntu/ )
 > sudo apt-get install redis-server
-> sudo systemctl enable redis-server.servic### 3. Install [redis)]( https://tecadmin.net/install-redis-ubuntu/ )
-> sudo apt-get install redis-server
 > sudo systemctl enable redis-server.service
 
-
-> sudo snap install snap-store snapd
+> sudo snap install snap-store snapd (if you dont have snap)
 > sudo snap install redis-desktop-manager
 > sometimes you need to add export PATH=$PATH:/snap/bin into .bashrc
 if you dont have icons in apps menu:
