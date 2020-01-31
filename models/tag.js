@@ -3,8 +3,9 @@ const DataTypes = require('sequelize').DataTypes
 module.exports = (sequelize) => {
   var Tag = sequelize.define('Tag', {
     name: DataTypes.STRING,
+    description: DataTypes.TEXT,
   }, {
-    // tableName: 'Tag' // in base
+    tableName: 'tags', // in base
   })
 
   return Tag
