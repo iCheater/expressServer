@@ -4,10 +4,6 @@ const { User } = require('../../models')
 
 // /* GET loader page. */
 router.get('/', (req, res, next) => {
-  // var params = {
-  //   title: 'Express',
-  //   auth: true
-  // }
   res.render('auth/login', { title: 'Express' })
 })
 

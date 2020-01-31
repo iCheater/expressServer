@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Order } = require('../../models')
-
+//
 router.get('/', (req, res) => {
   // User.findAll({
   //     include: [ Task ]
@@ -14,16 +14,15 @@ router.get('/', (req, res) => {
   Order.findAll({
     limit: 15,
     where: {
-      UserId: 1
-    }
+      // UserId: 1
+    },
   }).then((data) => {
     const tableData = data.map(e => e.get({ row: true }))
     console.table(tableData)
-    res.json(tableData)
-    // res.render('task', {
-    //     title: 'Sequelize: Express Example',
-    //     tasks: data
-    // });
+    // res.json(tableData)
+    res.render('admin/orders', {
+      orders: tableData,
+    })
   })
 })
 
@@ -39,7 +38,7 @@ router.get('/add', (req, res) => {
     name: 'name of wtf',
     email: 'mail@mail.ru',
     phone: 'phone',
-    UserId: 1
+    UserId: 1,
   })
     .then((good) => {
       // res.json(good);

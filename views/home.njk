@@ -1,8 +1,9 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-
-    <h1>HOMEPAGE</h1>
+    {{ user }}
+    {{ 'user' }}
+{#    <h1>HOMEPAGE</h1>#}
     <h1>  {{ user.name }}</h1>
     {% block slider %}
         {% include "slider.njk" %}

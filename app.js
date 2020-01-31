@@ -2,14 +2,16 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan') // logger
-const sassMiddleware = require('node-sass-middleware')
 const db = require('./models')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const multer = require('multer')
 const upload = multer()
+const redis = require('redis')
 
+const RedisStore = require('connect-redis')(session)
+const redisClient = redis.createClient()
 const router = require('./routes')
 
 const app = express()
@@ -18,18 +20,11 @@ app.use(morgan('dev'))
 const nunjucks = require('nunjucks')
 nunjucks.configure('views', {
   autoescape: true,
-  express: app
+  express: app,
 })
 app.set('view engine', 'njk')
 
-app.use(sassMiddleware({
-  src: path.join(__dirname, 'public/stylesheets/'),
-  dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
-  sourceMap: true
-}))
 app.use(express.static(path.join(__dirname, 'public')))
-
 // for parsing application/json
 app.use(bodyParser.json())
 // // for parsing application/xwww-form-urlencoded (parse incoming parameters requests to req.body)
@@ -44,14 +39,20 @@ app.use(session({
   key: 'user_sid',
   secret: 'somerandonstuffs',
   resave: false,
-  store: new SequelizeStore({
-    db: db.sequelize
+  // store: new SequelizeStore({
+  //   db: db.sequelize,
+  // }),
+  store: new RedisStore({
+    host: 'localhost',
+    port: 6379,
+    client: redisClient,
+    ttl: 86400,
   }),
   saveUninitialized: false,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
-    expires: 24 * 60 * 60 * 1000 // 10мин hours
-  }
+    expires: 24 * 60 * 60 * 1000, // 10мин hours
+  },
 }))
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
@@ -63,25 +64,7 @@ app.use((req, res, next) => {
   next()
 })
 
+// app.disable('x-powered-by')
 app.use('/', router)
-
-// app.use((req, res, next) => {
-//   res.status(404)
-//
-//   // respond with html page
-//   if (req.accepts('html')) {
-//     res.render('404', { url: req.url })
-//     return
-//   }
-//
-//   // respond with json
-//   if (req.accepts('json')) {
-//     res.send({ error: 'Not found' })
-//     return
-//   }
-//
-//   // default to plain-text. send()
-//   res.type('txt').send('Not found')
-// })
 
 module.exports = app

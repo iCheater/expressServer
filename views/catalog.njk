@@ -10,34 +10,27 @@
             <div class="catalog">
                 <div class="catalog__filters">
                     <ul class="catalog__filters-item">
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
-                        <li><a>Category__1</a></li>
+                        {% for category in categories %}
+                            <li><a href="/catalog/{{ category.id }}"> {{ category.name }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <!-- Catalog bar -->
                 <div class="catalog__bar">
 
-                    {% for good in goods %}
+                    {% for product in products %}
                         <div class="catalog__item">
                             <div class="item__img">
-                                <img src=" {{ good.mURL }}">
-{#                                {{ good.mURL }}#}
+                                <img src=" {{ product.mURL }}">
                             </div>
 
                             <div class="item__info">
                                 <div class="item__name">
-                                    <a href="#">{{ good.name }}</a>
+                                    <a href="#">{{ product.name }}</a>
                                 </div>
                                 <div class="item__price-container">
                                     <div class="item__price">
-                                        <span><span><span class="price">{{ good.price }} </span>руб</span></span>
+                                        <span><span class="price">{{ product.price }} </span>руб</span>
                                     </div>
                                     <a class="item__to-basket" title="Положить в корзину">
                                         <i class="fas fa-shopping-cart"></i>
@@ -51,7 +44,6 @@
                     {% endfor %}
 
 
-
                 </div>
 
 
@@ -63,7 +55,7 @@
 
 
 
-{##}
+    {##}
 {% endblock %}
 
 
