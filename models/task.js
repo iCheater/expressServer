@@ -3,7 +3,7 @@ const DataTypes = require('sequelize').DataTypes
 
 module.exports = (sequelize) => {
   var Task = sequelize.define('Task', {
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
   })
 
   // Task.associate = function (models) {

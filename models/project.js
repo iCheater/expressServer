@@ -2,9 +2,9 @@ const DataTypes = require('sequelize').DataTypes
 
 module.exports = function (sequelize) {
   var Project = sequelize.define('Project', {
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
   }, {
-    modelName: 'project123'
+    modelName: 'project123',
   })
 
   // class Project extends Sequelize.Model {}

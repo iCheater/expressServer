@@ -32,7 +32,7 @@ const paths = {
   distCSS: './public/',
   dist: './public/',
   distSASS: './public/css/',
-  distJS: './public/scripts/'
+  distJS: './public/scripts/',
 }
 
 gulp.task('clean', () => {
@@ -46,8 +46,8 @@ gulp.task('nodemon', cb => {
     ext: 'js njk',
     ignore: [
       'gulpfile.js',
-      'node_modules/'
-    ]
+      'node_modules/',
+    ],
   }).on('start', () => {
     if (!called) {
       called = true
@@ -60,7 +60,7 @@ gulp.task('browser-sync', gulp.series('nodemon', (cb) => {
     proxy: 'http://localhost:3000',
     files: ['public/**/*.*'],
     port: 5000,
-    notify: true
+    notify: true,
   }, cb)
 }))
 
@@ -69,7 +69,7 @@ gulp.task('sass', () => {
     .pipe(ifEnv('dev', sourcemaps.init()))
     .pipe(sass({
       // style: 'expanded',
-      style: 'compressed'
+      style: 'compressed',
     }).on('error', sass.logError))
     .pipe(autoprefixer())
     // .pipe(gulp.dest(paths.distSASS))

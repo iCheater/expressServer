@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
   var params = {
     username: req.body.username,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
   }
   console.table(params)
   User.create(params)
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
       var msg = {
         message: 'form data loaded',
         status: 'ok',
-        data: user
+        data: user,
       }
 
       // res.json(msg);
