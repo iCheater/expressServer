@@ -7,7 +7,7 @@ module.exports = function (sequelize) {
     line2: DataTypes.STRING,
     city: DataTypes.STRING,
     state: DataTypes.STRING,
-    zip: DataTypes.STRING
+    zip: DataTypes.STRING,
   }, {
     //
   })

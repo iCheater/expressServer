@@ -17,7 +17,7 @@ router.get('/add/:name', (req, res) => {
 
   var userParams = {
     username: req.params.name,
-    email: 'test@mai.ru'
+    email: 'test@mai.ru',
   }
   User.create(userParams)
     .then((user) => {

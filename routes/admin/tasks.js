@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
     console.table(rawData)
     res.render('admin/task', {
       title: 'Sequelize: Express Example',
-      tasks: tasks
+      tasks: tasks,
     })
   })
 })

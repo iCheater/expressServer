@@ -7,7 +7,6 @@ router.use(sessionChecker)
 
 router.get('/', (req, res) => {
   User.findByPk(req.session.user.id).then((user) => {
-    // res.json(user)
     res.render('profile/profile', {
       user: user,
     })

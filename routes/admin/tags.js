@@ -1,20 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const { Category } = require('../../models')
+const { Tag } = require('../../models')
 
 router.get('/', (req, res) => {
-  const params = { categories: null }
+  Tag.findAll({ limit: 200, where: {} })
+    .then(tagsArr => {
+      // res.json(tagsArr)
 
-  Category.findAll({ limit: 15 })
-    .then(data => {
-      // console.table(rawData);
-      // console.log(rawData);
-      // console.log(jane.toJSON()); // This is good!
-      // console.log(JSON.stringify(jane, null, 4)); // This is also good!
-      params.categories = data.map(e => e.get({ row: true }))
-      res.render('admin/categories/categories', params)
-    },
-    )
+      // params.tags = tagsArr.map(tagInstance => {
+      //   tagInstance.get({ row: true })
+      // })
+      // res.json(params.tags)
+      res.render('admin/tags/tags', { tags: tagsArr })
+    }).catch(err => {
+      res.json(err)
+    })
 })
 
 // router.post('/add', (req, res) => {

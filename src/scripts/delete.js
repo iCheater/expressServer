@@ -48,5 +48,5 @@ function removeButton (item) {
 }
 
 $(document).on('click', '#test-id', () => {
-  console.log(2222);
-});
+  console.log(2222)
+})

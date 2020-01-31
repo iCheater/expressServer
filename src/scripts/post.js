@@ -78,11 +78,11 @@ function AJAXSubmit (formId, method, url) {
     }
     console.log(this.responseText)
 
-//     // Simulate a mouse click:
-//     window.location.href = "http://www.w3schools.com";
-//
-// // Simulate an HTTP redirect:
-//     window.location.replace("http://www.w3schools.com");
+    //     // Simulate a mouse click:
+    //     window.location.href = "http://www.w3schools.com";
+    //
+    // // Simulate an HTTP redirect:
+    //     window.location.replace("http://www.w3schools.com");
   }
   const formData = getFormData(form)
   xhr.send(JSON.stringify(formData))
@@ -109,7 +109,6 @@ function transferFailed (evt) {
 function transferCanceled (evt) {
   console.log('Пользователь отменил загрузку.')
 }
-
 
 // todo pretty good
 // const btnSend = document.querySelector('#btn-clac');
