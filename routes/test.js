@@ -1,9 +1,10 @@
+const faker = require('faker')
 const express = require('express')
 const router = express.Router()
 // var db = require('./../models');
 // var Task = db.Task;
 // eslint-disable-next-line no-unused-vars
-const { Task, User, Project, Address, Tag } = require('./../models')
+const { Task, User, Category, Address, Product } = require('./../models')
 
 router.get('/findAll', (req, res, next) => {
   Task.findAll({ raw: true })
@@ -19,8 +20,8 @@ router.get('/findByPk', (req, res, next) => {
     raw: true,
     include: [{
       model: User,
-      as: 'workers'
-    }]
+      as: 'workers',
+    }],
   })
     .then((task) => {
       console.log(task.getworkers)
@@ -34,15 +35,88 @@ router.get('/findByPk', (req, res, next) => {
 router.get('/get', (req, res, next) => {
   Task.findAll({
     where: {
-      id: 1
+      id: 1,
     },
     include: [{
       model: User,
-      as: 'workers'
-    }]
+      as: 'workers',
+    }],
   }).then((task) => {
     res.json(task)
   })
+})
+
+// router.get('/gen', (req, res) => {
+//   Product.create({
+//     name: faker.commerce.product(),
+//     price: faker.commerce.price(0, 9999, 2),
+//     mURL: faker.image.abstract(),
+//     description: faker.commerce.productName(),
+//   }, { include: [{ model: Category }] })
+//     .then(data => { data.setCategories([1, 2]) })
+//
+//
+//   return Promise.all(users)
+//     .then(result => {
+//       res.json(result)
+//     })
+//     .catch(err => {
+//       res.json(err)
+//     })
+// })
+
+router.get('/bulk_unfinished', (req, res) => {
+  // todo ask somemody about it
+  const data = [
+    {
+      id: 12,
+      username: 'admin',
+      email: 'admin@admin.ru',
+      password: 'admin',
+    },
+    {
+      id: 11,
+      username: 'test',
+      email: 'test@test.ru',
+      password: 'test',
+    },
+  ]
+  for (let i = 0; i < 2; i++) {
+    const obj = {}
+    obj.username = faker.name.findName()
+    obj.email = faker.internet.email()
+    obj.password = faker.internet.email()
+    obj.addresses = [{
+      type: 'самовывоз',
+      line1: faker.address.streetAddress(),
+      line2: faker.address.secondaryAddress(),
+      city: faker.address.city(),
+      state: faker.address.state(),
+      zip: faker.address.zipCode(),
+      user_id: i + 1,
+    }]
+    data.push(obj)
+  }
+
+  User.bulkCreate(data, {
+    returning: true,
+    individualHooks: true,
+    include: [{
+      model: Address,
+      as: 'addresses',
+    }],
+  })
+    .then((data) => {
+      console.log('here', data)
+      res.json(data)
+    //   return User.findAll()
+    // })
+    // .then((response) => {
+    //   res.json(response)
+    })
+    .catch((error) => {
+      res.json(error)
+    })
 })
 
 router.get('/create', (req, res) => {
@@ -59,13 +133,13 @@ router.get('/create', (req, res) => {
       line2: '112312312300 Main St.',
       city: 'jopa',
       state: 'TX',
-      zip: '78704'
-    }]
+      zip: '78704',
+    }],
   }, {
     include: [{
       // include: [ User.Addresses ],
-      association: User.Addresses
-    }]
+      association: User.Addresses,
+    }],
   })
 
   // User.hasMany(Tag, { as: 'tags'});

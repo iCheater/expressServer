@@ -1,4 +1,6 @@
 'use strict'
+const resLocals = require('../middleware/resLocals')
+
 const homeRouter = require('./home')
 
 const adminRouter = require('./admin/')
@@ -6,10 +8,12 @@ const catalogRouter = require('./catalog')
 const testRouter = require('./test')
 const profileRouter = require('./profile')
 const authRouter = require('./auth')
+const ordersRouter = require('./admin/orders')
 
 const express = require('express')
 const router = express.Router()
 
+router.use(resLocals)
 
 router.use('/', homeRouter)
 router.use('/', authRouter)
@@ -23,15 +27,15 @@ router.use('/', authRouter)
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)
 
+// router.use((req, res, next) => { setTimeout(next, 3000) })
 // //admin
 router.use('/admin/', adminRouter)
 
+// //admin //orders
+router.use('/orders/', ordersRouter)
+
 // test
 router.use('/test', testRouter)
-
-
-
-
 
 router.use((req, res) => {
   res.status(404)
@@ -52,6 +56,7 @@ router.use((req, res) => {
   res.type('txt').send('Not found')
 })
 
+// router.all('/api/*', requireAuthentication)
 
 // router.use((req, res) => {
 //   res.status(500)

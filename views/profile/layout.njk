@@ -1,0 +1,26 @@
+{% extends "./../layout.njk" %}
+
+{#{{ user }}#}
+{% block preStylesheet %}
+    <link href="./css/profile.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex mt-5">
+
+        <div class="col-md-2">
+            <div class="list-group list-group-flush">
+                <a href="/profile" class="list-group-item list-group-item-action">Личный кабинет</a>
+                <a href="/profile/favorites" class="list-group-item list-group-item-action">Избранное</a>
+                <a href="profile/history" class="list-group-item list-group-item-action">История покупок</a>
+                <a href="profile/reviews" class="list-group-item list-group-item-action">Отзывы</a>
+                <a href="/profile/edit" class="list-group-item list-group-item-action">Настройки</a>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            {% block main_profile %}{% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
