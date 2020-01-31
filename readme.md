@@ -1,5 +1,6 @@
 The goal of this project is to create an online store using a modern technological stack.
-We use express, sequelize, nunjucks.
+We use express, sequelize, redis, nunjucks.
+Soon administration panel will be migrated to vue.
 We adhere to the JSON.API standard.
 
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
@@ -21,7 +22,20 @@ in postgress console:
 
 ### 2. Install [pgAdmin)]( https://wiki.postgresql.org/wiki/Apt)  or [DBeaver 6.1.5 ;)](https://github.com/dbeaver/dbeaver/releases/tag/6.1.5)
 
-### 3. Install [NVM)]( https://github.com/nvm-sh/nvm )
+### 3. Install [redis)]( https://tecadmin.net/install-redis-ubuntu/ )
+> sudo apt-get install redis-server
+> sudo systemctl enable redis-server.servic### 3. Install [redis)]( https://tecadmin.net/install-redis-ubuntu/ )
+> sudo apt-get install redis-server
+> sudo systemctl enable redis-server.service
+
+
+> sudo snap install snap-store snapd
+> sudo snap install redis-desktop-manager
+> sometimes you need to add export PATH=$PATH:/snap/bin into .bashrc
+if you dont have icons in apps menu:
+> sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applications/snap (if you dont get icons in search menu)
+
+### 4. Install [NVM)]( https://github.com/nvm-sh/nvm )
 > nvm install --lts
 
 ___

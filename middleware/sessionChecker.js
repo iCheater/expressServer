@@ -1,6 +1,6 @@
 const sessionChecker = (req, res, next) => {
-  console.log('sessionChecker')
   if (!req.session.user && !req.cookies.user_sid) {
+    console.log('sessionChecker. redirect!!')
     res.redirect('/login')
   } else {
     next()

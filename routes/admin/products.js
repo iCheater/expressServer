@@ -107,10 +107,10 @@ router.delete('/:id', (req, res) => {
   })
     .then(rowDeleted => { // rowDeleted will return number of rows deleted
       if (rowDeleted === 1) {
-        res.json(200, { links: { self: req.originalUrl } })
+        res.status(200).json({ links: { self: req.originalUrl } })
       }
       if (rowDeleted === 0) {
-        res.json(404, { links: { self: req.originalUrl } })
+        res.status(404).json({ links: { self: req.originalUrl } })
       }
     })
     .catch(err => {

@@ -1,4 +1,6 @@
 'use strict'
+const resLocals = require('../middleware/resLocals')
+
 const homeRouter = require('./home')
 
 const adminRouter = require('./admin/')
@@ -10,6 +12,8 @@ const ordersRouter = require('./admin/orders')
 
 const express = require('express')
 const router = express.Router()
+
+router.use(resLocals)
 
 router.use('/', homeRouter)
 router.use('/', authRouter)

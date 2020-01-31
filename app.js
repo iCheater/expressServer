@@ -42,7 +42,12 @@ app.use(session({
   // store: new SequelizeStore({
   //   db: db.sequelize,
   // }),
-  store: new RedisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
+  store: new RedisStore({
+    host: 'localhost',
+    port: 6379,
+    client: redisClient,
+    ttl: 86400,
+  }),
   saveUninitialized: false,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
