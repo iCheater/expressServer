@@ -33,8 +33,7 @@ if you dont have icons in apps menu:
 > sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applications/snap (if you dont get icons in search menu)
 
 ### 4. Install [NVM)]( https://github.com/nvm-sh/nvm )
-> nvm install --lts
-
+> nvm install node (current) or > nvm install --lts (latest)
 ___
 ### Usefull
 [node-express-sequelize-postgresql-association GIST](https://gist.github.com/thgaskell/e4decde53572664b182e)

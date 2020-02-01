@@ -8,6 +8,7 @@
     "start": "gulp",
     "poststart": "",
     "seed": "npx sequelize-cli db:seed:all",
+    "reseed": "npm run unseed & npm run seed",
     "unseed": "npx sequelize-cli db:seed:undo:all",
     "sass": "node-sass -w src/stylesheets/sass/ -o public/stylesheets/css/",
     "lint": "eslint ./bin/www"
