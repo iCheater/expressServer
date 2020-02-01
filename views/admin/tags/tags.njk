@@ -1,5 +1,10 @@
 {% extends "../adminLayout.njk" %}
 
+{% block preScript %}
+    <script src="/scripts/delete.js"></script>
+    <script src="/scripts/tagsSearch.js"></script>
+{% endblock %}
+
 {% block mbk %}
     <div class="col-10 mt-2 mb-2">
         <nav aria-label="breadcrumb">
@@ -10,35 +15,58 @@
             </ol>
         </nav>
 
-        <div class="alert alert-success  alert-dismissible fade show" role="alert">
-            <h5 class="alert-heading">Тег успешно добавлен!</h5>
-            <hr>
-            <p class="mb-0">
-                Тег загружен на сервер.
-            </p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        {% if successTag %}
+            <div class="alert alert-success  alert-dismissible fade show" role="alert">
+                <h5 class="alert-heading">Тег успешно добавлен!</h5>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
 
         <div class="d-flex">
-            <table class="table">
-                {% for tag in tags %}
-                    <tr>
-                        <td class="tableTd">{{ tag.id }}</td>
-                        <td class="tableTd">{{ tag.name }}</td>
-                        <td class="tableTd">{{ tag.description }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="">
+                <form role="search" name="test" >
+                    <input type="text" name="search" id="search" value="" class="form-control" placeholder="">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-dark" type="button">
+{#                              <img src="images/search.svg" class="w-100">#}
+                                <svg height="16px" version="1.1" viewBox="0 0 32 32" width="32px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink"><title/><desc/><defs/><g fill="none" fill-rule="evenodd" id="Page-1" stroke="none" stroke-width="1"><g fill="#929292" id="icon-111-search"><path d="M19.4271164,21.4271164 C18.0372495,22.4174803 16.3366522,23 14.5,23 C9.80557939,23 6,19.1944206 6,14.5 C6,9.80557939 9.80557939,6 14.5,6 C19.1944206,6 23,9.80557939 23,14.5 C23,16.3366522 22.4174803,18.0372495 21.4271164,19.4271164 L27.0119176,25.0119176 C27.5621186,25.5621186 27.5575313,26.4424687 27.0117185,26.9882815 L26.9882815,27.0117185 C26.4438648,27.5561352 25.5576204,27.5576204 25.0119176,27.0119176 L19.4271164,21.4271164 L19.4271164,21.4271164 Z M14.5,21 C18.0898511,21 21,18.0898511 21,14.5 C21,10.9101489 18.0898511,8 14.5,8 C10.9101489,8 8,10.9101489 8,14.5 C8,18.0898511 10.9101489,21 14.5,21 L14.5,21 Z" id="search"/></g></g></svg>
+                            </button>
+                        </span>
+                    </div>
+                </form><!-- Конец формы -->
 
-{#            <form class="col-6 d-flex flex-column " action="/admin/tags/add" method="post" target="_self">#}
-{#                Название тега:#}
-{#                <input type="text" name="name"><br>#}
-{#                Описание тега:#}
-{#                <input type="text" name="description">#}
-{#                <input class="btn btn-success mt-3 p-1" type="submit" value="Добавить тег">#}
-{#            </form>#}
+                <table id="tagsTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>description</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    {% for tag in tags %}
+                        <tr>
+                            <td class="tableTd">{{ tag.id }}</td>
+                            <td class="tableTd">{{ tag.name }}</td>
+                            <td class="tableTd">{{ tag.description }}</td>
+                            <td class="tableTd"><a class="text-danger deleteBtn"
+                                                   href="/admin/tags/{{ tag.id }}">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <form class="col-6 d-flex flex-column " action="/admin/tags/" method="post" target="_self">
+                Название тега:
+                <input type="text" name="name"><br>
+                Описание тега:
+                <input type="text" name="description">
+                <input class="btn btn-success mt-3 p-1" type="submit" value="Добавить тег">
+            </form>
+
 
         </div>
     </div>
