@@ -1,4 +1,5 @@
 const express = require('express')
+const app = express()
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan') // logger
@@ -7,15 +8,42 @@ const session = require('express-session')
 const multer = require('multer')
 const upload = multer()
 const redis = require('redis')
-
-const RedisStore = require('connect-redis')(session)
 const redisClient = redis.createClient()
+const RedisStore = require('connect-redis')(session)
 const router = require('./routes')
-
-const app = express()
-app.use(morgan('dev'))
-
 const nunjucks = require('nunjucks')
+const format = require('date-format')
+const winston = require('./config/winston')
+app.use(morgan('dev'))
+// app.use(morgan(':date :method :url :status :res[content-length] - :response-time ms'))
+// app.use(morgan((tokens, req, res) => {
+//   // console.log(tokens)
+//   return [
+//     (`[${format('hh:mm:ss.SSS', new Date())}]`),
+//     tokens.method(req, res),
+//     tokens.url(req, res),
+//     tokens.status(req, res),
+//     tokens.res(req, res, 'content-length'), '-',
+//     tokens['response-time'](req, res), 'ms',
+//   ].join(' ')
+// }))
+
+// error handler with res.locals logic. need to implement it
+router.use((err, req, res, next) => {
+  // set locals, only providing error in development
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+
+  // add this line to include winston logging
+  winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+
+  // render the error page
+  res.status(err.status || 500)
+  res.render('error')
+})
+
+// app.use(morgan('combined', { stream: winston.stream }))
+
 nunjucks.configure('views', {
   autoescape: true,
   express: app,
@@ -49,13 +77,13 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
-    expires: 24 * 60 * 60 * 1000, // 10мин hours
+    expires: 24 * 60 * 60 * 1000,
   },
 }))
 
 app.disable('x-powered-by')
 app.use('/', router)
-
+// todo refactor!
 /**
  * Module dependencies.
  */

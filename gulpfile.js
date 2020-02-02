@@ -59,7 +59,7 @@ gulp.task('nodemon', cb => {
       }
     })
     .on('restart', () => {
-      console.log('restarted!')
+      console.log('nodemon restarted!')
       browserSync.reload()
     })
 })
