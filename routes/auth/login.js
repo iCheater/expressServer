@@ -8,17 +8,16 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-
   const { username, password } = req.body
   if (!username || !password) {
     console.log('!username', username)
     console.log('!password', password)
     return res.redirect(400, '/login')
   }
-  console.log(username, password)
-  console.log('User', User)
+  console.log(`Correct auth: ${username} ${password}`)
+  // console.log('User', User)
   User.findOne({ where: { username: username } }).then(async (user) => {
-    console.log('findOne return:', user)
+    // console.log('findOne return:', user)
     if (!user) {
       console.log('!user', user.dataValues)
       res.redirect(400, '/login')
