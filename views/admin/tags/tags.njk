@@ -1,5 +1,10 @@
 {% extends "../adminLayout.njk" %}
 
+{% block preScript %}
+    <script src="/scripts/delete.js"></script>
+    <script src="/scripts/tagsSearch.js"></script>
+{% endblock %}
+
 {% block mbk %}
     <div class="col-10 mt-2 mb-2">
         <nav aria-label="breadcrumb">
@@ -10,35 +15,51 @@
             </ol>
         </nav>
 
-        <div class="alert alert-success  alert-dismissible fade show" role="alert">
-            <h5 class="alert-heading">Тег успешно добавлен!</h5>
-            <hr>
-            <p class="mb-0">
-                Тег загружен на сервер.
-            </p>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        {% if successTag %}
+            <div class="alert alert-success  alert-dismissible fade show" role="alert">
+                <h5 class="alert-heading">Тег успешно добавлен!</h5>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
 
         <div class="d-flex">
-            <table class="table">
-                {% for tag in tags %}
-                    <tr>
-                        <td class="tableTd">{{ tag.id }}</td>
-                        <td class="tableTd">{{ tag.name }}</td>
-                        <td class="tableTd">{{ tag.description }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
+            <div class="col-6">
+                <form class="mb-2" role="search" name="test" >
+                    <input type="text" name="search" id="search" value="" class="form-control form-control-sm" placeholder="Поиск тега..." autocomplete="off">
 
-{#            <form class="col-6 d-flex flex-column " action="/admin/tags/add" method="post" target="_self">#}
-{#                Название тега:#}
-{#                <input type="text" name="name"><br>#}
-{#                Описание тега:#}
-{#                <input type="text" name="description">#}
-{#                <input class="btn btn-success mt-3 p-1" type="submit" value="Добавить тег">#}
-{#            </form>#}
+                </form><!-- Конец формы -->
+
+                <table id="tagsTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>description</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    {% for tag in tags %}
+                        <tr>
+                            <td class="tableTd">{{ tag.id }}</td>
+                            <td class="tableTd">{{ tag.name }}</td>
+                            <td class="tableTd">{{ tag.description }}</td>
+                            <td class="tableTd"><a class="text-danger deleteBtn"
+                                                   href="/admin/tags/{{ tag.id }}">delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <form class="col-6 d-flex flex-column ml-2" action="/admin/tags/" method="post" target="_self">
+                Название тега:
+                <input type="text" name="name"><br>
+                Описание тега:
+                <input type="text" name="description">
+                <input class="btn btn-success mt-3 p-1" type="submit" value="Добавить тег">
+            </form>
+
 
         </div>
     </div>
