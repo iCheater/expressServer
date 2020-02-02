@@ -4,7 +4,8 @@ module.exports = {
   env: {
     commonjs: true,
     es6: true,
-    node: true
+    node: true,
+    jest: true,
   },
   extends: [
     'standard'
@@ -27,5 +28,6 @@ module.exports = {
       ignoreRestSiblings: true
     }],
     "comma-dangle": ["error", "always-multiline"],
-  }
+  },
+  // plugins: ["jest"]
 };
