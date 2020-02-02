@@ -5,7 +5,7 @@ const homeRouter = require('./home')
 
 const adminRouter = require('./admin/')
 const catalogRouter = require('./catalog')
-const testRouter = require('./test')
+const testRouter = require('./fortest')
 const profileRouter = require('./profile')
 const authRouter = require('./auth')
 const ordersRouter = require('./admin/orders')

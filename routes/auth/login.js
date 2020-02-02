@@ -8,23 +8,29 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  // res.render('login', { title: 'Express' });
+
   const { username, password } = req.body
+  if (!username || !password) {
+    console.log('!username', username)
+    console.log('!password', password)
+    return res.redirect(400, '/login')
+  }
   console.log(username, password)
+  console.log('User', User)
   User.findOne({ where: { username: username } }).then(async (user) => {
-    console.log(user)
+    console.log('findOne return:', user)
     if (!user) {
-      console.log('!user', user)
-      res.redirect('/login')
+      console.log('!user', user.dataValues)
+      res.redirect(400, '/login')
     } else if (!await user.validPassword(password)) {
       console.log('!validPassword')
-      res.redirect('/login')
+      res.redirect(400, '/login')
     } else {
       console.log('login ok. user')
       req.session.user = user.dataValues
       // req.session.user = {'test':"test"};
       // console.log('user.dataValues',user.dataValues);
-      res.redirect('/')
+      res.redirect(200, '/')
     }
   })
 })

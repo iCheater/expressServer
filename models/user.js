@@ -44,10 +44,10 @@ module.exports = (sequelize) => {
 
   // todo there is no-return-await
   User.prototype.validPassword = function (password) {
-    console.log('password === this.password', password === this.password)
-    console.log('password', password)
-    console.log('this.password', this.password)
-    console.log('this', this)
+    // console.log('password === this.password', password === this.password)
+    // console.log('password', password)
+    // console.log('this.password', this.password)
+    // console.log('this', this)
     // return password === this.password
     return bcrypt.compare(password, this.password)
   }

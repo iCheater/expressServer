@@ -42,7 +42,7 @@ gulp.task('clean', () => {
 gulp.task('nodemon', cb => {
   let called = false
   return nodemon({
-    script: './bin/www',
+    script: './app',
     ext: 'js .njk',
     ignore: [
       'gulpfile.js',
