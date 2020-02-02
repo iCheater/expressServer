@@ -38,6 +38,7 @@ router.post('/search', (req, res) => {
         [Op.startsWith]: req.body.value + '%',
       },
     },
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
   }).then(tags => {
     res.json(tags)
   })
