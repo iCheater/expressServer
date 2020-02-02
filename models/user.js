@@ -25,11 +25,15 @@ module.exports = (sequelize) => {
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     verified: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+    },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
 
   }, {

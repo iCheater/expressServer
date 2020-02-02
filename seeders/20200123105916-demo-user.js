@@ -15,6 +15,7 @@ module.exports = {
         password: faker.name.findName(),
         phone: faker.phone.phoneNumber(),
         verified: true,
+        avatarUrl: faker.image.avatar(),
         created_at: new Date(),
         updated_at: new Date(),
       })
