@@ -2,10 +2,8 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan') // logger
-// const db = require('./models')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-// const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const multer = require('multer')
 const upload = multer()
 const redis = require('redis')
@@ -55,16 +53,7 @@ app.use(session({
   },
 }))
 
-// This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
-// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
-app.use((req, res, next) => {
-  if (req.cookies.user_sid && !req.session.user) {
-    res.clearCookie('user_sid')
-  }
-  next()
-})
-
-// app.disable('x-powered-by')
+app.disable('x-powered-by')
 app.use('/', router)
 
 /**

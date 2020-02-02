@@ -1,5 +1,6 @@
 'use strict'
 const resLocals = require('../middleware/resLocals')
+const clearCookie = require('../middleware/clearCookie')
 
 const homeRouter = require('./home')
 
@@ -14,6 +15,7 @@ const express = require('express')
 const router = express.Router()
 
 router.use(resLocals)
+router.use(clearCookie)
 
 router.use('/', homeRouter)
 router.use('/', authRouter)
