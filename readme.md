@@ -28,25 +28,24 @@ shop_server_db=# \password shop_server (change password to "shop_server")
 
 ### 3. Install [Redis]( https://tecadmin.net/install-redis-ubuntu/ )
 ```console
-sudo apt-get install redis-server
-sudo systemctl enable redis-server.service
-
-sudo snap install redis-desktop-manager
+foo@bar: sudo apt-get install redis-server
+foo@bar: sudo systemctl enable redis-server.service
+foo@bar: sudo snap install redis-desktop-manager
 ```
 Linux Mint users have to add `export PATH=$PATH:/snap/bin` into `.bashrc`
 if you dont have icons in apps menu:
 ```console
-sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applications/snap (if you dont get icons in search menu)
+foo@bar: sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applications/snap (if you dont get icons in search menu)
 ```
 
 ### 4. Install [NVM]( https://github.com/nvm-sh/nvm )
 After NVM installation complete tell NVM to install current version:
 ```console
-nvm install node
+foo@bar: nvm install node
 ```
 or install latest version:
 ```console
-nvm install --lts
+foo@bar: nvm install --lts
 ```
 ___
 ### Usefull
@@ -54,9 +53,9 @@ ___
 
 find process and kill it
 ```console
-sudo netstat -nlp | grep :3000
-kill -9 process_id
-fuser -k 3000/tcp
+foo@bar: sudo netstat -nlp | grep :3000
+foo@bar: kill -9 process_id
+foo@bar: fuser -k 3000/tcp
 ```
 
 
