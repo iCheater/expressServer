@@ -1,12 +1,13 @@
 const appRoot = require('app-root-path')
-const { createLogger, format, transports } = require('winston')
+const util = require('util')
+const { createLogger, format, transports, addColors } = require('winston')
 const { combine, timestamp, label, printf } = format
-const colorizer = format.colorize()
-const dateFormat = require('date-format')
+// const colorizer = format.colorize()
+// const dateFormat = require('date-format')
+const path = require('path')
+const chalk = require('chalk')
 
-// todo i want logs look like this
-//  [00:23:22] [info][nodemon] starting `node ./app.js`
-// [date][level][[filename or process][msg]]
+// todo https://www.npmjs.com/package/config
 
 // Ignore log messages if they have { private: true }
 const ignorePrivate = format((info, opts) => {
@@ -39,9 +40,6 @@ const myCustomLevels = {
     http: 'red',
   },
 }
-const myFormat = printf(({ level, message, label, timestamp, ms }) => {
-  return `[${timestamp}] [${level}] [${label}] : ${message} ${ms}`
-})
 
 const options = {
   file: {
@@ -52,6 +50,9 @@ const options = {
     maxsize: 5242880, // 5MB
     maxFiles: 5,
     colorize: false,
+    // format: combine(
+    //   format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] }),
+    // ),
   },
   errorFile: {
     level: 'error',
@@ -67,27 +68,44 @@ const options = {
     level: process.env.LOG_LEVEL || 'silly',
     handleExceptions: true,
     // json: false,
-    colorize: true,
+    // colorize: true,
     // prettyPrint: true, // todo google it
     format: combine(
-      // format.prettyPrint(),
-      format.align(),
+      // format.padLevels(),
+
       ignorePrivate(),
-      format.colorize(myCustomLevels.colors),
-      label({ label: 'proccessNameLabel' }),
+      format.splat(),
+      // format.simple(),
+      format.colorize({ all: false, level: true, message: false }),
+      label({ label: path.basename(process.mainModule.filename) }),
       timestamp({
         format: 'HH:mm:ss',
         // format: 'YYYY-MM-DD HH:mm:ss',
       }),
       format.ms(),
-      // format.simple(),
-      myFormat,
+      format.printf((info) => {
+        const { level, message, label, timestamp, ms } = info
+        // console.log('info: ', info)
+        // if (info.message.constructor === Object) {
+        //   info.message = util.inspect(message, {
+        //     depth: 6,
+        //     compact: true,
+        //     colors: true,
+        //   })
+        // }
+        return `[${timestamp}] [${level}] [${label}] : ${info.message} ${ms}`
+      }),
+
+      // format.align(),
+
+      // format.prettyPrint({ depth: 1, colorize: true }),
     ),
   },
 }
-// logger.addColors(myCustomLevels.colors) /
+
+addColors(myCustomLevels.colors) // todo
 const logger = new createLogger({
-  levels: myCustomLevels.levels,
+  // levels: myCustomLevels.levels,
   transports: [
     new transports.File(options.file),
     new transports.File(options.errorFile),
@@ -104,14 +122,24 @@ logger.stream = {
   },
 }
 
+const obj = {
+  int: 1,
+  str: 'str',
+  arr: [1, 'string'],
+  obj: { test: 'test' },
+}
 logger.log('silly', "127.0.0.1 - there's no place like home")
 logger.log('debug', "127.0.0.1 - there's no place like home")
 logger.log('verbose', "127.0.0.1 - there's no place like home")
-logger.log('info', '127.0.0.1 - tinfoinfoinfoinfoinfo home')
+logger.info(obj)
 logger.log('warn', "127.0.0.1 - there's no place like home")
 logger.log('error', "127.0.0.1 - there's no place like home")
 logger.log('http', "127.0.0.1 - there's no place like home")
 logger.info("127.0.0.1 - there's no place like home")
+logger.info('logger.info: %o', obj)
+logger.info('test')
+logger.info('Log me plz: %O', { ok: 'logged' })
+logger.info('Log me plz: %O', obj)
 logger.warn("127.0.0.1 - there's no place like home")
 logger.error("127.0.0.1 - there's no place like home")
 // Messages with { private: true } will not be written when logged.
