@@ -9,6 +9,7 @@ const testRouter = require('./test')
 const profileRouter = require('./profile')
 const authRouter = require('./auth')
 const ordersRouter = require('./admin/orders')
+const cartRouter = require('./cart')
 
 const express = require('express')
 const router = express.Router()
@@ -27,6 +28,7 @@ router.use('/', authRouter)
 
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)
+router.use('/cart/', cartRouter)
 
 // router.use((req, res, next) => { setTimeout(next, 3000) })
 // //admin
