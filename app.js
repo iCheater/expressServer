@@ -12,21 +12,24 @@ const redisClient = redis.createClient()
 const RedisStore = require('connect-redis')(session)
 const router = require('./routes')
 const nunjucks = require('nunjucks')
-// const format = require('date-format')
+const format = require('date-format')
 const winston = require('./config/winston')
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 // app.use(morgan(':date :method :url :status :res[content-length] - :response-time ms'))
-// app.use(morgan((tokens, req, res) => {
-//   // console.log(tokens)
-//   return [
-//     (`[${format('hh:mm:ss.SSS', new Date())}]`),
-//     tokens.method(req, res),
-//     tokens.url(req, res),
-//     tokens.status(req, res),
-//     tokens.res(req, res, 'content-length'), '-',
-//     tokens['response-time'](req, res), 'ms',
-//   ].join(' ')
-// }))
+app.use(morgan((tokens, req, res) => {
+  // console.log(tokens)
+  return [
+    // (`[${format('hh:mm:SS.SSS', new Date())}]`),
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms',
+  ]
+
+    .join(' ')
+}, { stream: winston.stream }))
+// app.use(morgan('combined', { stream: winston.stream }))
 
 // error handler with res.locals logic. need to implement it
 router.use((err, req, res, next) => {
@@ -42,7 +45,6 @@ router.use((err, req, res, next) => {
   res.render('error')
 })
 
-// app.use(morgan('combined', { stream: winston.stream }))
 
 nunjucks.configure('views', {
   autoescape: true,

@@ -79,7 +79,7 @@ const options = {
       format.colorize({ all: false, level: true, message: false }),
       label({ label: path.basename(process.mainModule.filename) }),
       timestamp({
-        format: 'HH:mm:ss',
+        format: 'HH:mm:SS.SSS',
         // format: 'YYYY-MM-DD HH:mm:ss',
       }),
       format.ms(),
@@ -93,7 +93,7 @@ const options = {
         //     colors: true,
         //   })
         // }
-        return `[${timestamp}] [${level}] [${label}] : ${info.message} ${ms}`
+        return `[${timestamp}] ${ms} [${level}] [${label}] : ${info.message}`
       }),
 
       // format.align(),
@@ -118,7 +118,8 @@ const logger = new createLogger({
 logger.stream = {
   write: function (message, encoding) {
     // use the 'info' log level so the output will be picked up by both transports (file and console)
-    logger.info(message)
+    // logger.info(message)
+    logger.info(message.substring(0, message.lastIndexOf('\n')))
   },
 }
 
@@ -128,25 +129,25 @@ const obj = {
   arr: [1, 'string'],
   obj: { test: 'test' },
 }
-logger.log('silly', "127.0.0.1 - there's no place like home")
-logger.log('debug', "127.0.0.1 - there's no place like home")
-logger.log('verbose', "127.0.0.1 - there's no place like home")
-logger.info(obj)
-logger.log('warn', "127.0.0.1 - there's no place like home")
-logger.log('error', "127.0.0.1 - there's no place like home")
-logger.log('http', "127.0.0.1 - there's no place like home")
-logger.info("127.0.0.1 - there's no place like home")
-logger.info('logger.info: %o', obj)
-logger.info('test')
-logger.info('Log me plz: %O', { ok: 'logged' })
-logger.info('Log me plz: %O', obj)
-logger.warn("127.0.0.1 - there's no place like home")
-logger.error("127.0.0.1 - there's no place like home")
+// logger.log('silly', "127.0.0.1 - there's no place like home")
+// logger.log('debug', "127.0.0.1 - there's no place like home")
+// logger.log('verbose', "127.0.0.1 - there's no place like home")
+// logger.info(obj)
+// logger.log('warn', "127.0.0.1 - there's no place like home")
+// logger.log('error', "127.0.0.1 - there's no place like home")
+// logger.log('http', "127.0.0.1 - there's no place like home")
+// logger.info("127.0.0.1 - there's no place like home")
+// logger.info('logger.info: %o', obj)
+// logger.info('test')
+// logger.info('Log me plz: %O', { ok: 'logged' })
+// logger.info('Log me plz: %O', obj)
+// logger.warn("127.0.0.1 - there's no place like home")
+// logger.error("127.0.0.1 - there's no place like home")
 // Messages with { private: true } will not be written when logged.
-logger.log({
-  private: true,
-  level: 'error',
-  message: 'This is super secret - hide it.',
-})
+// logger.log({
+//   private: true,
+//   level: 'error',
+//   message: 'This is super secret - hide it.',
+// })
 
 module.exports = logger
