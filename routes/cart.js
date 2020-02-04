@@ -3,17 +3,33 @@ const router = express.Router()
 const { Product } = require('./../models')
 
 router.get('/', (req, res) => {
-  // считать куки
-  const arr = req.cookies.cart.split('|')
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === '') {
-      arr.splice(i, 1)
-    }
-    arr[i] = Number(arr[i])
+  const cartCookies = req.cookies.cart
+  console.log('cartCookies', cartCookies)
+
+  let arrCartCookies = []
+
+  if (cartCookies !== undefined) {
+    arrCartCookies = cartCookies.split('|')
   }
+
+  console.log('start', arrCartCookies)
+
+  for (let i = 0; i < arrCartCookies.length; i++) {
+    if (arrCartCookies[i] === '' || !Number.isInteger(parseInt(arrCartCookies[i]))) {
+      arrCartCookies.splice(i, 1)
+    }
+    arrCartCookies[i] = Number(arrCartCookies[i])
+  }
+  console.log('finish', arrCartCookies)
+
+  if (arrCartCookies.length === 0) {
+    return res.render('cart/cart')
+  }
+  console.log('we are here', arrCartCookies)
+  console.log('we are here', arrCartCookies.length)
   Product.findAll({
     where: {
-      id: arr,
+      id: arrCartCookies,
     },
   })
     .then(products => {
@@ -23,5 +39,6 @@ router.get('/', (req, res) => {
         products: products,
       })
     })
+
 })
 module.exports = router
