@@ -1,6 +1,6 @@
 const appRoot = require('app-root-path')
 // const util = require('util')
-const { createLogger, format, transports } = require('winston')
+const { createLogger, loggers, format, transports } = require('winston')
 const { combine, timestamp, label } = format
 // const colorizer = format.colorize()
 // const dateFormat = require('date-format')
@@ -8,6 +8,7 @@ const path = require('path')
 const chalk = require('chalk')
 
 // todo https://www.npmjs.com/package/config
+// https://github.com/winstonjs/winston/tree/master/examples
 
 // Ignore log messages if they have { private: true }
 const ignorePrivate = format((info, opts) => {
