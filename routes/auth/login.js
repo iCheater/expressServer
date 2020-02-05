@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const { User } = require('../../models')
+const appRoot = require('app-root-path')
+const logger = require(`${appRoot}/config/winstonLogger`)
 
 // /* GET loader page. */
 router.get('/', (req, res, next) => {
@@ -14,22 +16,26 @@ router.post('/', (req, res, next) => {
     console.log('!password', password)
     return res.redirect(400, '/login')
   }
-  console.log(`Correct auth: ${username} ${password}`)
+  logger.verbose(`Login request with: [${username}] and password [${password}]`)
   // console.log('User', User)
   User.findOne({ where: { username: username } }).then(async (user) => {
     // console.log('findOne return:', user)
     if (!user) {
-      console.log('!user', user.dataValues)
-      res.redirect(400, '/login')
+      logger.verbose(`Username [${username}] not found`)
+      res.status(400)
+      res.redirect('/login')
     } else if (!await user.validPassword(password)) {
-      console.log('!validPassword')
-      res.redirect(400, '/login')
+      logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]`})
+      res.status(400)
+      res.redirect('/login')
     } else {
+      logger.verbose('Login and password are valid')
       console.log('login ok. user')
       req.session.user = user.dataValues
       // req.session.user = {'test':"test"};
       // console.log('user.dataValues',user.dataValues);
-      res.redirect(200, '/')
+      res.status(200)
+      res.redirect('/')
     }
   })
 })

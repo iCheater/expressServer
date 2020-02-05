@@ -1,32 +1,22 @@
 const express = require('express')
 const router = express.Router()
 const { Product } = require('./../models')
+const cartCookiesValidation = require('./../helpers/cartCookiesValidation')
+const appRoot = require('app-root-path')
+const logger = require(`${appRoot}/config/winstonLogger`)
 
 router.get('/', (req, res) => {
   const cartCookies = req.cookies.cart
-  console.log('cartCookies', cartCookies)
+  logger.info('cartCookies %O', cartCookies)
+  // console.log('cartCookies', cartCookies)
 
-  let arrCartCookies = []
-
-  if (cartCookies !== undefined) {
-    arrCartCookies = cartCookies.split('|')
-  }
-
-  console.log('start', arrCartCookies)
-
-  for (let i = 0; i < arrCartCookies.length; i++) {
-    if (arrCartCookies[i] === '' || !Number.isInteger(parseInt(arrCartCookies[i]))) {
-      arrCartCookies.splice(i, 1)
-    }
-    arrCartCookies[i] = Number(arrCartCookies[i])
-  }
-  console.log('finish', arrCartCookies)
+  const arrCartCookies = cartCookiesValidation(req.cookies.cart)
 
   if (arrCartCookies.length === 0) {
     return res.render('cart/cart')
   }
-  console.log('we are here', arrCartCookies)
-  console.log('we are here', arrCartCookies.length)
+  logger.info('arrCartCookies %O', cartCookies)
+  logger.info('arrCartCookies.length %O', cartCookies.length)
   Product.findAll({
     where: {
       id: arrCartCookies,

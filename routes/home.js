@@ -17,8 +17,8 @@ router.get('/', (req, res, next) => {
   // console.log('req.session' , req.session)
   // winston.log(res.locals.user)
   // winston.log('log', 'test')
-  logger.info('req.cookies %O', req.cookies)
-  logger.log('info', 'req.cookies %O', req.cookies)
+  // logger.info('req.cookies %O', req.cookies)
+  // logger.log('info', 'req.cookies %O', req.cookies)
 
   // console.log(req.cookies)
   res.render('home', {
