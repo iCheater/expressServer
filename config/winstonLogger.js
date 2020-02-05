@@ -1,7 +1,7 @@
 const appRoot = require('app-root-path')
-const util = require('util')
-const { createLogger, format, transports, addColors } = require('winston')
-const { combine, timestamp, label, printf } = format
+// const util = require('util')
+const { createLogger, format, transports } = require('winston')
+const { combine, timestamp, label } = format
 // const colorizer = format.colorize()
 // const dateFormat = require('date-format')
 const path = require('path')
@@ -14,32 +14,6 @@ const ignorePrivate = format((info, opts) => {
   if (info.private) { return false }
   return info
 })
-
-const myCustomLevels = {
-  levels: {
-    error: 0,
-    warn: 1,
-    info: 2,
-    http: 3,
-    verbose: 4,
-    debug: 5,
-    silly: 6,
-  },
-  colors: {
-    trace: 'magenta',
-    input: 'grey',
-    verbose: 'cyan',
-    prompt: 'grey',
-    debug: 'blue',
-    info: 'green',
-    data: 'grey',
-    help: 'cyan',
-    warn: 'yellow',
-    error: 'red',
-    silly: 'red',
-    http: 'red',
-  },
-}
 
 const options = {
   file: {
@@ -67,16 +41,14 @@ const options = {
   console: {
     level: process.env.LOG_LEVEL || 'silly',
     handleExceptions: true,
-    // json: false,
-    // colorize: true,
     // prettyPrint: true, // todo google it
     format: combine(
-      // format.padLevels(),
-
+      format.align(),
+      format.padLevels(),
       ignorePrivate(),
       format.splat(),
       // format.simple(),
-      format.colorize({ all: false, level: true, message: false }),
+      format.colorize({ all: false, level: true, message: true }),
       label({ label: path.basename(process.mainModule.filename) }),
       timestamp({
         format: 'HH:mm:SS.SSS',
@@ -93,19 +65,15 @@ const options = {
         //     colors: true,
         //   })
         // }
-        return `[${timestamp}] ${ms} [${level}] [${label}] : ${info.message}`
+        return `[${chalk.blackBright(timestamp)}] [${level}] [${label}]:${message} [${ms}]`
       }),
-
-      // format.align(),
-
       // format.prettyPrint({ depth: 1, colorize: true }),
     ),
   },
 }
 
-addColors(myCustomLevels.colors) // todo
+// eslint-disable-next-line new-cap
 const logger = new createLogger({
-  // levels: myCustomLevels.levels,
   transports: [
     new transports.File(options.file),
     new transports.File(options.errorFile),
@@ -123,27 +91,14 @@ logger.stream = {
   },
 }
 
-const obj = {
-  int: 1,
-  str: 'str',
-  arr: [1, 'string'],
-  obj: { test: 'test' },
-}
-// logger.log('silly', "127.0.0.1 - there's no place like home")
-// logger.log('debug', "127.0.0.1 - there's no place like home")
-// logger.log('verbose', "127.0.0.1 - there's no place like home")
-// logger.info(obj)
-// logger.log('warn', "127.0.0.1 - there's no place like home")
-// logger.log('error', "127.0.0.1 - there's no place like home")
-// logger.log('http', "127.0.0.1 - there's no place like home")
-// logger.info("127.0.0.1 - there's no place like home")
-// logger.info('logger.info: %o', obj)
-// logger.info('test')
-// logger.info('Log me plz: %O', { ok: 'logged' })
-// logger.info('Log me plz: %O', obj)
-// logger.warn("127.0.0.1 - there's no place like home")
-// logger.error("127.0.0.1 - there's no place like home")
-// Messages with { private: true } will not be written when logged.
+logger.error('error')
+logger.warn('warn')
+logger.info('info')
+logger.http('http')
+logger.verbose('verbose')
+logger.debug('debug')
+logger.silly('silly')
+
 // logger.log({
 //   private: true,
 //   level: 'error',
