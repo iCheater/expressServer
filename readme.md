@@ -47,6 +47,17 @@ or install latest version:
 ```console
 foo@bar:~$  nvm install --lts
 ```
+### 5. Install npm dependencies
+Install dependencies from package.json
+```console
+foo@bar:~$  npm install
+```
+or
+
+Install dependencies from package-lock.json
+```console
+foo@bar:~$  npm ci
+```
 ___
 ### Usefull
 [node-express-sequelize-postgresql-association GIST](https://gist.github.com/thgaskell/e4decde53572664b182e)

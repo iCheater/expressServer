@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
+const debug = require('debug')('express-server:server') // todo why?
+const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const morgan = require('morgan') // logger
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const multer = require('multer')
@@ -12,39 +13,25 @@ const redisClient = redis.createClient()
 const RedisStore = require('connect-redis')(session)
 const router = require('./routes')
 const nunjucks = require('nunjucks')
-const format = require('date-format')
-const winston = require('./config/winston')
-// app.use(morgan('dev'))
-// app.use(morgan(':date :method :url :status :res[content-length] - :response-time ms'))
-app.use(morgan((tokens, req, res) => {
-  // console.log(tokens)
-  return [
-    // (`[${format('hh:mm:SS.SSS', new Date())}]`),
-    tokens.method(req, res),
-    tokens.url(req, res),
-    tokens.status(req, res),
-    tokens.res(req, res, 'content-length'), '-',
-    tokens['response-time'](req, res), 'ms',
-  ]
+// const winston = require('winston')
+const logger = require('./config/winstonLogger')
+const morgan = require('./config/morgan')
 
-    .join(' ')
-}, { stream: winston.stream }))
-// app.use(morgan('combined', { stream: winston.stream }))
+app.use(morgan({ stream: logger.stream }))
 
 // error handler with res.locals logic. need to implement it
-router.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
-
-  // add this line to include winston logging
-  winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
-
-  // render the error page
-  res.status(err.status || 500)
-  res.render('error')
-})
-
+// router.use((err, req, res, next) => {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message
+//   res.locals.error = req.app.get('env') === 'development' ? err : {}
+//
+//   // add this line to include winston logging
+//   winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
+//
+//   // render the error page
+//   res.status(err.status || 500)
+//   res.render('500', { message: err })
+// })
 
 nunjucks.configure('views', {
   autoescape: true,
@@ -86,39 +73,33 @@ app.use(session({
 app.disable('x-powered-by')
 app.use('/', router)
 // todo refactor!
-/**
- * Module dependencies.
- */
-
-const debug = require('debug')('express-server:server')
-var http = require('http')
 
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '3000')
+const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port)
 
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app)
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
+const server = http.createServer(app)
 server.listen(port)
-console.log('server : 127.0.0.1:' + port)
+logger.info('server : 127.0.0.1:' + port)
 server.on('error', onError)
 server.on('listening', onListening)
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening () {
+  const addr = server.address()
+  const bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port
+  debug('Listening on ' + bind)
+}
 
 /**
  * Normalize a port into a number, string, or false.
  */
-
 function normalizePort (val) {
   var port = parseInt(val, 10)
 
@@ -150,29 +131,22 @@ function onError (error) {
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
-    case 'EACCES':
+    case 'EACCES': {
       console.error(bind + ' requires elevated privileges')
       process.exit(1)
+      // eslint-disable-next-line no-unreachable
       break
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use')
+    }
+    case 'EADDRINUSE': {
+      logger.error(bind + ' is already in use')
       process.exit(1)
+      // eslint-disable-next-line no-unreachable
       break
+    }
+
     default:
       throw error
   }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening () {
-  var addr = server.address()
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port
-  debug('Listening on ' + bind)
 }
 
 module.exports = app
