@@ -14,13 +14,17 @@ const ignorePrivate = format((info, opts) => {
 
 const options = {
   file: {
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.LOG_LEVEL || 'silly',
     filename: `${appRoot}/logs/app.log`,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
     maxFiles: 5,
     colorize: false,
+    format: combine(
+      format.simple(),
+      ignorePrivate(),
+    ),
     // format: combine(
     //   format.metadata({ fillExcept: ['message', 'level', 'timestamp', 'label'] }),
     // ),
@@ -34,6 +38,7 @@ const options = {
     maxsize: 5242880, // 5MB
     maxFiles: 100,
     colorize: true,
+
   },
   console: {
     level: process.env.LOG_LEVEL || 'silly',
@@ -42,7 +47,6 @@ const options = {
     format: combine(
       format.align(),
       format.padLevels(),
-      ignorePrivate(),
       format.splat(),
       // format.simple(),
       format.colorize({ all: false, level: true, message: true }),
@@ -95,10 +99,15 @@ if (process.env.NODE_ENV !== 'production') {
   logger.verbose('verbose')
   logger.debug('debug')
   logger.silly('silly')
+  logger.verbose({
+    private: false,
+    // level: 'error',
+    message: 'This is super secret - hidasde it.',
+  })
   logger.log({
     private: true,
     level: 'error',
-    message: 'This is super secret - hide it.',
+    message: 'This is super secret - hidasde iast.',
   })
 }
 
