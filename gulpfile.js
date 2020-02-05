@@ -118,13 +118,14 @@ gulp.task('watch', () => {
 })
 
 gulp.task('set-dev-node-env', (cb) => {
-  // process.env.NODE_ENV = 'dev'
-  ifEnv.set('dev')
+  process.env.NODE_ENV = 'development'
+  process.env.LOG_LEVEL = 'silly'
+  // ifEnv.set('development')
   cb()
 })
 gulp.task('set-prod-node-env', (cb) => {
-  // process.env.NODE_ENV = 'prod'
-  ifEnv.set('prod')
+  process.env.NODE_ENV = 'production'
+  // ifEnv.set('prod')
   cb()
 })
 
