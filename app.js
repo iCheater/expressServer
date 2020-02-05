@@ -38,9 +38,8 @@ nunjucks.configure('views', {
   express: app,
 })
 app.set('view engine', 'njk')
-
 app.use(express.static(path.join(__dirname, 'public')))
-// for parsing application/json
+// for parsing application/json // todo  Don't use app.use for your entire application if you really only need that middleware for 2 routes (I'm looking at you, body-parser)
 app.use(bodyParser.json())
 // // for parsing application/xwww-form-urlencoded (parse incoming parameters requests to req.body)
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -82,7 +81,9 @@ app.set('port', port)
 
 const server = http.createServer(app)
 server.listen(port)
-logger.info('server : 127.0.0.1:' + port)
+logger.info('app.js started server:  http://localhost:' + port)
+logger.warn(`NODE_ENV was set to [${process.env.NODE_ENV || 'nothing'}]`)
+logger.warn(`LOG_LEVEL was set to [${process.env.LOG_LEVEL || 'nothing'}]. Possible values: error | warn | info | http | verbose | debug | silly `)
 server.on('error', onError)
 server.on('listening', onListening)
 /**

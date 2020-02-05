@@ -1,10 +1,6 @@
+const { createLogger, format, transports } = require('winston')
 const appRoot = require('app-root-path')
-// const util = require('util')
-const { createLogger, loggers, format, transports } = require('winston')
-const { combine, timestamp, label } = format
-// const colorizer = format.colorize()
-// const dateFormat = require('date-format')
-const path = require('path')
+const { combine, timestamp } = format
 const chalk = require('chalk')
 
 // todo https://www.npmjs.com/package/config
@@ -50,14 +46,13 @@ const options = {
       format.splat(),
       // format.simple(),
       format.colorize({ all: false, level: true, message: true }),
-      label({ label: path.basename(process.mainModule.filename) }),
+      // label({ label: path.basename(process.mainModule.filename) }),
       timestamp({
-        format: 'HH:mm:SS.SSS',
-        // format: 'YYYY-MM-DD HH:mm:ss',
+        format: 'HH:mm:SS.SSS', // format: 'YYYY-MM-DD HH:mm:ss',
       }),
       format.ms(),
       format.printf((info) => {
-        const { level, message, label, timestamp, ms } = info
+        const { level, message, timestamp, ms } = info
         // console.log('info: ', info)
         // if (info.message.constructor === Object) {
         //   info.message = util.inspect(message, {
@@ -66,7 +61,7 @@ const options = {
         //     colors: true,
         //   })
         // }
-        return `[${chalk.blackBright(timestamp)}] [${level}] [${label}]:${message} [${ms}]`
+        return `[${chalk.blackBright(timestamp)}] [${level}]:${message} [${ms}]`
       }),
       // format.prettyPrint({ depth: 1, colorize: true }),
     ),
@@ -92,18 +87,19 @@ logger.stream = {
   },
 }
 
-logger.error('error')
-logger.warn('warn')
-logger.info('info')
-logger.http('http')
-logger.verbose('verbose')
-logger.debug('debug')
-logger.silly('silly')
-
-// logger.log({
-//   private: true,
-//   level: 'error',
-//   message: 'This is super secret - hide it.',
-// })
+if (process.env.NODE_ENV !== 'production') {
+  logger.error('error')
+  logger.warn('warn')
+  logger.info('info')
+  logger.http('http')
+  logger.verbose('verbose')
+  logger.debug('debug')
+  logger.silly('silly')
+  logger.log({
+    private: true,
+    level: 'error',
+    message: 'This is super secret - hide it.',
+  })
+}
 
 module.exports = logger

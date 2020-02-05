@@ -3,6 +3,7 @@ We use express, sequelize, redis, nunjucks.
 Soon administration panel will be migrated to vue.
 We adhere to the JSON.API standard.
 
+
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
 
 example:
@@ -58,8 +59,22 @@ Install dependencies from package-lock.json
 ```console
 foo@bar:~$  npm ci
 ```
+### 6. Install  [Gulp]( https://gulpjs.com/docs/en/getting-started/quick-start )
+```console
+foo@bar:~$  npm install --global gulp-cli
+```
+### 7. Run Gulp!
+```console
+foo@bar:~$ gulp
+```
+
 ___
 ### Usefull
+
+###### G++
+```console
+sudo apt-get install build-essential
+```
 [node-express-sequelize-postgresql-association GIST](https://gist.github.com/thgaskell/e4decde53572664b182e)
 
 find process and kill it
