@@ -1,5 +1,9 @@
 {% extends "./../layout.njk" %}
 
+{% block preScript %}
+    <script src="/scripts/cartCalculate.js"></script>
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
@@ -30,11 +34,14 @@
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price"><span class="price">{{ product.price }} </span>руб</td>
+                    <td data-th="Price"><span class="price" value="{{ product.price }} ">{{ product.price }} </span></td>
                     <td data-th="Quantity">
-                        <input type="number" class="form-control text-center" value="{{ product.amount }}">
+                        <input type="number" class="form-control text-center quantityProduct" value="{{ product.amount }}">
+                        <button id="btnPlus" onclick="increaseValue(this)">+</button>
+
+                        <button id="btnMinus" onclick="decreaseValue(this)">-</button>
                     </td>
-                    <td data-th="Subtotal" class="text-center">{{ product.amount * product.price }} руб.</td>
+                    <td data-th="Subtotal" class="subtotal text-center">{{ product.amount * product.price }}</td>
                     <td class="actions" data-th="">
                         <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
@@ -46,7 +53,7 @@
                 <tr>
                     <td><a href="#" class="btn btn-general btn-white"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                     <td colspan="2" class="hidden-xs"></td>
-                    <td class="hidden-xs text-center"><strong>Total $150.99</strong></td>
+                    <td class="hidden-xs text-center"><strong id="sumTotal">{{ sumTotal }}</strong></td>
                     <td><a href="#" class="btn btn-general btn-green">Checkout <i class="fa fa-angle-right"></i></a></td>
                 </tr>
                 </tfoot>
