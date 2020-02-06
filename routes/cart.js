@@ -15,6 +15,8 @@ router.get('/', (req, res) => {
   if (arrCartCookies.length === 0) {
     return res.render('cart/cart')
   }
+  // расчет повторов
+
   logger.info('arrCartCookies %O', cartCookies)
   logger.info('arrCartCookies.length %O', cartCookies.length)
   Product.findAll({
