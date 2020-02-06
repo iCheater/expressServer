@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
   })
     .then(products => {
       const rowProducts = products.map(e => e.get({ row: true }))
+      let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
         product.amount = 0
         arrCartCookies.forEach(i => {
@@ -31,6 +32,7 @@ router.get('/', (req, res) => {
             product.amount++
           }
         })
+        sumTotal = sumTotal + product.price
         return product
       })
       // console.table(productsWithAmount)
@@ -39,6 +41,7 @@ router.get('/', (req, res) => {
       res.render('cart/cart', {
         editOrAdd: 'cart',
         products: productsWithAmount,
+        sumTotal: sumTotal,
       })
     })
 })

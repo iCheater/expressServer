@@ -53,6 +53,5 @@ function createTable (obj) {
     td.appendChild(aElem)
     tr.appendChild(td)
   }
-
   console.log(newtBody)
 }
