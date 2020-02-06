@@ -10,27 +10,36 @@ router.get('/', (req, res) => {
   logger.info('cartCookies %O', cartCookies)
   // console.log('cartCookies', cartCookies)
 
-  const arrCartCookies = cartCookiesValidation(req.cookies.cart)
+  const arrCartCookies = cartCookiesValidation(req.cookies.cart).sort()
 
   if (arrCartCookies.length === 0) {
     return res.render('cart/cart')
   }
-  // расчет повторов
-
-  logger.info('arrCartCookies %O', cartCookies)
-  logger.info('arrCartCookies.length %O', cartCookies.length)
+  logger.info('arrCartCookies %O', arrCartCookies)
+  logger.info('arrCartCookies.length %O', arrCartCookies.length)
   Product.findAll({
     where: {
       id: arrCartCookies,
     },
   })
     .then(products => {
+      const rowProducts = products.map(e => e.get({ row: true }))
+      const productsWithAmount = rowProducts.map((product) => {
+        product.amount = 0
+        arrCartCookies.forEach(i => {
+          if (i === product.id) {
+            product.amount++
+          }
+        })
+        return product
+      })
+      // console.table(productsWithAmount)
       // res.json(products)
+      // console.table(rowProducts)
       res.render('cart/cart', {
         editOrAdd: 'cart',
-        products: products,
+        products: productsWithAmount,
       })
     })
-
 })
 module.exports = router
