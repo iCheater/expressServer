@@ -1,3 +1,5 @@
+const cartCookiesValidation = require('./../helpers/cartCookiesValidation')
+
 const resLocals = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
     // console.log('resLocals')
@@ -5,6 +7,10 @@ const resLocals = (req, res, next) => {
       name: req.session.user.username,
       id: req.session.user.id,
     }
+  }
+
+  if (req.cookies.user_sid) {
+    res.locals.cart = cartCookiesValidation(req.cookies.cart)
   }
   next()
 }

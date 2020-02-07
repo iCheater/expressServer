@@ -1,11 +1,11 @@
+const appRoot = require('app-root-path')
+const logger = require(`${appRoot}/config/winstonLogger`)
 const express = require('express')
 const router = express.Router()
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
   const params = {}
-
-  // console.log('session', req.session.user)
 
   if (req.session.user && req.cookies.user_sid) {
     // console.log('session', req.session.user)
@@ -15,8 +15,12 @@ router.get('/', (req, res, next) => {
     }
   }
   // console.log('req.session' , req.session)
-  console.log(res.locals.user)
+  // winston.log(res.locals.user)
+  // winston.log('log', 'test')
+  // logger.info('req.cookies %O', req.cookies)
+  // logger.log('info', 'req.cookies %O', req.cookies)
 
+  // console.log(req.cookies)
   res.render('home', {
     // user: {
     //   name: req.session.user.username,

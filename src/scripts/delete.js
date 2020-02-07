@@ -46,7 +46,3 @@ function removeButton (item) {
   const tr = item.closest('tr')
   tr.parentNode.removeChild(tr)
 }
-
-$(document).on('click', '#test-id', () => {
-  console.log(2222)
-})

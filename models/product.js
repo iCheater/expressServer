@@ -14,7 +14,7 @@ module.exports = function (sequelize) {
       },
     },
     name: DataTypes.STRING,
-    price: DataTypes.FLOAT,
+    price: DataTypes.DECIMAL,
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
   })
