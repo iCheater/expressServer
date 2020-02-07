@@ -10,11 +10,26 @@ login\password: shop_server\shop_server_db
 
 ```console
 foo@bar:~$ sudo -u postgres createuser --interactive // type shop_server
-//replace_this_text_with_actual_text_from_the_console_plz
+Enter name of role to add: shop_server
+Shall the new role be a superuser? (y/n) y
 foo@bar:~$ sudo -u postgres createdb shop_server_db // creating db
-//replace_this_text_with_actual_text_from_the_console_plz
 foo@bar:~$ sudo adduser shop_server //create linux user with password shop_server
-//replace_this_text_with_actual_text_from_the_console_plz
+Добавляется пользователь «shop_server» ...
+Добавляется новая группа «shop_server» (1001) ...
+Добавляется новый пользователь «shop_server» (1001) в группу «shop_server» ...
+Создаётся домашний каталог «/home/shop_server» ...
+Копирование файлов из «/etc/skel» ...
+Новый пароль : 
+Повторите ввод нового пароля : 
+passwd: пароль успешно обновлён
+Изменение информации о пользователе shop_server
+Введите новое значение или нажмите ENTER для выбора значения по умолчанию
+        Полное имя []: 
+        Номер комнаты []: 
+        Рабочий телефон []: 
+        Домашний телефон []: 
+        Другое []: 
+Данная информация корректна? [Y/n] y
 foo@bar:~$ sudo -u shop_server psql shop_server_db // enter in postgress console
 psql (12.1 (Ubuntu 12.1-1.pgdg19.04+1), server 11.6 (Ubuntu 11.6-1.pgdg19.04+1))
 Type "help" for help.
