@@ -9,7 +9,7 @@ module.exports = {
     for (let i = 0; i < 100; i++) {
       products.push({
         name: faker.commerce.product(),
-        price: faker.commerce.price(0, 9999, 2),
+        price: faker.commerce.price(0.1, 9999.99, 2),
         mURL: faker.image.avatar(),
         description: faker.commerce.productName(),
         createdAt: new Date(),
