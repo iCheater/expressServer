@@ -17,3 +17,20 @@ module.exports = (cartCookies) => {
 
   return arrCartCookies
 }
+
+// module.exports = (cartCookies) => {
+//   let arrCartCookies = []
+//
+//   if (cartCookies !== undefined) {
+//     arrCartCookies = cartCookies.split('|')
+//     for (let i = 0; i < arrCartCookies.length; i++) {
+//       if (arrCartCookies[i] === '' || !Number.isInteger(parseInt(arrCartCookies[i]))) {
+//         arrCartCookies.splice(i, 1)
+//         continue
+//       }
+//       arrCartCookies[i] = Number(arrCartCookies[i])
+//     }
+//   }
+//
+//   return arrCartCookies
+// }
