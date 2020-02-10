@@ -1,10 +1,12 @@
 {% extends "../adminLayout.njk" %}
 
+
 {% block preScript %}
     <script src="/scripts/delete.js"></script>
 {% endblock %}
 
 {% block mbk %}
+
     <div class="col-md-10 w-100 mt-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -28,8 +30,8 @@
                     <td class="tableTd"><a href="/admin/products/{{ product.id }}">{{ product.id }}</a></td>
                     <td class="tableTd">{{ product.name }}</td>
                     <td class="tableTd">{{ product.price or "null" }}</td>
-                    {#            <td>{{ good.description }}</td>#}
-                    {#            <td>{{ good.category }}</td>#}
+                                <td>{{ good.description }}</td>
+                                <td>{{ good.category }}</td>
                     <td class="tableTd">{{ product.createdAt }}</td>
                     <td class="tableTd">{{ product.updatedAt }}</td>
                     <td class="tableTd"><a class="text-success" href="/admin/products/edit/{{ product.id }}">edit</a>
