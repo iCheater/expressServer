@@ -39,10 +39,14 @@ const {
   Order,
   Product,
   Category,
+  Tag,
 } = db
 
 Product.belongsToMany(Category, { through: 'product_category', foreignKey: 'product_id' })
 Category.belongsToMany(Product, { through: 'product_category', foreignKey: 'category_id' })
+
+Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
+Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
 
 User.hasMany(Address, { as: 'addresses', foreignKey: 'user_id' })
 Address.belongsTo(User, { foreignKey: 'user_id' })

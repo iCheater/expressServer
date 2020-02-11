@@ -81,12 +81,19 @@
             <h4>Описание</h4>
             {{ product.description }}
         </div>
+        // бахни тут теги сочные
+        <div class="tags">
+{#            {{ product | dump  }}#}
+            {% for tag in product.Tags %}
+                <span>{{ tag.name }}</span>
+            {% endfor %}
+        </div>
 
 
-        <h4>Спонсорские товары</h4>
+        <h4>Похожие товары</h4>
         <div class="product_other">
 
-            {#            {% for product in products %}#}
+                        {% for product in products %}
             <div class="other__item">
                 <div class="other__item-img">
                     <img src=" {{ product.mURL }}">
@@ -107,7 +114,7 @@
 
                 </div>
             </div>
-            {#            {% endfor %}#}
+                        {% endfor %}
         </div>
 
     </div>

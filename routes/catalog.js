@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Product, Category, Sequelize: { Op } } = require('./../models')
+const { Product, Tag, Category, Sequelize: { Op } } = require('./../models')
 
 router.get('/', (req, res, next) => {
   const promises = [
@@ -21,19 +21,35 @@ router.get('/', (req, res, next) => {
   })
 })
 
-router.get('/items/:idItem', (req, res, next) => {
+router.get('/item/:idItem', (req, res, next) => {
+  console.log(req.params.idItem)
   Product.findByPk(parseInt(req.params.idItem), {
-    include: [{ model: Category }],
+    include: [
+      { model: Category },
+      { model: Tag },
+    ],
   })
     .then(product => {
-      // console.log(product.Categories[0].name)
-      console.log(product)
-      res.render('catalog/catalogItem', {
-        product: product,
-        products: product,
-        category: product.Categories[0].name,
+      // res.json(product.Tags[0].name)
+      Product.findAll({
+        limit: 10,
+        include: [{
+          model: Category,
+          where: {
+            id: 11,
+          },
+        }],
+      }).then(products => {
+        // res.json(products)
+        res.render('catalog/catalogItem', {
+          product: product,
+          // tags: product.Tags,
+          products: products,
+          category: product.Categories[0].name,
+        })
       })
-    }).catch(err => {
+    })
+    .catch(err => {
       res.json(err)
     })
 })
