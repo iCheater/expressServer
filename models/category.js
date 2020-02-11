@@ -15,6 +15,7 @@ module.exports = (sequelize) => {
       },
     },
     name: DataTypes.STRING,
+    nameURL: DataTypes.STRING,
     description: DataTypes.TEXT,
   }, {
   })
