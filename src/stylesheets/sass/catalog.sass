@@ -5,7 +5,7 @@
   margin: 0
   list-style: none
   font-size: 14px
-  padding-left: 10px
+  //padding-left: 10px
   li
     display: inline-block
     padding: 10px 0
@@ -32,12 +32,12 @@
         a
           color: rgba(128, 128, 128, 0.4)
     .category-title
-      margin-top: 10px
+      margin-top: 20px
       padding: 0
       display: block
     .empty
       display: block
-      height: 50px
+      height: 40px
       border-bottom: 1px solid rgba(128, 128, 128, 0.37)
 
 .catalog__bar
@@ -75,15 +75,16 @@
     color: #FFF
     font-weight: 600
     margin: 5px 10px 5px 0
-  .item__price
-    color: #b11a41
-    font-weight: 600
-    font-size: 14px
-    margin: auto
+
   .item__other-info
     color: gray
     p
       margin-bottom: 0
+
+.item__price
+  color: #b11a41
+  font-weight: 600
+  font-size: 18px
 
 //Category page
 .category__container
@@ -126,3 +127,91 @@
     padding: 5px 0
 
 
+// page item
+.block__item
+  &-photo
+    //width: 48%
+    img
+      width: 40vw
+  &-info
+    width: 48%
+    margin-left: 30px
+    color: #555555
+    a
+      color: rgba(54, 81, 255, 0.87)
+      font-size: 14px
+
+  .item__title
+    margin-bottom: 20px
+    width: 100%
+    display: block
+  .block__item-wrapper
+    display: flex
+    justify-content: space-between
+  .items__btns
+    display: flex
+    align-items: center
+    margin: 20px auto
+    .item__links
+      margin: 30px auto
+      a
+        padding: 10px
+        vertical-align: center
+    button
+      width: 110px
+      padding: 5px 20px
+      margin-right: 20px
+      text-align: center
+
+  .items__info-contain
+
+.block__shipping
+  margin-top: 100px
+  color: #555555
+  a
+    color: rgba(54, 81, 255, 0.87)
+    font-size: 14px
+
+#btn_cart
+  background-color: #005bf8
+  padding: 8px 15px
+  color: #fff
+  border-radius: 5px
+  margin-right: 20px
+
+.item__contain-descr
+  margin-top: 20px
+  padding: 20px
+  border: 1px solid rgba(18, 9, 9, 0.2)
+  h4
+    margin: 0 0 10px
+
+
+//
+.product_other
+  width: 100%
+  display: flex
+  justify-content: space-between
+  margin-bottom: 30px
+  padding: 5px
+  .other__item
+    padding: 5px
+    width: 11vw
+    height: 250px
+    background-color: rgba(12, 84, 96, 0.48)
+    margin: 0 10px
+    .other__item-img
+      img
+        width: 100%
+        margin: 0 auto
+    .item__price,
+    .other__item-info
+      font-size: 14px
+      .btn__to-basket
+        display: block
+        margin-top: 30px
+        background-color: #005bf8
+        padding: 8px 15px
+        color: #fff
+        border-radius: 5px
+        text-align: center

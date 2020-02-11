@@ -64,49 +64,14 @@ ul
 
   li
     padding-left: 38px
-
   a
     color: #2f3f54
     font-weight: 700
 
-#main-content
-  min-height: 70vh
 
+//#main-content
+//  min-height: 70vh
 
-.block__item
-  display: flex
-  justify-content: space-around
-
-  &-photo
-    width: 48%
-
-  &-info
-    width: 48%
-    margin-left: 30px
-
-  .item__title
-    margin-bottom: 20px
-
-  .items__btns
-    margin: 20px auto
-
-    button
-      width: 110px
-      padding: 5px 20px
-      margin-right: 20px
-      text-align: center
-
-  .items__info-contain
-    .item__links
-      margin: 20px auto
-
-      a span
-        padding: 5px
-        vertical-align: center
-
-    .item__contain-descr
-      padding: 20px
-      border: 5px dashed rgba(237, 51, 18, 0.45)
 
 //Admin
 .product_table
@@ -230,37 +195,6 @@ ul
 
 
 //content home page
-.services
-  .services__inner
-    display: flex
-    justify-content: space-between
-    margin-bottom: 30px
-
-    .block__services
-      width: 50%
-      height: 250px
-      margin: 5px
-      text-align: center
-      display: flex
-      justify-content: center
-      position: relative
-
-      span
-        text-transform: uppercase
-        font-weight: 700
-        position: absolute
-        top: 50%
-        transform: translate(0, -50%)
-
-    .services-link
-      background-color: rgba(237, 51, 18, 0.5)
-
-    .portfolio-link
-      background-color: rgba(237, 178, 63, 0.5)
-
-    .catalog-link
-      background-color: rgba(242, 232, 26, 0.51)
-
 
 .footer
   padding-top: 45px
@@ -469,4 +403,27 @@ ul
 
 .shadow
   box-shadow: 0px 5px 10px rgba(0, 9, 12, 0.2)
+
+.services
+  .services__inner
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    .services-title
+      width: 100%
+      display: inline-block
+    .services-descr
+      width: 70%
+
+    .services-aside
+      margin-bottom: 50px
+      .sort__services
+        padding: 20px 30px
+        box-shadow: 0px 5px 10px rgba(0, 9, 12, 0.2)
+        li
+          list-style-type: none
+          padding-bottom: 8px
+        li:before
+          content: " – "
+
 

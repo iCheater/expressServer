@@ -20,6 +20,23 @@ router.get('/', (req, res, next) => {
   })
 })
 
+router.get('/items/:idItem', (req, res, next) => {
+  Product.findByPk(parseInt(req.params.idItem), {
+    include: [{ model: Category }],
+  })
+    .then(product => {
+      // console.log(product.Categories[0].name)
+      console.log(product)
+      res.render('catalog/catalogItem', {
+        product: product,
+        products: product,
+        category: product.Categories[0].name,
+      })
+    }).catch(err => {
+      res.json(err)
+    })
+})
+
 router.get('/:category', (req, res, next) => {
   Category.findByPk(parseInt(req.params.category))
     .then(category => {
