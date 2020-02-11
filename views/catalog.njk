@@ -1,91 +1,156 @@
 {% extends "layout.njk" %}
 
+{% block preStylesheet %}
+    <link href="/css/catalog.min.css" rel="stylesheet">
+{% endblock %}
+
  {% block preScript %}
-     <script src="scripts/addProductToCart.js" ></script>
+     <script src="scripts/addProductToCart.js"></script>
  {% endblock %}
 
 {% block content %}
-
     <div class="main__content">
+        <!--   breadcrumb -->
         <div class="container">
-            {#        <!-- хлебные крошки  -->#}
+            <div class="breadcrumb_1">
+                <ul class="breadcrumb-path">
+                    <li><a href="/">Главная</a></li>
+                    <li class="active">Каталог</li>
+                </ul>
+            </div>
+            <!--   catalog container -->
             <div class="catalog">
-                <div class="catalog__filters">
-                    <ul class="catalog__filters-item">
-                        {% for category in categories %}
-                            <li><a href="/catalog/{{ category.id }}"> {{ category.name }}</a></li>
-                        {% endfor %}
+                <div class="catalog__category">
+                    <span class="empty"> </span>
+
+                    <span class="category-title">Популярные категории</span>
+                    <ul>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+
+                    </ul>
+
+                    <span class="category-title">Корпусы</span>
+                    <ul>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
                     </ul>
                 </div>
-                <!-- Catalog bar -->
+
                 <div class="catalog__bar">
-
-                    {% for product in products %}
-                        <div class="catalog__item">
-                            <div class="item__img">
-                                <img src=" {{ product.mURL }}">
+                    <h3>Категории</h3>
+                    <div class="category__container">
+                        {% for category in categories %}
+                            <div class="category__item">
+                                <a href="/catalog/{{ category.id }}">
+                                    <h5>{{ category.name }}</h5>
+                                    <img src="https://placehold.it/280x160">
+                                </a>
                             </div>
+                        {% endfor %}
+                    </div>
 
-                            <div class="item__info">
-                                <div class="item__name">
-                                    <a href="#">{{ product.name }}</a>
-                                </div>
-                                <div class="item__price-container">
-                                    <div class="item__price">
-                                        <span><span class="price">{{ product.price }} </span>руб</span>
-                                    </div>
-                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button' title="Положить в корзину">
-                                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="currentColor"
-                                                  d="M504.717 320H211.572l6.545 32h268.418c15.401 0 26.816 14.301 23.403 29.319l-5.517 24.276C523.112 414.668 536 433.828 536 456c0 31.202-25.519 56.444-56.824 55.994-29.823-.429-54.35-24.631-55.155-54.447-.44-16.287 6.085-31.049 16.803-41.548H231.176C241.553 426.165 248 440.326 248 456c0 31.813-26.528 57.431-58.67 55.938-28.54-1.325-51.751-24.385-53.251-52.917-1.158-22.034 10.436-41.455 28.051-51.586L93.883 64H24C10.745 64 0 53.255 0 40V24C0 10.745 10.745 0 24 0h102.529c11.401 0 21.228 8.021 23.513 19.19L159.208 64H551.99c15.401 0 26.816 14.301 23.403 29.319l-47.273 208C525.637 312.246 515.923 320 504.717 320zM403.029 192H360v-60c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v60h-43.029c-10.691 0-16.045 12.926-8.485 20.485l67.029 67.029c4.686 4.686 12.284 4.686 16.971 0l67.029-67.029c7.559-7.559 2.205-20.485-8.486-20.485z">
-                                            </path>
-                                        </svg>
-                                    </a>
-                                    <a class="item__to-favorite" type='button' title="Избранное">
-                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14pt" height="14pt" viewBox="0 0 14 14" version="1.1">
-                                            <g id="surface1">
-                                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 12.773438 2.191406 C 11.40625 0.824219 9.191406 0.824219 7.824219 2.191406 L 7 3.015625 L 6.175781 2.191406 C 4.808594 0.824219 2.59375 0.824219 1.226562 2.191406 C -0.140625 3.558594 -0.140625 5.773438 1.226562 7.140625 L 7 12.914062 L 12.773438 7.140625 C 14.140625 5.773438 14.140625 3.558594 12.773438 2.191406 Z M 10.300781 7.964844 L 7 11.265625 L 2.050781 6.316406 C 1.140625 5.40625 1.140625 3.929688 2.050781 3.015625 C 2.960938 2.105469 4.4375 2.105469 5.351562 3.015625 L 7 4.667969 L 8.648438 3.015625 C 9.5625 2.105469 11.039062 2.105469 11.949219 3.015625 C 12.859375 3.929688 12.859375 5.40625 11.949219 6.316406 Z M 10.300781 7.964844 "/>
-                                            </g>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+                    <h4 class="title__side-left">Популярные товары</h4>
+                    <div class="category__container">
+
+                    </div>
 
                 </div>
-
             </div>
         </div>
+
     </div>
 
+    <!--   catalog -->
 
+{#        <div class="main__content">#}
+{#            <!--   breadcrumb -->#}
+{#            <div class="container">#}
+{#                <div class="breadcrumb_1">#}
+{#                    <ul class="breadcrumb-path">#}
+{#                        <li><a href="/">Главная</a></li>#}
+{#                        <li class="active">Каталог</li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <!--   catalog container -->#}
+{#                <div class="catalog">#}
+{#                    <div class="catalog__category">#}
+{#                        <span class="empty"> </span>#}
 
+{#                        <span class="category-title">Популярные категории</span>#}
+{#                        <ul>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
 
+{#                        </ul>#}
 
-    {##}
-{% endblock %}
+{#                        <span class="category-title">Корпусы</span>#}
+{#                        <ul>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                            <li><a href="#">Обложки</a></li>#}
+{#                        </ul>#}
+{#                    </div>#}
 
+{#                    <div class="catalog__bar">#}
+{#                        <h3>Категории</h3>#}
+{#                        {% for product in products %}#}
+{#                            <div class="catalog__item">#}
+{#                                <div class="item__img">#}
+{#                                    <img src=" {{ product.mURL }}">#}
+{#                                </div>#}
 
-{#<div class="catalog__item">#}
-{#    <div class="item__img">#}
-{#        <img src="https://placehold.it/150x150">#}
-{#    </div>#}
-
-{#    <div class="item__info">#}
-{#        <div class="item__name">#}
-{#            <a href="#">Product__1 Product__1</a>#}
-{#        </div>#}
-{#        <div class="item__price-container">#}
-{#            <div class="item__price">#}
-{#                <span><span><span class="price">200 </span>руб</span></span>#}
+{#                                <div class="item__info">#}
+{#                                    <div class="item__name">#}
+{#                                        <a href="#">{{ product.name }}</a>#}
+{#                                    </div>#}
+{#                                    <div class="item__price-container">#}
+{#                                        <a class="item__to-basket" data-id="{{ product.id }}" type='button' title="Положить в корзину">#}
+{#                                            В корзину#}
+{#                                        </a>#}
+{#                                        <div class="item__price">#}
+{#                                            <span><span class="price">{{ product.price }} </span></span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="item__other-info">#}
+{#                                        <p>В наличии 42 шт</p>#}
+{#                                        <p>Доставка сегодня</p>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
 {#            </div>#}
-{#            <a class="item__to-basket" title="Положить в корзину">#}
-{#                <i class="fas fa-shopping-cart"></i>#}
-{#            </a>#}
-{#            <a class="item__to-favorite" title="Избранное">#}
-{#                <i class="fas fa-heart"></i>#}
-{#            </a>#}
+
 {#        </div>#}
-{#    </div>#}
-{#</div>#}
+
+{#            <div class="main__content">#}
+{#                <div class="container">#}
+{#                            <!-- хлебные крошки  -->#}
+{#                    <div class="catalog">#}
+{#                        <div class="catalog__filters">#}
+{#                            <ul class="catalog__filters-item">#}
+{#                                {% for category in categories %}#}
+{#                                    <li><a href="/catalog/{{ category.id }}"> {{ category.name }}</a></li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                        <!-- Catalog bar -->#}
+{#                        <div class="catalog__bar">#}
+
+
+
+{#                        </div>#}
+
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{% endblock %}

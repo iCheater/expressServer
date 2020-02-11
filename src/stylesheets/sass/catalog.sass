@@ -1,0 +1,103 @@
+//catalog for client side
+
+
+.breadcrumb-path
+  margin: 0
+  list-style: none
+
+  padding-left: 10px
+  li
+    display: inline-block
+    padding: 10px 0
+    &::after
+      content: '>'
+      margin-left: 5px
+    &:last-child::after
+      content: ''
+.catalog
+  display: flex
+  justify-content: space-between
+  &__category
+    min-width: 200px
+    margin-right: 10px
+    //background-color: rgba(0, 168, 255, 0.22)
+    span
+      font-weight: 600
+    ul
+      list-style: none
+      margin: 0
+      padding: 10px 0
+      li
+        padding-bottom: 5px
+        a
+          color: rgba(128, 128, 128, 0.4)
+    .category-title
+      margin-top: 10px
+      display: block
+    .empty
+      display: block
+      height: 50px
+      border-bottom: 1px solid rgba(128, 128, 128, 0.37)
+
+.catalog__bar
+  padding: 10px
+  width: 940px
+  //background-color: rgba(255, 119, 144, 0.22)
+  display: flex
+  justify-content: center
+  flex-wrap: wrap
+  margin: 0 auto
+  h3
+    margin-left: 20px
+    width: 100%
+
+.catalog__item
+  border: 1px solid rgba(0, 0, 0, 0.24)
+  padding: 5px
+  width: 280px
+  height: 350px
+  .item__img
+    display: flex
+    justify-content: space-between
+    img
+      margin: auto
+      height: 220px
+  .item__name
+    font-size: 16px
+    margin: 5px 0
+  .item__price-container
+    display: inline-flex
+  .item__to-basket
+    background-color: #005bf8
+    padding: 12px 25px
+    border-radius: 5px
+    color: #FFF
+    font-weight: 600
+    margin: 5px 10px 5px 0
+  .item__price
+    color: #b11a41
+    font-weight: 600
+    font-size: 14px
+    margin: auto
+  .item__other-info
+    color: gray
+    p
+      margin-bottom: 0
+
+//Category page
+.category__container
+  padding: 20px
+  width: 940px
+  display: flex
+  justify-content: flex-start
+  flex-wrap: wrap
+  margin: 0
+  border: 2px solid rgba(128, 128, 128, 0.37)
+.title__side-left
+  width: 100%
+  margin: 10px 0 0 20px
+  font-weight: 600
+.category__item
+  margin: 5px
+  a:hover
+    color: #555555
