@@ -1,0 +1,115 @@
+{% extends "../layout.njk" %}
+
+{% block preStylesheet %}
+    <link href="/css/catalog.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container shadow">
+        <div class="breadcrumb_1">
+            <ul class="breadcrumb-path">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/catalog/">Каталог</a></li>
+                <li><a href="/catalog/{{ category }}">{{ category }}</a></li>
+                <li class="active">{{ product.name }}</li>
+            </ul>
+        </div>
+
+        <div class="block__item">
+
+            <h2 class="item__title">
+                {{ product.name }}
+            </h2>
+
+
+            <div class="block__item-wrapper">
+                <div class="block__item-photo">
+                    <img src="{{ product.mURL }}" alt="#">
+                </div>
+
+                <div class="block__item-info">
+
+                    <div class="items__info-contain">
+                        <p>
+                            Contain: tree, metal.
+                        </p>
+                        <p>
+                            Size: 200x200cm.
+                        </p>
+                        <a href="#contein-descr">Перейти к описанию</a>
+                    </div>
+
+                    <div class="items__btns">
+                        <a id="btn_cart" class="item__to-basket" data-id="{{ product.id }}" type='button'
+                           title="Положить в корзину">
+                            В корзину
+                        </a>
+
+                        <div class="item__price">
+                            <span><span class="price">{{ product.price }}</span></span>
+                        </div>
+
+                        <div class="item__links">
+                            <a class="item__to-favorite" title="Избранное">
+                                <img src="images/favorite.png">
+                                {#                                <span>Добавить в избранное</span>#}
+
+                            </a>
+                            <a class="item__to-social" title="Поделиться">
+                                <img src="images/favorite.png">
+                                {#                                <span>Поделиться</span>#}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="block__shipping">
+                        <h4>Доставка</h4>
+                        <div class="shipping__address">
+                            Москва
+                            <a href="#">Изменить</a>
+                        </div>
+                        <div class="item__other-info">
+                            <p>В наличии 42 шт</p>
+                            <p>Доставка сегодня</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item__contain-descr" id="#contein-descr">
+            <h4>Описание</h4>
+            {{ product.description }}
+        </div>
+
+
+        <h4>Спонсорские товары</h4>
+        <div class="product_other">
+
+            {#            {% for product in products %}#}
+            <div class="other__item">
+                <div class="other__item-img">
+                    <img src=" {{ product.mURL }}">
+                </div>
+                <div class="other__item-info">
+                    <div class="item__price">
+                        <span><span class="price">{{ product.price }} </span></span>
+                    </div>
+                    <div class="item__info-name">
+                        <a href="#">{{ product.name }}</a>
+                    </div>
+
+
+                    <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
+                       title="Положить в корзину">
+                        В корзину
+                    </a>
+
+                </div>
+            </div>
+            {#            {% endfor %}#}
+        </div>
+
+    </div>
+
+{% endblock %}

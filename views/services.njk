@@ -1,17 +1,52 @@
+{% extends "layout.njk" %}
 
-<section class="services">
-    <div class="container">
-        <div class="services__inner">
-            <div class="block__services services-link">
-                <span>услуги</span>
+{% block content %}
+
+    <section class="services">
+        <div class="container shadow">
+
+            <div class="services__inner">
+                <h1 class="services-title">Услуги</h1>
+                <div class="services-descr">
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed dui sed dolor imperdiet suscipit. Aliquam non lectus ac neque cursus venenatis. Phasellus nec purus feugiat augue gravida faucibus nec eu erat. Fusce feugiat, justo sit amet molestie varius, neque.</p>
+                    <p> Fusce feugiat, justo sit amet molestie varius, neque.</p>
+                    <p>Aliquam non lectus ac neque cursus venenatis. Phasellus nec purus feugiat augue gravida faucibus nec eu erat. Fusce feugiat, justo sit amet molestie varius, neque.</p>
+                    <p>Praesent sed dui sed dolor imperdiet suscipit. Aliquam non lectus ac neque cursus venenatis. Phasellus nec purus feugiat augue gravida faucibus nec eu erat. Fusce feugiat, justo sit amet molestie varius, neque.</p>
+
+                </div>
+                <div class="services-aside">
+                    <ul class="sort__services">
+                        <li>LaserLaserLaser</li>
+                        <li>FreserFreserFreser</li>
+                        <li>ProjectProjectProjectProject</li>
+                    </ul>
+
+                    <div class="">
+                        <h4>Каталог готовых изделий</h4>
+                        <div>
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                        </div>
+                    </div>
+
+                    <div class="">
+                        <h4>Портфолио индивидуальных проектов</h4>
+                        <div>
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                            <img src="https://placehold.it/60x60">
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="block__services portfolio-link">
-                <span>portfolio</span>
-            </div>
-            <div class="block__services catalog-link">
-                <span>каталог</span>
-            </div>
+
         </div>
-
-    </div>
-</section>
+    </section>
+{% endblock %}
