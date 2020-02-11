@@ -4,19 +4,43 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     const categories = [
       {
-        name: 'из дерева',
-        description: 'фанера 3мм-5мм',
+        name: 'Обложки',
+        description: 'описание обложек',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: 'из акрила',
-        description: 'акрил 3мм-5мм',
+        name: 'Орнаменты',
+        description: 'разные геометрические формы',
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
-        name: 'другое',
+        name: 'Фигурки',
+        description: 'Ну вы поняли',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Подставки',
+        description: 'разный материал',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Корпусы',
+        description: 'разный материал',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Мебель',
+        description: 'разный материал',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        name: 'Светильники',
         description: 'разный материал',
         createdAt: new Date(),
         updatedAt: new Date(),

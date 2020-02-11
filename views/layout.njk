@@ -19,6 +19,7 @@
 {% block nav %}
     {% include "navbar.njk" %}
 {% endblock nav %}
+
 <div id="main-content" class="mb-2">
     {% block content %}{% endblock %}
 </div>
@@ -31,6 +32,6 @@
 
 {% block postScript %}{% endblock %}
 <script src="/scripts/jQuery/jquery-3.4.1.min.js" ></script>
-<script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
+{#<script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>#}
 </body>
 </html>
