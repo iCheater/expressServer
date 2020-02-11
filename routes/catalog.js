@@ -115,7 +115,7 @@ router.get('/:categoryID', (req, res, next) => {
       Product.findAll({
         include: [{
           model: Category,
-          where: { id: parseInt(req.params.category) },
+          where: { id: parseInt(req.params.categoryID) },
         },
         ],
       })
