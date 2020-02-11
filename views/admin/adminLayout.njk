@@ -1,5 +1,9 @@
 {% extends "../layout.njk" %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+{% endblock %}
+
 {% block content %}
 <div class="container p-1">
     <div class="row">
@@ -7,4 +11,8 @@
         {% block mbk %}{% endblock %}
     </div>
 </div>
+{% endblock %}
+
+{% block postScript %}
+    <script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
 {% endblock %}

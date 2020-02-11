@@ -3,13 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Shop</title>
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    {% block stylesheet %}{% endblock %}
     <link rel="stylesheet" href="/css/style.min.css"/>
 {#    <link rel="stylesheet" href="/css/style.css.map"/>#}
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap">
 
-    {% block stylesheet %}{% endblock %}
     {% block preStylesheet %}{% endblock %}
 
     {% block preScript %}{% endblock %}
@@ -24,7 +23,6 @@
     {% block content %}{% endblock %}
 </div>
 
-{#<script src="../public/javascripts/slider.js"></script>#}
 
 {% block footer %}
     {% include "footer.njk" %}
@@ -32,6 +30,5 @@
 
 {% block postScript %}{% endblock %}
 <script src="/scripts/jQuery/jquery-3.4.1.min.js" ></script>
-{#<script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>#}
 </body>
 </html>

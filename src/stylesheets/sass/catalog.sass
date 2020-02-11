@@ -4,7 +4,7 @@
 .breadcrumb-path
   margin: 0
   list-style: none
-
+  font-size: 14px
   padding-left: 10px
   li
     display: inline-block
@@ -16,7 +16,7 @@
       content: ''
 .catalog
   display: flex
-  justify-content: space-between
+  //justify-content: space-between
   &__category
     min-width: 200px
     margin-right: 10px
@@ -33,6 +33,7 @@
           color: rgba(128, 128, 128, 0.4)
     .category-title
       margin-top: 10px
+      padding: 0
       display: block
     .empty
       display: block
@@ -40,22 +41,22 @@
       border-bottom: 1px solid rgba(128, 128, 128, 0.37)
 
 .catalog__bar
-  padding: 10px
+  padding: 0 0 10px
   width: 940px
   //background-color: rgba(255, 119, 144, 0.22)
   display: flex
-  justify-content: center
+  justify-content: flex-start
   flex-wrap: wrap
   margin: 0 auto
-  h3
-    margin-left: 20px
+  h2
+    margin: 0 0 10px 0
     width: 100%
 
 .catalog__item
   border: 1px solid rgba(0, 0, 0, 0.24)
   padding: 5px
-  width: 280px
-  height: 350px
+  //width: 33.3%
+  width: 33.3%
   .item__img
     display: flex
     justify-content: space-between
@@ -101,3 +102,27 @@
   margin: 5px
   a:hover
     color: #555555
+
+//Popular block
+.popular__item
+  display: flex
+  justify-content: space-between
+  flex-direction: column
+  height: 200px
+  padding: 10px
+  margin: 0 auto
+  &-img
+    img
+      height: 100px
+  .popular__price-container
+    font-size: 14px
+    line-height: 30px
+    .btn__to-basket
+      background-color: #005bf8
+      padding: 8px 15px
+      color: #fff
+      border-radius: 5px
+  .item__info-name
+    padding: 5px 0
+
+
