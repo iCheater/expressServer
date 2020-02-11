@@ -7,16 +7,15 @@ const logger = require(`${appRoot}/config/winstonLogger`)
 
 router.get('/', (req, res) => {
   const cartCookies = req.cookies.cart
-  logger.info('cartCookies %O', cartCookies)
-  // console.log('cartCookies', cartCookies)
+  logger.verbose('cartCookies %O', cartCookies)
 
   const arrCartCookies = cartCookiesValidation(req.cookies.cart).sort()
 
   if (arrCartCookies.length === 0) {
     return res.render('cart/cart')
   }
-  logger.info('arrCartCookies %O', arrCartCookies)
-  logger.info('arrCartCookies.length %O', arrCartCookies.length)
+  logger.verbose('arrCartCookies %O', arrCartCookies)
+  logger.verbose('arrCartCookies.length %O', arrCartCookies.length)
   Product.findAll({
     where: {
       id: arrCartCookies,
@@ -27,17 +26,16 @@ router.get('/', (req, res) => {
       let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
         product.amount = 0
+        product.rowTotal = 0
         arrCartCookies.forEach(i => {
           if (i === product.id) {
             product.amount++
           }
         })
-        sumTotal = sumTotal + product.price
+        product.rowTotal = product.price * product.amount
+        sumTotal = sumTotal + product.rowTotal
         return product
       })
-      // console.table(productsWithAmount)
-      // res.json(products)
-      // console.table(rowProducts)
       res.render('cart/cart', {
         editOrAdd: 'cart',
         products: productsWithAmount,

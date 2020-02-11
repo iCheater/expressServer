@@ -10,6 +10,18 @@ router.get('/', (req, res) => {
       res.render('admin/products/products', { products: rawData })
     })
 })
+router.get('/add/', (req, res) => {
+  Category.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('admin/products/addProduct', {
+        editOrAdd: 'Add',
+        categories: rawData,
+      })
+    })
+})
+
 router.get('/:id', (req, res, next) => {
   Product.findByPk(req.params.id, {
     include: [{ model: Category }],
@@ -29,17 +41,7 @@ router.get('/:id', (req, res, next) => {
     })
   // res.status(404)
 })
-router.get('/add/', (req, res) => {
-  Category.findAll()
-    .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
-      res.render('admin/products/addProduct', {
-        editOrAdd: 'Add',
-        categories: rawData,
-      })
-    })
-})
+
 router.get('/edit/:id', (req, res) => {
   // how to chain?
   console.log(req.params.id)
@@ -78,6 +80,7 @@ router.post('/', (req, res) => {
     })
 })
 router.put('/:id', (req, res) => {
+  // check for undefined!
   Product.update({
     name: req.body.name,
     price: req.body.price,
