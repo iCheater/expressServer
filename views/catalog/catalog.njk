@@ -1,0 +1,93 @@
+{% extends "../layout.njk" %}
+
+{% block preStylesheet %}
+    <link href="/css/catalog.min.css" rel="stylesheet">
+{% endblock %}
+
+ {% block preScript %}
+     <script src="../../public/scripts/addProductToCart.js"></script>
+ {% endblock %}
+
+{% block content %}
+    <div class="main__content">
+        <!--   breadcrumb -->
+        <div class="container shadow">
+            <div class="breadcrumb_1">
+                <ul class="breadcrumb-path">
+                    <li><a href="/">Главная</a></li>
+                    <li class="active">Каталог</li>
+                </ul>
+            </div>
+            <!--   catalog container -->
+            <div class="catalog">
+                <div class="catalog__category">
+                    <span class="empty"> </span>
+
+                    <span class="category-title">Популярные категории</span>
+                    <ul>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+
+                    </ul>
+
+                    <span class="category-title">Корпусы</span>
+                    <ul>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                    </ul>
+                </div>
+
+                <div class="catalog__bar">
+                    <h2>Категории</h2>
+                    <div class="category__container">
+                        {% for category in categories %}
+                            <div class="category__item">
+                                <a href="/catalog/{{ category.id }}">
+                                    <h3>{{ category.name }}</h3>
+                                    <img src="https://placehold.it/280x160">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <h4 class="title__side-left">Популярные товары</h4>
+                    <div class="category__container">
+                        {% for product in products %}
+                            <div class="popular__item">
+                                <div class="popular__item-img">
+                                    <img src=" {{ product.mURL }}">
+                                </div>
+
+                                <div class="popular__item-info">
+                                    <div class="item__info-name">
+                                        <a href="#">{{ product.name }}</a>
+                                    </div>
+                                    <div class="popular__price-container">
+                                        <div class="item__price">
+                                            <span><span class="price">{{ product.price }} </span></span>
+                                        </div>
+                                        <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
+                                           title="Положить в корзину">
+                                            В корзину
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--   catalog -->
+
+{% endblock %}

@@ -1,5 +1,5 @@
 'use strict'
-
+// todo refactor https://dev.to/nedsoft/getting-started-with-sequelize-and-postgres-emp
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
@@ -42,7 +42,7 @@ const {
 } = db
 
 Product.belongsToMany(Category, { through: 'product_category', foreignKey: 'product_id' })
-Category.belongsToMany(Product, { through: 'product_category' })
+Category.belongsToMany(Product, { through: 'product_category', foreignKey: 'category_id' })
 
 User.hasMany(Address, { as: 'addresses', foreignKey: 'user_id' })
 Address.belongsTo(User, { foreignKey: 'user_id' })

@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize').DataTypes
 
 module.exports = (sequelize) => {
-  var Tag = sequelize.define('Tag', {
+  const Tag = sequelize.define('Tag', {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
   }, {
@@ -10,4 +10,3 @@ module.exports = (sequelize) => {
 
   return Tag
 }
-// https://sequelize-guides.netlify.com/getting-started/
