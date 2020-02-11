@@ -38,33 +38,8 @@ router.get('/items/:idItem', (req, res, next) => {
     })
 })
 
-router.get('/:category', (req, res, next) => {
-  Category.findByPk(parseInt(req.params.category))
-    .then(category => {
-      if (category.length === 0) {
-        return res.json({ category: 'not found' })
-      }
-      Product.findAll({
-        include: [{
-          model: Category,
-          where: { id: parseInt(req.params.category) },
-        },
-        ],
-      })
-        .then(products => {
-          // res.json(products)
-          res.render('catalog/category', {
-            products: products,
-            category: category,
-          })
-        })
-    }).catch(err => {
-      res.json(err)
-    })
-})
-
-
 // http://localhost:5002/catalog/items?color=black&price=33&width=44
+// https://sequelize.org/master/manual/model-querying-basics.html
 router.get('/items', (req, res) => {
   console.log(req.query.color)
   console.log(req.query.price)
@@ -92,7 +67,26 @@ router.get('/items', (req, res) => {
     // }
     // nested key example
     where['features.dimensions.width'] = {
-      [Op.gt]: parseInt(req.query.width) || 0,
+      [Op.gte]: parseInt(req.query.width),
+    }
+  }
+
+  if (req.query.price) {
+    // Nested object example
+    // where.features = {}
+    // where.features.dimensions = {
+    //   width: {
+    //     [Op.gt]: parseInt(req.query.width) || 0,
+    //   },
+    // }
+    // nested key example
+    where.price = {
+      [Op.gte]: parseInt(req.query.price),
+    }
+  }
+  if (req.query.name) {
+    where.name = {
+      [Op.startsWith]: req.query.name,
     }
   }
 
@@ -111,6 +105,32 @@ router.get('/items', (req, res) => {
       res.json(err)
     })
 })
+
+router.get('/:categoryID', (req, res, next) => {
+  Category.findByPk(parseInt(req.params.categoryID))
+    .then(category => {
+      if (category.length === 0) {
+        return res.json({ category: 'not found' })
+      }
+      Product.findAll({
+        include: [{
+          model: Category,
+          where: { id: parseInt(req.params.category) },
+        },
+        ],
+      })
+        .then(products => {
+          // res.json(products)
+          res.render('catalog/category', {
+            products: products,
+            category: category,
+          })
+        })
+    }).catch(err => {
+      res.json(err)
+    })
+})
+
 // promise chain example
 // router.get('/', (req, res, next) => {
 //   return Category.findAll().then(categories => {
