@@ -1,4 +1,5 @@
 'use strict'
+const faker = require('faker')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -46,6 +47,15 @@ module.exports = {
         updatedAt: new Date(),
       },
     ]
+
+    for (let i = 0; i < 5; i++) {
+      categories.push({
+        name: faker.commerce.department(),
+        description: 'фейковый тег',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+    }
 
     return queryInterface.bulkInsert('Categories', categories, {})
   },
