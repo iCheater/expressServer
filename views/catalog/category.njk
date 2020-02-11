@@ -1,0 +1,94 @@
+{% extends "../layout.njk" %}
+
+{% block preStylesheet %}
+    <link href="/css/catalog.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="main__content">
+        <!--   breadcrumb -->
+
+        <div class="container shadow">
+            <div class="breadcrumb_1">
+                <ul class="breadcrumb-path">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/catalog/">Каталог</a></li>
+                    <li class="active">{{ category.name }}</li>
+                </ul>
+            </div>
+            <!--   catalog container -->
+            <div class="catalog">
+                <div class="catalog__category">
+                    <span class="empty"> </span>
+
+                    <span class="category-title">Популярные категории</span>
+                    <ul>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+                        <li><a href="#">Обложки</a></li>
+
+                    </ul>
+
+
+                </div>
+
+                <div class="catalog__bar">
+                    <h2>{{ category.name }}</h2>
+                    {% for product in products %}
+                        <div class="catalog__item">
+                            <div class="item__img">
+                                <img src=" {{ product.mURL }}">
+                            </div>
+
+                            <div class="item__info">
+                                <div class="item__name">
+                                    <a href="#">{{ product.name }}</a>
+                                </div>
+                                <div class="item__price-container">
+                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button'
+                                       title="Положить в корзину">
+                                        В корзину
+                                    </a>
+                                    <div class="item__price">
+                                        <span><span class="price">{{ product.price }} </span></span>
+                                    </div>
+                                </div>
+                                <div class="item__other-info">
+                                    <p>В наличии 42 шт</p>
+                                    <p>Доставка сегодня</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{#            <div class="main__content">#}
+{#                <div class="container">#}
+{#                            <!-- хлебные крошки  -->#}
+{#                    <div class="catalog">#}
+{#                        <div class="catalog__filters">#}
+{#                            <ul class="catalog__filters-item">#}
+{#                                {% for category in categories %}#}
+{#                                    <li><a href="/catalog/{{ category.id }}"> {{ category.name }}</a></li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        </div>#}
+{#                        <!-- Catalog bar -->#}
+{#                        <div class="catalog__bar">#}
+
+
+
+{#                        </div>#}
+
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}

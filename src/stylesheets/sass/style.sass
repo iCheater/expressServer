@@ -1,18 +1,27 @@
 //@import "vars"
 //@import "libs"
 //@import "fonts"
-//@import "sass/global"
+@import "global"
 
 
 body
   padding: 50px
   margin: 0
   padding: 0
-  font: 14px 'Roboto', sans-serif
+  font: 16px 'Roboto', sans-serif
 
-a
-  color: #00202c
-  text-decoration: none
+html
+  box-sizing: border-box
+
+.container
+  max-width: 1170px
+  margin: 0 auto
+  padding: 0 15px
+
+ul
+  padding: 0
+  margin: 0
+  list-style: none
 
 .header
   background-color: #f8f8f8
@@ -23,7 +32,6 @@ a
     align-items: center
     height: 87px
 
-
 .btn__menu
   width: 40px
   display: none
@@ -32,7 +40,6 @@ a
     height: 5px
     margin-bottom: 5px
     background-color: #2f3f54
-
 
 .logo
   display: flex
@@ -62,10 +69,8 @@ a
     color: #2f3f54
     font-weight: 700
 
-
 #main-content
   min-height: 70vh
-
 
 
 .block__item
@@ -102,7 +107,6 @@ a
     .item__contain-descr
       padding: 20px
       border: 5px dashed rgba(237, 51, 18, 0.45)
-
 
 //Admin
 .product_table
@@ -463,4 +467,6 @@ a
 #order__info
   background-color: rgba(42, 167, 69, 0.1)
 
+.shadow
+  box-shadow: 0px 5px 10px rgba(0, 9, 12, 0.2)
 
