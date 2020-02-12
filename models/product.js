@@ -17,6 +17,11 @@ module.exports = function (sequelize) {
     price: DataTypes.DECIMAL,
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
+    features: DataTypes.JSONB,
+  }, {
+    tableName: 'products',
+    // underscored: true, // this will make mURL into m_u_r_l
+
   })
 
   return Product
