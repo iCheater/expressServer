@@ -42,8 +42,8 @@ const {
   Tag,
 } = db
 
-Product.belongsToMany(Category, { through: 'product_category', foreignKey: 'product_id' })
-Category.belongsToMany(Product, { through: 'product_category', foreignKey: 'category_id' })
+Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
+Product.belongsTo(Category, { foreignKey: 'category_id' })
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
