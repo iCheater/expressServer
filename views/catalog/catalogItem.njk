@@ -10,7 +10,7 @@
             <ul class="breadcrumb-path">
                 <li><a href="/">Главная</a></li>
                 <li><a href="/catalog/">Каталог</a></li>
-                <li><a href="/catalog/{{ category }}">{{ category }}</a></li>
+                <li><a href="/catalog/{{ product.Category.id }}">{{ product.Category.name }}</a></li>
                 <li class="active">{{ product.name }}</li>
             </ul>
         </div>
@@ -28,14 +28,14 @@
                 </div>
 
                 <div class="block__item-info">
-
                     <div class="items__info-contain">
-                        <p>
-                            Contain: tree, metal.
-                        </p>
-                        <p>
-                            Size: 200x200cm.
-                        </p>
+                        {% if  product.features.color | length %}
+                            <p>color: {{ product.features.color }}</p>
+                        {% endif %}
+                        <p>weight: {{ product.features.weight }}</p>
+                        <p>material: {{ product.features.material }}</p>
+                        <p>dimensions: {{ product.features.dimensions }}</p>
+                        <p>width: {{ product.features.dimensions.width }}</p>
                         <a href="#contein-descr">Перейти к описанию</a>
                     </div>
 
@@ -51,12 +51,12 @@
 
                         <div class="item__links">
                             <a class="item__to-favorite" title="Избранное">
-                                <img src="images/favorite.png">
+                                <img src="/images/favorite.png">
                                 {#                                <span>Добавить в избранное</span>#}
 
                             </a>
                             <a class="item__to-social" title="Поделиться">
-                                <img src="images/favorite.png">
+                                <img src="/images/share.png">
                                 {#                                <span>Поделиться</span>#}
                             </a>
                         </div>
@@ -77,37 +77,44 @@
             </div>
         </div>
 
-        <div class="item__contain-descr" id="#contein-descr">
+        <div class="item__contain-descr" id="contein-descr">
             <h4>Описание</h4>
             {{ product.description }}
         </div>
+        // бахни тут теги сочные
+        <div class="tags">
+            {#            {{ product | dump  }}#}
+            {% for tag in product.Tags %}
+                <span>{{ tag.name }}</span>
+            {% endfor %}
+        </div>
 
 
-        <h4>Спонсорские товары</h4>
+        <h4>Похожие товары</h4>
         <div class="product_other">
 
-            {#            {% for product in products %}#}
-            <div class="other__item">
-                <div class="other__item-img">
-                    <img src=" {{ product.mURL }}">
-                </div>
-                <div class="other__item-info">
-                    <div class="item__price">
-                        <span><span class="price">{{ product.price }} </span></span>
+            {% for product in products %}
+                <div class="other__item">
+                    <div class="other__item-img">
+                        <img src=" {{ product.mURL }}">
                     </div>
-                    <div class="item__info-name">
-                        <a href="#">{{ product.name }}</a>
+                    <div class="other__item-info">
+                        <div class="item__price">
+                            <span><span class="price">{{ product.price }} </span></span>
+                        </div>
+                        <div class="item__info-name">
+                            <a href="#">{{ product.name }}</a>
+                        </div>
+
+
+                        <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
+                           title="Положить в корзину">
+                            В корзину
+                        </a>
+
                     </div>
-
-
-                    <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
-                       title="Положить в корзину">
-                        В корзину
-                    </a>
-
                 </div>
-            </div>
-            {#            {% endfor %}#}
+            {% endfor %}
         </div>
 
     </div>

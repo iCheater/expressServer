@@ -28,9 +28,10 @@ module.exports = {
       }
     }
 
-    return queryInterface.bulkInsert('order_product', orderProducts, {}).catch(err => {
-      console.log(err)
-    })
+    return queryInterface.bulkInsert('order_product', orderProducts, {})
+      .catch(err => {
+        console.log(err)
+      })
   },
 
   down: (queryInterface, Sequelize) => {

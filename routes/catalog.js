@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Product, Category } = require('./../models')
+const { Product, Tag, Category, Sequelize: { Op } } = require('./../models')
 
 router.get('/', (req, res, next) => {
   const promises = [
@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
     }),
   ]
   return Promise.all(promises).then(([categories, products]) => {
+    console.log(products[0].features)
     res.render('catalog/catalog', {
       categories: categories,
       products: products,
@@ -20,25 +21,111 @@ router.get('/', (req, res, next) => {
   })
 })
 
-router.get('/items/:idItem', (req, res, next) => {
+// тут творится кое-что ужасное, тот кто найдет и оптимизирует запрос до одного не получит люлей
+router.get('/item/:idItem', (req, res, next) => {
+  console.log(req.params.idItem)
   Product.findByPk(parseInt(req.params.idItem), {
-    include: [{ model: Category }],
+    include: [
+      { model: Category },
+      { model: Tag },
+    ],
   })
     .then(product => {
-      // console.log(product.Categories[0].name)
-      console.log(product)
-      res.render('catalog/catalogItem', {
-        product: product,
-        products: product,
-        category: product.Categories[0].name,
+      Product.findAll({
+        limit: 10,
+        where: {
+          category_id: product.category_id,
+        },
+        include: [{
+          model: Category,
+          attributes: ['id', 'name'],
+        }],
+      }).then(products => {
+        // res.json(products)
+        // const test = JSON.parse(product.features)
+        res.render('catalog/catalogItem', {
+          product: product,
+          // tags: product.Tags,
+          products: products,
+          features: product.features,
+        })
       })
+    })
+    .catch(err => {
+      res.json(err)
+    })
+})
+
+// http://localhost:5002/catalog/items?color=black&price=33&width=44
+// https://sequelize.org/master/manual/model-querying-basics.html
+router.get('/items', (req, res) => {
+  console.log(req.query.color)
+  console.log(req.query.price)
+  const where = {}
+
+  if (req.query.color) {
+    // Nested object example
+    // where.features = {}
+    // where.features.color = {
+    //   [Op.eq]: req.query.color,
+    // }
+    // nested key example
+    where['features.color'] = {
+      [Op.eq]: req.query.color,
+    }
+  }
+
+  if (req.query.width) {
+    // Nested object example
+    // where.features = {}
+    // where.features.dimensions = {
+    //   width: {
+    //     [Op.gt]: parseInt(req.query.width) || 0,
+    //   },
+    // }
+    // nested key example
+    where['features.dimensions.width'] = {
+      [Op.gte]: parseInt(req.query.width),
+    }
+  }
+
+  if (req.query.price) {
+    // Nested object example
+    // where.features = {}
+    // where.features.dimensions = {
+    //   width: {
+    //     [Op.gt]: parseInt(req.query.width) || 0,
+    //   },
+    // }
+    // nested key example
+    where.price = {
+      [Op.gte]: parseInt(req.query.price),
+    }
+  }
+  if (req.query.name) {
+    where.name = {
+      [Op.startsWith]: req.query.name,
+    }
+  }
+
+  const order = []
+  if (req.query.order) {
+    order.push(['features.dimensions.width', 'DESC'])
+  }
+
+  Product.findAll({
+    where,
+    order,
+  })
+    .then(products => {
+      res.json(products)
     }).catch(err => {
       res.json(err)
     })
 })
 
-router.get('/:category', (req, res, next) => {
-  Category.findByPk(parseInt(req.params.category))
+router.get('/:categoryID', (req, res, next) => {
+  Category.findByPk(parseInt(req.params.categoryID))
     .then(category => {
       if (category.length === 0) {
         return res.json({ category: 'not found' })
@@ -46,7 +133,7 @@ router.get('/:category', (req, res, next) => {
       Product.findAll({
         include: [{
           model: Category,
-          where: { id: parseInt(req.params.category) },
+          where: { id: parseInt(req.params.categoryID) },
         },
         ],
       })

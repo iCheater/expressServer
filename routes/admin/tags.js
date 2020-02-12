@@ -35,7 +35,7 @@ router.post('/search', (req, res) => {
     limit: 10,
     where: {
       name: {
-        [Op.startsWith]: req.body.value + '%',
+        [Op.startsWith]: '%' + req.body.value + '%',
       },
     },
     attributes: { exclude: ['createdAt', 'updatedAt'] },
