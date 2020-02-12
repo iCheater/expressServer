@@ -86,71 +86,6 @@ ul
     border: black 1px solid
     padding: 5px 10px
 
-//Top slider
-.slider
-  position: relative
-  overflow: hidden
-  max-width: 100%
-  margin: 30px auto
-
-
-.slider__wrapper
-  position: relative
-  overflow: hidden
-
-
-/* стили для контейнера слайдов */
-.slider__items
-  display: flex
-  transition: transform 0.6s ease
-
-
-/* стили для слайдов */
-.slider__item
-  flex: 0 0 100%
-  max-width: 100%
-
-
-/* стили для кнопок "вперед" и "назад" */
-.slider__control
-  position: absolute
-  top: 50%
-  display: flex
-  align-items: center
-  justify-content: center
-  width: 40px
-  color: #fff
-  text-align: center
-  opacity: 0.5
-  height: 50px
-  transform: translateY(-50%)
-  background: rgba(0, 0, 0, 0.2)
-
-
-.slider__control:hover,
-.slider__control:focus
-  color: #fff
-  text-decoration: none
-  outline: 0
-  opacity: 0.9
-
-
-.slider__control_prev
-  left: 120px
-
-
-.slider__control_next
-  right: 120px
-
-
-.slider__control::before
-  content: ""
-  display: inline-block
-  width: 20px
-  height: 20px
-  background: transparent no-repeat center center
-  background-size: 100% 100%
-
 .slider__control_prev::before
   // прошу локально сохранять такие штуки .
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E")
@@ -162,36 +97,36 @@ ul
 
 
 /* стили для индикаторов */
-.slider__indicators
-  position: absolute
-  right: 0
-  bottom: 10px
-  left: 0
-  z-index: 15
-  display: flex
-  justify-content: center
-  padding-left: 0
-  list-style: none
-  margin: 0 15%
-
-
-.slider__indicators li
-  box-sizing: content-box
-  flex: 0 1 auto
-  width: 30px
-  height: 4px
-  margin-right: 3px
-  margin-left: 3px
-  text-indent: -999px
-  cursor: pointer
-  background-color: rgba(255, 255, 255, 0.5)
-  background-clip: padding-box
-  border-top: 10px solid transparent
-  border-bottom: 10px solid transparent
-
-
-.slider__indicators li.active
-  background-color: #fff
+//.slider__indicators
+//  position: absolute
+//  right: 0
+//  bottom: 10px
+//  left: 0
+//  z-index: 15
+//  display: flex
+//  justify-content: center
+//  padding-left: 0
+//  list-style: none
+//  margin: 0 15%
+//
+//
+//.slider__indicators li
+//  box-sizing: content-box
+//  flex: 0 1 auto
+//  width: 30px
+//  height: 4px
+//  margin-right: 3px
+//  margin-left: 3px
+//  text-indent: -999px
+//  cursor: pointer
+//  background-color: rgba(255, 255, 255, 0.5)
+//  background-clip: padding-box
+//  border-top: 10px solid transparent
+//  border-bottom: 10px solid transparent
+//
+//
+//.slider__indicators li.active
+//  background-color: #fff
 
 
 //content home page
@@ -443,3 +378,78 @@ ul
 
     .contacts__way
       margin-bottom: 30px
+
+
+//slider
+
+.slider
+  display: flex
+  justify-content: center
+  margin: 0 auto
+  .slider__items
+    width: 100%
+    position: relative
+    .slider__title
+      width: 100%
+      height: 150px
+      position: absolute
+      top: 30%
+      color: #fff
+      text-align: center
+      h1
+        margin-bottom: 50px
+        font-size: 40px
+      .slider__btn
+        background-color: rgb(0, 144, 0)
+        padding: 10px 50px
+        border-radius: 5px
+        color: #fff
+        font-weight: 600
+
+
+      margin: auto
+    .slider_img
+      //background-image: url("images/slider-bg.jpg")
+      //background-repeat: no-repeat
+      //width: 100%
+      //height: 100px
+
+//preview__pages
+.preview__pages
+  margin-top: 0
+  .preview__block
+    padding: 30px 0
+    width: 100%
+    text-align: center
+    .preview__title
+      margin: 10px
+      font-size: 36px
+      color: #404040
+    .preview__subtitle
+      font-size: 26px
+      text-align: center
+      color: #404040
+      margin: 0 0 5px
+    .catalog__slider
+      display: flex
+      justify-content: space-between
+
+.services__slider
+  width: 70%
+  margin: 0 auto
+  display: flex
+  justify-content: space-around
+  flex-wrap: wrap
+
+.contacts__info-section
+  display: flex
+  justify-content: space-around
+  span a
+    color: #be9e4b
+  iframe,
+  .contacts__info
+    width: 100%
+  .contacts__info
+    text-align: left
+    padding-left: 30px
+
