@@ -21,6 +21,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
+// тут творится кое-что ужасное, тот кто найдет и оптимизирует запрос до одного не получит люлей
 router.get('/item/:idItem', (req, res, next) => {
   console.log(req.params.idItem)
   Product.findByPk(parseInt(req.params.idItem), {
@@ -30,22 +31,23 @@ router.get('/item/:idItem', (req, res, next) => {
     ],
   })
     .then(product => {
-      // res.json(product.Tags[0].name)
       Product.findAll({
         limit: 10,
+        where: {
+          category_id: product.category_id,
+        },
         include: [{
           model: Category,
-          where: {
-            id: 11,
-          },
+          attributes: ['id', 'name'],
         }],
       }).then(products => {
         // res.json(products)
+        // const test = JSON.parse(product.features)
         res.render('catalog/catalogItem', {
           product: product,
           // tags: product.Tags,
           products: products,
-          category: product.Categories[0].name,
+          features: product.features,
         })
       })
     })
