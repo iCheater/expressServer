@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Product } = require('./../models')
+const { Product, Order } = require('./../models')
 const cartCookiesValidation = require('./../helpers/cartCookiesValidation')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
@@ -43,4 +43,48 @@ router.get('/', (req, res) => {
       })
     })
 })
+
+router.post('/', (req, res) => {
+  console.log(req.body)
+  console.log(req.params)
+  const formData = {
+    userName: 'user',
+    address: 'adress moscwa',
+    promoCode: '',
+    comment: 'привезите поскорее!!',
+    shipping: 'курьером',
+    email: 'asd@ad.ru',
+    phone: '31234234',
+    products: [55, 62],
+    cart: {
+      1: 10,
+      2: 1,
+      3: 2,
+      4: 5,
+    },
+  }
+  res.json({
+    body: req.body.name,
+    params: req.params,
+  })
+
+  // Order.create(formData, {
+  //   include: [{ model: Product }],
+  // })
+  //   .then(cart => {
+  //     console.log(cart)
+  //     cart.setProducts([55, 62]).then(products => {
+  //       res.json(products)
+  //     })
+  //   })
+
+  // Order.findByPk(1, {
+  //   include: {
+  //     model: Product,
+  //   },
+  // }).then(orders => {
+  //   res.json(orders)
+  // })
+})
+
 module.exports = router
