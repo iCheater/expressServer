@@ -63,6 +63,10 @@ or install latest version:
 ```console
 foo@bar:~$  nvm install --lts
 ```
+you can change default node version
+```console
+foo@bar:~$  nvm alias default
+```
 ### 5. Install npm dependencies
 Install dependencies from package.json
 ```console
