@@ -81,9 +81,8 @@
             <h4>Описание</h4>
             {{ product.description }}
         </div>
-        // бахни тут теги сочные
+
         <div class="tags">
-            {#            {{ product | dump  }}#}
             {% for tag in product.Tags %}
                 <span>{{ tag.name }}</span>
             {% endfor %}

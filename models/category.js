@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
     nameURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     featuresFilter: DataTypes.JSONB,
+    visitCounter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   }, {
   })
 
