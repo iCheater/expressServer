@@ -1,5 +1,4 @@
 const DataTypes = require('sequelize').DataTypes
-
 module.exports = (sequelize) => {
   const Category = sequelize.define('Category', {
     id: {
@@ -19,7 +18,15 @@ module.exports = (sequelize) => {
     description: DataTypes.TEXT,
     featuresFilter: DataTypes.JSONB,
   }, {
+    // https://www.npmjs.com/package/sequelize-hierarchy
+    hierarchy: {
+      foreignKey: 'parent_id',
+      levelFieldName: 'hierarchy_level',
+      throughTable: 'categories_ancestors',
+    },
   })
+
+  Category.rebuildHierarchy()
 
   return Category
 }

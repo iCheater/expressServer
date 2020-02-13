@@ -5,16 +5,26 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const categories = []
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       categories.push({
         id: i + 1,
         name: faker.commerce.department(),
         description: 'фейковый тег',
+        parent_id: i === 0 ? i : i + 1,
         featuresFilter: JSON.stringify({}),
         createdAt: new Date(),
         updatedAt: new Date(),
       })
     }
+    categories[0].parent_id = null
+    categories[0].name = 'root'
+    categories[0].description = 'root category to rule them all'
+    categories[1].parent_id = 1
+    categories[2].parent_id = 1
+    categories[3].parent_id = 2
+    categories[4].parent_id = 2
+    categories[5].parent_id = 3
+    categories[6].parent_id = 5
 
     const products = []
     for (let i = 0; i < 100; i++) {

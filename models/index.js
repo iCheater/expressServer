@@ -3,6 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
+require('sequelize-hierarchy')(Sequelize)
 const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'development'
 // eslint-disable-next-line no-path-concat
@@ -44,6 +45,9 @@ const {
 
 Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
 Product.belongsTo(Category, { foreignKey: 'category_id' })
+
+// Category.hasMany(Category, { as: 'category', foreignKey: 'parent_id' })
+// Category.belongsTo(Category, { foreignKey: 'child_id' })
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
