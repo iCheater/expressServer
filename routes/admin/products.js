@@ -75,7 +75,8 @@ router.post('/', (req, res) => {
       // console.log(product)
       product.setCategories(req.body.category)
       res.json(product)
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.log(error)
     })
 })

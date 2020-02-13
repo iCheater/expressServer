@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize')
 module.exports = function (sequelize) {
-  var Order = sequelize.define('Order', {
+  const Order = sequelize.define('Order', {
     userName: DataTypes.STRING,
     address: DataTypes.STRING,
     promoCode: DataTypes.STRING,

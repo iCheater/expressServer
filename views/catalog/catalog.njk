@@ -25,23 +25,25 @@
 
                     <span class="category-title">Популярные категории</span>
                     <ul>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
+                    {% for category in categoriesPopular %}
+                        <li><a href="#">{{ category.name }} {{ category.visitCounter }}</a></li>
+                    {% endfor %}
                     </ul>
-                    {% for category in categories %}
+
+                    {% for category in categoriesHierarchical %}
                         <span class="category-title">{{ category.name }}</span>
+                    <ul>
                         {% for subcategory in category.children %}
                             <li><a href="#">{{subcategory.name}}</a></li>
                         {% endfor %}
                     {% endfor %}
+                    </ul>
                 </div>
 
                 <div class="catalog__bar">
                     <h2>Категории</h2>
                     <div class="category__container">
-                        {% for category in categories %}
+                        {% for category in categoriesHierarchical %}
                             <div class="category__item">
                                 <a href="/catalog/{{ category.id }}">
                                     <h3>{{ category.name }}</h3>

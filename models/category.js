@@ -17,6 +17,10 @@ module.exports = (sequelize) => {
     nameURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     featuresFilter: DataTypes.JSONB,
+    visitCounter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   }, {
     // https://www.npmjs.com/package/sequelize-hierarchy
     hierarchy: {
