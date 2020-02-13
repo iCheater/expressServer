@@ -4,16 +4,29 @@ const { Product, Tag, Category, Sequelize: { Op } } = require('./../models')
 
 router.get('/', (req, res, next) => {
   const promises = [
-    Category.findAll(),
+    Category.findOne({
+      where: { id: 1 }, // looking for root category
+      include: {
+        where: {
+          hierarchy_level: {
+            [Op.lte]: 3,
+          },
+        },
+        attributes: ['id', 'name', 'description', 'parent_id', 'hierarchy_level'], // remove unnecessary fields
+        model: Category,
+        as: 'descendents',
+        hierarchy: true,
+      },
+    }),
     Product.findAll({
       limit: 5,
       // raw: true,
     }),
   ]
   return Promise.all(promises).then(([categories, products]) => {
-    console.log(products[0].features)
+    // console.log(categories)
     res.render('catalog/catalog', {
-      categories: categories,
+      categories: categories.children,
       products: products,
     })
   }).catch(err => {

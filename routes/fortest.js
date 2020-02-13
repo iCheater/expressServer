@@ -1,18 +1,29 @@
 const faker = require('faker')
 const express = require('express')
 const router = express.Router()
+
 // var db = require('./../models');
 // var Task = db.Task;
 // eslint-disable-next-line no-unused-vars
-const { Task, User, Category, Address, Product } = require('./../models')
+const { Task, User, Category, Address, Sequelize: { Op } } = require('./../models')
 
 router.get('/findAll', (req, res, next) => {
-  Task.findAll({ raw: true })
-    .then((users) => {
-      console.table(users)
-      // res.json('catalog', {users: users});
-      res.json(users)
-    })
+  Category.findOne({
+    where: { id: 1 }, // looking for root category
+    include: {
+      where: {
+        hierarchy_level: {
+          [Op.lte]: 3,
+        },
+      },
+      attributes: ['id', 'name', 'description', 'parent_id', 'hierarchy_level'], // remove unnecessary fields
+      model: Category,
+      as: 'descendents',
+      hierarchy: true,
+    },
+  }).then(categories => {
+    res.json(categories.children)
+  })
 })
 
 router.get('/findByPk', (req, res, next) => {

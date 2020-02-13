@@ -29,16 +29,13 @@
                         <li><a href="#">Обложки</a></li>
                         <li><a href="#">Обложки</a></li>
                         <li><a href="#">Обложки</a></li>
-
                     </ul>
-
-                    <span class="category-title">Корпусы</span>
-                    <ul>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                    </ul>
+                    {% for category in categories %}
+                        <span class="category-title">{{ category.name }}</span>
+                        {% for subcategory in category.children %}
+                            <li><a href="#">{{subcategory.name}}</a></li>
+                        {% endfor %}
+                    {% endfor %}
                 </div>
 
                 <div class="catalog__bar">

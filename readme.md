@@ -82,6 +82,10 @@ foo@bar:~$  npm install --global gulp-cli
 ```console
 foo@bar:~$ gulp
 ```
+### Oops! Fill db with mockup data 
+```console
+foo@bar:~$ npm run seed
+```
 
 ___
 ### Usefull
