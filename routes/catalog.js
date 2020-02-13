@@ -24,6 +24,7 @@ router.get('/', (req, res, next) => {
 // тут творится кое-что ужасное, тот кто найдет и оптимизирует запрос до одного не получит люлей
 router.get('/item/:idItem', (req, res, next) => {
   console.log(req.params.idItem)
+
   Product.findByPk(parseInt(req.params.idItem), {
     include: [
       { model: Category },
@@ -31,6 +32,10 @@ router.get('/item/:idItem', (req, res, next) => {
     ],
   })
     .then(product => {
+      product.update(
+        { visitCounter: product.visitCounter + 1 },
+      )
+        .then(test => { console.log(test) })
       Product.findAll({
         limit: 10,
         where: {
@@ -43,6 +48,11 @@ router.get('/item/:idItem', (req, res, next) => {
       }).then(products => {
         // res.json(products)
         // const test = JSON.parse(product.features)
+        //
+        // product.update(
+        //   { visitCounter: products.visitCounter + 1 },
+        // )
+
         res.render('catalog/catalogItem', {
           product: product,
           // tags: product.Tags,
@@ -130,6 +140,9 @@ router.get('/:categoryID', (req, res, next) => {
       if (category.length === 0) {
         return res.json({ category: 'not found' })
       }
+      category.update(
+        { visitCounter: category.visitCounter + 1 },
+      )
       Product.findAll({
         include: [{
           model: Category,

@@ -18,6 +18,10 @@ module.exports = function (sequelize) {
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     features: DataTypes.JSONB,
+    visitCounter: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   }, {
     tableName: 'products',
     // underscored: true, // this will make mURL into m_u_r_l
