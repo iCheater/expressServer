@@ -147,8 +147,7 @@ router.get('/:categoryID', (req, res, next) => {
         include: [{
           model: Category,
           where: { id: parseInt(req.params.categoryID) },
-        },
-        ],
+        }],
       })
         .then(products => {
           // res.json(products)
@@ -157,7 +156,8 @@ router.get('/:categoryID', (req, res, next) => {
             category: category,
           })
         })
-    }).catch(err => {
+    })
+    .catch(err => {
       res.json(err)
     })
 })
