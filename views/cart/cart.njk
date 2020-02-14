@@ -6,6 +6,10 @@
 
 {% block content %}
 
+    <span>
+        {{ session | dump }}
+    </span>
+
     <form action="/cart/" method="POST">
         <input type='text' name='name'>
         <input type='text' name='qqqqq'>
