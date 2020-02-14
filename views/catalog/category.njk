@@ -4,6 +4,10 @@
     <link href="/css/catalog.min.css" rel="stylesheet">
 {% endblock %}
 
+ {% block preScript %}
+     <script src="/scripts/addProductToCart.js"></script>
+ {% endblock %}
+
 {% block content %}
     <div class="main__content">
         <!--   breadcrumb -->
@@ -46,8 +50,7 @@
                                     <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
                                 </div>
                                 <div class="item__price-container">
-                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button'
-                                       title="Положить в корзину">
+                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button' title="Положить в корзину" onclick="reqForServer(this)">
                                         В корзину
                                     </a>
                                     <div class="item__price">

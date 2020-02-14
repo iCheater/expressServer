@@ -1,7 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('carCalculate.js loaded')
-
 })
 
 function increaseValue (btn) {
@@ -42,3 +41,4 @@ function calcTotal () {
   const sumTotal = document.getElementById('sumTotal')
   sumTotal.innerHTML = sum
 }
+
