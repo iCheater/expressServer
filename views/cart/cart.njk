@@ -1,5 +1,9 @@
 {% extends "./../layout.njk" %}
 
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+{% endblock %}
+
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
 {% endblock %}
@@ -131,5 +135,9 @@
         </section>
 
     </div>
+
+    {% block postScript %}
+        <script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
+    {% endblock %}
 
 {% endblock %}

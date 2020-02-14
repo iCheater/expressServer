@@ -1,40 +1,26 @@
 const express = require('express')
 const router = express.Router()
 const { Product, Order } = require('./../models')
-const cartCookiesValidation = require('./../helpers/cartCookiesValidation')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 
 router.get('/', (req, res) => {
-  const cartCookies = req.cookies.cart
-  logger.verbose('cartCookies %O', cartCookies)
-  console.log(req.session)
-
-  const arrCartCookies = cartCookiesValidation(req.cookies.cart).sort()
-
-  if (arrCartCookies.length === 0) {
+  if (!req.session.cart) {
     return res.render('cart/cart', {
       session: req.session,
     })
   }
-  logger.verbose('arrCartCookies %O', arrCartCookies)
-  logger.verbose('arrCartCookies.length %O', arrCartCookies.length)
+  const arrCartID = Object.keys(req.session.cart)
   Product.findAll({
     where: {
-      id: arrCartCookies,
+      id: arrCartID,
     },
   })
     .then(products => {
-      const rowProducts = products.map(e => e.get({ row: true }))
+      const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
-        product.amount = 0
-        product.rowTotal = 0
-        arrCartCookies.forEach(i => {
-          if (i === product.id) {
-            product.amount++
-          }
-        })
+        product.amount = req.session.cart[product.id]
         product.rowTotal = product.price * product.amount
         sumTotal = sumTotal + product.rowTotal
         return product
@@ -91,13 +77,24 @@ router.post('/', (req, res) => {
   // })
 })
 
-router.get('/add', (req, res, next) => {
-  req.session.user.cart = [{
-    productId: 1,
-    amount: 2,
-  }]
+router.get('/add/:productID', (req, res, next) => {
+  // todo do we need to check if PRODUCT EXIST??
+  console.log(req.params)
+  const productID = req.params.productID
+  console.log('productID', productID)
+
+  if (!req.session.cart) { req.session.cart = {} }
+
+  if (req.session.cart[productID]) {
+    req.session.cart[productID]++
+  } else {
+    req.session.cart[productID] = 1
+  }
+
+  console.log('cart', req.session.cart)
+
   res.json(req.session)
-  console.log(req.session.user)
+  console.log(req.session)
 })
 
 module.exports = router
