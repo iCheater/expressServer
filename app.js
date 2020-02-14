@@ -5,12 +5,12 @@ const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
-const session = require('express-session')
+const expressSession = require('express-session')
 const multer = require('multer')
 const upload = multer()
 const redis = require('redis')
 const redisClient = redis.createClient()
-const RedisStore = require('connect-redis')(session)
+const RedisStore = require('connect-redis')(expressSession)
 const router = require('./routes')
 const nunjucks = require('nunjucks')
 // const winston = require('winston')
@@ -48,8 +48,7 @@ app.use(upload.array())
 // initialize cookie-parser to allow us access the cookies stored in the browser.
 app.use(cookieParser())
 
-// initialize express-session to allow us track the logged-in user across sessions.
-app.use(session({
+const session = expressSession({
   key: 'user_sid',
   secret: 'somerandonstuffs',
   resave: false,
@@ -62,12 +61,19 @@ app.use(session({
     client: redisClient,
     ttl: 86400,
   }),
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     // expires: 24h * 60min * 60sec * 1000ms // 24 hours
     expires: 24 * 60 * 60 * 1000,
   },
-}))
+})
+
+if (app.get('env') === 'production') {
+  // app.set('trust proxy', 1) // trust first proxy
+  session.cookie.secure = true // serve secure cookies
+}
+// initialize express-session to allow us track the logged-in user across sessions.
+app.use(session)
 
 app.disable('x-powered-by')
 app.use('/', router)

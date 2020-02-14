@@ -8,11 +8,14 @@ const logger = require(`${appRoot}/config/winstonLogger`)
 router.get('/', (req, res) => {
   const cartCookies = req.cookies.cart
   logger.verbose('cartCookies %O', cartCookies)
+  console.log(req.session)
 
   const arrCartCookies = cartCookiesValidation(req.cookies.cart).sort()
 
   if (arrCartCookies.length === 0) {
-    return res.render('cart/cart')
+    return res.render('cart/cart', {
+      session: req.session,
+    })
   }
   logger.verbose('arrCartCookies %O', arrCartCookies)
   logger.verbose('arrCartCookies.length %O', arrCartCookies.length)
@@ -40,6 +43,7 @@ router.get('/', (req, res) => {
         editOrAdd: 'cart',
         products: productsWithAmount,
         sumTotal: sumTotal,
+        session: req.session,
       })
     })
 })
@@ -85,6 +89,15 @@ router.post('/', (req, res) => {
   // }).then(orders => {
   //   res.json(orders)
   // })
+})
+
+router.get('/add', (req, res, next) => {
+  req.session.user.cart = [{
+    productId: 1,
+    amount: 2,
+  }]
+  res.json(req.session)
+  console.log(req.session.user)
 })
 
 module.exports = router
