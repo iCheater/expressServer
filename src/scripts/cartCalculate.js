@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
   console.log('carCalculate.js loaded')
 })
@@ -42,3 +41,9 @@ function calcTotal () {
   sumTotal.innerHTML = sum
 }
 
+function switchAllCheckbox (checkbox) {
+  const checkboxArr = document.getElementsByClassName('form-check-input')
+  for (let i = 0; i < checkboxArr.length; i++) {
+    checkboxArr[i].checked = checkbox.checked === true
+  }
+}

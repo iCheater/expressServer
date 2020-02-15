@@ -13,7 +13,11 @@
     <div class="container d-flex mt-3">
 
         <section id="cart" class="col-8 cart">
-
+            <div class="form-check">
+                <label class="form-check-label">
+                <input type="checkbox" class="form-check"  onclick="switchAllCheckbox(this)">
+                Выбрать все</label>
+            </div>
             <table id="cart" class="table table-hover table-condensed">
                 <thead>
                 <tr>
@@ -29,12 +33,15 @@
                     <tr>
                         <td data-th="Product">
                             <div class="row">
+                                <div class="col-sm-1 hidden-xs">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                </div>
                                 <div class="col-sm-2 hidden-xs">
                                     <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
                                 </div>
-                                <div class="col-sm-10 prod-desc ">
-                                    <h6 class="ml-3">{{ product.name }}</h6>
-                                    <p class="ml-3 small font-weight-light">{{ product.description }}</p>
+                                <div class="col-sm-9 prod-desc ">
+                                    <h6 class="ml-9">{{ product.name }}</h6>
+                                    <p class="ml-9 small font-weight-light">{{ product.description }}</p>
                                 </div>
                             </div>
                         </td>
