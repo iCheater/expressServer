@@ -1,4 +1,5 @@
 /config/config.json
+/config/mailerconfig.js
 /public/*
 public/
 /logs/
