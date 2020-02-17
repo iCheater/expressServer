@@ -77,24 +77,39 @@ router.post('/', (req, res) => {
   // })
 })
 
-router.get('/add/:productID', (req, res, next) => {
+router.put('/:productID', (req, res, next) => {
   // todo do we need to check if PRODUCT EXIST??
   console.log(req.params)
+  console.log(req.body)
   const productID = req.params.productID
   console.log('productID', productID)
 
   if (!req.session.cart) { req.session.cart = {} }
 
   if (req.session.cart[productID]) {
-    req.session.cart[productID]++
+    req.session.cart[productID].amount++
   } else {
-    req.session.cart[productID] = 1
+    req.session.cart[productID] = {}
+    req.session.cart[productID].amount = 1
+    req.session.cart[productID].checked = true
   }
-
   console.log('cart', req.session.cart)
-
   res.json(req.session)
-  console.log(req.session)
+  // console.log(req.session)
+})
+
+router.delete('/:productID', (req, res) => {
+  console.log('req.session.cart', req.session.cart)
+  delete req.session.cart[req.params.productID]
+  console.log('req.session.cart', req.session.cart)
+  res.status(200).json({ links: { self: req.originalUrl } })
+})
+
+router.post('/select', (req, res, next) => {
+  console.log(req.body)
+  console.log(req.session.cart)
+  res.json(
+    { mgs: req.body })
 })
 
 module.exports = router

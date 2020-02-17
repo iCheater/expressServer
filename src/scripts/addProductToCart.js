@@ -56,7 +56,7 @@ function request (data) {
     }
     // console.log('request', xhr.response)
   }
-  xhr.open('GET', '/cart/add/' + data)
+  xhr.open('PUT', '/cart/' + data)
   // xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send()
 }

@@ -31,6 +31,11 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
   }, {
     underscored: true,
     hooks: {
