@@ -31,16 +31,24 @@ router.get('/reset', async (req, res, next) => {
   })
 
   user.addTokens([token.id])
-  // .then(updatedUser => {
-  //   res.send(`<span>На почту ${updatedUser.email} был отправлено письмо c ссылкой для сброса пароля</span>`)
+    .then(updatedUser => {
+      if (!updatedUser) {
+        //
+      }
+      // mailer.sendResetPassword()
+      res.send(`<span>На почту ${updatedUser.email} был отправлено письмо c ссылкой для сброса пароля</span>`)
+    })
+  // res.json({
+  //   token: token,
+  //   user: user,
+  //   // user2: user2,
   // })
-  res.json({
-    token: token,
-    user: user,
-    // user2: user2,
-  })
 })
 
+router.get('/reset/resend', async (req, res, next) => {
+  res.json({ test: 'test' })
+})
+// http://localhost:5000/resetpassword/approve/:token
 router.get('/approve/:token', (req, res, next) => {
   console.log(req.params)
   res.json({ 'req.params': req.params })

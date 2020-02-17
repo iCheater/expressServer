@@ -77,6 +77,7 @@ function sendMailConfirmation (user) {
 }
 function sendOrder (user, order) {}
 function sendOrderStatus (user, order) {}
+function sendResetPassword (user, order) {}
 module.exports = mailer
 
 // mailer.sendMailConfirmation(user)

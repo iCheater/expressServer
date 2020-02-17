@@ -45,9 +45,7 @@ module.exports = (sequelize) => {
 
     let token = ''
     for (let i = 0; i < 15; i++) {
-      token += possibleCharacters.charAt(
-        Math.floor(Math.random() * possibleCharacters.length),
-      )
+      token += possibleCharacters.charAt(Math.floor(Math.random() * possibleCharacters.length))
     }
     return token
   }
