@@ -41,6 +41,7 @@ const {
   Product,
   Category,
   Tag,
+  Token,
 } = db
 
 Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
@@ -55,6 +56,9 @@ Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
 User.hasMany(Address, { as: 'addresses', foreignKey: 'user_id' })
 Address.belongsTo(User, { foreignKey: 'user_id' })
 
+User.hasMany(Token, { as: 'tokens', foreignKey: 'user_id' })
+Token.belongsTo(User, { foreignKey: 'user_id' })
+
 User.hasMany(Order, { as: 'orders', foreignKey: 'user_id' })
 Order.belongsTo(User, { foreignKey: 'user_id' })
 
@@ -67,12 +71,14 @@ Product.belongsToMany(Order, { through: 'order_product', foreignKey: 'product_id
 // User.Addresses = User.hasMany(Address, { as: 'addresses' })
 
 process.argv.forEach((val, index, array) => {
-  if (val === 'sync') {
+  if (val === 'syncf' || val === 'synca') {
     console.log('sync')
-    sequelize.sync({
-      force: true, // This creates the table, dropping it first if it already existed
-      // alter: true // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
-    }).then(() => {
+    const options = {
+      force: val === 'syncf', // This creates the table, dropping it first if it already existed
+      alter: val === 'synca', // This checks what is the current state of the table in the database (which columns it has, what are their data types, etc), and then performs the necessary changes in the table to make it match the model.
+    }
+
+    sequelize.sync(options).then(() => {
       sequelize.close()
     })
     console.log('sync complete')

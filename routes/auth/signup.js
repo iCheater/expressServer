@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res) => {
   console.log('Got body:', req.body)
 
-  var params = {
+  const params = {
     username: req.body.username,
     password: req.body.password,
     email: req.body.email,
@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
   console.table(params)
   User.create(params)
     .then((user) => {
-      var msg = {
+      const msg = {
         message: 'form data loaded',
         status: 'ok',
         data: user,

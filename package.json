@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "sync": "node ./models/index.js sync",
+    "synca": "node ./models/index.js synca",
+    "syncf": "node ./models/index.js syncf",
     "prestart": "",
     "start": "gulp",
     "poststart": "",
