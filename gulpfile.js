@@ -24,7 +24,7 @@ const autoprefixer = require('gulp-autoprefixer')
 // todo https://github.com/hughsk/gulp-duration
 
 const paths = {
-  srcCSS: 'src/stylesheets/**/*.css',
+  srcCSS: 'src/stylesheets/**/*.*',
   srcJS: 'src/scripts/**/*.js',
   srcSASS: 'src/stylesheets/sass/*.sass',
   srcImages: 'src/**/*.{gif,jpg,png,svg,ico}',
