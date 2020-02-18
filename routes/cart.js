@@ -17,7 +17,6 @@ router.get('/', (req, res) => {
     },
   })
     .then(products => {
-
       const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
@@ -112,16 +111,22 @@ router.delete('/:productID', (req, res) => {
 
 router.post('/select', (req, res, next) => {
   console.log('req.body', req.body)
-  console.log('req.session.cart', req.session.cart)
+  console.log('req.session.cart before', req.session.cart)
   for (const key in req.body) {
     req.session.cart[key].checked = req.body[key]
-    console.log('new checked status added')
-    console.log('new checked', req.session.cart)
   }
-  res.json(
-    { mgs: req.session.cart })
+  console.log('req.session.cart after', req.session.cart)
+  res.json({ mgs: req.session.cart })
 })
 
-// eslint-disable-next-line no-undef
+router.post('/quantity', (req, res, next) => {
+  console.log('req.body', req.body)
+  console.log('req.session.cart before', req.session.cart)
+  for (const key in req.body) {
+    req.session.cart[key].quantity = req.body[key]
+  }
+  console.log('req.session.cart after', req.session.cart)
+  res.json({ mgs: req.session.cart })
+})
 
 module.exports = router

@@ -47,11 +47,11 @@
                         <td data-th="Price"><span class="price" value="{{ product.price }} ">{{ product.price }} </span>
                         </td>
                         <td data-th="Quantity">
-                            <input type="number" class="form-control text-center quantityProduct"
-                                   value="{{ product.quantity }}">
-                            <button id="btnPlus" onclick="increaseValue(this)">+</button>
+                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}" class="form-control text-center quantityProduct"
+                                   value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
+                            <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>
 
-                            <button id="btnMinus" onclick="decreaseValue(this)">-</button>
+                            <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this)">-</button>
                         </td>
                         <td data-th="Subtotal" class="subtotal text-center">{{ product.rowTotal }}</td>
                         <td class="actions" data-th="">
