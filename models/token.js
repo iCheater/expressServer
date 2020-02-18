@@ -16,8 +16,12 @@ module.exports = (sequelize) => {
       type: DataTypes.DATE,
       required: true,
     },
+    // deleted: {
+    //   type: DataTypes.BOOLEAN,
+    // },
   }, {
     tableName: 'tokens',
+    paranoid: true,
     hooks: {
       beforeCreate: async (token) => {
         token.token = await token.generateToken() // todo check for unique?

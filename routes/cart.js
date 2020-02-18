@@ -108,6 +108,12 @@ router.delete('/:productID', (req, res) => {
 router.post('/select', (req, res, next) => {
   console.log(req.body)
   console.log(req.session.cart)
+  const keys = Object.keys(req.body)
+  console.log('keys', keys)
+  for (const key in req.body) {
+    console.log(`key: ${key} value: ${req.body[key]}`)
+    console.log(`value: ${req.session.cart[key].checked}`)
+  }
   res.json(
     { mgs: req.body })
 })
