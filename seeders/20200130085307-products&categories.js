@@ -33,6 +33,7 @@ module.exports = {
         price: faker.commerce.price(0.1, 9999.99, 2),
         mURL: faker.image.avatar(),
         description: faker.commerce.productName(),
+        stock: Math.floor(Math.random() * 99),
         category_id: categories[Math.floor(Math.random() * categories.length)].id,
         features: JSON.stringify({
           color: faker.commerce.color(),

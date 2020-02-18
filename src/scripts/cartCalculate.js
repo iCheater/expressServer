@@ -48,10 +48,16 @@ function switchAllCheckbox (checkbox) {
     checkboxArr[i].checked = checkbox.checked === true
     checkboxIdArr[checkboxArr[i].dataset.id] = checkboxArr[i].checked
   }
-  selectRequest(checkboxIdArr)
+  sendCheckboxStatus(checkboxIdArr)
 }
 
-function selectRequest (data) {
+function swithOneCheckbox (checkbox) {
+  const obj = {}
+  obj[checkbox.dataset.id] = checkbox.checked
+  sendCheckboxStatus(obj)
+}
+
+function sendCheckboxStatus (data) {
   // eslint-disable-next-line no-undef
   const xhr = new XMLHttpRequest()
   xhr.onload = function (e) {
@@ -110,4 +116,46 @@ function activateRemoveButton (btn) {
 function removeProductRow (btn) {
   const tr = btn.closest('tr')
   tr.parentNode.removeChild(tr)
+}
+
+function quantityInput (domObj) {
+  let value = parseInt(document.getElementById('input' + domObj.dataset.id).value)
+  if (value < 0 || !Number.isInteger(value)) {
+    alert('Ошибка ввода!')
+    document.getElementById('input' + domObj.dataset.id).value = 0
+    value = 0
+  }
+  const obj = {}
+  obj[domObj.dataset.id] = value
+  productQantityRequest(obj)
+}
+function increaseValue (btn) {
+  document.getElementById('input' + btn.dataset.id).value++
+  const obj = {}
+  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
+  productQantityRequest(obj)
+}
+function decreaseValue (btn) {
+  if (document.getElementById('input' + btn.dataset.id).value > 0) {
+    document.getElementById('input' + btn.dataset.id).value--
+  }
+  const obj = {}
+  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
+  productQantityRequest(obj)
+}
+
+function productQantityRequest (data) {
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+  xhr.onload = function (e) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // unblock buttons until good request
+    }
+    // console.log('request', e)
+  }
+
+  xhr.open('POST', '/cart/quantity')
+  xhr.setRequestHeader('Content-type', 'application/json')
+
+  xhr.send(JSON.stringify(data))
 }

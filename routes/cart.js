@@ -20,11 +20,13 @@ router.get('/', (req, res) => {
       const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
-        product.amount = req.session.cart[product.id]
-        product.rowTotal = product.price * product.amount
+        product.quantity = req.session.cart[product.id].quantity
+        product.checked = req.session.cart[product.id].checked
+        product.rowTotal = product.price * product.quantity
         sumTotal = sumTotal + product.rowTotal
         return product
       })
+
       res.render('cart/cart', {
         editOrAdd: 'cart',
         products: productsWithAmount,
@@ -84,13 +86,15 @@ router.put('/:productID', (req, res, next) => {
   const productID = req.params.productID
   console.log('productID', productID)
 
-  if (!req.session.cart) { req.session.cart = {} }
+  if (!req.session.cart) {
+    req.session.cart = {}
+  }
 
   if (req.session.cart[productID]) {
-    req.session.cart[productID].amount++
+    req.session.cart[productID].quantity++
   } else {
     req.session.cart[productID] = {}
-    req.session.cart[productID].amount = 1
+    req.session.cart[productID].quantity = 1
     req.session.cart[productID].checked = true
   }
   console.log('cart', req.session.cart)
@@ -106,16 +110,23 @@ router.delete('/:productID', (req, res) => {
 })
 
 router.post('/select', (req, res, next) => {
-  console.log(req.body)
-  console.log(req.session.cart)
-  const keys = Object.keys(req.body)
-  console.log('keys', keys)
+  console.log('req.body', req.body)
+  console.log('req.session.cart before', req.session.cart)
   for (const key in req.body) {
-    console.log(`key: ${key} value: ${req.body[key]}`)
-    console.log(`value: ${req.session.cart[key].checked}`)
+    req.session.cart[key].checked = req.body[key]
   }
-  res.json(
-    { mgs: req.body })
+  console.log('req.session.cart after', req.session.cart)
+  res.json({ mgs: req.session.cart })
+})
+
+router.post('/quantity', (req, res, next) => {
+  console.log('req.body', req.body)
+  console.log('req.session.cart before', req.session.cart)
+  for (const key in req.body) {
+    req.session.cart[key].quantity = req.body[key]
+  }
+  console.log('req.session.cart after', req.session.cart)
+  res.json({ mgs: req.session.cart })
 })
 
 module.exports = router
