@@ -12,55 +12,55 @@ const path = require('path')
 const config = require('../config/mailerconfig')[env]
 
 // async..await is not allowed in global scope, must use a wrapper
-async function main () {
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
-  // const testAccount = await nodemailer.createTestAccount()
-  //
-  // // create reusable transporter object using the default SMTP transport
-  // const transporter = nodemailer.createTransport({
-  //   host: 'smtp.ethereal.email',
-  //   port: 587,
-  //   secure: false, // true for 465, false for other ports
-  //   auth: {
-  //     user: testAccount.user, // generated ethereal user
-  //     pass: testAccount.pass, // generated ethereal password
-  //   },
-  // })
-  const transporter = nodemailer.createTransport(config)
-
-  const message = {
-    from: config.auth.user,
-    to: 'qaasdasd',
-    subject: 'Message title',
-    text: 'Plaintext version of the message',
-    html: '<p>HTML version of the message</p>',
-  }
-  // send mail with defined transport object
-  const info = await transporter.sendMail(message)
-  transporter.verify((error, success) => {
-    if (error) {
-      console.log(error)
-    } else {
-      console.log('Server is ready to take our messages')
-    }
-  })
-
-  transporter.on('token', token => {
-    console.log('A new access token was generated')
-    console.log('User: %s', token.user)
-    console.log('Access Token: %s', token.accessToken)
-    console.log('Expires: %s', new Date(token.expires))
-  })
-
-  console.log('Message sent: %s', info.messageId) // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-
-  // Preview only available when sending through an Ethereal account
-  // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
-  // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-}
-
-main().catch(console.error)
+// async function main () {
+//   // Generate test SMTP service account from ethereal.email
+//   // Only needed if you don't have a real mail account for testing
+//   // const testAccount = await nodemailer.createTestAccount()
+//   //
+//   // // create reusable transporter object using the default SMTP transport
+//   // const transporter = nodemailer.createTransport({
+//   //   host: 'smtp.ethereal.email',
+//   //   port: 587,
+//   //   secure: false, // true for 465, false for other ports
+//   //   auth: {
+//   //     user: testAccount.user, // generated ethereal user
+//   //     pass: testAccount.pass, // generated ethereal password
+//   //   },
+//   // })
+//   const transporter = nodemailer.createTransport(config)
+//
+//   const message = {
+//     from: config.auth.user,
+//     to: 'qaasdasd',
+//     subject: 'Message title',
+//     text: 'Plaintext version of the message',
+//     html: '<p>HTML version of the message</p>',
+//   }
+//   // send mail with defined transport object
+//   const info = await transporter.sendMail(message)
+//   transporter.verify((error, success) => {
+//     if (error) {
+//       console.log(error)
+//     } else {
+//       console.log('Server is ready to take our messages')
+//     }
+//   })
+//
+//   transporter.on('token', token => {
+//     console.log('A new access token was generated')
+//     console.log('User: %s', token.user)
+//     console.log('Access Token: %s', token.accessToken)
+//     console.log('Expires: %s', new Date(token.expires))
+//   })
+//
+//   console.log('Message sent: %s', info.messageId) // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+//
+//   // Preview only available when sending through an Ethereal account
+//   // console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+//   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+// }
+//
+// main().catch(console.error)
 
 const mailer = nodemailer.createTransport(config)
 
@@ -75,9 +75,25 @@ function sendMailConfirmation (user) {
   }
   mailer.sendMail(message)
 }
-function sendOrder (user, order) {}
-function sendOrderStatus (user, order) {}
-function sendResetPassword (user, order) {}
+
+function sendOrder (user, order) {
+}
+
+function sendOrderStatus (user, order) {
+}
+
+function sendResetPassword ({ mail, username, token }) {
+  const message = {
+    from: config.auth.user,
+    to: mail,
+    subject: 'Восстановление пароля',
+    text: 'тут какой-то текст, но я не понял куда он идет',
+    html: `<p>Здравствуйте ${username}Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
+      Для восстановления пароля нажмите на кнопку <a href="/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
+  }
+  mailer.sendMail(message)
+}
+
 module.exports = mailer
 
 // mailer.sendMailConfirmation(user)
