@@ -33,7 +33,7 @@
                         <td data-th="Product">
                             <div class="row">
                                 <div class="col-sm-1 hidden-xs">
-                                    <input class="form-check-input" type="checkbox" data-id="{{ product.id }}">
+                                    <input class="form-check-input" type="checkbox" data-id="{{ product.id }}" onclick="swithOneCheckbox(this)" {{ "checked" if product.checked  }}>
                                 </div>
                                 <div class="col-sm-2 hidden-xs">
                                     <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
@@ -48,12 +48,12 @@
                         </td>
                         <td data-th="Quantity">
                             <input type="number" class="form-control text-center quantityProduct"
-                                   value="{{ product.amount }}">
+                                   value="{{ product.quantity }}">
                             <button id="btnPlus" onclick="increaseValue(this)">+</button>
 
                             <button id="btnMinus" onclick="decreaseValue(this)">-</button>
                         </td>
-                        <td data-th="Subtotal" class="subtotal text-center">{{ product.amount * product.price }}</td>
+                        <td data-th="Subtotal" class="subtotal text-center">{{ product.rowTotal }}</td>
                         <td class="actions" data-th="">
                             <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn btn-danger btn-sm deleteBtn" onclick="removeProduct(this)" data-id="{{ product.id }}">
                                 Удалить

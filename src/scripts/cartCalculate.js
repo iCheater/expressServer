@@ -48,10 +48,16 @@ function switchAllCheckbox (checkbox) {
     checkboxArr[i].checked = checkbox.checked === true
     checkboxIdArr[checkboxArr[i].dataset.id] = checkboxArr[i].checked
   }
-  selectRequest(checkboxIdArr)
+  sendCheckboxStatus(checkboxIdArr)
 }
 
-function selectRequest (data) {
+function swithOneCheckbox (checkbox) {
+  const obj = {}
+  obj[checkbox.dataset.id] = checkbox.checked
+  sendCheckboxStatus(obj)
+}
+
+function sendCheckboxStatus (data) {
   // eslint-disable-next-line no-undef
   const xhr = new XMLHttpRequest()
   xhr.onload = function (e) {
@@ -111,3 +117,4 @@ function removeProductRow (btn) {
   const tr = btn.closest('tr')
   tr.parentNode.removeChild(tr)
 }
+

@@ -17,14 +17,17 @@ router.get('/', (req, res) => {
     },
   })
     .then(products => {
+
       const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
       const productsWithAmount = rowProducts.map((product) => {
-        product.amount = req.session.cart[product.id]
-        product.rowTotal = product.price * product.amount
+        product.quantity = req.session.cart[product.id].quantity
+        product.checked = req.session.cart[product.id].checked
+        product.rowTotal = product.price * product.quantity
         sumTotal = sumTotal + product.rowTotal
         return product
       })
+
       res.render('cart/cart', {
         editOrAdd: 'cart',
         products: productsWithAmount,
@@ -84,13 +87,15 @@ router.put('/:productID', (req, res, next) => {
   const productID = req.params.productID
   console.log('productID', productID)
 
-  if (!req.session.cart) { req.session.cart = {} }
+  if (!req.session.cart) {
+    req.session.cart = {}
+  }
 
   if (req.session.cart[productID]) {
-    req.session.cart[productID].amount++
+    req.session.cart[productID].quantity++
   } else {
     req.session.cart[productID] = {}
-    req.session.cart[productID].amount = 1
+    req.session.cart[productID].quantity = 1
     req.session.cart[productID].checked = true
   }
   console.log('cart', req.session.cart)
@@ -106,10 +111,17 @@ router.delete('/:productID', (req, res) => {
 })
 
 router.post('/select', (req, res, next) => {
-  console.log(req.body)
-  console.log(req.session.cart)
+  console.log('req.body', req.body)
+  console.log('req.session.cart', req.session.cart)
+  for (const key in req.body) {
+    req.session.cart[key].checked = req.body[key]
+    console.log('new checked status added')
+    console.log('new checked', req.session.cart)
+  }
   res.json(
-    { mgs: req.body })
+    { mgs: req.session.cart })
 })
+
+// eslint-disable-next-line no-undef
 
 module.exports = router

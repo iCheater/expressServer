@@ -18,6 +18,12 @@ module.exports = function (sequelize) {
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     features: DataTypes.JSONB,
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      nullable: false,
+      defaultValue: 0,
+    },
     visitCounter: {
       type: DataTypes.INTEGER,
       defaultValue: 0,
