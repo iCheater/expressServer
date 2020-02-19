@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { Product, Order } = require('./../models')
+const { Product, User, Order } = require('./../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 
 router.get('/', (req, res) => {
+  console.log(req.session.user)
   if (!req.session.cart) {
     return res.render('cart/cart', {
       session: req.session,
@@ -26,7 +27,7 @@ router.get('/', (req, res) => {
         sumTotal = sumTotal + product.rowTotal
         return product
       })
-
+      console.log('Авторизованный пользователь', req.session.user)
       res.render('cart/cart', {
         editOrAdd: 'cart',
         products: productsWithAmount,
@@ -127,6 +128,40 @@ router.post('/quantity', (req, res, next) => {
   }
   console.log('req.session.cart after', req.session.cart)
   res.json({ mgs: req.session.cart })
+})
+
+router.post('/address', (req, res, next) => {
+  console.log('address ')
+  console.log('req.session', req.session)
+  console.log('req.session.user.addresses', req.session.user.addresses)
+  console.log('req.body address', req.body)
+  if (!req.session.order) { req.session.order = {} }
+  req.session.order.address = req.body.address
+  // megick return autocomplete
+  res.json({ address: req.session.order.address })
+})
+
+router.post('/order', (req, res, next) => {
+  console.log('order req.session', req.session)
+  console.log('req.body address', req.body)
+
+  if (!req.session.order) { req.session.order = {} }
+
+  if (req.body.address) {
+    req.session.order.address = req.body.address
+    // megick return autocomplete
+    res.json({ address: req.session.order.address })
+  }
+  if (req.body.name) {
+    req.session.order.name = req.body.name
+    res.json({ msg: 'ok' })
+  }
+
+  if (req.body.phone) {
+    req.session.order.phone = req.body.phone
+    res.json({ msg: 'ok' })
+  }
+  console.log('order req.session', req.session)
 })
 
 module.exports = router
