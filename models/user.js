@@ -42,12 +42,25 @@ module.exports = (sequelize) => {
   }, {
     underscored: true,
     hooks: {
-      beforeCreate: async (user) => {
-        const salt = await bcrypt.genSalt(10)
-        user.password = await bcrypt.hash(user.password, salt)
+      beforeCreate: (user) => {
+        user.setPassword()
+      },
+      beforeUpdate: (user) => {
+        user.setPassword()
       },
     },
   })
+
+  User.prototype.setPassword = function () {
+    if (this.changed('password')) {
+      this.password = User.encryptPassword(this.password)
+    }
+  }
+
+  User.encryptPassword = function (password) {
+    const salt = bcrypt.genSaltSync(10)
+    return bcrypt.hashSync(password, salt)
+  }
 
   // todo there is no-return-await
   User.prototype.validPassword = function (password) {

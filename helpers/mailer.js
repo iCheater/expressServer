@@ -6,7 +6,7 @@
 // https://yandex.ru/dev/oauth/doc/dg/reference/refresh-client-docpage/
 const nodemailer = require('nodemailer')
 const env = process.env.NODE_ENV || 'development'
-const path = require('path')
+// const path = require('path')
 // todo fix it
 // eslint-disable-next-line no-path-concat
 const config = require('../config/mailerconfig')[env]
@@ -62,38 +62,21 @@ const config = require('../config/mailerconfig')[env]
 //
 // main().catch(console.error)
 
-const mailer = nodemailer.createTransport(config)
+const transporter = nodemailer.createTransport(config)
 
-function sendMailConfirmation (user) {
-  // todo https://www.npmjs.com/package/email-templates
-  const message = {
-    from: config.auth.user,
-    to: config.auth.testRecipient,
-    subject: 'Message title',
-    text: 'Plaintext version of the message',
-    html: '<p>HTML version of the message</p>',
-  }
-  mailer.sendMail(message)
+module.exports = {
+  sendResetPassword: ({ email, username, token }) => {
+    // console.log({ email, username, token })
+    const message = {
+      from: config.auth.user,
+      to: email,
+      subject: 'Восстановление пароля',
+      text: 'тут какой-то текст, но я не понял куда он идет',
+      html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
+      Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
+    }
+    transporter.sendMail(message)
+  },
+  // sendOrder: (user, order) => {},
+  // sendOrderStatus: (user, order) => {},
 }
-
-function sendOrder (user, order) {
-}
-
-function sendOrderStatus (user, order) {
-}
-
-function sendResetPassword ({ mail, username, token }) {
-  const message = {
-    from: config.auth.user,
-    to: mail,
-    subject: 'Восстановление пароля',
-    text: 'тут какой-то текст, но я не понял куда он идет',
-    html: `<p>Здравствуйте ${username}Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
-      Для восстановления пароля нажмите на кнопку <a href="/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
-  }
-  mailer.sendMail(message)
-}
-
-module.exports = mailer
-
-// mailer.sendMailConfirmation(user)
