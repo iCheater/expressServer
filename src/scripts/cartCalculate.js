@@ -131,6 +131,8 @@ function quantityInput (domObj) {
 }
 function increaseValue (btn) {
   document.getElementById('input' + btn.dataset.id).value++
+  calcSubtotal(btn)
+  calcTotal()
   const obj = {}
   obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
   productQantityRequest(obj)
@@ -139,6 +141,8 @@ function decreaseValue (btn) {
   if (document.getElementById('input' + btn.dataset.id).value > 0) {
     document.getElementById('input' + btn.dataset.id).value--
   }
+  calcSubtotal(btn)
+  calcTotal()
   const obj = {}
   obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
   productQantityRequest(obj)
@@ -187,4 +191,23 @@ function sendOrderData (data) {
   xhr.send(JSON.stringify(data))
 }
 
+function calcSubtotal (data) {
+  const quantity = parseInt(document.getElementById('input' + data.dataset.id).value)
+  const subtotalOld = document.getElementById('subtotal' + data.dataset.id)
+  const price = parseInt((document.getElementById('price' + data.dataset.id)).innerHTML)
+  subtotalOld.innerHTML = quantity * price
+}
 
+function calcTotal () {
+  const elemArr = document.getElementsByClassName('subtotal')
+  console.log('elemArr', elemArr)
+  let total = 0
+  for (let i = 0; i < elemArr.length; i++) {
+    const valueElem = parseInt(elemArr[i].innerHTML)
+    console.log(`valueElem ${i}: ${valueElem}`)
+    total = total + valueElem
+  }
+  console.log('total', total)
+  const sumTotal = document.getElementById('sumTotal')
+  sumTotal.innerHTML = total
+}

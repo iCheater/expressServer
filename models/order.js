@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize')
 module.exports = function (sequelize) {
   const Order = sequelize.define('Order', {
-    userName: DataTypes.STRING,
-    address: DataTypes.STRING,
+    // userName: DataTypes.STRING,
+    // address: DataTypes.STRING,
     promoCode: DataTypes.STRING,
     comment: DataTypes.STRING,
     shipping: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phone: DataTypes.STRING,
+    // email: DataTypes.STRING,
+    // phone: DataTypes.STRING,
     status: DataTypes.STRING,
   }, {
     // classMethods: {

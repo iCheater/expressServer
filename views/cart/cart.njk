@@ -45,17 +45,16 @@
                                 </div>
                             </div>
                         </td>
-                        <td data-th="Price"><span class="price" value="{{ product.price }} ">{{ product.price }} </span>
+                        <td data-th="Price"><span id="price{{ product.id }}" data-id="{{ product.id }}" class="price" value="{{ product.price }} ">{{ product.price }} </span>
                         </td>
                         <td data-th="Quantity">
-                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
-                                   class="form-control text-center quantityProduct"
-                                   value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
+                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}" class="form-control text-center quantityProduct"
+  value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
                             <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>
 
                             <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this)">-</button>
                         </td>
-                        <td data-th="Subtotal" class="subtotal text-center">{{ product.rowTotal }}</td>
+                        <td data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}" class="subtotal text-center">{{ product.rowTotal }}</td>
                         <td class="actions" data-th="">
                             <button href="/cart/{{ product.id }}" data-method="DELETE"
                                     class="btn btn-danger btn-sm deleteBtn" onclick="removeProduct(this)"
@@ -70,7 +69,9 @@
                 <tr>
                     <td><a href="#" class="btn btn-success">Продолжить покупки</a></td>
                     <td colspan="2" class="hidden-xs"></td>
+
                     <td class="hidden-xs text-center"><strong id="sumTotal">{{ sumTotal }}</strong></td>
+
                     <td><a href="#" class="btn btn-success">Оплатить </a></td>
                 </tr>
                 </tfoot>

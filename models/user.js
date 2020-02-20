@@ -30,10 +30,13 @@ module.exports = (sequelize) => {
     verified: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: false,
     },
     avatarUrl: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: 'urlToImage', // todo add default image
+
     },
 
   }, {

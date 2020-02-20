@@ -130,35 +130,35 @@ router.post('/quantity', (req, res, next) => {
   res.json({ mgs: req.session.cart })
 })
 
-router.post('/address', (req, res, next) => {
-  console.log('address ')
-  console.log('req.session', req.session)
-  console.log('req.session.user.addresses', req.session.user.addresses)
-  console.log('req.body address', req.body)
-  if (!req.session.order) { req.session.order = {} }
-  req.session.order.address = req.body.address
-  // megick return autocomplete
-  res.json({ address: req.session.order.address })
-})
+// router.post('/address', (req, res, next) => {
+//   console.log('address ')
+//   console.log('req.session', req.session)
+//   console.log('req.session.user.addresses', req.session.user.addresses)
+//   console.log('req.body address', req.body)
+//   if (!req.session.order) { req.session.order = {} }
+//   req.session.order.address = req.body.address
+//   // megick return autocomplete
+//   res.json({ address: req.session.order.address })
+// })
 
 router.post('/order', (req, res, next) => {
   console.log('order req.session', req.session)
   console.log('req.body address', req.body)
 
-  if (!req.session.order) { req.session.order = {} }
+  if (!req.session.authorless) { req.session.authorless = {} }
 
   if (req.body.address) {
-    req.session.order.address = req.body.address
+    req.session.authorless.address = req.body.address
     // megick return autocomplete
-    res.json({ address: req.session.order.address })
+    res.json({ address: req.session.authorless.address })
   }
   if (req.body.name) {
-    req.session.order.name = req.body.name
+    req.session.authorless.name = req.body.name
     res.json({ msg: 'ok' })
   }
 
   if (req.body.phone) {
-    req.session.order.phone = req.body.phone
+    req.session.authorless.phone = req.body.phone
     res.json({ msg: 'ok' })
   }
   console.log('order req.session', req.session)
