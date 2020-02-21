@@ -42,7 +42,7 @@
 
 .catalog__item
   border: 1px solid rgba(0, 0, 0, 0.24)
-  padding: 5px
+  padding: 10px 5px 0
   //width: 33.3%
   width: 33.3%
   .item__img
@@ -54,8 +54,12 @@
   .item__name
     font-size: 16px
     margin: 5px 0
+  .item__info
+    text-align: center
   .item__price-container
     display: inline-flex
+    justify-content: center
+    align-items: center
   .item__to-basket
     background-color: #005bf8
     padding: 12px 25px
@@ -63,16 +67,24 @@
     color: #FFF
     font-weight: 600
     margin: 5px 10px 5px 0
+    &:hover
+      background-color: rgba(205, 15, 0, 0.82)
 
   .item__other-info
     color: gray
+    padding: 10px 40px
     p
-      margin-bottom: 0
+      margin: 0 0 5px
+      text-align: left
 
 .item__price
   color: #b11a41
   font-weight: 600
   font-size: 18px
+
+  .price
+    display: block
+
 
 //Category page
 .category__container
@@ -114,6 +126,8 @@
       padding: 8px 15px
       color: #fff
       border-radius: 5px
+      &:hover
+        background-color: rgba(205, 15, 0, 0.82)
   .item__info-name
     padding: 5px 0
 
@@ -206,6 +220,8 @@
         color: #fff
         border-radius: 5px
         text-align: center
+        &:hover
+          background-color: rgba(205, 15, 0, 0.82)
 
 
 .input-img
