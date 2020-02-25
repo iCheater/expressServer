@@ -7,6 +7,7 @@
 .header
   background-color: #f8f8f8
 
+
   .header__inner
     display: flex
     justify-content: space-between
@@ -24,7 +25,10 @@
 
 .logo
   display: flex
-  justify-content: center
+  //justify-content: center
+  span
+    display: inline-block
+
 
   a
     img
@@ -43,11 +47,40 @@
   display: flex
   list-style: none
 
+
   li
     padding-left: 38px
   a
     color: #2f3f54
     font-weight: 700
+
+
+#menu__sticky
+  padding: 20px 0
+  max-width: 100%
+  align-items: center
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  background-color: #f8f8f8
+  box-shadow: 0 3px 10px rgba(0,0,0, .2)
+  display: none
+  .nav__link
+    list-style: none
+    color: #2f3f54
+  .short_order
+    display: flex
+    flex-direction: column
+    .short_order-link
+      text-decoration: underline
+      color: #a83930
+
+.sticky
+  display: flex
+  justify-content: space-between
+
+
 
 //Admin
 .product_table
