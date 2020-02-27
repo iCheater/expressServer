@@ -12,23 +12,39 @@ router.get('/', (req, res, next) => {
 })
 // придумать удобную структуру данных в сессии без дублирования
 // создание пользователя после создания заказа
+function vаlidateAuthorless () {
+  console.warn('vаlidateAuthorless() IS NOT IMPLEMENTED')
+  return true
+}
+
 router.get('/neworder', (req, res, next) => {
-  // if (!req.session.user) {
-  //   User.create({
-  //     username: req.session.authorless.username,
-  //     email: req.session.authorless.email,
-  //     password: Math.floor(Math.random() * 100), // todo
-  //     phone: req.session.authorless.phone,
-  //   })
-  //     .then(user => {
-  //       Address.create({
-  //         line1: req.session.authorless.address,
-  //       })
-  //         .then(address => {
-  //           // user.addAddresses[address.id]
-  //         })
-  //     })
-  // }
+  // ситуэйшны:
+  // - Я зареган, сделал заказ, но забыл авторизоваться, предлагаем авторизоваться на этапе оформления
+  // - Я зареган, сделал заказ указав другого получателя
+
+  if (!req.session.cart) {
+    return res.render('error', { message: 'ошибка, у вас пустая корзина' })
+  }
+
+  if (!req.session.user) {
+    if (vаlidateAuthorless(req.session.authorless)) {
+      return res.render('error', { message: 'данные пользователя не валидны' })
+    }
+    User.create({
+      username: req.session.authorless.username,
+      email: req.session.authorless.email,
+      password: Math.floor(Math.random() * 100), // todo
+      phone: req.session.authorless.phone,
+    })
+      .then(user => {
+        Address.create({
+          line1: req.session.authorless.address,
+        })
+          .then(address => {
+            // user.addAddresses[address.id]
+          })
+      })
+  }
   // // todo какое имя применить в заказе, если ты уже зарегистрирован?
   // Order.create({
   //   promoCode: req.session.authorless.order.promoCode, // todo
