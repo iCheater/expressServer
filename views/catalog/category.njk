@@ -2,6 +2,7 @@
 
 {% block preStylesheet %}
     <link href="/css/catalog.min.css" rel="stylesheet">
+    <link href="/css/cart.min.css" rel="stylesheet">
 {% endblock %}
 
  {% block preScript %}
@@ -50,18 +51,20 @@
                                     <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
                                 </div>
                                 <div class="item__price-container">
-                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button' title="Положить в корзину" onclick="reqForServer(this)">
+                                    <a class="item__to-basket" id="btn{{ product.id }}" data-id="{{ product.id }}" type='button' title="Положить в корзину" onclick="reqForServer(this)">
                                         В корзину
                                     </a>
                                     <div class="item__price">
                                         <span class="price">{{ product.price }} </span>
                                     </div>
                                 </div>
+
                                 <div class="item__other-info">
                                     <p>В наличии 42 шт</p>
                                     <p>Доставка сегодня</p>
                                 </div>
                             </div>
+
                         </div>
                     {% endfor %}
                 </div>
