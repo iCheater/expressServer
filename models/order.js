@@ -13,6 +13,9 @@ module.exports = function (sequelize) {
       defaultValue: 'CREATED',
       allowNull: false,
     },
+    totalPrice: {
+      type: DataTypes.INTEGER,
+    },
     // items: {
     //   // structure: {product: {Product}, quantity: X, price: X}
     //   type: DataTypes.ARRAY(Sequelize.JSON),
@@ -28,13 +31,7 @@ module.exports = function (sequelize) {
     //     }
     //   }
     // },
-  }, {
-    // classMethods: {
-    //     associate: function(models) {
-    //         Order.hasMany(models.User);
-    //     }
-    // }
-  })
+  }, { })
 
   return Order
 }

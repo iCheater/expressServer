@@ -1,18 +1,32 @@
 const express = require('express')
 const router = express.Router()
-const { Order, User, Address } = require('../models')
+const { Order, User, Address, OrderItem, Product } = require('../models')
 
 router.get('/', (req, res, next) => {
-  const order = {
-    cart: req.session.cart,
-    order: req.session.authorless,
-    user: req.session.user,
-  }
-  res.json(req.session)
+  Order.findAll({
+    where: {
+      id: 1,
+    },
+    limit: 10,
+    include: [
+      {
+        model: OrderItem,
+        as: 'items',
+        include: [{
+          model: Product,
+        }],
+      },
+      {
+        model: User,
+        as: 'user',
+      }],
+  }).then(orders => {
+    res.json(orders)
+  })
 })
 // придумать удобную структуру данных в сессии без дублирования
 // создание пользователя после создания заказа
-function vаlidateAuthorless () {
+function validateAuthorless () {
   console.warn('vаlidateAuthorless() IS NOT IMPLEMENTED')
   return true
 }
@@ -27,7 +41,7 @@ router.get('/neworder', (req, res, next) => {
   }
 
   if (!req.session.user) {
-    if (vаlidateAuthorless(req.session.authorless)) {
+    if (validateAuthorless(req.session.authorless)) {
       return res.render('error', { message: 'данные пользователя не валидны' })
     }
     User.create({
@@ -38,7 +52,7 @@ router.get('/neworder', (req, res, next) => {
     })
       .then(user => {
         Address.create({
-          line1: req.session.authorless.address,
+          textAddress: req.session.authorless.address,
         })
           .then(address => {
             // user.addAddresses[address.id]
@@ -46,24 +60,32 @@ router.get('/neworder', (req, res, next) => {
       })
   }
   // // todo какое имя применить в заказе, если ты уже зарегистрирован?
-  // Order.create({
-  //   promoCode: req.session.authorless.order.promoCode, // todo
-  //   comment: req.session.authorless.order.comment, // todo
-  //   shipping: req.session.authorless.order.shipping,
-  //   status: 'в обработке',
-  // })
-  //   .then(order => {
-  //     const keys = Object.keys(req.session.cart)
-  //     ProductQuantity.create({
-  //       product_id: req.session.authorless.cart[productID],
-  //       qunatity: req.session.authorless.cart[productID].amount,
-  //     })
-  //
-  //     // user.addOrder[order.id],
-  //     // mailer.sendOrder(user)
-  //     res.json(order)
-  //     // redirect('/order' + order.id)
-  //   })
+  Order.create({
+    promoCode: req.session.authorless.order.promoCode, // todo
+    comment: req.session.authorless.order.comment, // todo
+    shipping: req.session.authorless.order.shipping,
+    status: 'в обработке',
+  })
+    .then(order => {
+      const productIDs = Object.keys(req.session.cart)
+      const cartItems = []
+      for (const productID of productIDs) {
+        const cartItem = {}
+        cartItem.quantity = req.session.cart[productID].quantity
+        cartItem.subTotal = req.session.cart[productID].subTotal
+        cartItem.product_id = productID
+      }
+
+      OrderItem.bulkCreate(cartItems, { returning: true })
+        .then(orderItems => {
+          res.json(orderItems)
+        })
+
+      // user.addOrder[order.id],
+      // mailer.sendOrder(user)
+      res.json(order)
+      // redirect('/order' + order.id)
+    })
 })
 
 router.get('/order:id', (req, res, next) => {
