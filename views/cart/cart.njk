@@ -5,6 +5,8 @@
 {% endblock %}
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
+    <script src="/scripts/inputQuantity.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -55,11 +57,11 @@
                         </div>
 
                         <div class="product-qty" data-th="Quantity">
-                            <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this)">-</button>
+                            <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseAndCalc(this.dataset.id)">-</button>
                             <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
                                    class="form-control text-center quantityProduct"
-                                   value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
-                            <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>
+                                   value="{{ product.quantity }}" onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
+                            <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseAndCalc(this.dataset.id)">+</button>
                         </div>
 
                         <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"

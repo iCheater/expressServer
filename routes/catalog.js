@@ -171,8 +171,15 @@ router.get('/:categoryID', (req, res, next) => {
       })
         .then(products => {
           // res.json(products)
+          const rowProducts = products.map(product => product.get({ row: true }))
+          const productsWithQuantity = rowProducts.map((product) => {
+            if (req.session.cart[product.id]) {
+              product.quantity = req.session.cart[product.id].quantity
+            }
+            return product
+          })
           res.render('catalog/category', {
-            products: products,
+            products: productsWithQuantity,
             category: category,
           })
         })
