@@ -61,8 +61,8 @@ Product.belongsTo(Category, { foreignKey: 'category_id' })
 Order.hasMany(OrderItem, { as: 'items', foreignKey: 'order_id' })
 OrderItem.belongsTo(Order, { foreignKey: 'order_id' })
 
-// Product.belongsTo(OrderItem)
-OrderItem.belongsTo(Product)
+// Product.belongsTo(OrderItem) // todo do we need bidirectional association? hasMany?
+OrderItem.belongsTo(Product, { foreignKey: 'product_id' })
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })

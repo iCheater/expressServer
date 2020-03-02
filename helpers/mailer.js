@@ -71,12 +71,21 @@ module.exports = {
       from: config.auth.user,
       to: email,
       subject: 'Восстановление пароля',
-      text: 'тут какой-то текст, но я не понял куда он идет',
+      text: 'RESET PASSWORD тут какой-то текст, но я не понял куда он идет',
       html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
       Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
     }
     transporter.sendMail(message)
   },
-  // sendOrder: (user, order) => {},
+  sendOrder: ({ email, username, order }) => {
+    const message = {
+      from: config.auth.user,
+      to: email,
+      subject: `Заказ номер:${order.id}`,
+      text: 'ORDER тут какой-то текст, но я не понял куда он идет',
+      html: `<p>Здравствуйте ${username} !</p>`,
+    }
+    transporter.sendMail(message)
+  },
   // sendOrderStatus: (user, order) => {},
 }
