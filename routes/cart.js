@@ -20,17 +20,31 @@ router.get('/', (req, res) => {
     .then(products => {
       const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
-      const productsWithAmount = rowProducts.map((product) => {
-        product.quantity = req.session.cart[product.id].quantity
-        product.checked = req.session.cart[product.id].checked
-        product.rowTotal = product.price * product.quantity
-        sumTotal = sumTotal + product.rowTotal
-        return product
+      // const productsWithAmount = rowProducts.map((product) => {
+      //   product.quantity = req.session.cart[product.id].quantity
+      //   product.checked = req.session.cart[product.id].checked
+      //   product.rowTotal = product.price * product.quantity
+      //   sumTotal = sumTotal + product.rowTotal
+      //   return product
+      // })
+      const productsOutOFStock = []
+      const productsWithAmount = []
+      rowProducts.forEach(product => {
+        if (product.stock > 0) {
+          product.quantity = req.session.cart[product.id].quantity
+          product.checked = req.session.cart[product.id].checked
+          product.rowTotal = product.price * product.quantity
+          sumTotal = sumTotal + product.rowTotal
+          productsWithAmount.push(product)
+        } else {
+          // todo add alternatives
+          productsOutOFStock.push(product)
+        }
       })
-      console.log('Авторизованный пользователь', req.session.user)
       res.render('cart/cart', {
         editOrAdd: 'cart',
-        products: productsWithAmount,
+        productsWithAmount: productsWithAmount,
+        productsOutOFStock: productsOutOFStock,
         sumTotal: sumTotal,
         session: req.session,
       })

@@ -24,6 +24,11 @@ module.exports = function (sequelize) {
       nullable: false,
       defaultValue: 0,
     },
+    craftable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
     visitCounter: {
       type: DataTypes.INTEGER,
       defaultValue: 0,

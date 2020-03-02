@@ -173,7 +173,7 @@ router.get('/:categoryID', (req, res, next) => {
           // res.json(products)
           const rowProducts = products.map(product => product.get({ row: true }))
           const productsWithQuantity = rowProducts.map((product) => {
-            if (req.session.cart[product.id]) {
+            if (req.session.cart && req.session.cart[product.id]) {
               product.quantity = req.session.cart[product.id].quantity
             }
             return product
@@ -206,6 +206,5 @@ router.get('/:categoryID', (req, res, next) => {
 //     res.json(err)
 //   })
 // })
-
 
 module.exports = router
