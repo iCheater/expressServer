@@ -6,212 +6,239 @@
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
     <script src="/scripts/inputQuantity.js"></script>
-{#    <script src="scripts/cartCheckbox.js"></script>#}
+    {#    <script src="scripts/cartCheckbox.js"></script>#}
 {% endblock %}
 
 {% block content %}
     <div class="cart">
-        <div class="container cart__wrapper">
+        <div class="container ">
+            <h2>Корзина</h2>
+            <div class="cart__wrapper">
+                <section class="cart__inner">
+                    <div class="table">
+                        <div class="column-items">
+                            <div class="row__menu">
+                                <label class="form-check-label cart-action">
+                                    <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)">
+                                    Выбрать все
+                                </label>
+                                <a class="cart-delete cart-action">Удалить выделенное</a>
 
-            <section id="cart" class="cart">
-                <h2>Корзина</h2>
-                <div id="cart" class="table">
-                    <div class="row">
-
-                        <label class="form-check-label cart-action">Выбрать все
-                            <input type="checkbox"  name="a"  class="form-check styled" onclick="switchAllCheckbox(this)">
-                            <span class="checkmark"></span>
-                        </label>
-
-                        <a class="cart-delete cart-action">Удалить выделенное</a>
-
-                    </div>
-
-                    <h1>Нет в наличии</h1>
-
-                    {% for product in productsOutOFStock %}
-
-                    <div class="row">
-                        <div class="product-select" data-th="Product">
-                            <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
-                                   onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
-                        </div>
-
-                        <div class="product-img">
-                            <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
-                        </div>
-
-                        <div class="product-main">
-                            <div class="prod-desc">
-                                <h4>{{ product.name }}</h4>
-                                <p>{{ product.description }}</p>
                             </div>
                         </div>
+                        <h3>Нет в наличии</h3>
+                        <div class="column-items">
+                            {% for product in productsOutOFStock %}
+                                <div class="row">
+                                    <div class="product-select" data-th="Product">
+                                        <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
+                                               onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
+                                    </div>
 
-                        <div class="product-price" data-th="Price">
-                                <span id="price{{ product.id }}"
-                                      data-id="{{ product.id }}"
-                                      class="price"
-{#                                      value="{{ product.price }} "#}
-                                >{{ product.price }} </span>
-                        </div>
+                                    <div class="product-img">
+                                        <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
+                                    </div>
 
-                        <div class="product-qty" data-th="Quantity">
-                            <button class="btnMinus" data-id="{{ product.id }}"
-                                    onclick="decreaseAndCalc(this.dataset.id)">-
-                            </button>
-                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
-                                   class="form-control text-center quantityProduct"
-                                   value="{{ product.quantity }}"
-                                   onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
-                            <button class="btnPlus" data-id="{{ product.id }}"
-                                    onclick="increaseAndCalc(this.dataset.id)">+
-                            </button>
-                        </div>
+                                    <div class="product-main">
+                                        <div class="prod-desc">
+                                            <h4>{{ product.name }}</h4>
+                                            <p>{{ product.description }}</p>
+                                        </div>
+                                    </div>
 
-                        <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"
-                             class="subtotal">{{ product.rowTotal }}</div>
+                                    <div class="product-price" data-th="Price">
+                                    <span id="price{{ product.id }}"
+                                          data-id="{{ product.id }}"
+                                          class="price"
+    {#                                      value="{{ product.price }} "#}
+                                    >{{ product.price }} </span>
+                                    </div>
 
-                        <div class="actions" data-th="">
-                            <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                    class="btn deleteBtn" onclick="removeProduct(this)"
-                                    data-id="{{ product.id }}">
-                                x
-                            </button>
-                        </div>
-                    </div>
-                    <hr>
-                    {% endfor %}
+                                    <div class="product-qty" data-th="Quantity">
+                                        <button class="btnMinus" data-id="{{ product.id }}"
+                                                onclick="decreaseAndCalc(this.dataset.id)">-
+                                        </button>
+                                        <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
+                                               class="form-control text-center quantityProduct"
+                                               value="{{ product.quantity }}"
+                                               onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
+                                        <button class="btnPlus" data-id="{{ product.id }}"
+                                                onclick="increaseAndCalc(this.dataset.id)">+
+                                        </button>
+                                    </div>
 
-                    <h1>нормальные продукты</h1>
+                                    <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"
+                                         class="subtotal">{{ product.rowTotal }}</div>
 
-                    {% for product in productsWithAmount %}
-
-                        {#                        <div class="outOfStock">#}
-{#                            {% if product.stock == 0 %}#}
-{#                                {{ product.name }} не в наличии#}
-{#                            {% endif %}#}
-{#                        </div>#}
-
-{#                        <div class="outOfStock">#}
-{#                            {% if product.stock > 0 %}#}
-{#                                {{ product.name }} нормальный товар#}
-{#                            {% endif %}#}
-{#                        </div>#}
-
-
-
-                        <div class="row">
-                            <div class="product-select" data-th="Product">
-                                <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
-                                       onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
-                            </div>
-
-                            <div class="product-img">
-                                <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
-                            </div>
-
-                            <div class="product-main">
-                                <div class="prod-desc">
-                                    <h4>{{ product.name }} id: {{ product.id }}</h4>
-                                    <p>{{ product.description }}</p>
+                                    <div class="actions" data-th="">
+                                        <button href="/cart/{{ product.id }}" data-method="DELETE"
+                                                class="btn deleteBtn" onclick="removeProduct(this)"
+                                                data-id="{{ product.id }}">
+                                            x
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endfor %}
+                        </div>
+                        <h3>В наличии</h3>
+                        <div class="column-items">
+                            {% for product in productsWithAmount %}
+                                {#                        <div class="outOfStock">#}
+                                {#                            {% if product.stock == 0 %}#}
+                                {#                                {{ product.name }} не в наличии#}
+                                {#                            {% endif %}#}
+                                {#                        </div>#}
 
-                            <div class="product-price" data-th="Price">
+                                {#                        <div class="outOfStock">#}
+                                {#                            {% if product.stock > 0 %}#}
+                                {#                                {{ product.name }} нормальный товар#}
+                                {#                            {% endif %}#}
+                                {#                        </div>#}
+
+                                <div class="row">
+                                    <div class="product-select" data-th="Product">
+                                        <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
+                                               onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
+                                    </div>
+
+                                    <div class="product-img">
+                                        <img src=" {{ product.mURL }}" alt="..." class="product-img__img"/>
+                                    </div>
+
+                                    <div class="product-main">
+                                        <div class="prod-desc">
+                                            <h4>{{ product.name }} id: {{ product.id }}</h4>
+                                            <p>{{ product.description }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="product-price" data-th="Price">
                                 <span id="price{{ product.id }}"
                                       data-id="{{ product.id }}"
                                       class="price"
 {#                                      value="{{ product.price }} "#}
                                 >{{ product.price }} </span>
-                            </div>
+                                    </div>
 
-                            <div class="product-qty" data-th="Quantity">
-                                <button class="btnMinus" data-id="{{ product.id }}"
-                                        onclick="decreaseAndCalc(this.dataset.id)">-
-                                </button>
-                                <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
-                                       class="form-control text-center quantityProduct"
-                                       value="{{ product.quantity }}"
-                                       onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
-                                <button class="btnPlus" data-id="{{ product.id }}"
-                                        onclick="increaseAndCalc(this.dataset.id)">+
-                                </button>
-                            </div>
+                                    <div class="product-qty" data-th="Quantity">
+                                        <button class="btnMinus" data-id="{{ product.id }}"
+                                                onclick="decreaseAndCalc(this.dataset.id)">-
+                                        </button>
+                                        <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
+                                               class="form-control text-center quantityProduct"
+                                               value="{{ product.quantity }}"
+                                               onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
+                                        <button class="btnPlus" data-id="{{ product.id }}"
+                                                onclick="increaseAndCalc(this.dataset.id)">+
+                                        </button>
+                                    </div>
 
-                            <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"
-                                 class="subtotal">{{ product.rowTotal }}</div>
+                                    <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}" class="subtotal">{{ product.rowTotal }}</div>
 
-                            <div class="actions" data-th="">
-                                <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                        class="btn deleteBtn" onclick="removeProduct(this)"
-                                        data-id="{{ product.id }}">
-                                    x
-                                </button>
-                            </div>
+                                    <div class="actions" data-th="">
+                                        <button href="/cart/{{ product.id }}" data-method="DELETE"
+                                                class="btn deleteBtn" onclick="removeProduct(this)"
+                                                data-id="{{ product.id }}">
+                                            x
+                                        </button>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
                         </div>
-                        <hr>
-                    {% endfor %}
 
 
-                    <div class="row">
-                        <a href="#" class="btn btn-success">Продолжить покупки</a>
-                        <strong id="sumTotal">{{ sumTotal }}</strong>
-                    </div>
-                </div>
-
-            </section>
-
-            <section class="order" id="order__info" style="">
-                <h3 class="">Оформление заказа</h3>
-                <form class="form-group">
-                    <p>Адрес доставки</p>
-                    <div class="input-form">
-                        <input type="text" class="form-control input-address" placeholder="Адрес доставки"
-                               aria-label="Address" oninput="getAndSendAddress(this)"
-                               value="{{ session.order.address }}">
+{#                        <div class="row">#}
+{#                            <a href="#" class="btn btn-success">Продолжить покупки</a>#}
+{#                            <strong id="sumTotal">{{ sumTotal }}</strong>#}
+{#                        </div>#}
                     </div>
 
-                    <div class="input-form">
-                        <input type="text" class="form-control input-phone" placeholder="Номер телефона"
-                               aria-label="Phone" onfocusout="getAndSendPhone(this)"
-                               value="{{ session.user.phone or session.order.phone }}">
-                    </div>
+                </section>
 
+                <section class="order">
+                    <div class="result__order">
+                        <button class="btn-order">
+                            Перейти к оформлению
+                        </button>
+                        <div class="order-text">
+                            Доступные способы и время доставки можно выбрать при оформлении заказа
+                        </div>
 
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Введите свое имя"
-                               aria-label="Name" onfocusout="getAndSendName(this)" value="{{ session.user.username }}">
-                    </div>
-
-                    <div class="input-pay">
-                        <h4>Способ оплаты</h4>
-                        <div class="">
-                            <div class="form-check">
-                                <input class="" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                                <label class="form-check-label" for="gridRadios1">
-                                    Оплата наличными или банковской картой при получении
-                                </label>
+                        <div class="cart__total">
+                            <h4>Ваша корзина</h4>
+                            <div class="cart__total-row">
+                                <div class="row__column">
+                                    Товары ({{ cartLength | length }})
+                                </div>
+                                <div id="sumTotal"> {{ sumTotal }} </div>
                             </div>
-                            <div class="form-check">
-                                <input class="" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                                <label class="form-check-label" for="gridRadios2">
-                                    Онлайн оплата
-                                </label>
+                            <div class="cart__total-row row-sale">
+                                <div class="row__column">
+                                    Скидка
+                                </div>
+                                <div>нет</div>
+                            </div>
+                            <div class="cart__total-row">
+                                <div class="row__column">
+                                    Общая стоимость
+                                </div>
+                                <div id="sumTotal"> {{ sumTotal }} </div>
                             </div>
 
                         </div>
                     </div>
-                    <button class="btn btn-order">
-                        <a href="#">Оформить заказ</a>
-                    </button>
 
+                    <div class=""
+                </section>
+            </div>
 
-                </form>
-            </section>
 
         </div>
     </div>
 
 
 {% endblock %}
+{#<h3 class="">Оформление заказа</h3>#}
+{#<form class="form-group">#}
+{#    <p>Адрес доставки</p>#}
+{#    <div class="input-form">#}
+{#        <input type="text" class="form-control input-address" placeholder="Адрес доставки"#}
+{#               aria-label="Address" oninput="getAndSendAddress(this)"#}
+{#               value="{{ session.order.address }}">#}
+{#    </div>#}
+
+{#    <div class="input-form">#}
+{#        <input type="text" class="form-control input-phone" placeholder="Номер телефона"#}
+{#               aria-label="Phone" onfocusout="getAndSendPhone(this)"#}
+{#               value="{{ session.user.phone or session.order.phone }}">#}
+{#    </div>#}
+
+
+{#    <div class="input-group mb-3">#}
+{#        <input type="text" class="form-control" placeholder="Введите свое имя"#}
+{#               aria-label="Name" onfocusout="getAndSendName(this)" value="{{ session.user.username }}">#}
+{#    </div>#}
+
+{#    <div class="input-pay">#}
+{#        <h4>Способ оплаты</h4>#}
+{#        <div class="">#}
+{#            <div class="form-check">#}
+{#                <input class="" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>#}
+{#                <label class="form-check-label" for="gridRadios1">#}
+{#                    Оплата наличными или банковской картой при получении#}
+{#                </label>#}
+{#            </div>#}
+{#            <div class="form-check">#}
+{#                <input class="" type="radio" name="gridRadios" id="gridRadios2" value="option2">#}
+{#                <label class="form-check-label" for="gridRadios2">#}
+{#                    Онлайн оплата#}
+{#                </label>#}
+{#            </div>#}
+
+{#        </div>#}
+{#    </div>#}
+{#    <button class="btn btn-order">#}
+{#        <a href="#">Оформить заказ</a>#}
+{#    </button>#}
+{#</form>#}
