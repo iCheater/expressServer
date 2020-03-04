@@ -12,7 +12,7 @@
 {% block content %}
     <div class="cart">
         <div class="container ">
-            <h2>Корзина</h2>
+            <h2 class="section-title">Корзина</h2>
             <div class="cart__wrapper">
                 <section class="cart__inner">
                     <div class="table">
@@ -29,7 +29,7 @@
                         <h3>Нет в наличии</h3>
                         <div class="column-items">
                             {% for product in productsOutOFStock %}
-                                <div class="row">
+                                <div class="row row_grid-outstock">
                                     <div class="product-select" data-th="Product">
                                         <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
                                                onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
@@ -42,39 +42,18 @@
                                     <div class="product-main">
                                         <div class="prod-desc">
                                             <h4>{{ product.name }}</h4>
-                                            <p>{{ product.description }}</p>
+                                            <p>Нет в наличии</p>
                                         </div>
                                     </div>
 
-                                    <div class="product-price" data-th="Price">
-                                    <span id="price{{ product.id }}"
-                                          data-id="{{ product.id }}"
-                                          class="price"
-    {#                                      value="{{ product.price }} "#}
-                                    >{{ product.price }} </span>
-                                    </div>
-
-                                    <div class="product-qty" data-th="Quantity">
-                                        <button class="btnMinus" data-id="{{ product.id }}"
-                                                onclick="decreaseAndCalc(this.dataset.id)">-
-                                        </button>
-                                        <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
-                                               class="form-control text-center quantityProduct"
-                                               value="{{ product.quantity }}"
-                                               onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
-                                        <button class="btnPlus" data-id="{{ product.id }}"
-                                                onclick="increaseAndCalc(this.dataset.id)">+
-                                        </button>
-                                    </div>
-
-                                    <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"
-                                         class="subtotal">{{ product.rowTotal }}</div>
-
                                     <div class="actions" data-th="">
+                                        <button class="btn-favorite" data-id="{{ product.id }}">
+                                            <img src="images/favorite.png">
+                                        </button>
                                         <button href="/cart/{{ product.id }}" data-method="DELETE"
                                                 class="btn deleteBtn" onclick="removeProduct(this)"
                                                 data-id="{{ product.id }}">
-                                            x
+                                            <img src="images/remove.svg">
                                         </button>
                                     </div>
                                 </div>
@@ -95,7 +74,7 @@
                                 {#                            {% endif %}#}
                                 {#                        </div>#}
 
-                                <div class="row">
+                                <div class="row row-grid">
                                     <div class="product-select" data-th="Product">
                                         <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
                                                onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
@@ -112,13 +91,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="product-price" data-th="Price">
-                                <span id="price{{ product.id }}"
-                                      data-id="{{ product.id }}"
-                                      class="price"
-{#                                      value="{{ product.price }} "#}
-                                >{{ product.price }} </span>
-                                    </div>
+{#                                    <div class="product-price" data-th="Price">#}
+{#                                        <span id="price{{ product.id }}"#}
+{#                                              data-id="{{ product.id }}"#}
+{#                                              class="price"#}
+{#        #}{#                                      value="{{ product.price }} "#}
+{#                                        >{{ product.price }} </span>#}
+{#                                    </div>#}
 
                                     <div class="product-qty" data-th="Quantity">
                                         <button class="btnMinus" data-id="{{ product.id }}"
@@ -136,11 +115,16 @@
                                     <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}" class="subtotal">{{ product.rowTotal }}</div>
 
                                     <div class="actions" data-th="">
-                                        <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                                class="btn deleteBtn" onclick="removeProduct(this)"
-                                                data-id="{{ product.id }}">
-                                            x
+                                        <button class="btn-favorite" data-id="{{ product.id }}">
+                                            <img src="images/favorite.png">
                                         </button>
+                                        <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn" onclick="removeProduct(this)"
+                                                data-id="{{ product.id }}">
+                                            <img src="images/remove.svg">
+                                        </button>
+                                    </div>
+                                    <div class="sale">
+                                        Sale!!!
                                     </div>
                                 </div>
 
@@ -148,10 +132,6 @@
                         </div>
 
 
-{#                        <div class="row">#}
-{#                            <a href="#" class="btn btn-success">Продолжить покупки</a>#}
-{#                            <strong id="sumTotal">{{ sumTotal }}</strong>#}
-{#                        </div>#}
                     </div>
 
                 </section>
@@ -189,7 +169,7 @@
                         </div>
                     </div>
 
-                    <div class=""
+                    <div class=""></div>
                 </section>
             </div>
 

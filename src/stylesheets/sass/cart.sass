@@ -1,8 +1,13 @@
 //cart
+.section-title
+  margin-top: 0
 .cart
-  background-color: rgba(212, 212, 212, 0.2)
+  background-color: rgba(223, 223, 223, 0.2)
   width: 100%
   height: 100%
+  padding: 20px 0
+  border-top: 2px solid #ffffff
+  border-bottom: 2px solid #ffffff
 .cart__wrapper
   display: flex
   margin-top: 30px !important
@@ -27,27 +32,7 @@
   padding-right: 5px
 
 
-.product-select
-  padding-right: 5px
 
-.product-img
-  padding-right: 15px
-  width: 10%
-  .product-img__img
-    width: 80px
-    height: 80px
-
-.product-main
-  padding-right: 15px
-  width: 40%
-  .prod-desc
-    h4
-      margin: 0 10px 10px 0
-    p
-      margin-top: 0
-
-.product-price
-  width: 10%
 
 .column-items
   background-color: #ffffff
@@ -72,6 +57,102 @@
   padding: 20px 0
   &:last-child
     border-bottom: none
+
+
+.row_grid-outstock
+  display: grid
+  grid-column-gap: 5px
+  grid-template-columns: 30px 100px 4fr 100px
+  grid-template-areas: "a b c d"
+  opacity: 0.7
+  padding: 5px 0
+  .product-select
+    grid-area: a
+  .product-img
+    grid-area: b
+    padding-right: 15px
+    .img__product
+      width: 50px
+      height: 50px
+  .product-main
+    grid-area: c
+  .actions
+    grid-area: d
+
+.row-grid
+  display: grid
+  grid-column-gap: 5px
+  grid-template-columns: 30px 1fr 4fr 100px
+  grid-template-areas: "a b c f" "a b c e" " a b d g "
+
+.product-select
+  grid-area: a
+  padding-right: 5px
+
+.product-img
+  grid-area: b
+  padding-right: 15px
+  .product-img__img
+    width: 80px
+    height: 80px
+
+.product-main
+  grid-area: c
+  padding-right: 15px
+  //width: 40%
+  .prod-desc
+    h4
+      margin: 0 10px 10px 0
+    p
+      margin-top: 0
+
+.product-qty
+  grid-area: d
+  width: 110px
+  display: flex
+  justify-content: space-around
+  align-items: center
+  margin-right: 10px
+  input
+    width: 50px
+    height: 20px
+    padding: 5px
+    margin: 0
+    text-align: center
+    font-weight: 500
+    font-size: 14px
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none
+    margin: 0
+  button
+    width: 25px
+    height: 25px
+    border-radius: 50%
+    background-color: rgba(128, 128, 128, 0.18)
+    color: #b11a41
+    //background: rgba(0,0,0,0)
+    border: none
+    font-weight: 700
+    font-size: 18px
+
+.subtotal
+  grid-area: e
+  grid-column: 13/span 14
+
+.actions
+  grid-area: f
+  grid-column: 13/span 14
+  text-align: right
+  padding-top: 0
+
+.sale
+  grid-area: g
+  grid-column: 13/span 14
+  text-align: left
+  color: red
+  font-weight: 500
 
 input[type="checkbox"]
   cursor: pointer
@@ -117,58 +198,13 @@ input[type="checkbox"]:disabled:after
 .form-check
   margin: 0
 
-
-
-
-
-
-.product-qty
-  width: 15%
-  display: flex
-  justify-content: space-around
-  align-items: center
-  margin-right: 10px
-  input
-    width: 50px
-    height: 20px
-    padding: 5px
-    margin: 0
-    text-align: center
-    font-weight: 500
-    font-size: 14px
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none
-    margin: 0
-  button
-    width: 25px
-    height: 25px
-    border-radius: 50%
-    background-color: rgba(128, 128, 128, 0.18)
-    color: #b11a41
-    //background: rgba(0,0,0,0)
-    border: none
-    font-weight: 700
-    font-size: 18px
-
-.subtotal
-  width: 10%
-
+.btn-favorite,
 .deleteBtn
   background: none
-  border: 1px solid #464646
-  padding: 10px 5px
-  font-weight: 700
-  color: #464646
-  font-size: 14px
-  line-height: 0
-
-  &:hover
-    color: #a84b3c
-    border: 1px solid #a84b3c
-    padding: 10px 5px
-    background-color: rgba(254, 85, 70, 0.12)
+  border: none
+  cursor: pointer
+  img
+    width: 20px
 
 .form-group
   width: 100%
