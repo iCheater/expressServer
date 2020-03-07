@@ -5,39 +5,12 @@ const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
 
-router.get('/', (req, res, next) => {
-  Order.findAll({
-    where: {
-      id: 1,
-    },
-    limit: 10,
-    include: [
-      {
-        model: OrderItem,
-        as: 'items',
-        include: [{
-          model: Product,
-        }],
-      },
-      {
-        model: User,
-        as: 'user',
-      }],
-  }).then(orders => {
-    res.json(orders)
-  })
-})
-// придумать удобную структуру данных в сессии без дублирования
-// создание пользователя после создания заказа
 function isAuthorlessValid () {
   console.warn('isAuthorlessValid() IS NOT IMPLEMENTED')
   return true
 }
 
 router.get('/neworder', async (req, res, next) => {
-  // ситуэйшны:
-  // - Я зареган, сделал заказ, но забыл авторизоваться, предлагаем авторизоваться на этапе оформления
-  // - Я зареган, сделал заказ указав другого получателя
   req.session.authorless = {
     username: 'artem',
     email: 'test@test2.ru',
@@ -49,9 +22,13 @@ router.get('/neworder', async (req, res, next) => {
       shipping: '',
     },
   }
-  let user = req.session.user || null
+
   try {
+    let user = req.session.user || null
+    const tempPassword = User.generatePassword()
+
     if (!req.session.cart) {
+      // throw error(404, 'ошибка, у вас пустая корзина') // todo need to find good error handler
       return res.json({ message: 'ошибка, у вас пустая корзина' })
     }
 
@@ -66,7 +43,6 @@ router.get('/neworder', async (req, res, next) => {
       //     }
       //   })
       //
-      const tempPassword = User.generatePassword()
       user = await User.create({
         username: req.session.authorless.username,
         email: req.session.authorless.email,
@@ -105,13 +81,14 @@ router.get('/neworder', async (req, res, next) => {
     console.log(cartItems[0])
     const orderItems = await OrderItem.bulkCreate(cartItems, { returning: true })
 
-    // todo password, orderItems+include products
+    // TODO orderItems+include products
     // todo create model mail.
     mailer.sendOrder({
       username: user.username,
       email: user.email,
       order: order.id,
       orderItems: orderItems,
+      password: tempPassword,
     })
 
     delete req.session.cart
@@ -132,32 +109,58 @@ router.get('/neworder', async (req, res, next) => {
   }
 })
 
-router.get('/order:id', (req, res, next) => {
-  Order.findByPk(req.params.id, {
-    include: {
-      model: User,
-      include: {
-        model: Address,
-      },
-    },
-  })
-    .then(order => {
-      res.json(order)
-    })
-})
 
-router.get('/list', (req, res, next) => {
-  Order.findAll({
-    include: {
-      model: User,
-      include: {
-        model: Address,
-      },
-    },
-  })
-    .then(order => {
-      res.json(order)
-    })
-})
+// for tests
+// router.get('/', (req, res, next) => {
+//   Order.findAll({
+//     where: {
+//       id: 1,
+//     },
+//     limit: 10,
+//     include: [
+//       {
+//         model: OrderItem,
+//         as: 'items',
+//         include: [{
+//           model: Product,
+//         }],
+//       },
+//       {
+//         model: User,
+//         as: 'user',
+//       }],
+//   }).then(orders => {
+//     res.json(orders)
+//   })
+// })
+
+// // for tests
+// router.get('/order:id', (req, res, next) => {
+//   Order.findByPk(req.params.id, {
+//     include: {
+//       model: User,
+//       include: {
+//         model: Address,
+//       },
+//     },
+//   })
+//     .then(order => {
+//       res.json(order)
+//     })
+// })
+//
+// router.get('/list', (req, res, next) => {
+//   Order.findAll({
+//     include: {
+//       model: User,
+//       include: {
+//         model: Address,
+//       },
+//     },
+//   })
+//     .then(order => {
+//       res.json(order)
+//     })
+// })
 
 module.exports = router

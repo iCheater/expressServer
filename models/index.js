@@ -50,6 +50,7 @@ const {
   Tag,
   Token,
   OrderItem,
+  Mail,
 } = db
 
 Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
@@ -63,6 +64,11 @@ OrderItem.belongsTo(Order, { foreignKey: 'order_id' })
 
 // Product.belongsTo(OrderItem) // todo do we need bidirectional association? hasMany?
 OrderItem.belongsTo(Product, { foreignKey: 'product_id' })
+
+Mail.belongsTo(Order, { foreignKey: 'order_id' }) // todo do we need bidirectional association? hasMany?
+
+User.hasMany(Mail, { as: 'mails', foreignKey: 'user_id' })
+Mail.belongsTo(User, { foreignKey: 'user_id' })
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
