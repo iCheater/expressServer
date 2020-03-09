@@ -4,7 +4,7 @@ const DataTypes = require('sequelize').DataTypes
 module.exports = (sequelize) => {
   const Mail = sequelize.define('Mail', {
     status: {
-      type: DataTypes.ENUM('CREATED', 'FAILED', 'RECEIVED'),
+      type: DataTypes.ENUM('CREATED', 'FAILED', 'SENT', 'RECEIVED'),
       defaultValue: 'CREATED',
       allowNull: false,
     },

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Order, User, Address, OrderItem, Product } = require('../models')
+const { Order, User, Address, OrderItem, Product, Mail } = require('../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
@@ -11,21 +11,21 @@ function isAuthorlessValid () {
 }
 
 router.get('/neworder', async (req, res, next) => {
-  req.session.authorless = {
-    username: 'artem',
-    email: 'test@test2.ru',
-    phone: '89933329293',
-    address: 'moscow bolshov bulvar 12',
-    order: {
-      promoCode: '',
-      comment: '',
-      shipping: '',
-    },
-  }
+  // req.session.authorless = {
+  //   username: 'test',
+  //   email: 'test@test4.ru',
+  //   phone: '89933329293',
+  //   address: 'kebab bolshov bulvar 12',
+  //   order: {
+  //     promoCode: '',
+  //     comment: '',
+  //     shipping: '',
+  //   },
+  // }
 
   try {
     let user = req.session.user || null
-    const tempPassword = User.generatePassword()
+    let nonSaltedPassword = null
 
     if (!req.session.cart) {
       // throw error(404, 'ошибка, у вас пустая корзина') // todo need to find good error handler
@@ -43,10 +43,11 @@ router.get('/neworder', async (req, res, next) => {
       //     }
       //   })
       //
+      nonSaltedPassword = User.generatePassword()
       user = await User.create({
         username: req.session.authorless.username,
         email: req.session.authorless.email,
-        password: tempPassword,
+        password: nonSaltedPassword,
         phone: req.session.authorless.phone,
         addresses: [{
           textAddress: req.session.authorless.address,
@@ -59,6 +60,7 @@ router.get('/neworder', async (req, res, next) => {
       })
     }
 
+    // todo
     const order = await Order.create({
       promoCode: req.session.authorless.order.promoCode || null,
       comment: req.session.authorless.order.comment || null,
@@ -67,7 +69,7 @@ router.get('/neworder', async (req, res, next) => {
       user_id: user === null ? null : user.id,
     })
     const productIDs = Object.keys(req.session.cart)
-    // todo Should i check products in DB ?
+    // todo Should i check products in DB or its not my problem?
     const cartItems = []
     for (const productID of productIDs) {
       const cartItem = {
@@ -78,25 +80,43 @@ router.get('/neworder', async (req, res, next) => {
       }
       cartItems.push(cartItem)
     }
-    console.log(cartItems[0])
-    const orderItems = await OrderItem.bulkCreate(cartItems, { returning: true })
 
-    // TODO orderItems+include products
-    // todo create model mail.
-    mailer.sendOrder({
-      username: user.username,
-      email: user.email,
-      order: order.id,
-      orderItems: orderItems,
-      password: tempPassword,
+    await OrderItem.bulkCreate(cartItems, { returning: true })
+
+    const orderWithIncludes = await Order.findByPk(order.id, {
+      include: {
+        model: OrderItem,
+        as: 'items',
+        include: [{
+          model: Product,
+        }],
+      },
     })
 
-    delete req.session.cart
-    // todo auth new user
+    const mail = await Mail.create({
+      type: 'ORDER',
+      order_id: orderWithIncludes.id,
+      user_id: user.id,
+    })
 
+    // no await, because we want to create order, even if mail server is down
+    mailer.sendOrder({
+      order: orderWithIncludes,
+      user: user,
+      password: nonSaltedPassword,
+      mailId: mail.id,
+    })
+
+    // delete req.session.cart
+
+    // auth new user
+    if (!req.session.user) {
+      req.session.user = user.dataValues
+    }
     res.json({
-      order: order,
-      orderItems: orderItems,
+      order: orderWithIncludes,
+      user: user,
+      password: nonSaltedPassword,
     })
 
     // redirect('/order' + order.id)
@@ -108,7 +128,6 @@ router.get('/neworder', async (req, res, next) => {
     res.json(e)
   }
 })
-
 
 // for tests
 // router.get('/', (req, res, next) => {
