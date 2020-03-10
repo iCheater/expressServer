@@ -2,10 +2,13 @@
 
 {% block preStylesheet %}
     <link href="/css/catalog.min.css" rel="stylesheet">
+    <link href="/css/cart.min.css" rel="stylesheet">
 {% endblock %}
 
  {% block preScript %}
      <script src="/scripts/addProductToCart.js"></script>
+{#     <script src="/scripts/cartCalculate.js"></script>#}
+     <script src="/scripts/inputQuantity.js"></script>
  {% endblock %}
 
 {% block content %}
@@ -50,18 +53,31 @@
                                     <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
                                 </div>
                                 <div class="item__price-container">
-                                    <a class="item__to-basket" data-id="{{ product.id }}" type='button' title="Положить в корзину" onclick="reqForServer(this)">
-                                        В корзину
-                                    </a>
+                                    {% if product.quantity > 0 %}
+                                    <div class="product-qty" data-th="Quantity">
+                                        <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this.dataset.id)">-</button>
+                                        <input type="number" id="input{{ product.id }}" data-id="{{ product.id }}"
+ class="quantityProduct " value="{{ product.quantity }}" min="0" onchange="quantityInput(this.dataset.id)">
+                                        <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this.dataset.id)">+</button>
+                                    </div>
+                                    {% else %}
+                                        <a class="item__to-basket" id="btn{{ product.id }}" data-id="{{ product.id }}"
+                                           type='button' title="Положить в корзину" onclick="requestAndElemSwap(this.dataset.id)">
+
+                                            В корзину
+                                        </a>
+                                    {% endif %}
                                     <div class="item__price">
-                                        <span><span class="price">{{ product.price }} </span></span>
+                                        <span class="price">{{ product.price }} </span>
                                     </div>
                                 </div>
+
                                 <div class="item__other-info">
                                     <p>В наличии 42 шт</p>
                                     <p>Доставка сегодня</p>
                                 </div>
                             </div>
+
                         </div>
                     {% endfor %}
                 </div>

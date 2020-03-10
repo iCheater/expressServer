@@ -6,17 +6,18 @@
 
 .header
   background-color: #f8f8f8
-
   .header__inner
     display: flex
     justify-content: space-between
     align-items: center
     height: 87px
 
+.main
+  height: 100%
+
 .btn__menu
   width: 40px
   display: none
-
   div
     height: 5px
     margin-bottom: 5px
@@ -24,30 +25,55 @@
 
 .logo
   display: flex
-  justify-content: center
-
+  //justify-content: center
+  span
+    display: inline-block
   a
     img
       height: 40px
-
   .logo__text
     font-size: 30px
     font-weight: 700
     color: #ED3312
-
   .text
     color: #f2e81a
-
 
 .menu__list
   display: flex
   list-style: none
-
   li
     padding-left: 38px
   a
     color: #2f3f54
     font-weight: 700
+
+
+#menu__sticky
+  padding: 20px 0
+  max-width: 100%
+  align-items: center
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  background-color: #f8f8f8
+  box-shadow: 0 3px 10px rgba(0,0,0, .2)
+  display: none
+  .nav__link
+    list-style: none
+    color: #2f3f54
+  .short_order
+    display: flex
+    flex-direction: column
+    .short_order-link
+      text-decoration: underline
+      color: #a83930
+
+.sticky
+  display: flex
+  justify-content: space-between
+
+
 
 //Admin
 .product_table
@@ -72,50 +98,18 @@
 //background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E")
 
 
-/* стили для индикаторов */
-//.slider__indicators
-//  position: absolute
-//  right: 0
-//  bottom: 10px
-//  left: 0
-//  z-index: 15
-//  display: flex
-//  justify-content: center
-//  padding-left: 0
-//  list-style: none
-//  margin: 0 15%
-//
-//
-//.slider__indicators li
-//  box-sizing: content-box
-//  flex: 0 1 auto
-//  width: 30px
-//  height: 4px
-//  margin-right: 3px
-//  margin-left: 3px
-//  text-indent: -999px
-//  cursor: pointer
-//  background-color: rgba(255, 255, 255, 0.5)
-//  background-clip: padding-box
-//  border-top: 10px solid transparent
-//  border-bottom: 10px solid transparent
-//
-//
-//.slider__indicators li.active
-//  background-color: #fff
-
-
 //content home page
-
 .footer
   padding-top: 45px
   background-color: #f8f8f8
   font-size: 13px
 
   width: 100%
-  position: absolute
   height: 150px
-  bottom: 0
+  //position: absolute
+  //bottom: 0
+  //right: 0
+  //left: 0
 
   &__inner
     padding-bottom: 30px
@@ -280,7 +274,6 @@
   font-style: italic
   font-size: 13px
 
-
 .instagram
   display: flex
   flex-wrap: wrap
@@ -298,21 +291,18 @@
 .wait
   cursor: wait
 
+#sumTotal
+  font-weight: 700
+
 //cart page
 .price:after,
 .subtotal:after,
 #sumTotal:after
   content: " ₽"
 
-#sumTotal:before
-  content: "Итого: "
+//#sumTotal:before
+//  content: "Итого: "
 
-.img__product
-  height: 50px
-  width: 50px
-
-#order__info
-  background-color: rgba(42, 167, 69, 0.1)
 
 .services
   .services__inner
@@ -350,7 +340,6 @@
     .contacts-email,
     iframe
       margin-bottom: 30px
-
     .contacts__way
       margin-bottom: 30px
 
@@ -441,5 +430,11 @@
     padding: 5px 10px
     margin: 5px
 
+
+//input btn
+.inputVal
+  width: 3em
+  text-align: center
+  margin: 0 10px
 
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User } = require('../../models')
+const { User, Address } = require('../../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 
@@ -17,25 +17,29 @@ router.post('/', (req, res, next) => {
   }
   logger.verbose(`Login request with: [${username}] and password [${password}]`)
 
-  User.findOne({ where: { username: username } }).then(async (user) => {
-    if (!user) {
-      logger.verbose(`Username [${username}] not found`)
-      res.status(400)
-      res.redirect('/login')
-    } else if (!await user.validPassword(password)) {
-      logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]` })
-      res.status(400)
-      res.redirect('/login')
-    } else {
-      logger.verbose('Login and password are valid')
-      console.log('login ok. user')
-      req.session.user = user.dataValues
-      // req.session.user = {'test':"test"};
-      // console.log('user.dataValues',user.dataValues);
-      res.status(200)
-      res.redirect('/')
-    }
+  User.findOne({
+    where: { username: username },
+    include: { model: Address, as: 'addresses' },
   })
+    .then(async (user) => {
+      if (!user) {
+        logger.verbose(`Username [${username}] not found`)
+        res.status(400)
+        res.redirect('/login')
+      } else if (!await user.validPassword(password)) {
+        logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]` })
+        res.status(400)
+        res.redirect('/login')
+      } else {
+        logger.verbose('Login and password are valid')
+        console.log('login ok. user')
+        req.session.user = user.dataValues
+        // req.session.user = {'test':"test"};
+        // console.log('user.dataValues',user.dataValues);
+        res.status(200)
+        res.redirect('/')
+      }
+    })
 })
 
 module.exports = router

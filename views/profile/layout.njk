@@ -3,26 +3,47 @@
 {#{{ user }}#}
 {% block preStylesheet %}
     <link href="./css/profile.css" rel="stylesheet"/>
+    <link href="/css/catalog.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-    <a href="/resetpassword/reset">reset password</a>
+    <a href="/resetpassword/reset" type="button" >reset password</a>
 
-    <div class="container d-flex mt-5">
+    <div class="container">
+        <div class="profile-wrapper">
+            <div class="breadcrumb_1">
+                <ul class="breadcrumb-path">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/profile/">Профиль</a></li>
+                </ul>
+            </div>
+            <h2 class="profile-title">Профиль</h2>
+            <div class="menu__profile">
+                <h4>Личная информация</h4>
+                <div class="menu__block">
+                    <a href="/profile" class="">Профиль</a>
+                    <a href="/profile/favorites" class="">Адреса доставки</a>
+                </div>
+                <h4>Покупки</h4>
+                <div class="menu__block">
+                    <a href="/cart" class="">Моя корзина</a>
+                    <a href="profile/history" class="">История заказов</a>
+                </div>
+                <h4>Списки</h4>
+                <div class="menu__block">
+                    <a href="/profile/favorites" class="">Избранное</a>
+                    <a href="profile/history" class="">Купленные товары</a>
+                    <a href="profile/" class="">Электронные чеки</a>
+                    <a href="/profile/" class="">Мои возвраты</a>
+                </div>
+            </div>
 
-        <div class="col-md-2">
-            <div class="list-group list-group-flush">
-                <a href="/profile" class="list-group-item list-group-item-action">Личный кабинет</a>
-                <a href="/profile/favorites" class="list-group-item list-group-item-action">Избранное</a>
-                <a href="profile/history" class="list-group-item list-group-item-action">История покупок</a>
-                <a href="profile/reviews" class="list-group-item list-group-item-action">Отзывы</a>
-                <a href="/profile/edit" class="list-group-item list-group-item-action">Настройки</a>
+
+            <div class="main-panel">
+                {% block main_profile %}{% endblock %}
             </div>
         </div>
 
-        <div class="main-panel">
-            {% block main_profile %}{% endblock %}
-        </div>
     </div>
 
 {% endblock %}

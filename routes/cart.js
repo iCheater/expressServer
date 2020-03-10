@@ -1,16 +1,18 @@
 const express = require('express')
 const router = express.Router()
-const { Product, Order } = require('./../models')
+const { Product, User, Order } = require('./../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 
 router.get('/', (req, res) => {
+  console.log(req.session.user)
   if (!req.session.cart) {
     return res.render('cart/cart', {
       session: req.session,
     })
   }
   const arrCartID = Object.keys(req.session.cart)
+  // todo Mark somehow unavailable products
   Product.findAll({
     where: {
       id: arrCartID,
@@ -19,17 +21,34 @@ router.get('/', (req, res) => {
     .then(products => {
       const rowProducts = products.map(product => product.get({ row: true }))
       let sumTotal = 0
-      const productsWithAmount = rowProducts.map((product) => {
-        product.quantity = req.session.cart[product.id].quantity
-        product.checked = req.session.cart[product.id].checked
-        product.rowTotal = product.price * product.quantity
-        sumTotal = sumTotal + product.rowTotal
-        return product
-      })
+      // const productsWithAmount = rowProducts.map((product) => {
+      //   product.quantity = req.session.cart[product.id].quantity
+      //   product.checked = req.session.cart[product.id].checked
+      //   product.rowTotal = product.price * product.quantity
+      //   sumTotal = sumTotal + product.rowTotal
+      //   return product
+      // })
+      const productsOutOFStock = []
+      const productsWithAmount = []
 
+      rowProducts.forEach(product => {
+        if (product.stock > 0) {
+          product.quantity = req.session.cart[product.id].quantity
+          product.checked = req.session.cart[product.id].checked
+          product.rowTotal = product.sellingPrice * product.quantity
+          product.discountValue = (product.rowTotal * (100 - product.discount) / 100).toFixed()
+          sumTotal = sumTotal + product.rowTotal
+          productsWithAmount.push(product)
+        } else {
+          // todo add alternatives
+          productsOutOFStock.push(product)
+        }
+      })
+      console.log()
       res.render('cart/cart', {
         editOrAdd: 'cart',
-        products: productsWithAmount,
+        productsWithAmount: productsWithAmount,
+        productsOutOFStock: productsOutOFStock,
         sumTotal: sumTotal,
         session: req.session,
       })
@@ -97,8 +116,11 @@ router.put('/:productID', (req, res, next) => {
     req.session.cart[productID].quantity = 1
     req.session.cart[productID].checked = true
   }
-  console.log('cart', req.session.cart)
-  res.json(req.session)
+  const data = {
+    cartLength: Object.keys(req.session.cart).length,
+  }
+  console.log('data', data)
+  res.json(data)
   // console.log(req.session)
 })
 
@@ -127,6 +149,40 @@ router.post('/quantity', (req, res, next) => {
   }
   console.log('req.session.cart after', req.session.cart)
   res.json({ mgs: req.session.cart })
+})
+
+// router.post('/address', (req, res, next) => {
+//   console.log('address ')
+//   console.log('req.session', req.session)
+//   console.log('req.session.user.addresses', req.session.user.addresses)
+//   console.log('req.body address', req.body)
+//   if (!req.session.order) { req.session.order = {} }
+//   req.session.order.address = req.body.address
+//   // megick return autocomplete
+//   res.json({ address: req.session.order.address })
+// })
+
+router.post('/order', (req, res, next) => {
+  console.log('order req.session', req.session)
+  console.log('req.body address', req.body)
+
+  if (!req.session.authorless) { req.session.authorless = {} }
+
+  if (req.body.address) {
+    req.session.authorless.address = req.body.address
+    // megick return autocomplete
+    res.json({ address: req.session.authorless.address })
+  }
+  if (req.body.name) {
+    req.session.authorless.name = req.body.name
+    res.json({ msg: 'ok' })
+  }
+
+  if (req.body.phone) {
+    req.session.authorless.phone = req.body.phone
+    res.json({ msg: 'ok' })
+  }
+  console.log('order req.session', req.session)
 })
 
 module.exports = router

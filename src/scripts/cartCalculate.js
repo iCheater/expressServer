@@ -87,6 +87,7 @@ function removeRequest (btn) {
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
       removeProductRow(btn)
+      calcTotal()
     } else {
       activateRemoveButton(btn)
     }
@@ -114,48 +115,86 @@ function activateRemoveButton (btn) {
 }
 
 function removeProductRow (btn) {
-  const tr = btn.closest('tr')
+  const tr = btn.closest('.row')
   tr.parentNode.removeChild(tr)
 }
 
-function quantityInput (domObj) {
-  let value = parseInt(document.getElementById('input' + domObj.dataset.id).value)
-  if (value < 0 || !Number.isInteger(value)) {
-    alert('Ошибка ввода!')
-    document.getElementById('input' + domObj.dataset.id).value = 0
-    value = 0
-  }
-  const obj = {}
-  obj[domObj.dataset.id] = value
-  productQantityRequest(obj)
+function decreaseAndCalc (id) {
+  decreaseValue(id)
+  calcSubtotal(id)
+  calcTotal()
 }
-function increaseValue (btn) {
-  document.getElementById('input' + btn.dataset.id).value++
-  const obj = {}
-  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
-  productQantityRequest(obj)
+function increaseAndCalc (id) {
+  increaseValue(id)
+  calcSubtotal(id)
+  calcTotal()
 }
-function decreaseValue (btn) {
-  if (document.getElementById('input' + btn.dataset.id).value > 0) {
-    document.getElementById('input' + btn.dataset.id).value--
-  }
-  const obj = {}
-  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
-  productQantityRequest(obj)
+function reqAndValidationAndCalc (id) {
+  quantityInput(id)
+  calcSubtotal(id)
+  calcTotal()
 }
 
-function productQantityRequest (data) {
+function getAndSendAddress (input) {
+  sendOrderData({ address: input.value })
+}
+function getAndSendPhone (input) {
+  console.log('obj pnone', input.value)
+  sendOrderData({ phone: input.value })
+}
+function getAndSendName (input) {
+  console.log('obj name', input.value)
+  sendOrderData({ name: input.value })
+}
+
+function sendOrderData (data) {
   // eslint-disable-next-line no-undef
   const xhr = new XMLHttpRequest()
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
-      // unblock buttons until good request
+      console.log(JSON.parse(xhr.response))
+    } else {
+      console.log('server not work')
     }
-    // console.log('request', e)
+    // console.log('request', xhr.response)
   }
-
-  xhr.open('POST', '/cart/quantity')
+  xhr.open('POST', '/cart/order')
   xhr.setRequestHeader('Content-type', 'application/json')
-
   xhr.send(JSON.stringify(data))
 }
+
+function calcSubtotal (id) {
+  const quantity = parseInt(document.getElementById('input' + id).value)
+  const subtotalOld = document.getElementById('subtotal' + id)
+  const price = parseInt(subtotalOld.dataset.price)
+  subtotalOld.innerHTML = quantity * price
+}
+
+function calcTotal () {
+  const elemArr = document.getElementsByClassName('subtotal')
+  console.log('elemArr', elemArr)
+  let total = 0
+  for (let i = 0; i < elemArr.length; i++) {
+    const valueElem = parseInt(elemArr[i].innerHTML)
+    console.log(`valueElem ${i}: ${valueElem}`)
+    total = total + valueElem
+  }
+  console.log('total', total)
+  const sumTotal = document.getElementById('sumTotal')
+  sumTotal.innerHTML = total
+  bonusOrder(total)
+}
+
+function bonusOrder (data) {
+  // const total = (document.getElementById('sumTotal'))
+  //   // .innerHTML
+  console.log('data', data)
+  // const sumTotal = data
+  // console.log('sumTotal', sumTotal)
+  // if (data >= 10000) {
+  //   const changeLabel = document.getElementById('bonusLevel_3')
+  //   changeLabel.classList.add('done')
+  // }
+}
+
+// active

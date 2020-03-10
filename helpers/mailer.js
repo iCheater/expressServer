@@ -5,7 +5,12 @@
 // refresh token
 // https://yandex.ru/dev/oauth/doc/dg/reference/refresh-client-docpage/
 const nodemailer = require('nodemailer')
+const Email = require('email-templates')
+const appRoot = require('app-root-path')
+const logger = require(`${appRoot}/config/winstonLogger`)
 const env = process.env.NODE_ENV || 'development'
+const { Mail } = require('../models')
+
 // const path = require('path')
 // todo fix it
 // eslint-disable-next-line no-path-concat
@@ -63,20 +68,71 @@ const config = require('../config/mailerconfig')[env]
 // main().catch(console.error)
 
 const transporter = nodemailer.createTransport(config)
+const email = new Email({
+  transport: transporter,
+  send: true,
+  // preview: true,  // opens chrome by default
+  preview: {
+    open: {
+      app: 'firefox',
+      wait: false,
+    },
+  },
+  views: {
+    options: {
+      extension: 'njk',
+    },
+    root: `${appRoot}/views/emails`,
+  },
+  juice: true,
+  juiceResources: {
+    preserveImportant: true,
+    webResources: {
+      relativeTo: `${appRoot}/public`,
+    },
+  },
+})
 
 module.exports = {
-  sendResetPassword: ({ email, username, token }) => {
+  sendResetPassword: ({ email, username, token }) => { // todo refactor
     // console.log({ email, username, token })
-    const message = {
-      from: config.auth.user,
-      to: email,
-      subject: 'Восстановление пароля',
-      text: 'тут какой-то текст, но я не понял куда он идет',
-      html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
-      Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
-    }
-    transporter.sendMail(message)
+    // const message = {
+    //   from: config.auth.user,
+    //   to: email,
+    //   subject: 'Восстановление пароля',
+    //   text: 'RESET PASSWORD тут какой-то текст, но я не понял куда он идет',
+    //   html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
+    //   Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
+    // }
+    // transporter.sendMail(message)
+
+    email.send({
+      template: 'resetPassword',
+      message: { from: config.auth.user, to: email },
+      locals: { username: username, token: token },
+    })
+      .then(() => console.log('email has been send!'))
+      .catch(err => console.log(err))
   },
-  // sendOrder: (user, order) => {},
-  // sendOrderStatus: (user, order) => {},
+  sendOrder: ({ order, user, nonSaltedPassword, mailId }) => {
+    console.log(user)
+    email.send({
+      template: 'order',
+      message: { from: config.auth.user, to: user.email },
+      locals: {
+        order: order,
+        user: user,
+        password: nonSaltedPassword,
+      },
+    })
+      .then(() => {
+        Mail.update(
+          { status: 'SENT' },
+          { where: { id: mailId } },
+        )
+        console.log('email has been send!')
+      })
+      .catch(err => console.log(err))
+  },
+
 }
