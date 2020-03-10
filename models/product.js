@@ -14,7 +14,9 @@ module.exports = function (sequelize) {
       },
     },
     name: DataTypes.STRING,
-    price: DataTypes.DECIMAL,
+    sellingPrice: DataTypes.INTEGER,
+    costPrice: DataTypes.INTEGER,
+    discount: DataTypes.INTEGER,
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     features: DataTypes.JSONB,
@@ -23,6 +25,11 @@ module.exports = function (sequelize) {
       allowNull: false,
       nullable: false,
       defaultValue: 0,
+    },
+    craftable: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
     },
     visitCounter: {
       type: DataTypes.INTEGER,

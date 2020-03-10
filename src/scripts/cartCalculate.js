@@ -115,53 +115,24 @@ function activateRemoveButton (btn) {
 }
 
 function removeProductRow (btn) {
-  const tr = btn.closest('tr')
+  const tr = btn.closest('.row')
   tr.parentNode.removeChild(tr)
 }
 
-function quantityInput (domObj) {
-  let value = parseInt(document.getElementById('input' + domObj.dataset.id).value)
-  if (value < 0 || !Number.isInteger(value)) {
-    alert('Ошибка ввода!')
-    document.getElementById('input' + domObj.dataset.id).value = 0
-    value = 0
-  }
-  const obj = {}
-  obj[domObj.dataset.id] = value
-  productQantityRequest(obj)
-}
-function increaseValue (btn) {
-  document.getElementById('input' + btn.dataset.id).value++
-  calcSubtotal(btn)
+function decreaseAndCalc (id) {
+  decreaseValue(id)
+  calcSubtotal(id)
   calcTotal()
-  const obj = {}
-  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
-  productQantityRequest(obj)
 }
-function decreaseValue (btn) {
-  if (document.getElementById('input' + btn.dataset.id).value > 0) {
-    document.getElementById('input' + btn.dataset.id).value--
-  }
-  calcSubtotal(btn)
+function increaseAndCalc (id) {
+  increaseValue(id)
+  calcSubtotal(id)
   calcTotal()
-  const obj = {}
-  obj[btn.dataset.id] = parseInt(document.getElementById('input' + btn.dataset.id).value)
-  productQantityRequest(obj)
 }
-
-function productQantityRequest (data) {
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
-  xhr.onload = function (e) {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      // unblock buttons until good request
-    }
-    // console.log('request', e)
-  }
-
-  xhr.open('POST', '/cart/quantity')
-  xhr.setRequestHeader('Content-type', 'application/json')
-  xhr.send(JSON.stringify(data))
+function reqAndValidationAndCalc (id) {
+  quantityInput(id)
+  calcSubtotal(id)
+  calcTotal()
 }
 
 function getAndSendAddress (input) {
@@ -192,10 +163,10 @@ function sendOrderData (data) {
   xhr.send(JSON.stringify(data))
 }
 
-function calcSubtotal (data) {
-  const quantity = parseInt(document.getElementById('input' + data.dataset.id).value)
-  const subtotalOld = document.getElementById('subtotal' + data.dataset.id)
-  const price = parseInt((document.getElementById('price' + data.dataset.id)).innerHTML)
+function calcSubtotal (id) {
+  const quantity = parseInt(document.getElementById('input' + id).value)
+  const subtotalOld = document.getElementById('subtotal' + id)
+  const price = parseInt(subtotalOld.dataset.price)
   subtotalOld.innerHTML = quantity * price
 }
 
@@ -211,4 +182,19 @@ function calcTotal () {
   console.log('total', total)
   const sumTotal = document.getElementById('sumTotal')
   sumTotal.innerHTML = total
+  bonusOrder(total)
 }
+
+function bonusOrder (data) {
+  // const total = (document.getElementById('sumTotal'))
+  //   // .innerHTML
+  console.log('data', data)
+  // const sumTotal = data
+  // console.log('sumTotal', sumTotal)
+  // if (data >= 10000) {
+  //   const changeLabel = document.getElementById('bonusLevel_3')
+  //   changeLabel.classList.add('done')
+  // }
+}
+
+// active
