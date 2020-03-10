@@ -5,16 +5,17 @@ module.exports = {
 
   up: (queryInterface, Sequelize) => {
     const orders = []
+    const shipping = ['курьером', 'почта']
     for (let i = 0; i < 50; i++) {
       orders.push({
         // userName: faker.name.findName(),
         // address: faker.address.streetAddress(),
         promoCode: 'xxx-xxx-xxx-xxx',
         comment: 'comments',
-        shipping: 'курьером',
+        shipping: shipping[Math.round(Math.random())],
         // phone: faker.phone.phoneNumber(),
         // email: faker.internet.email(),
-        status: 'в обработке',
+        status: 'CREATED', // CREATED', 'PROCESSING', 'CANCELLED', 'COMPLETED
         createdAt: new Date(),
         updatedAt: new Date(),
       },

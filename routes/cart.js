@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
     })
   }
   const arrCartID = Object.keys(req.session.cart)
+  // todo Mark somehow unavailable products
   Product.findAll({
     where: {
       id: arrCartID,

@@ -16,7 +16,10 @@ module.exports = (sequelize) => {
     },
     email: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: {
+        msg: 'This email is already taken.',
+        fields: ['email'],
+      },
       allowNull: false,
     },
     password: {
@@ -42,12 +45,28 @@ module.exports = (sequelize) => {
   }, {
     underscored: true,
     hooks: {
-      beforeCreate: async (user) => {
-        const salt = await bcrypt.genSalt(10)
-        user.password = await bcrypt.hash(user.password, salt)
+      beforeCreate: (user) => {
+        user.setPassword()
+      },
+      beforeUpdate: (user) => {
+        user.setPassword()
       },
     },
   })
+
+  User.prototype.setPassword = function () {
+    if (this.changed('password')) {
+      this.password = User.encryptPassword(this.password)
+    }
+  }
+
+  User.encryptPassword = function (password) {
+    const salt = bcrypt.genSaltSync(10)
+    return bcrypt.hashSync(password, salt)
+  }
+  User.generatePassword = function () {
+    return Math.floor(Math.random() * (99999 - 10000) - 10000).toString()
+  }
 
   // todo there is no-return-await
   User.prototype.validPassword = function (password) {

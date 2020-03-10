@@ -49,6 +49,8 @@ const {
   Category,
   Tag,
   Token,
+  OrderItem,
+  Mail,
 } = db
 
 Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
@@ -56,6 +58,18 @@ Product.belongsTo(Category, { foreignKey: 'category_id' })
 
 // Category.hasMany(Category, { as: 'category', foreignKey: 'parent_id' })
 // Category.belongsTo(Category, { foreignKey: 'child_id' })
+
+Order.hasMany(OrderItem, { as: 'items', foreignKey: 'order_id' })
+OrderItem.belongsTo(Order, { foreignKey: 'order_id' })
+
+// Product.belongsTo(OrderItem) // todo do we need bidirectional association? hasMany?
+OrderItem.belongsTo(Product, { foreignKey: 'product_id' })
+
+Order.hasMany(Mail, { as: 'mails', foreignKey: 'order_id' })
+Mail.belongsTo(Order, { foreignKey: 'order_id' }) // todo do we need bidirectional association? hasMany?
+
+User.hasMany(Mail, { as: 'mails', foreignKey: 'user_id' })
+Mail.belongsTo(User, { foreignKey: 'user_id' })
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })
@@ -67,10 +81,10 @@ User.hasMany(Token, { as: 'tokens', foreignKey: 'user_id' })
 Token.belongsTo(User, { foreignKey: 'user_id' })
 
 User.hasMany(Order, { as: 'orders', foreignKey: 'user_id' })
-Order.belongsTo(User, { foreignKey: 'user_id' })
+Order.belongsTo(User, { as: 'user', foreignKey: 'user_id' })
 
-Order.belongsToMany(Product, { through: 'order_product', foreignKey: 'order_id' })
-Product.belongsToMany(Order, { through: 'order_product', foreignKey: 'product_id' })
+// Order.belongsToMany(Product, { through: 'order_product', foreignKey: 'order_id' })
+// Product.belongsToMany(Order, { through: 'order_product', foreignKey: 'product_id' })
 
 // example of nested association:
 // Project.hasMany(Tag);

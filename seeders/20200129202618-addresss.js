@@ -10,8 +10,7 @@ module.exports = {
     for (let i = 0; i < users.length; i++) {
       addresses.push({
         type: 'самовывоз',
-        line1: faker.address.streetAddress(),
-        line2: faker.address.secondaryAddress(),
+        textAddress: faker.address.streetAddress(),
         city: faker.address.city(),
         state: faker.address.state(),
         zip: faker.address.zipCode(),

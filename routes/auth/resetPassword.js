@@ -4,10 +4,26 @@ const { User, Token } = require('../../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
+const { resetPasswordPage } = require(`${appRoot}/controllers/resetpassword`)
 
-router.get('/', (req, res, next) => {
-  // todo password reset page
-  res.send('<a href="/resetpassword/reset">reset password</a>')
+router.get('/', resetPasswordPage)
+router.get('/forgot', (req, res, next) => {
+  res.send('<form method="POST" action="/resetpassword/forgot"><label>введетная почта при регистрации</label><input type="text" name="email">  <input type="submit" value="Submit"> </form>') // todo нужна форма!
+})
+router.post('/forgot', (req, res, next) => {
+  User.findOne({
+    where: { email: req.body.mail },
+    // include: {
+    //   model: Token,
+    //   as: 'tokens',
+    // },
+  })
+    .then(user => {
+      if (!user) {
+        return res.send('<span>Пользователя с таким email не существует </span>')
+      }
+    })
+  return res.json({ error: 'not implemented' }) // todo dublication of code, we need to split rout and controllers
 })
 
 router.get('/reset', (req, res, next) => {
@@ -81,9 +97,32 @@ router.get('/approve/:token', (req, res, next) => {
       if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
         return res.send('<span>ссылка просрочена!</span>')
       }
-      res.send('<span>вот форма смены пароля </span>') // todo нужна форма!
+      res.send(`<form method="POST" action="/resetpassword/"><label>введите новый пароль</label><input type="hidden" name="token" value="${req.params.token}"> <input type="text" name="password">  <input type="submit" value="Submit"> </form>`) // todo нужна форма!
     })
     .catch(err => {
+      res.json(err)
+    })
+})
+router.post('/', (req, res, next) => {
+  console.log(req.body)
+  Token.findOne({
+    where: { token: req.body.token },
+    include: {
+      model: User,
+    },
+  })
+    .then(token => {
+      if (!token) {
+        return res.json({ err: 'токен не найден!' }) // todo 404 !
+      }
+
+      if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
+        return res.json({ err: 'ссылка просрочена' }) // todo 404 !
+      }
+      token.User.update({ password: req.body.password })
+
+      return res.json({ token: token }) // todo 404 !
+    }).catch(err => {
       res.json(err)
     })
 })
