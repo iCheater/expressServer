@@ -95,8 +95,8 @@
 {#                                        <span id="price{{ product.id }}"#}
 {#                                              data-id="{{ product.id }}"#}
 {#                                              class="price"#}
-{#        #}{#                                      value="{{ product.price }} "#}
-{#                                        >{{ product.price }} </span>#}
+{#        #}{#                                      value="{{ product.sellingPrice }} "#}
+{#                                        >{{ product.sellingPrice }} </span>#}
 {#                                    </div>#}
 
                                     <div class="product-qty" data-th="Quantity">
@@ -111,8 +111,26 @@
                                                 onclick="increaseAndCalc(this.dataset.id)">+
                                         </button>
                                     </div>
+                                    {% if product.discount %}
+                                        <div data-th="Subtotal" id="subtotal{{ product.id }}"
+                                             data-id="{{ product.id }}"
+                                             data-price="{{ product.sellingPrice }}"
+                                             data-discount="{{ product.discount }}"
+                                             class="subtotal ">
+                                            {{ product.rowTotal }} |
+                                            {{ product.discount }}% |
+                                            {{ product.discountValue }}
+                                        </div>
+                                    {% else %}
+                                        <div data-th="Subtotal" id="subtotal{{ product.id }}"
+                                             data-id="{{ product.id }}"
+                                             data-price="{{ product.sellingPrice }}"
+                                             class="subtotal ">
+                                            {{ product.rowTotal }}
+                                        </div>
+                                    {% endif %}
 
-                                    <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}" class="subtotal">{{ product.rowTotal }}</div>
+
 
                                     <div class="actions" data-th="">
                                         <button class="btn-favorite" data-id="{{ product.id }}">
@@ -169,7 +187,40 @@
                         </div>
                     </div>
 
-                    <div class=""></div>
+                    <div class="bonus">
+                        <div class="bonus__header">
+                            <h3 class="title">Комплименты</h3>
+                            <a class="bonus-btn" href="#">
+{#                                Подробнее#}
+                                <span class="arrow_down"></span>
+                                <span class="arrow_up"></span>
+                            </a>
+                        </div>
+                        <div class="bonus__body">
+                            <p class="bonus-text">
+                                До бесплатной доставки осталось 492 рубля
+                            </p>
+
+                            <div class="progress__bar">
+                                <div class="circle">
+                                    <span class="label" id="bonusLevel_1">...</span>
+                                    <span class="title">Бесплатная доставка от 4 000 рублей</span>
+                                </div>
+                                <div class="circle">
+                                    <span class="label" id="bonusLevel_2">...</span>
+                                    <span class="title">Прочая упаковка от 5 000 рублей</span>
+                                </div>
+                                <div class="circle">
+                                    <span class="label" id="bonusLevel_3">...</span>
+                                    <span class="title">Эксклюзивная упаковка от 10 000 рублей</span>
+                                </div>
+
+                                <div class="progress__line"></div>
+                            </div>
+
+
+                        </div>
+                    </div>
                 </section>
             </div>
 

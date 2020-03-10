@@ -166,7 +166,7 @@ function sendOrderData (data) {
 function calcSubtotal (id) {
   const quantity = parseInt(document.getElementById('input' + id).value)
   const subtotalOld = document.getElementById('subtotal' + id)
-  const price = parseInt((document.getElementById('price' + id)).innerHTML)
+  const price = parseInt(subtotalOld.dataset.price)
   subtotalOld.innerHTML = quantity * price
 }
 
@@ -182,4 +182,19 @@ function calcTotal () {
   console.log('total', total)
   const sumTotal = document.getElementById('sumTotal')
   sumTotal.innerHTML = total
+  bonusOrder(total)
 }
+
+function bonusOrder (data) {
+  // const total = (document.getElementById('sumTotal'))
+  //   // .innerHTML
+  console.log('data', data)
+  // const sumTotal = data
+  // console.log('sumTotal', sumTotal)
+  // if (data >= 10000) {
+  //   const changeLabel = document.getElementById('bonusLevel_3')
+  //   changeLabel.classList.add('done')
+  // }
+}
+
+// active

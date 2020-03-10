@@ -29,11 +29,13 @@ router.get('/', (req, res) => {
       // })
       const productsOutOFStock = []
       const productsWithAmount = []
+
       rowProducts.forEach(product => {
         if (product.stock > 0) {
           product.quantity = req.session.cart[product.id].quantity
           product.checked = req.session.cart[product.id].checked
-          product.rowTotal = product.price * product.quantity
+          product.rowTotal = product.sellingPrice * product.quantity
+          product.discountValue = (product.rowTotal * (100 - product.discount) / 100).toFixed()
           sumTotal = sumTotal + product.rowTotal
           productsWithAmount.push(product)
         } else {
@@ -41,6 +43,7 @@ router.get('/', (req, res) => {
           productsOutOFStock.push(product)
         }
       })
+      console.log()
       res.render('cart/cart', {
         editOrAdd: 'cart',
         productsWithAmount: productsWithAmount,

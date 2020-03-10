@@ -26,11 +26,17 @@ module.exports = {
     categories[5].parent_id = 3
     categories[6].parent_id = 5
 
+    const minCostPrice = 5000
+    const maxCostPrice = 999999
+
     const products = []
     for (let i = 0; i < 100; i++) {
+      const costPrice = Math.floor(Math.random() * (maxCostPrice - minCostPrice) + minCostPrice)
       products.push({
         name: faker.commerce.product(),
-        price: faker.commerce.price(0.1, 9999.99, 2),
+        costPrice: costPrice,
+        sellingPrice: (costPrice * (Math.random() * (5 - 1) + 1).toFixed(2)).toFixed(),
+        discount: Math.floor(Math.random() * (99 - 1) + 1),
         mURL: faker.image.avatar(),
         description: faker.commerce.productName(),
         stock: Math.floor(Math.random() * 99),
