@@ -1,0 +1,7 @@
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/mail.min.css">
+{% endblock %}
+{{ user.username }}, вы зарегистрированы на сайте таком-то(ссылка).
+Отслеживания информации о заказе возможно в профиле(ссылка)
+Ваш логин {{ user.email }}
+Ваш пароль {{ password }}, рекомендуем вам его сменить.

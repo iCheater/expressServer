@@ -1,48 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('add product to cart.js')
-  // const form = document.querySelector('#formElem')
-  // const btnsArr = document.getElementsByClassName('item__to-basket')
-  // // console.log(btnsArr)
-  // for (let i = 0; i < btnsArr.length; i++) {
-  //   btnsArr[i].addEventListener('click', (e) => {
-  //     // console.log(btnsArr[i].dataset.id)
-  //
-  //     const str = getCookie('cart')
-  //     let arrCart = str.split('|')
-  //     console.log(arrCart)
-  //     if (str === '') {
-  //       arrCart = []
-  //     }
-  //
-  //     arrCart.push(btnsArr[i].dataset.id)
-  //     document.cookie = 'cart=' + arrCart.join('|')
-  //     // var a = [1, 2, 3, 4];
-  //     // a.join('|');  // Returns: "1|2|3|4"
-  //   })
-  // }
 })
-
-// function getCookie (cname) {
-//   const name = cname + '='
-//   const decodedCookie = decodeURIComponent(document.cookie)
-//   const ca = decodedCookie.split(';')
-//   for (let i = 0; i < ca.length; i++) {
-//     let c = ca[i]
-//     while (c.charAt(0) === ' ') {
-//       c = c.substring(1)
-//     }
-//     if (c.indexOf(name) === 0) {
-//       return c.substring(name.length, c.length)
-//     }
-//   }
-//   return ''
-// }
 
 // eslint-disable-next-line no-unused-vars
 function reqForServer (btn) {
   const btnId = btn.dataset.id
-  console.log('на меня нажали', btnId)
   request(btnId)
+  changeTextBtn(btn)
 }
 
 function request (data) {
@@ -51,6 +15,7 @@ function request (data) {
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
       console.log(JSON.parse(xhr.response))
+      updateCartQuantity(JSON.parse(xhr.response))
     } else {
       console.log('server not work')
     }
@@ -59,4 +24,24 @@ function request (data) {
   xhr.open('PUT', '/cart/' + data)
   // xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send()
+}
+
+function updateCartQuantity (data) {
+  const cartLength = document.getElementById('cartLength')
+  cartLength.innerHTML = data.cartLength
+}
+
+function changeTextBtn (domObj) {
+  const textLink = document.getElementById('btn' + domObj.dataset.id)
+  console.log('textLink', textLink)
+  textLink.innerHTML = '<div class="product-qty" data-th="Quantity">\n' +
+    '<button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this)">-</button>\n' +
+    '<input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"\n' +
+    ' class="form-control text-center quantityProduct"\n' +
+    ' value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">\n' +
+    '<button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>\n' +
+    '                        </div>'
+  textLink.style.backgroundColor = 'transparent'
+  textLink.style.border = '1px solid #005bf8'
+  textLink.style.color = '#005bf8'
 }

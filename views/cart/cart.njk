@@ -1,7 +1,7 @@
 {% extends "./../layout.njk" %}
 
 {% block stylesheet %}
-    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cart.min.css">
 {% endblock %}
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
@@ -9,102 +9,95 @@
 
 {% block content %}
 
-    <div class="container d-flex mt-3">
+    <div class="container cart__wrapper">
 
-        <section id="cart" class="col-8 cart">
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)">
-                    Выбрать все</label>
-            </div>
-            <table id="cart" class="table table-hover table-condensed">
-                <thead>
-                <tr>
-                    <th class="col-7">Product</th>
-                    <th class="col-1">Price</th>
-                    <th class="col-1">Quantity</th>
-                    <th class="col-1 text-center">Subtotal</th>
-                    <th class="col-1"></th>
-                </tr>
-                </thead>
-                <tbody>
+        <section id="cart" class="cart">
+
+            <div id="cart" class="table">
+                <div class="row">
+                    <div class="col col-select">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)">
+                                Выбрать все
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col col-main">Product</div>
+                    <div class="col col-price">Price</div>
+                    <div class="col col-qty">Quantity</div>
+                    <div class="col col-subtotal">Subtotal</div>
+                    <div class="col"></div>
+
+                </div>
+                <hr>
                 {% for product in products %}
-                    <tr>
-                        <td data-th="Product">
-                            <div class="row">
-                                <div class="col-sm-1 hidden-xs">
-                                    <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
-                                           onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
-                                </div>
-                                <div class="col-sm-2 hidden-xs">
-                                    <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
-                                </div>
-                                <div class="col-sm-9 prod-desc ">
-                                    <h6 class="ml-9">{{ product.name }}</h6>
-                                    <p class="ml-9 small font-weight-light">{{ product.description }}</p>
-                                </div>
+                    <div class="row">
+                        <div class="product-select" data-th="Product">
+                            <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
+                                   onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
+                        </div>
+
+                        <div class="product-img">
+                            <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
+                        </div>
+
+                        <div class="product-main">
+                            <div class="prod-desc">
+                                <h4>{{ product.name }}</h4>
+                                <p>{{ product.description }}</p>
                             </div>
-                        </td>
-                        <td data-th="Price"><span id="price{{ product.id }}" data-id="{{ product.id }}" class="price" value="{{ product.price }} ">{{ product.price }} </span>
-                        </td>
-                        <td data-th="Quantity">
-                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}" class="form-control text-center quantityProduct"
-  value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
-                            <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>
+                        </div>
 
+                        <div class="product-price" data-th="Price"><span id="price{{ product.id }}"
+                                                                         data-id="{{ product.id }}" class="price"
+                                                                         value="{{ product.price }} ">{{ product.price }} </span>
+                        </div>
+
+                        <div class="product-qty" data-th="Quantity">
                             <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this)">-</button>
-                        </td>
-                        <td data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}" class="subtotal text-center">{{ product.rowTotal }}</td>
-                        <td class="actions" data-th="">
+                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
+                                   class="form-control text-center quantityProduct"
+                                   value="{{ product.quantity }}" onchange="quantityInput(this)" min="0">
+                            <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this)">+</button>
+                        </div>
+
+                        <div data-th="Subtotal" id="subtotal{{ product.id }}" data-id="{{ product.id }}"
+                             class="subtotal">{{ product.rowTotal }}</div>
+
+                        <div class="actions" data-th="">
                             <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                    class="btn btn-danger btn-sm deleteBtn" onclick="removeProduct(this)"
+                                    class="btn deleteBtn" onclick="removeProduct(this)"
                                     data-id="{{ product.id }}">
-                                Удалить
+                                x
                             </button>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
+                    <hr>
                 {% endfor %}
-                </tbody>
-                <tfoot>
-                <tr>
-                    <td><a href="#" class="btn btn-success">Продолжить покупки</a></td>
-                    <td colspan="2" class="hidden-xs"></td>
 
-                    <td class="hidden-xs text-center"><strong id="sumTotal">{{ sumTotal }}</strong></td>
 
-                    <td><a href="#" class="btn btn-success">Оплатить </a></td>
-                </tr>
-                </tfoot>
-            </table>
+                <div class="row">
+                    <a href="#" class="btn btn-success">Продолжить покупки</a>
+                    <strong id="sumTotal">{{ sumTotal }}</strong>
+                </div>
+            </div>
 
         </section>
 
-        {#    {% include 'orderInfo.njk' %}#}
-
-        <section class="col-4 pt-2" id="order__info" style="">
-            <h6 class="">Оформление заказа</h6>
-            <form>
+        <section class="order" id="order__info" style="">
+            <h3 class="">Оформление заказа</h3>
+            <form class="form-group">
                 <p>Адрес доставки</p>
-                <div class="input-group mb-3">
-
-                    <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                    <img class="input-img" src="images/marker.svg" style="width: 25px">
-                </span>
-                    </div>
-                    <input  type="text" class="form-control" placeholder="Адрес доставки"
+                <div class="input-form">
+                    <input type="text" class="form-control input-address" placeholder="Адрес доставки"
                            aria-label="Address" oninput="getAndSendAddress(this)" value="{{ session.order.address }}">
                 </div>
 
-                <div class="input-group mb-3">
-
-                    <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                    <img class="input-img" src="images/phone.svg" style="width: 25px">
-                </span>
-                    </div>
-                    <input  type="text" class="form-control" placeholder="Номер телефона"
-                           aria-label="Phone" onfocusout="getAndSendPhone(this)" value="{{ session.user.phone or session.order.phone }}">
+                <div class="input-form">
+                    <input type="text" class="form-control input-phone" placeholder="Номер телефона"
+                           aria-label="Phone" onfocusout="getAndSendPhone(this)"
+                           value="{{ session.user.phone or session.order.phone }}">
                 </div>
 
 
@@ -113,10 +106,10 @@
                            aria-label="Name" onfocusout="getAndSendName(this)" value="{{ session.user.username }}">
                 </div>
 
-                <div class="input-group mb-3 d-flex flex-column">
-                    <h6>Способ оплаты</h6>
+                <div class="input-pay">
+                    <h4>Способ оплаты</h4>
                     <div class="">
-                        <div class="form-check mb-1">
+                        <div class="form-check">
                             <input class="" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
                             <label class="form-check-label" for="gridRadios1">
                                 Оплата наличными или банковской картой при получении
@@ -131,15 +124,14 @@
 
                     </div>
                 </div>
-                <a href="#" class="btn btn-success w-100 mb-2">Оформить заказ</a>
+                <button class="btn btn-order">
+                    <a href="#">Оформить заказ</a>
+                </button>
+
 
             </form>
         </section>
 
     </div>
-
-    {% block postScript %}
-        <script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
-    {% endblock %}
 
 {% endblock %}

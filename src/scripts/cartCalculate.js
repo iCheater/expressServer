@@ -87,6 +87,7 @@ function removeRequest (btn) {
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
       removeProductRow(btn)
+      calcTotal()
     } else {
       activateRemoveButton(btn)
     }

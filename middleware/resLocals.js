@@ -8,6 +8,10 @@ const resLocals = (req, res, next) => {
       id: req.session.user.id,
     }
   }
+  // todo can we access to coockies without app.use(cookieParser()) ?
+  if (req.session.cart) {
+    res.locals.cartLength = req.session.cart.length
+  }
 
   // if (req.cookies.user_sid) { // todo can we access to coockies without app.use(cookieParser()) ?
   //   res.locals.cart = cartCookiesValidation(req.cookies.cart)

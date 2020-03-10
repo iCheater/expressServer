@@ -1,8 +1,42 @@
 .main-panel {
-    width: 100%;
+    width: 65%;
+    margin-bottom: 30px;
 }
 
 /*profile preview*/
+.profile-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 1170px;
+}
+.profile-title {
+    width: 100%;
+    margin: 10px 0
+}
+.menu__profile {
+    width: 25%;
+}
+
+.info-descr {
+    width: 40%;
+}
+
+.info-descr p {
+    width: 100%;
+}
+
+.menu__block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.menu__block a {
+    display: block;
+    margin-bottom: 10px;
+    color: #000095;
+}
+
 
 
 /*Edit*/
@@ -233,6 +267,45 @@
     border-radius: 0;
 }
 
+/*preview profile*/
+.panel-section {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(105, 105, 105, 0.69);
+}
+.panel-section:last-child {
+    border-bottom: none;
+}
+.profile-info {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.info-descr {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+.info-descr p {
+    font-size: 12px;
+    color: #333;
+}
+
+.info-subtitle {
+    font-size: 12px;
+    color: #333;
+    margin-bottom: 5px;
+}
+.profile-edit {
+    font-size: 14px;
+    margin: auto 0;
+}
+.profile-exit {
+    color: #ca4056;
+    font-size: 14px;
+}
+
+
+
 
 
 @media (min-width: 992px) {
@@ -252,6 +325,6 @@
     padding: 0 !important;
 }
 
-/*Reviews*/
+
 
 
