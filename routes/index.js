@@ -1,6 +1,12 @@
 'use strict'
+const appRoot = require('app-root-path')
 const resLocals = require('../middleware/resLocals')
 const clearCookie = require('../middleware/clearCookie')
+// const clientErrorHandler = require('../middleware/clientErrorHandler')
+// const errorHandler = require('../middleware/errorHandler')
+// const logErrors = require('../middleware/logErrors')
+const pageNotFoundHandler = require('../middleware/pageNotFoundHandler')
+const { logErrors, clientErrorHandler, errorHandler } = require(`${appRoot}/helpers/error`)
 
 const homeRouter = require('./home')
 
@@ -14,7 +20,6 @@ const cartRouter = require('./cart')
 const servicesRouter = require('./services')
 const contactsRouter = require('./contacts')
 const orderRouter = require('./order')
-
 
 const express = require('express')
 const router = express.Router()
@@ -49,25 +54,6 @@ router.use('/orders/', ordersRouter)
 // test
 router.use('/test', testRouter)
 
-router.use((req, res) => {
-  res.status(404)
-
-  // respond with html page
-  if (req.accepts('html')) {
-    res.render('404', { url: req.protocol + '://' + req.get('host') + req.originalUrl })
-    return
-  }
-
-  // respond with json
-  if (req.accepts('json')) {
-    res.send({ error: 'Not found' })
-    return
-  }
-
-  // default to plain-text. send()
-  res.type('txt').send('Not found')
-})
-
 // router.all('/api/*', requireAuthentication)
 
 // router.use((req, res) => {
@@ -88,5 +74,9 @@ router.use((req, res) => {
 //   // default to plain-text. send()
 //   res.type('txt').send('Not found')
 // })
+router.use(pageNotFoundHandler)
+router.use(logErrors)
+router.use(clientErrorHandler)
+router.use(errorHandler)
 
 module.exports = router

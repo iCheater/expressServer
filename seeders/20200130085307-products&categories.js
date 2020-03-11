@@ -36,7 +36,7 @@ module.exports = {
         name: faker.commerce.product(),
         costPrice: costPrice,
         sellingPrice: (costPrice * (Math.random() * (5 - 1) + 1).toFixed(2)).toFixed(),
-        discount: Math.floor(Math.random() * (99 - 1) + 1),
+        discountRate: Math.floor(Math.random() * (99 - 1) + 1),
         mURL: faker.image.avatar(),
         description: faker.commerce.productName(),
         stock: Math.floor(Math.random() * 99),

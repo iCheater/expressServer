@@ -33,9 +33,15 @@ app.use(morgan({ stream: logger.stream }))
 //   res.render('500', { message: err })
 // })
 
-nunjucks.configure('views', {
+const evn = nunjucks.configure('views', {
   autoescape: true,
   express: app,
+})
+evn.addFilter('toFixed', (num, digits) => {
+  return parseFloat(num).toFixed(digits)
+})
+evn.addFilter('addPennies', (num) => {
+  return (num / 100).toFixed(2)
 })
 app.set('view engine', 'njk')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -92,6 +98,7 @@ logger.warn(`NODE_ENV was set to [${process.env.NODE_ENV || 'nothing'}]`)
 logger.warn(`LOG_LEVEL was set to [${process.env.LOG_LEVEL || 'nothing'}]. Possible values: error | warn | info | http | verbose | debug | silly `)
 server.on('error', onError)
 server.on('listening', onListening)
+
 /**
  * Event listener for HTTP server "listening" event.
  */

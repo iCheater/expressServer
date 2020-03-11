@@ -2,9 +2,8 @@
 
 {% block content %}
 
-    <h1>500</h1>
-    <h1>  Error</h1>
+{#    <h1>500</h1>#}
+    <h3>Error {{ statusCode }}</h3>
     {{ message }}
-    <p> requested page: {{ url }} </p>
 {% endblock %}
 
