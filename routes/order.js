@@ -4,6 +4,7 @@ const { Order, User, Address, OrderItem, Product, Mail } = require('../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
+const { ErrorHandler } = require(`${appRoot}/helpers/error`)
 
 function isAuthorlessValid () {
   console.warn('isAuthorlessValid() IS NOT IMPLEMENTED')
@@ -26,15 +27,14 @@ router.get('/neworder', async (req, res, next) => {
   try {
     let user = req.session.user || null
     let nonSaltedPassword = null
-
     if (!req.session.cart) {
-      // throw error(404, 'ошибка, у вас пустая корзина') // todo need to find good error handler
-      return res.json({ message: 'ошибка, у вас пустая корзина' })
+      // throw new Error('cart is empty')
+      throw new ErrorHandler(500, 'cart is empty')
     }
 
     if (!req.session.user) {
-      if (!isAuthorlessValid(req.session.authorless)) {
-        return res.json({ message: 'данные пользователя не валидны' })
+      if (isAuthorlessValid(req.session.authorless)) {
+        throw new ErrorHandler(500, 'user data is not valid')
       }
       // const user = await User.findOne({ where: { email: req.session.authorless.email } })
       //   .then(user => {
@@ -120,12 +120,8 @@ router.get('/neworder', async (req, res, next) => {
     })
 
     // redirect('/order' + order.id)
-  } catch (e) {
-    console.log(e)
-    // res.json({
-    //   errors: e.errors,
-    // })
-    res.json(e)
+  } catch (err) {
+    next(err)
   }
 })
 
