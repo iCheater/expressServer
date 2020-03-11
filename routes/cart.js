@@ -20,14 +20,10 @@ router.get('/', (req, res) => {
   })
     .then(products => {
       const rowProducts = products.map(product => product.get({ row: true }))
-      let sumTotal = 0
-      // const productsWithAmount = rowProducts.map((product) => {
-      //   product.quantity = req.session.cart[product.id].quantity
-      //   product.checked = req.session.cart[product.id].checked
-      //   product.rowTotal = product.price * product.quantity
-      //   sumTotal = sumTotal + product.rowTotal
-      //   return product
-      // })
+      let sumRowTotal = 0
+      let sumDiscountInMoney = 0
+      let sellingPriceWithDiscount = 0
+      let selectAllStatus = true
       const productsOutOFStock = []
       const productsWithAmount = []
 
@@ -36,9 +32,15 @@ router.get('/', (req, res) => {
           product.quantity = req.session.cart[product.id].quantity
           product.checked = req.session.cart[product.id].checked
           product.rowTotal = product.sellingPrice * product.quantity
-          product.discountValue = (product.rowTotal * (100 - product.discount) / 100).toFixed()
-          sumTotal = sumTotal + product.rowTotal
+          product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+          product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
           productsWithAmount.push(product)
+
+          sumRowTotal = sumRowTotal + product.rowTotal
+          sumDiscountInMoney = sumDiscountInMoney + product.discountInMoney
+          sellingPriceWithDiscount = sellingPriceWithDiscount + product.sellingPriceWithDiscount
+
+          if (!product.checked) { selectAllStatus = false }
         } else {
           // todo add alternatives
           productsOutOFStock.push(product)
@@ -49,7 +51,10 @@ router.get('/', (req, res) => {
         editOrAdd: 'cart',
         productsWithAmount: productsWithAmount,
         productsOutOFStock: productsOutOFStock,
-        sumTotal: sumTotal,
+        sumRowTotal: sumRowTotal,
+        sumDiscountInMoney: sumDiscountInMoney,
+        sellingPriceWithDiscount: sellingPriceWithDiscount,
+        selectAllStatus: selectAllStatus,
         session: req.session,
       })
     })

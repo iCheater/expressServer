@@ -16,7 +16,7 @@ module.exports = function (sequelize) {
     name: DataTypes.STRING,
     sellingPrice: DataTypes.INTEGER,
     costPrice: DataTypes.INTEGER,
-    discount: DataTypes.INTEGER,
+    discountRate: DataTypes.INTEGER,
     mURL: DataTypes.STRING,
     description: DataTypes.TEXT,
     features: DataTypes.JSONB,

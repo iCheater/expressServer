@@ -19,7 +19,8 @@
                         <div class="column-items">
                             <div class="row__menu">
                                 <label class="form-check-label cart-action">
-                                    <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)">
+                                    <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)"
+                                            {{ "checked" if selectAllStatus }}>
                                     Выбрать все
                                 </label>
                                 <a class="cart-delete cart-action">Удалить выделенное</a>
@@ -111,15 +112,15 @@
                                                 onclick="increaseAndCalc(this.dataset.id)">+
                                         </button>
                                     </div>
-                                    {% if product.discount %}
+                                    {% if product.discountRate %}
                                         <div data-th="Subtotal" id="subtotal{{ product.id }}"
                                              data-id="{{ product.id }}"
-                                             data-price="{{ product.sellingPrice }}"
-                                             data-discount="{{ product.discount }}"
+                                             data-sellingPrice="{{ product.sellingPrice }}"
+                                             data-discountRate="{{ product.discountRate }}"
                                              class="subtotal ">
-                                            {{ product.rowTotal }} |
-                                            {{ product.discount }}% |
-                                            {{ product.discountValue }}
+                                            {{ product.rowTotal | addPennies }} |
+                                            {{ product.sellingPriceWithDiscount | addPennies }} руб
+                                            {{ product.discountInMoney | addPennies }}
                                         </div>
                                     {% else %}
                                         <div data-th="Subtotal" id="subtotal{{ product.id }}"
@@ -169,19 +170,19 @@
                                 <div class="row__column">
                                     Товары ({{ cartLength | length }})
                                 </div>
-                                <div id="sumTotal"> {{ sumTotal }} </div>
+                                <div id="sumTotal"> {{ sumRowTotal | addPennies }} </div>
                             </div>
                             <div class="cart__total-row row-sale">
                                 <div class="row__column">
                                     Скидка
                                 </div>
-                                <div>нет</div>
+                                <div>{{ sumDiscountInMoney | addPennies }}</div>
                             </div>
                             <div class="cart__total-row">
                                 <div class="row__column">
                                     Общая стоимость
                                 </div>
-                                <div id="sumTotal"> {{ sumTotal }} </div>
+                                <div id="sumTotal"> {{ sellingPriceWithDiscount | addPennies}} </div>
                             </div>
 
                         </div>
