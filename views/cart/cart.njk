@@ -6,7 +6,6 @@
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
     <script src="/scripts/inputQuantity.js"></script>
-    {#    <script src="scripts/cartCheckbox.js"></script>#}
 {% endblock %}
 
 {% block content %}
@@ -27,9 +26,10 @@
 
                             </div>
                         </div>
-                        <h3>Нет в наличии</h3>
-                        <div class="column-items">
+
                             {% for product in productsOutOFStock %}
+                            <h3>Нет в наличии</h3>
+                            <div class="column-items">
                                 <div class="row row_grid-outstock">
                                     <div class="product-select" data-th="Product">
                                         <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
@@ -58,8 +58,9 @@
                                         </button>
                                     </div>
                                 </div>
+                            </div>
                             {% endfor %}
-                        </div>
+
                         <h3>В наличии</h3>
                         <div class="column-items">
                             {% for product in productsWithAmount %}
@@ -118,9 +119,15 @@
                                              data-sellingPrice="{{ product.sellingPrice }}"
                                              data-discountRate="{{ product.discountRate }}"
                                              class="subtotal ">
-                                            {{ product.rowTotal | addPennies }} |
-                                            {{ product.sellingPriceWithDiscount | addPennies }} руб
-                                            {{ product.discountInMoney | addPennies }}
+
+                                            <span>
+                                                {{ product.sellingPriceWithDiscount | addPennies }} ₽
+                                                <s> {{ product.rowTotal | addPennies }} </s>
+                                            </span>
+
+                                        </div>
+                                        <div class="sale">
+                                            Скидка {{ product.discountInMoney | addPennies }}  ₽
                                         </div>
                                     {% else %}
                                         <div data-th="Subtotal" id="subtotal{{ product.id }}"
@@ -131,8 +138,6 @@
                                         </div>
                                     {% endif %}
 
-
-
                                     <div class="actions" data-th="">
                                         <button class="btn-favorite" data-id="{{ product.id }}">
                                             <img src="images/favorite.png">
@@ -142,9 +147,7 @@
                                             <img src="images/remove.svg">
                                         </button>
                                     </div>
-                                    <div class="sale">
-                                        Sale!!!
-                                    </div>
+
                                 </div>
 
                             {% endfor %}
@@ -182,7 +185,7 @@
                                 <div class="row__column">
                                     Общая стоимость
                                 </div>
-                                <div id="sumTotal"> {{ sellingPriceWithDiscount | addPennies}} </div>
+                                <div id="total"> {{ sumSellingPriceWithDiscount | addPennies}} </div>
                             </div>
 
                         </div>
@@ -202,19 +205,27 @@
                                 До бесплатной доставки осталось 492 рубля
                             </p>
 
+
                             <div class="progress__bar">
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_1">...</span>
-                                    <span class="title">Бесплатная доставка от 4 000 рублей</span>
-                                </div>
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_2">...</span>
-                                    <span class="title">Прочая упаковка от 5 000 рублей</span>
-                                </div>
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_3">...</span>
-                                    <span class="title">Эксклюзивная упаковка от 10 000 рублей</span>
-                                </div>
+                                {% for bonus in bonuses %}
+                                    <div class="circle">
+                                        <span class="label {{ bonus.class }}" id="bonusLevel_{{ bonus.id }}">...</span>
+                                        <span class="title">{{ bonus.title + ( bonus.bonusStart | addPennies ) }}</span>
+                                    </div>
+                                {% endfor %}
+
+{#                                <div class="circle">#}
+{#                                    <span class="label" id="bonusLevel_1">...</span>#}
+{#                                    <span class="title">Бесплатная доставка от 4 000 рублей</span>#}
+{#                                </div>#}
+{#                                <div class="circle">#}
+{#                                    <span class="label" id="bonusLevel_2">...</span>#}
+{#                                    <span class="title">Прочая упаковка от 5 000 рублей</span>#}
+{#                                </div>#}
+{#                                <div class="circle">#}
+{#                                    <span class="label" id="bonusLevel_3">...</span>#}
+{#                                    <span class="title">Эксклюзивная упаковка от 10 000 рублей</span>#}
+{#                                </div>#}
 
                                 <div class="progress__line"></div>
                             </div>

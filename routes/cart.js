@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { Product, User, Order } = require('./../models')
+const { Product, User, Order, Bonus } = require('./../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/config/winstonLogger`)
 
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   console.log(req.session.user)
   if (!req.session.cart) {
     return res.render('cart/cart', {
@@ -13,50 +13,77 @@ router.get('/', (req, res) => {
   }
   const arrCartID = Object.keys(req.session.cart)
   // todo Mark somehow unavailable products
-  Product.findAll({
+  // get bonuses
+
+  Bonus.findAll({
     where: {
-      id: arrCartID,
+      status: 'ACTIVE',
     },
   })
-    .then(products => {
-      const rowProducts = products.map(product => product.get({ row: true }))
-      let sumRowTotal = 0
-      let sumDiscountInMoney = 0
-      let sellingPriceWithDiscount = 0
-      let selectAllStatus = true
-      const productsOutOFStock = []
-      const productsWithAmount = []
+    .then(bonuses => {
+      const rowBonuses = bonuses.map(bonus => bonus.get({ row: true }))
 
-      rowProducts.forEach(product => {
-        if (product.stock > 0) {
-          product.quantity = req.session.cart[product.id].quantity
-          product.checked = req.session.cart[product.id].checked
-          product.rowTotal = product.sellingPrice * product.quantity
-          product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
-          product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
-          productsWithAmount.push(product)
-
-          sumRowTotal = sumRowTotal + product.rowTotal
-          sumDiscountInMoney = sumDiscountInMoney + product.discountInMoney
-          sellingPriceWithDiscount = sellingPriceWithDiscount + product.sellingPriceWithDiscount
-
-          if (!product.checked) { selectAllStatus = false }
-        } else {
-          // todo add alternatives
-          productsOutOFStock.push(product)
-        }
+      Product.findAll({
+        where: {
+          id: arrCartID,
+        },
       })
-      console.log()
-      res.render('cart/cart', {
-        editOrAdd: 'cart',
-        productsWithAmount: productsWithAmount,
-        productsOutOFStock: productsOutOFStock,
-        sumRowTotal: sumRowTotal,
-        sumDiscountInMoney: sumDiscountInMoney,
-        sellingPriceWithDiscount: sellingPriceWithDiscount,
-        selectAllStatus: selectAllStatus,
-        session: req.session,
-      })
+        .then(products => {
+          const rowProducts = products.map(product => product.get({ row: true }))
+          let sumRowTotal = 0
+          let sumDiscountInMoney = 0
+          let sumSellingPriceWithDiscount = 0
+          let selectAllStatus = true
+          const productsOutOFStock = []
+          const productsWithAmount = []
+
+          rowProducts.forEach(product => {
+            if (product.stock > 0) {
+              product.quantity = req.session.cart[product.id].quantity
+              product.checked = req.session.cart[product.id].checked
+              product.rowTotal = product.sellingPrice * product.quantity
+              product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+              product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
+              productsWithAmount.push(product)
+
+              sumRowTotal = sumRowTotal + product.rowTotal
+              sumDiscountInMoney = sumDiscountInMoney + product.discountInMoney
+              sumSellingPriceWithDiscount = sumSellingPriceWithDiscount + product.sellingPriceWithDiscount
+
+              if (!product.checked) { selectAllStatus = false }
+            } else {
+              // todo add alternatives
+              productsOutOFStock.push(product)
+            }
+          })
+
+
+          // todo IS IT BAD TO DO IT HERE?
+          let lastBonusStart = null
+          rowBonuses.forEach(bonus => {
+            if (sumSellingPriceWithDiscount >= bonus.bonusStart) {
+              bonus.class = 'done'
+            } else if (sumSellingPriceWithDiscount < bonus.bonusStart && sumSellingPriceWithDiscount > lastBonusStart) {
+              bonus.class = 'active'
+            }
+            lastBonusStart = bonus.bonusStart
+          })
+
+          res.render('cart/cart', {
+            editOrAdd: 'cart',
+            productsWithAmount: productsWithAmount,
+            productsOutOFStock: productsOutOFStock,
+            sumRowTotal: sumRowTotal,
+            sumDiscountInMoney: sumDiscountInMoney,
+            sumSellingPriceWithDiscount: sumSellingPriceWithDiscount,
+            selectAllStatus: selectAllStatus,
+            bonuses: rowBonuses,
+            session: req.session,
+          })
+        })
+    })
+    .catch(err => {
+      next(err)
     })
 })
 

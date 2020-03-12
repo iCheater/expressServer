@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('carCalculate.js loaded')
+  bonusOrder()
 })
 
 // function increaseValue (btn) {
@@ -182,13 +183,12 @@ function calcTotal () {
   console.log('total', total)
   const sumTotal = document.getElementById('sumTotal')
   sumTotal.innerHTML = total
-  bonusOrder(total)
 }
 
-function bonusOrder (data) {
-  // const total = (document.getElementById('sumTotal'))
+function bonusOrder () {
+  const total = (document.getElementById('total'))
   //   // .innerHTML
-  console.log('data', data)
+  console.log('total', total)
   // const sumTotal = data
   // console.log('sumTotal', sumTotal)
   // if (data >= 10000) {
