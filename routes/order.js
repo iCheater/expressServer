@@ -141,33 +141,4 @@ router.get('/neworder', async (req, res, next) => {
 //   })
 // })
 
-// // for tests
-// router.get('/order:id', (req, res, next) => {
-//   Order.findByPk(req.params.id, {
-//     include: {
-//       model: User,
-//       include: {
-//         model: Address,
-//       },
-//     },
-//   })
-//     .then(order => {
-//       res.json(order)
-//     })
-// })
-//
-// router.get('/list', (req, res, next) => {
-//   Order.findAll({
-//     include: {
-//       model: User,
-//       include: {
-//         model: Address,
-//       },
-//     },
-//   })
-//     .then(order => {
-//       res.json(order)
-//     })
-// })
-
 module.exports = router
