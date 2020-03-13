@@ -76,6 +76,7 @@ module.exports = {
     const promises = [
       queryInterface.bulkDelete('Categories', null, {}),
       queryInterface.bulkDelete('products', null, {}),
+      queryInterface.bulkDelete('categories_ancestors', null, {}),
     ]
     return Promise.all(promises)
   },

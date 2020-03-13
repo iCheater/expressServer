@@ -7,7 +7,7 @@
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 const env = process.env.NODE_ENV || 'development'
 const { Mail } = require('../models')
 

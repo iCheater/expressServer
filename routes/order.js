@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Order, User, Address, OrderItem, Product, Mail } = require('../models')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
 const { ErrorHandler } = require(`${appRoot}/helpers/error`)
 
@@ -28,21 +28,13 @@ router.get('/neworder', async (req, res, next) => {
     let user = req.session.user || null
     let nonSaltedPassword = null
     if (!req.session.cart) {
-      // throw new Error('cart is empty')
-      throw new ErrorHandler(500, 'cart is empty')
+      return next(new ErrorHandler(500, 'cart is empty'))
     }
 
     if (!req.session.user) {
       if (isAuthorlessValid(req.session.authorless)) {
-        throw new ErrorHandler(500, 'user data is not valid')
+        return next(new ErrorHandler(500, 'user data is not valid'))
       }
-      // const user = await User.findOne({ where: { email: req.session.authorless.email } })
-      //   .then(user => {
-      //     if (user) {
-      //       return res.json({ message: 'пользователь с таким email уже существует' })
-      //     }
-      //   })
-      //
       nonSaltedPassword = User.generatePassword()
       user = await User.create({
         username: req.session.authorless.username,

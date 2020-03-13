@@ -2,11 +2,14 @@ const express = require('express')
 const router = express.Router()
 const { Product, User, Order } = require('./../models')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 
 router.get('/', (req, res) => {
-  console.log(req.session.user)
+  console.log(req.session.cart)
+  logger.verbose('/cart')
+
   if (!req.session.cart) {
+    logger.verbose('req.session.cart is empty!')
     return res.render('cart/cart', {
       session: req.session,
     })
@@ -19,88 +22,46 @@ router.get('/', (req, res) => {
     },
   })
     .then(products => {
-      const rowProducts = products.map(product => product.get({ row: true }))
-      let sumRowTotal = 0
-      let sumDiscountInMoney = 0
-      let sellingPriceWithDiscount = 0
-      let selectAllStatus = true
-      const productsOutOFStock = []
-      const productsWithAmount = []
-
-      rowProducts.forEach(product => {
-        if (product.stock > 0) {
-          product.quantity = req.session.cart[product.id].quantity
-          product.checked = req.session.cart[product.id].checked
-          product.rowTotal = product.sellingPrice * product.quantity
-          product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
-          product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
-          productsWithAmount.push(product)
-
-          sumRowTotal = sumRowTotal + product.rowTotal
-          sumDiscountInMoney = sumDiscountInMoney + product.discountInMoney
-          sellingPriceWithDiscount = sellingPriceWithDiscount + product.sellingPriceWithDiscount
-
-          if (!product.checked) { selectAllStatus = false }
-        } else {
-          // todo add alternatives
-          productsOutOFStock.push(product)
-        }
-      })
-      console.log()
-      res.render('cart/cart', {
+      const data = {
         editOrAdd: 'cart',
-        productsWithAmount: productsWithAmount,
-        productsOutOFStock: productsOutOFStock,
-        sumRowTotal: sumRowTotal,
-        sumDiscountInMoney: sumDiscountInMoney,
-        sellingPriceWithDiscount: sellingPriceWithDiscount,
-        selectAllStatus: selectAllStatus,
         session: req.session,
-      })
+      }
+      if (products.length > 0) {
+
+        const rowProducts = products.map(product => product.get({ row: true }))
+        data.sumRowTotal = 0
+        data.sumDiscountInMoney = 0
+        data.sellingPriceWithDiscount = 0
+        data.selectAllStatus = true
+        data.productsOutOFStock = []
+        data.productsWithAmount = []
+
+        rowProducts.forEach(product => {
+          if (product.stock > 0) {
+            console.log(req.session.cart[product.id])
+            product.quantity = req.session.cart[product.id].quantity
+            product.checked = req.session.cart[product.id].checked
+            product.rowTotal = product.sellingPrice * product.quantity
+            product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+            product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
+            data.productsWithAmount.push(product)
+
+            data.sumRowTotal = data.sumRowTotal + product.rowTotal
+            data.sumDiscountInMoney = data.sumDiscountInMoney + product.discountInMoney
+            data.sellingPriceWithDiscount = data.sellingPriceWithDiscount + product.sellingPriceWithDiscount
+
+            if (!product.checked) { data.selectAllStatus = false }
+          } else {
+          // todo add alternatives
+            data.productsOutOFStock.push(product)
+          }
+        })
+      }
+
+      logger.verbose('res.render', products)
+
+      res.render('cart/cart', data)
     })
-})
-
-router.post('/', (req, res) => {
-  console.log(req.body)
-  console.log(req.params)
-  const formData = {
-    userName: 'user',
-    address: 'adress moscwa',
-    promoCode: '',
-    comment: 'привезите поскорее!!',
-    shipping: 'курьером',
-    email: 'asd@ad.ru',
-    phone: '31234234',
-    products: [55, 62],
-    cart: {
-      1: 10,
-      2: 1,
-      3: 2,
-      4: 5,
-    },
-  }
-  res.json({
-    body: req.body.name,
-    params: req.params,
-  })
-
-  // Order.create(formData, {
-  //   include: [{ model: Product }],
-  // })
-  //   .then(cart => {
-  //     console.log(cart)
-  //     cart.setProducts([55, 62]).then(products => {
-  //       res.json(products)
-  //     })
-  //   })
-
-  // Order.findByPk(1, {
-  //   include: {
-  //     model: Product,
-  //   },
-  // }).then(orders => {
-  //   res.json(orders)
-  // })
 })
 
 router.put('/:productID', (req, res, next) => {
