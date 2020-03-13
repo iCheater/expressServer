@@ -46,7 +46,7 @@
                         </a>
 
                         <div class="item__price">
-                            <span><span class="price">{{ product.sellingPrice }}</span></span>
+                            <span><span class="price">{{ product.sellingPrice | addPennies }}</span></span>
                         </div>
 
                         <div class="item__links">
@@ -99,7 +99,7 @@
                     </div>
                     <div class="other__item-info">
                         <div class="item__price">
-                            <span><span class="price">{{ product.sellingPrice }} </span></span>
+                            <span><span class="price">{{ product.sellingPrice | addPennies }} </span></span>
                         </div>
                         <div class="item__info-name">
                             <a href="#">{{ product.name }}</a>

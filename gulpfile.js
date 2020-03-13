@@ -92,7 +92,9 @@ gulp.task('sass', () => {
     .pipe(sass({
       // style: 'expanded',
       style: 'compressed',
-    }).on('error', sass.logError))
+    })
+      // .on('error', sass.logError)
+    )
     .pipe(autoprefixer())
     // .pipe(gulp.dest(paths.distSASS))
     .pipe(rename({ suffix: '.min' }))
