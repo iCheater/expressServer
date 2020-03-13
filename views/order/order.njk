@@ -1,0 +1,102 @@
+{% extends "./../layout.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/cart.min.css">
+{% endblock %}
+{% block preScript %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="order">
+            <div class="details__order">
+                <h2>Ваши данные</h2>
+                <div class="user_info">
+                    <div class="user_info-name">
+                        Jane Doe
+                        <a href="/profile/edit">Редактировать</a>
+                    </div>
+                    <div class="add-recipient">
+                        <a href="#">
+                            Добавить получателя
+                        </a>
+                        <div class="explanations">
+                            Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал другой человек.
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Способ получения</h2>
+                <div class="way_shipping">
+                    <div class="way_shipping-title">
+                        Курьерская доставка или Почта
+                    </div>
+                    <div class="shipping-descr">
+                        <p>от 198 рублей</p>
+{#                        нужно динамически отражать изменение цены#}
+                    </div>
+                </div>
+                <div class="way_shipping">
+                    <div class="way_shipping-title">
+                        Пункты выдачи и отделения Почты
+                    </div>
+                    <div class="shipping-descr">
+                        <p>Скидка на доставку</p>
+                        <div class="adress_info">
+                            <h3>Адрес доставки</h3>
+                            <div class="way">
+                                пункт Партнёра
+                            </div>
+
+                            <div class="address-place">
+                                г. Москва, ул. Коптевская, д. 26 корп. 5
+                            </div>
+                            <div class="conditions">
+                                Срок хранения заказа — 5 дней
+                            </div>
+                            <button class="change-place">
+                                Изменить место
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Состав заказа</h2>
+                <div class="order-row">
+                    <div class="order_item">
+
+                        <div class="order_item-img">
+                            <img src="https://placehold.it/50x50">
+                        </div>
+
+                        <div class="order_item-qty">
+                            <span class="qty-num">1</span> шт.
+                            <span class="qty-weight">30</span> гр.
+                        </div>
+
+                        <div class="order_item-day">
+                            <h3>Доставим</h3>
+                            <div>
+                                16 марта
+                            </div>
+                            <div>
+                                Стоимость доставки
+                            </div>
+                            <div>
+                                0 ₽ 49 ₽
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="payment">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

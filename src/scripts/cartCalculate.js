@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('carCalculate.js loaded')
-  bonusOrder()
+  // bonusOrder()
 })
 
 // function increaseValue (btn) {
@@ -166,13 +166,26 @@ function sendOrderData (data) {
 
 function calcSubtotal (id) {
   const quantity = parseInt(document.getElementById('input' + id).value)
-  const subtotalOld = document.getElementById('subtotal' + id)
-  const price = parseInt(subtotalOld.dataset.price)
-  subtotalOld.innerHTML = quantity * price
+  const sellingPriceWithDiscountEl = document.getElementById('sellingPriceWithDiscount' + id)
+  const rowTotalEl = document.getElementById('rowTotal' + id)
+  const discountInMoneyEl = document.getElementById('discountInMoney' + id)
+
+  const sellingPriceWithDiscount = parseInt(sellingPriceWithDiscountEl.dataset.sellingPriceWithDiscount)
+  const rowTotal = parseInt(rowTotalEl.dataset.rowTotal)
+  const discountInMoney = parseInt(discountInMoneyEl.dataset.discountInMoney)
+
+  sellingPriceWithDiscountEl.innerHTML = addPennies(quantity * sellingPriceWithDiscount)
+  rowTotalEl.innerHTML = addPennies(quantity * rowTotal)
+  discountInMoneyEl.innerHTML = addPennies(quantity * discountInMoney)
+  calcSumTotal()
+}
+
+function addPennies (num) {
+  return (num / 100).toFixed(2)
 }
 
 function calcTotal () {
-  const elemArr = document.getElementsByClassName('subtotal')
+  const elemArr = document.getElementsByClassName('rowTotal')
   console.log('elemArr', elemArr)
   let total = 0
   for (let i = 0; i < elemArr.length; i++) {
@@ -180,21 +193,42 @@ function calcTotal () {
     console.log(`valueElem ${i}: ${valueElem}`)
     total = total + valueElem
   }
-  console.log('total', total)
   const sumTotal = document.getElementById('sumTotal')
   sumTotal.innerHTML = total
 }
 
-function bonusOrder () {
-  const total = (document.getElementById('total'))
-  //   // .innerHTML
-  console.log('total', total)
-  // const sumTotal = data
+function calcSumTotal () {
+  // const sumTotal = parseInt((document.getElementById('sumTotal')).innerHTML)
   // console.log('sumTotal', sumTotal)
-  // if (data >= 10000) {
-  //   const changeLabel = document.getElementById('bonusLevel_3')
-  //   changeLabel.classList.add('done')
-  // }
+  // const discountInMoney = parseInt((document.getElementById('sumSale')).innerHTML)
+  // console.log('discountInMoney', discountInMoney)
+  // const totalEl = document.getElementById('total')
+  // const total = totalEl.innerHTML
+  // total.innerHTML = sumTotal - discountInMoney
+  // console.log('total', total)
+
+  const elemArr = document.getElementsByClassName('priceWithDisc')
+  console.log('elemArr', elemArr)
+  let total = 0
+  for (let i = 0; i < elemArr.length; i++) {
+    const valueElem = parseInt(elemArr[i].innerHTML)
+    console.log(`valueElem ${i}: ${valueElem}`)
+    total = total + valueElem
+  }
+  const sumTotalWithDisc = document.getElementById('total')
+  sumTotalWithDisc.innerHTML = total
 }
+
+// function bonusOrder () {
+//   const total = (document.getElementById('total'))
+//   //   // .innerHTML
+//   console.log('total', total)
+//   // const sumTotal = data
+//   // console.log('sumTotal', sumTotal)
+//   // if (data >= 10000) {
+//   //   const changeLabel = document.getElementById('bonusLevel_3')
+//   //   changeLabel.classList.add('done')
+//   // }
+// }
 
 // active

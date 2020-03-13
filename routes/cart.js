@@ -42,10 +42,11 @@ router.get('/', (req, res, next) => {
               product.quantity = req.session.cart[product.id].quantity
               product.checked = req.session.cart[product.id].checked
               product.rowTotal = product.sellingPrice * product.quantity
-              product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+              product.sellingPriceWithDiscount = (product.rowTotal * (100 - product.discountRate) / 100).toFixed()
               product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
               productsWithAmount.push(product)
-
+              console.log(product.rowTotal)
+              console.log(product.discountRate)
               sumRowTotal = sumRowTotal + product.rowTotal
               sumDiscountInMoney = sumDiscountInMoney + product.discountInMoney
               sumSellingPriceWithDiscount = sumSellingPriceWithDiscount + product.sellingPriceWithDiscount
