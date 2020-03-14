@@ -36,6 +36,7 @@ function productQantityRequest (data) {
   const xhr = new XMLHttpRequest()
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
+      updateCartQuantity(JSON.parse(xhr.response).cart.cartLength)
       // unblock buttons until good request
     }
     // console.log('request', e)
@@ -44,4 +45,9 @@ function productQantityRequest (data) {
   xhr.open('POST', '/cart/quantity')
   xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send(JSON.stringify(data))
+}
+function updateCartQuantity (cartLength) {
+  const cartLengthEl = document.getElementById('cartLength')
+  console.log(cartLength)
+  cartLengthEl.innerHTML = cartLength
 }

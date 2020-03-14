@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
       session: req.session,
     })
   }
-  const arrCartID = Object.keys(req.session.cart)
+  const arrCartID = Object.keys(req.session.cart.items)
   // todo Mark somehow unavailable products
   Product.findAll({
     where: {
@@ -27,7 +27,6 @@ router.get('/', (req, res) => {
         session: req.session,
       }
       if (products.length > 0) {
-
         const rowProducts = products.map(product => product.get({ row: true }))
         data.sumRowTotal = 0
         data.sumDiscountInMoney = 0
@@ -39,8 +38,8 @@ router.get('/', (req, res) => {
         rowProducts.forEach(product => {
           if (product.stock > 0) {
             console.log(req.session.cart[product.id])
-            product.quantity = req.session.cart[product.id].quantity
-            product.checked = req.session.cart[product.id].checked
+            product.quantity = req.session.cart.items[product.id].quantity
+            product.checked = req.session.cart.items[product.id].checked
             product.rowTotal = product.sellingPrice * product.quantity
             product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
             product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
@@ -64,37 +63,42 @@ router.get('/', (req, res) => {
     })
 })
 
-router.put('/:productID', (req, res, next) => {
-  // todo do we need to check if PRODUCT EXIST??
-  console.log(req.params)
-  console.log(req.body)
-  const productID = req.params.productID
-  console.log('productID', productID)
-
-  if (!req.session.cart) {
-    req.session.cart = {}
-  }
-
-  if (req.session.cart[productID]) {
-    req.session.cart[productID].quantity++
-  } else {
-    req.session.cart[productID] = {}
-    req.session.cart[productID].quantity = 1
-    req.session.cart[productID].checked = true
-  }
-  const data = {
-    cartLength: Object.keys(req.session.cart).length,
-  }
-  console.log('data', data)
-  res.json(data)
-  // console.log(req.session)
-})
+// router.put('/:productID', (req, res, next) => {
+//   // todo do we need to check if PRODUCT EXIST??
+//   console.log(req.params)
+//   console.log(req.body)
+//   const productID = req.params.productID
+//   console.log('productID', productID)
+//
+//   if (!req.session.cart) {
+//     req.session.cart = {}
+//   }
+//
+//   if (req.session.cart[productID]) {
+//     req.session.cart[productID].quantity++
+//   } else {
+//     req.session.cart[productID] = {}
+//     req.session.cart[productID].quantity = 1
+//     req.session.cart[productID].checked = true
+//   }
+//   const data = {
+//     cartLength: Object.keys(req.session.cart).length,
+//   }
+//   res.locals.cartLength = Object.keys(req.session.cart).length
+//   console.log(res.locals)
+//   // req.session.cart.cartLength = Object.keys(req.session.cart).length
+//
+//   console.log('data', data)
+//   res.json(data)
+//   // console.log(req.session)
+// })
 
 router.delete('/:productID', (req, res) => {
-  console.log('req.session.cart', req.session.cart)
-  delete req.session.cart[req.params.productID]
-  console.log('req.session.cart', req.session.cart)
-  res.status(200).json({ links: { self: req.originalUrl } })
+  console.log('before req.session.cart', req.session.cart)
+  delete req.session.cart.items[req.params.productID]
+  req.session.cart.cartLength = calCartQuantity(req)
+  console.log('after req.session.cart', req.session.cart)
+  res.status(200).json({ cart: req.session.cart })
 })
 
 router.post('/select', (req, res, next) => {
@@ -110,23 +114,28 @@ router.post('/select', (req, res, next) => {
 router.post('/quantity', (req, res, next) => {
   console.log('req.body', req.body)
   console.log('req.session.cart before', req.session.cart)
-  for (const key in req.body) {
-    req.session.cart[key].quantity = req.body[key]
-  }
-  console.log('req.session.cart after', req.session.cart)
-  res.json({ mgs: req.session.cart })
-})
 
-// router.post('/address', (req, res, next) => {
-//   console.log('address ')
-//   console.log('req.session', req.session)
-//   console.log('req.session.user.addresses', req.session.user.addresses)
-//   console.log('req.body address', req.body)
-//   if (!req.session.order) { req.session.order = {} }
-//   req.session.order.address = req.body.address
-//   // megick return autocomplete
-//   res.json({ address: req.session.order.address })
-// })
+  if (!req.session.cart) {
+    req.session.cart = {
+      items: {},
+    }
+  }
+  for (const productId in req.body) {
+    if (req.body[productId] === 0) {
+      delete req.session.cart.items[productId]
+    } else {
+      if (!req.session.cart.items[productId]) {
+        // todo do we need to check if PRODUCT EXIST??
+        req.session.cart.items[productId] = {}
+        req.session.cart.items[productId].checked = true
+      }
+      req.session.cart.items[productId].quantity = req.body[productId]
+    }
+  }
+  req.session.cart.cartLength = calCartQuantity(req)
+  console.log('req.session.cart after', req.session.cart)
+  res.json({ cart: req.session.cart })
+})
 
 router.post('/order', (req, res, next) => {
   console.log('order req.session', req.session)
@@ -150,5 +159,13 @@ router.post('/order', (req, res, next) => {
   }
   console.log('order req.session', req.session)
 })
+
+function calCartQuantity (req) {
+  let cartLength = 0
+  for (const productID in req.session.cart.items) {
+    cartLength = cartLength + req.session.cart.items[productID].quantity
+  }
+  return cartLength
+}
 
 module.exports = router
