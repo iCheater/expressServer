@@ -1,8 +1,8 @@
-const morgan = require('morgan') // logger
+const morganHTTPLogger = require('morgan') // logger
 const chalk = require('chalk')
 // todo different colors for get/post/path/delete
 module.exports = function (args) {
-  return morgan((tokens, req, res) => {
+  return morganHTTPLogger((tokens, req, res) => {
     return [
       // (`[${format('hh:mm:SS.SSS', new Date())}]`),
       chalk.bold.blue(tokens.method(req, res)),

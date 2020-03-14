@@ -14,8 +14,8 @@ const RedisStore = require('connect-redis')(expressSession)
 const router = require('./routes')
 const nunjucks = require('nunjucks')
 // const winston = require('winston')
-const logger = require('./config/winstonLogger')
-const morgan = require('./config/morgan')
+const logger = require('./helpers/winstonLogger')
+const morgan = require('./helpers/morganHTTPLogger')
 
 app.use(morgan({ stream: logger.stream }))
 

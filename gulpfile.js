@@ -15,6 +15,7 @@ const autoprefixer = require('gulp-autoprefixer')
 // https://getinstance.info/articles/tools/9-gulp-plugins/
 // https://github.com/gimm/gulp-live-server
 // https://alferov.github.io/awesome-gulp/
+// https://frontender.info/gulp-browserify-starter-faq/
 
 // https://gist.github.com/renarsvilnis/ab8581049a3efe4d03d8
 // todo https://github.com/gulp-community/gulp-cached
@@ -24,7 +25,7 @@ const autoprefixer = require('gulp-autoprefixer')
 // todo https://github.com/hughsk/gulp-duration
 
 const paths = {
-  srcCSS: 'src/stylesheets/**/*.*',
+  srcCSS: 'src/stylesheets/css/*.*',
   srcJS: 'src/scripts/**/*.js',
   srcSASS: 'src/stylesheets/sass/*.sass',
   srcImages: 'src/**/*.{gif,jpg,png,svg,ico}',
@@ -52,16 +53,20 @@ gulp.task('nodemon', cb => {
   })
     .on('start', () => {
       if (!called) {
+        console.log('nodemon start event!')
         called = true
         setTimeout(() => {
+          called = false
+          browserSync.reload()
           cb()
-        }, 400)
+        }, 300)
       }
     })
-    .on('restart', () => {
-      console.log('nodemon restarted!')
-      browserSync.reload()
-    })
+    // dont use restart! https://www.npmjs.com/package/gulp-nodemon#using-gulp-nodemon-with-browser-sync
+    // .on('restart', () => {
+    //   console.log('nodemon restarted!')
+    //   browserSync.reload()
+    // })
 })
 // the old one, idk why some guides tell me to run brwoserSync like this
 // gulp.task('browser-sync', gulp.series('nodemon', (cb) => {
@@ -87,7 +92,9 @@ gulp.task('sass', () => {
     .pipe(sass({
       // style: 'expanded',
       style: 'compressed',
-    }).on('error', sass.logError))
+    })
+      // .on('error', sass.logError)
+    )
     .pipe(autoprefixer())
     // .pipe(gulp.dest(paths.distSASS))
     .pipe(rename({ suffix: '.min' }))

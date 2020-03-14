@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { User, Address } = require('../../models')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 
 // /* GET loader page. */
 router.get('/', (req, res, next) => {

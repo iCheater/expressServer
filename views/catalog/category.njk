@@ -68,12 +68,12 @@
                                         </a>
                                     {% endif %}
                                     <div class="item__price">
-                                        <span class="price">{{ product.price }} </span>
+                                        <span class="price">{{ product.sellingPrice | addPennies  }} </span>
                                     </div>
                                 </div>
 
                                 <div class="item__other-info">
-                                    <p>В наличии 42 шт</p>
+                                    <p>В наличии {{ product.stock }} шт</p>
                                     <p>Доставка сегодня</p>
                                 </div>
                             </div>

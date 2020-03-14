@@ -74,7 +74,7 @@ function sendCheckboxStatus (data) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function removeProduct (btn) {
+function requestRemoveProduct (btn) {
   if (!btn.classList.contains('wait')) {
     removeRequest(btn)
   }
@@ -87,6 +87,8 @@ function removeRequest (btn) {
   xhr.onload = function (e) {
     if (xhr.status >= 200 && xhr.status < 300) {
       removeProductRow(btn)
+      console.log(JSON.parse(xhr.response).cart.cartLength)
+      updateCartQuantity(JSON.parse(xhr.response).cart.cartLength)
       calcTotal()
     } else {
       activateRemoveButton(btn)
