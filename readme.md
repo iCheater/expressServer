@@ -124,6 +124,9 @@ npx sequelize-cli db:seed:undo --seed name-of-seed-as-in-data
 npx sequelize-cli db:seed --seed 20191011121208-update-feature.js
 ```
 
+Nice advanced seeding 
+https://medium.com/@edtimmer/sequelize-associations-basics-bde90c0deeaa
+
 
 
 

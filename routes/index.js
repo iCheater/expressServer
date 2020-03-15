@@ -30,13 +30,6 @@ router.use(clearCookie)
 router.use('/', homeRouter)
 router.use('/', authRouter)
 
-// todo страница profile
-// просмотр текущего заказа
-// Просмотр истории заказов,
-// Посмотреть содержимое корзины
-// Посмотреть отложенные товары
-// Изменить профиль(данные, адреса, пароль, почта, телефоны)
-
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)
 router.use('/cart/', cartRouter)

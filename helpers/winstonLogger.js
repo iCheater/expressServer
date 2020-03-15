@@ -3,7 +3,6 @@ const appRoot = require('app-root-path')
 const { combine, timestamp } = format
 const chalk = require('chalk')
 
-// todo https://www.npmjs.com/package/config
 // https://github.com/winstonjs/winston/tree/master/examples
 
 // Ignore log messages if they have { private: true }
@@ -43,7 +42,7 @@ const options = {
   console: {
     level: process.env.LOG_LEVEL || 'silly',
     handleExceptions: true,
-    // prettyPrint: true, // todo google it
+    // prettyPrint: true,
     format: combine(
       format.align(),
       format.padLevels(),

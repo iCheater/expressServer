@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
     })
   }
   const arrCartID = Object.keys(req.session.cart.items)
-  // todo Mark somehow unavailable products
   Product.findAll({
     where: {
       id: arrCartID,
@@ -51,7 +50,6 @@ router.get('/', (req, res) => {
 
             if (!product.checked) { data.selectAllStatus = false }
           } else {
-          // todo add alternatives
             data.productsOutOFStock.push(product)
           }
         })
@@ -64,7 +62,6 @@ router.get('/', (req, res) => {
 })
 
 // router.put('/:productID', (req, res, next) => {
-//   // todo do we need to check if PRODUCT EXIST??
 //   console.log(req.params)
 //   console.log(req.body)
 //   const productID = req.params.productID
@@ -125,7 +122,6 @@ router.post('/quantity', (req, res, next) => {
       delete req.session.cart.items[productId]
     } else {
       if (!req.session.cart.items[productId]) {
-        // todo do we need to check if PRODUCT EXIST??
         req.session.cart.items[productId] = {}
         req.session.cart.items[productId].checked = true
       }

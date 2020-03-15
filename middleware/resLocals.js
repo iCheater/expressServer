@@ -13,6 +13,7 @@ const resLocals = (req, res, next) => {
   // if (req.cookies.user_sid) { // todo can we access to coockies without app.use(cookieParser()) ?
   //   res.locals.cart = cartCookiesValidation(req.cookies.cart)
   // }
+
   next()
 }
 

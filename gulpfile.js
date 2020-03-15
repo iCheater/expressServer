@@ -59,7 +59,7 @@ gulp.task('nodemon', cb => {
           called = false
           browserSync.reload()
           cb()
-        }, 300)
+        }, 1000)
       }
     })
     // dont use restart! https://www.npmjs.com/package/gulp-nodemon#using-gulp-nodemon-with-browser-sync

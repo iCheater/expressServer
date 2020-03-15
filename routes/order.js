@@ -52,7 +52,6 @@ router.get('/neworder', async (req, res, next) => {
       })
     }
 
-    // todo
     const order = await Order.create({
       promoCode: req.session.authorless.order.promoCode || null,
       comment: req.session.authorless.order.comment || null,
@@ -61,7 +60,7 @@ router.get('/neworder', async (req, res, next) => {
       user_id: user === null ? null : user.id,
     })
     const productIDs = Object.keys(req.session.cart)
-    // todo Should i check products in DB or its not my problem?
+    // Should i check products in DB or its not my problem?
     const cartItems = []
     for (const productID of productIDs) {
       const cartItem = {

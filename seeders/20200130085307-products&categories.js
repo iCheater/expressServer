@@ -81,6 +81,3 @@ module.exports = {
     return Promise.all(promises)
   },
 }
-// todo good seeding example
-// https://medium.com/@edtimmer/sequelize-associations-basics-bde90c0deeaa
-//
