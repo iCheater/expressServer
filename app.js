@@ -56,7 +56,7 @@ app.use(upload.array())
 
 const session = expressSession({
   key: 'user_sid',
-  secret: 'somerandonstuffs',
+  secret: 'somerandonstuffs123qwer!@#$*$#',
   resave: false,
   // store: new SequelizeStore({
   //   db: db.sequelize,

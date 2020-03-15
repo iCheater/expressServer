@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const { Product, User, Order } = require('./../models')
+const { Product, User, Order, Bonus } = require('./../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/helpers/winstonLogger`)
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res, next) => {
   console.log(req.session.cart)
   logger.verbose('/cart')
 
@@ -15,51 +15,75 @@ router.get('/', (req, res) => {
     })
   }
   const arrCartID = Object.keys(req.session.cart.items)
-  Product.findAll({
-    where: {
-      id: arrCartID,
-    },
-  })
-    .then(products => {
-      const data = {
-        editOrAdd: 'cart',
-        session: req.session,
-      }
-      if (products.length > 0) {
-        const rowProducts = products.map(product => product.get({ row: true }))
-        data.sumRowTotal = 0
-        data.sumDiscountInMoney = 0
-        data.sellingPriceWithDiscount = 0
-        data.selectAllStatus = true
-        data.productsOutOFStock = []
-        data.productsWithAmount = []
 
-        rowProducts.forEach(product => {
-          if (product.stock > 0) {
-            console.log(req.session.cart[product.id])
-            product.quantity = req.session.cart.items[product.id].quantity
-            product.checked = req.session.cart.items[product.id].checked
-            product.rowTotal = product.sellingPrice * product.quantity
-            product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
-            product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
-            data.productsWithAmount.push(product)
-
-            data.sumRowTotal = data.sumRowTotal + product.rowTotal
-            data.sumDiscountInMoney = data.sumDiscountInMoney + product.discountInMoney
-            data.sellingPriceWithDiscount = data.sellingPriceWithDiscount + product.sellingPriceWithDiscount
-
-            if (!product.checked) { data.selectAllStatus = false }
-          } else {
-            data.productsOutOFStock.push(product)
-          }
-        })
-      }
-
-      logger.verbose('res.render', products)
-
-      res.render('cart/cart', data)
+  try {
+    const bonuses = await Bonus.findAll({
+      where: {
+        status: 'ACTIVE',
+      },
     })
+
+    const products = await Product.findAll({ where: { id: arrCartID } })
+    const templateData = {
+      bonuses,
+    }
+
+    if (products.length > 0) {
+      const rowProducts = products.map(product => product.get({ row: true }))
+      templateData.sumRowTotal = 0
+      templateData.sumDiscountInMoney = 0
+      templateData.sumSellingPriceWithDiscount = 0
+      templateData.selectAllStatus = true
+      templateData.productsOutOFStock = []
+      templateData.productsWithAmount = []
+
+      rowProducts.forEach(product => {
+        if (product.stock > 0) {
+          product.quantity = req.session.cart.items[product.id].quantity
+          product.checked = req.session.cart.items[product.id].checked
+          product.rowTotal = product.sellingPrice * product.quantity
+          product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+          product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
+          templateData.productsWithAmount.push(product)
+
+          templateData.sumRowTotal = templateData.sumRowTotal + product.rowTotal
+          templateData.sumDiscountInMoney = templateData.sumDiscountInMoney + product.discountInMoney
+          templateData.sumSellingPriceWithDiscount = templateData.sumSellingPriceWithDiscount + product.sellingPriceWithDiscount
+
+          if (!product.checked) {
+            templateData.selectAllStatus = false
+          }
+        } else {
+          templateData.productsOutOFStock.push(product)
+        }
+      })
+    }
+    // todo IS IT BAD TO DO IT HERE?
+    let lastBonusStart = null
+    bonuses.forEach(bonus => {
+      if (templateData.sumSellingPriceWithDiscount >= bonus.bonusStart) {
+        bonus.class = 'done'
+      } else if (templateData.sumSellingPriceWithDiscount < bonus.bonusStart && templateData.sumSellingPriceWithDiscount > lastBonusStart) {
+        bonus.class = 'active'
+      }
+      lastBonusStart = bonus.bonusStart
+    })
+    console.log(templateData)
+    res.render('cart/cart', templateData)
+  } catch (err) {
+    next(err)
+  }
 })
+
+// Order.create(formData, {
+//   include: [{ model: Product }],
+// })
+//   .then(cart => {
+//     console.log(cart)
+//     cart.setProducts([55, 62]).then(products => {
+//       res.json(products)
+//     })
+//   })
 
 // router.put('/:productID', (req, res, next) => {
 //   console.log(req.params)
@@ -102,7 +126,7 @@ router.post('/select', (req, res, next) => {
   console.log('req.body', req.body)
   console.log('req.session.cart before', req.session.cart)
   for (const key in req.body) {
-    req.session.cart[key].checked = req.body[key]
+    req.session.cart.items[key].checked = req.body[key]
   }
   console.log('req.session.cart after', req.session.cart)
   res.json({ mgs: req.session.cart })
@@ -137,7 +161,9 @@ router.post('/order', (req, res, next) => {
   console.log('order req.session', req.session)
   console.log('req.body address', req.body)
 
-  if (!req.session.authorless) { req.session.authorless = {} }
+  if (!req.session.authorless) {
+    req.session.authorless = {}
+  }
 
   if (req.body.address) {
     req.session.authorless.address = req.body.address
