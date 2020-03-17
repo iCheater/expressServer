@@ -11,6 +11,10 @@ function isAuthorlessValid () {
   return true
 }
 
+router.get('/', (req, res) => {
+  res.render('order/order')
+})
+
 router.get('/neworder', async (req, res, next) => {
   // req.session.authorless = {
   //   username: 'test',
