@@ -76,10 +76,8 @@ module.exports = {
     const promises = [
       queryInterface.bulkDelete('Categories', null, {}),
       queryInterface.bulkDelete('products', null, {}),
+      queryInterface.bulkDelete('categories_ancestors', null, {}),
     ]
     return Promise.all(promises)
   },
 }
-// todo good seeding example
-// https://medium.com/@edtimmer/sequelize-associations-basics-bde90c0deeaa
-//

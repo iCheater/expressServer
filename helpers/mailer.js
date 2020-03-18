@@ -7,14 +7,11 @@
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 const env = process.env.NODE_ENV || 'development'
 const { Mail } = require('../models')
 
-// const path = require('path')
-// todo fix it
-// eslint-disable-next-line no-path-concat
-const config = require('../config/mailerconfig')[env]
+const config = require(`${appRoot}/config/mailerconfig`)[env]
 
 // async..await is not allowed in global scope, must use a wrapper
 // async function main () {
@@ -94,7 +91,7 @@ const email = new Email({
 })
 
 module.exports = {
-  sendResetPassword: ({ email, username, token }) => { // todo refactor
+  sendResetPassword: ({ email, username, token }) => {
     // console.log({ email, username, token })
     // const message = {
     //   from: config.auth.user,

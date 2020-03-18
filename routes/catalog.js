@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
     }),
     Product.findAll({
       limit: 5,
-      // raw: true,
+      order: [['visitCounter', 'DESC']],
     }),
   ]
   return Promise.all(promises).then(([categoriesHierarchical, categoriesPopular, products]) => {
@@ -173,8 +173,8 @@ router.get('/:categoryID', (req, res, next) => {
           // res.json(products)
           const rowProducts = products.map(product => product.get({ row: true }))
           const productsWithQuantity = rowProducts.map((product) => {
-            if (req.session.cart && req.session.cart[product.id]) {
-              product.quantity = req.session.cart[product.id].quantity
+            if (req.session.cart && req.session.cart.items[product.id]) {
+              product.quantity = req.session.cart.items[product.id].quantity
             }
             return product
           })

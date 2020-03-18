@@ -52,7 +52,7 @@
                                             <img src="images/favorite.png">
                                         </button>
                                         <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                                class="btn deleteBtn" onclick="removeProduct(this)"
+                                                class="btn deleteBtn" onclick="requestRemoveProduct(this)"
                                                 data-id="{{ product.id }}">
                                             <img src="images/remove.svg">
                                         </button>
@@ -151,7 +151,7 @@
                                             <img src="images/favorite.png">
                                         </button>
                                         <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn"
-                                                onclick="removeProduct(this)"
+                                                onclick="requestRemoveProduct(this)"
                                                 data-id="{{ product.id }}">
                                             <img src="images/remove.svg">
                                         </button>
@@ -180,7 +180,7 @@
                             <h4>Ваша корзина</h4>
                             <div class="cart__total-row">
                                 <div class="row__column">
-                                    Товары ({{ cartLength | length }})
+                                    Товары ({{ cartLength }})
                                 </div>
                                 <div id="sumTotal"> {{ sumRowTotal | addPennies }} </div>
                             </div>

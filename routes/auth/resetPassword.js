@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { User, Token } = require('../../models')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
 const { resetPasswordPage } = require(`${appRoot}/controllers/resetpassword`)
 

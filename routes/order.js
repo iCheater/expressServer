@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { Order, User, Address, OrderItem, Product, Mail } = require('../models')
 const appRoot = require('app-root-path')
-const logger = require(`${appRoot}/config/winstonLogger`)
+const logger = require(`${appRoot}/helpers/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
 const { ErrorHandler } = require(`${appRoot}/helpers/error`)
 
@@ -32,21 +32,13 @@ router.get('/neworder', async (req, res, next) => {
     let user = req.session.user || null
     let nonSaltedPassword = null
     if (!req.session.cart) {
-      // throw new Error('cart is empty')
-      throw new ErrorHandler(500, 'cart is empty')
+      return next(new ErrorHandler(500, 'cart is empty'))
     }
 
     if (!req.session.user) {
       if (isAuthorlessValid(req.session.authorless)) {
-        throw new ErrorHandler(500, 'user data is not valid')
+        return next(new ErrorHandler(500, 'user data is not valid'))
       }
-      // const user = await User.findOne({ where: { email: req.session.authorless.email } })
-      //   .then(user => {
-      //     if (user) {
-      //       return res.json({ message: 'пользователь с таким email уже существует' })
-      //     }
-      //   })
-      //
       nonSaltedPassword = User.generatePassword()
       user = await User.create({
         username: req.session.authorless.username,
@@ -64,7 +56,6 @@ router.get('/neworder', async (req, res, next) => {
       })
     }
 
-    // todo
     const order = await Order.create({
       promoCode: req.session.authorless.order.promoCode || null,
       comment: req.session.authorless.order.comment || null,
@@ -73,7 +64,7 @@ router.get('/neworder', async (req, res, next) => {
       user_id: user === null ? null : user.id,
     })
     const productIDs = Object.keys(req.session.cart)
-    // todo Should i check products in DB or its not my problem?
+    // Should i check products in DB or its not my problem?
     const cartItems = []
     for (const productID of productIDs) {
       const cartItem = {
@@ -151,35 +142,6 @@ router.get('/neworder', async (req, res, next) => {
 //   }).then(orders => {
 //     res.json(orders)
 //   })
-// })
-
-// // for tests
-// router.get('/order:id', (req, res, next) => {
-//   Order.findByPk(req.params.id, {
-//     include: {
-//       model: User,
-//       include: {
-//         model: Address,
-//       },
-//     },
-//   })
-//     .then(order => {
-//       res.json(order)
-//     })
-// })
-//
-// router.get('/list', (req, res, next) => {
-//   Order.findAll({
-//     include: {
-//       model: User,
-//       include: {
-//         model: Address,
-//       },
-//     },
-//   })
-//     .then(order => {
-//       res.json(order)
-//     })
 // })
 
 module.exports = router
