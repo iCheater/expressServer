@@ -57,79 +57,6 @@ router.get('/get', (req, res, next) => {
   })
 })
 
-// router.get('/gen', (req, res) => {
-//   Product.create({
-//     name: faker.commerce.product(),
-//     price: faker.commerce.price(0, 9999, 2),
-//     mURL: faker.image.abstract(),
-//     description: faker.commerce.productName(),
-//   }, { include: [{ model: Category }] })
-//     .then(data => { data.setCategories([1, 2]) })
-//
-//
-//   return Promise.all(users)
-//     .then(result => {
-//       res.json(result)
-//     })
-//     .catch(err => {
-//       res.json(err)
-//     })
-// })
-
-router.get('/bulk_unfinished', (req, res) => {
-  // todo ask somemody about it
-  const data = [
-    {
-      id: 12,
-      username: 'admin',
-      email: 'admin@admin.ru',
-      password: 'admin',
-    },
-    {
-      id: 11,
-      username: 'test',
-      email: 'test@test.ru',
-      password: 'test',
-    },
-  ]
-  for (let i = 0; i < 2; i++) {
-    const obj = {}
-    obj.username = faker.name.findName()
-    obj.email = faker.internet.email()
-    obj.password = faker.internet.email()
-    obj.addresses = [{
-      type: 'самовывоз',
-      line1: faker.address.streetAddress(),
-      line2: faker.address.secondaryAddress(),
-      city: faker.address.city(),
-      state: faker.address.state(),
-      zip: faker.address.zipCode(),
-      user_id: i + 1,
-    }]
-    data.push(obj)
-  }
-
-  User.bulkCreate(data, {
-    returning: true,
-    individualHooks: true,
-    include: [{
-      model: Address,
-      as: 'addresses',
-    }],
-  })
-    .then((data) => {
-      console.log('here', data)
-      res.json(data)
-    //   return User.findAll()
-    // })
-    // .then((response) => {
-    //   res.json(response)
-    })
-    .catch((error) => {
-      res.json(error)
-    })
-})
-
 router.get('/create', (req, res) => {
   // console.log('Project.User:', Project.User);
 
@@ -152,22 +79,6 @@ router.get('/create', (req, res) => {
       association: User.Addresses,
     }],
   })
-
-  // User.hasMany(Tag, { as: 'tags'});
-  // User.create({
-  //     username: 'admin2',
-  //     email: 'admin@admin.ru2',
-  //     password: 'admin',
-  //     tags: [
-  //         { name: 'Alpha'},
-  //         { name: 'Beta'}
-  //     ]
-  // }, {
-  //     include: [{
-  //         model: Tag,
-  //         as: 'tags'
-  //     }]
-  // })
 
     // Project.User = Project.belongsTo(User, {as: 'user'});
     // User.Addresses = User.hasMany(Address, {as: 'addresses'});

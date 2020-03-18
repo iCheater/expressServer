@@ -22,7 +22,7 @@ const logErrors = (err, req, res, next) => {
 }
 
 const clientErrorHandler = (err, req, res, next) => {
-  const { statusCode, message } = err
+  const { statusCode = 500, message } = err
   if (req.xhr) {
     res.status(statusCode).send({
       status: 'error',
@@ -34,7 +34,7 @@ const clientErrorHandler = (err, req, res, next) => {
   }
 }
 const errorHandler = (err, req, res, next) => {
-  const { statusCode, message } = err
+  const { statusCode = 500, message } = err
 
   if (res.headersSent) {
     return next(err)

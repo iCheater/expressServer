@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const debug = require('debug')('express-server:server') // todo why?
+const debug = require('debug')('express-server:server')
 const http = require('http')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -52,11 +52,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // for parsing multipart/form-data
 app.use(upload.array())
 // initialize cookie-parser to allow us access the cookies stored in the browser.
-app.use(cookieParser())
+// app.use(cookieParser())
 
 const session = expressSession({
   key: 'user_sid',
-  secret: 'somerandonstuffs',
+  secret: 'somerandonstuffs123qwer!@#$*$#',
   resave: false,
   // store: new SequelizeStore({
   //   db: db.sequelize,

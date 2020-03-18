@@ -6,7 +6,6 @@
 {% block preScript %}
     <script src="/scripts/cartCalculate.js"></script>
     <script src="/scripts/inputQuantity.js"></script>
-    {#    <script src="scripts/cartCheckbox.js"></script>#}
 {% endblock %}
 
 {% block content %}
@@ -27,9 +26,10 @@
 
                             </div>
                         </div>
-                        <h3>Нет в наличии</h3>
-                        <div class="column-items">
-                            {% for product in productsOutOFStock %}
+
+                        {% for product in productsOutOFStock %}
+                            <h3>Нет в наличии</h3>
+                            <div class="column-items">
                                 <div class="row row_grid-outstock">
                                     <div class="product-select" data-th="Product">
                                         <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
@@ -58,8 +58,9 @@
                                         </button>
                                     </div>
                                 </div>
-                            {% endfor %}
-                        </div>
+                            </div>
+                        {% endfor %}
+
                         <h3>В наличии</h3>
                         <div class="column-items">
                             {% for product in productsWithAmount %}
@@ -92,13 +93,13 @@
                                         </div>
                                     </div>
 
-{#                                    <div class="product-price" data-th="Price">#}
-{#                                        <span id="price{{ product.id }}"#}
-{#                                              data-id="{{ product.id }}"#}
-{#                                              class="price"#}
-{#        #}{#                                      value="{{ product.sellingPrice }} "#}
-{#                                        >{{ product.sellingPrice }} </span>#}
-{#                                    </div>#}
+                                    {#                                    <div class="product-price" data-th="Price">#}
+                                    {#                                        <span id="price{{ product.id }}"#}
+                                    {#                                              data-id="{{ product.id }}"#}
+                                    {#                                              class="price"#}
+                                    {#        #}{#                                      value="{{ product.sellingPrice }} "#}
+                                    {#                                        >{{ product.sellingPrice }} </span>#}
+                                    {#                                    </div>#}
 
                                     <div class="product-qty" data-th="Quantity">
                                         <button class="btnMinus" data-id="{{ product.id }}"
@@ -113,38 +114,49 @@
                                         </button>
                                     </div>
                                     {% if product.discountRate %}
-                                        <div data-th="Subtotal" id="subtotal{{ product.id }}"
-                                             data-id="{{ product.id }}"
-                                             data-sellingPrice="{{ product.sellingPrice }}"
-                                             data-discountRate="{{ product.discountRate }}"
+                                        <div data-th="Subtotal"
+{#                                             id="subtotal{{ product.id }}"#}
+{#                                             data-id="{{ product.id }}"#}
+{#                                             data-discount-rate="{{ product.discountRate }}"#}
                                              class="subtotal ">
-                                            {{ product.rowTotal | addPennies }} |
-                                            {{ product.sellingPriceWithDiscount | addPennies }} руб
+                                            <span id="sellingPriceWithDiscount{{ product.id }}"
+                                                  class="priceWithDisc"
+                                                    data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}"
+                                                   >
+                                                {{ product.sellingPriceWithDiscount | addPennies }}
+                                            </span>
+                                            <s id="rowTotal{{ product.id }}"
+                                               class="rowTotal"
+                                               data-id="{{ product.id }}"
+                                               data-row-total="{{ product.rowTotal }}">
+                                                {{ product.rowTotal | addPennies }}
+                                            </s>
+
+                                        </div>
+                                        <div id="discountInMoney{{ product.id }}"
+                                             data-discount-in-money="{{ product.discountInMoney }}" class="sale">
                                             {{ product.discountInMoney | addPennies }}
                                         </div>
                                     {% else %}
                                         <div data-th="Subtotal" id="subtotal{{ product.id }}"
                                              data-id="{{ product.id }}"
-                                             data-price="{{ product.sellingPrice }}"
+                                             data-selling-price="{{ product.sellingPrice }}"
                                              class="subtotal ">
                                             {{ product.rowTotal }}
                                         </div>
                                     {% endif %}
 
-
-
                                     <div class="actions" data-th="">
                                         <button class="btn-favorite" data-id="{{ product.id }}">
                                             <img src="images/favorite.png">
                                         </button>
-                                        <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn" onclick="requestRemoveProduct(this)"
+                                        <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn"
+                                                onclick="requestRemoveProduct(this)"
                                                 data-id="{{ product.id }}">
                                             <img src="images/remove.svg">
                                         </button>
                                     </div>
-                                    <div class="sale">
-                                        Sale!!!
-                                    </div>
+
                                 </div>
 
                             {% endfor %}
@@ -157,9 +169,9 @@
 
                 <section class="order">
                     <div class="result__order">
-                        <button class="btn-order">
+                        <a href="/order" class="btn-order">
                             Перейти к оформлению
-                        </button>
+                        </a>
                         <div class="order-text">
                             Доступные способы и время доставки можно выбрать при оформлении заказа
                         </div>
@@ -176,13 +188,14 @@
                                 <div class="row__column">
                                     Скидка
                                 </div>
-                                <div>{{ sumDiscountInMoney | addPennies }}</div>
+                                <div id="sumSale">{{ sumDiscountInMoney | addPennies }}</div>
                             </div>
                             <div class="cart__total-row">
                                 <div class="row__column">
                                     Общая стоимость
                                 </div>
-                                <div id="sumTotal"> {{ sellingPriceWithDiscount | addPennies}} </div>
+                                <div id="total"> {{ sumRowTotal | addPennies }} </div>
+{#                                мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
                             </div>
 
                         </div>
@@ -192,7 +205,7 @@
                         <div class="bonus__header">
                             <h3 class="title">Комплименты</h3>
                             <a class="bonus-btn" href="#">
-{#                                Подробнее#}
+                                {#                                Подробнее#}
                                 <span class="arrow_down"></span>
                                 <span class="arrow_up"></span>
                             </a>
@@ -202,19 +215,15 @@
                                 До бесплатной доставки осталось 492 рубля
                             </p>
 
+
                             <div class="progress__bar">
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_1">...</span>
-                                    <span class="title">Бесплатная доставка от 4 000 рублей</span>
-                                </div>
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_2">...</span>
-                                    <span class="title">Прочая упаковка от 5 000 рублей</span>
-                                </div>
-                                <div class="circle">
-                                    <span class="label" id="bonusLevel_3">...</span>
-                                    <span class="title">Эксклюзивная упаковка от 10 000 рублей</span>
-                                </div>
+                                {% for bonus in bonuses %}
+                                    <div class="circle">
+                                        <span class="label {{ bonus.class }}" id="bonusLevel_{{ bonus.id }}">...</span>
+                                        <span class="title">{{ bonus.title + ( bonus.bonusStart | addPennies ) }} ₽</span>
+                                    </div>
+                                {% endfor %}
+
 
                                 <div class="progress__line"></div>
                             </div>

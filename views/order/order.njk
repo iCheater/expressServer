@@ -1,0 +1,180 @@
+{% extends "./../layout.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/order.min.css">
+{% endblock %}
+{% block preScript %}
+{% endblock %}
+
+{% block content %}
+    <div class="order">
+        <div class="container">
+            <div class="order__wrapper">
+                <div class="details__order">
+                    <h2>Ваши данные</h2>
+                    <div class="content user_info">
+                        <div class="user_info-name">
+                            <div class="title">Jane Doe</div>
+                            <a class="link" href="/profile/edit">Редактировать</a>
+                        </div>
+                        <div class="add-recipient">
+                            <a class="link" href="#">
+                                Добавить получателя
+                            </a>
+                            <div class="explanations">
+                                Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал
+                                другой
+                                человек.
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Способ получения</h2>
+                    <div class="content way__shipping">
+                        <div class="way_shipping-title">
+                            Самовывоз со склада
+                        </div>
+                        <div class="shipping-descr">
+                            <p>Бесплатно</p>
+                            {# нужно динамически отражать изменение цены#}
+                        </div>
+                    </div>
+                    <div class="content way__shipping">
+                        <div class="way_shipping-title">
+                            Курьерская доставка по Москве
+                        </div>
+                        <div class="shipping-descr">
+                            <p>от 198 рублей</p>
+                            {# нужно динамически отражать изменение цены#}
+                        </div>
+                    </div>
+
+                    <div class="content way__shipping">
+                        <div class="way_shipping-title">
+                            Пункты выдачи и отделения Почты
+                        </div>
+
+                        <div class="shipping-descr">
+                            <p>Скидка на доставку</p>
+                            <hr>
+                            <div class="adress_info">
+                                <h4>Адрес доставки</h4>
+                                <div class="way">
+                                    пункт Партнёра
+                                </div>
+                                <div class="address-place">
+                                    г. Москва, ул. Коптевская, д. 26 корп. 5
+                                </div>
+                                <div class="conditions">
+                                    Срок хранения заказа — 5 дней
+                                </div>
+                                <button class="change-place">
+                                    Изменить место
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2>Состав заказа</h2>
+                    <div class="content order-row">
+                        <div class="order__item">
+
+                            <div class="order__item-img">
+                                <img src="https://placehold.it/90x90">
+                            </div>
+
+                            <div class="order__item-qty">
+                                <span class="qty-num">1</span> шт.
+                                <span class="qty-weight">30</span> гр.
+                            </div>
+
+                            <div class="order__item-day">
+                                <h5>Доставим</h5>
+                                <div>
+                                    16 марта
+                                </div>
+                                <div>
+                                    Стоимость доставки
+                                </div>
+                                <div>
+                                    0 ₽ 49 ₽
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <h2>Оплата</h2>
+                    <div class="content way__pay">
+                        <form>
+                            <input id="promocode" type="text" placeholder="Кодовое слово или сертификат">
+                            <button class="btn btn-promo" disabled="disabled">Активировать</button>
+                        </form>
+                        <h4>Способы оплаты</h4>
+                        {#  Подумала что тут будет неплохо сделать шаблон#}
+                        <div class="payment-method method-changed">
+                            <div class="title">
+                                Картой онлайн
+                            </div>
+                            <div class="descr">
+                                тут должны быть плюшки
+                            </div>
+                            <div class="icon">
+                                <img src="https://placehold.it/30x30">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="content payment">
+                    <div class="payment__row">
+                        <div class="title">
+                            <h4>Товары</h4>
+                            <div class="descr">
+                                {{ cartLength | length }} шт.
+                            </div>
+                        </div>
+                        <div id="sumTotal"> {{ sumRowTotal | addPennies }} </div>
+                    </div>
+
+                    <div class="payment__row row-sale">
+                        <div class="title">
+                            <h4>Скидка</h4>
+                            <div class="descr">
+                                <a class="link" href="#">Подробнее</a>
+                            </div>
+                        </div>
+                        <div id="sumSale"> {{ sumDiscountInMoney | addPennies }} </div>
+                    </div>
+
+                    <div class="payment__row">
+                        <div class="title">
+                            <h4>Доставка</h4>
+                            <div class="descr">
+                                {{ cartLength | length }} шт.
+                            </div>
+                        </div>
+                        <div id="sumShipping"> {{ sumDiscountInMoney | addPennies }} </div>
+                    </div>
+
+                    <div class="payment__row total-row">
+                        <div class="title">
+                            <h2>Итого</h2>
+                        </div>
+                        <div id="total"> {{ sumRowTotal | addPennies }} </div>
+                        {#мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
+                    </div>
+
+                    <button class="btn btn-order">
+                        Оформить заказ
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
