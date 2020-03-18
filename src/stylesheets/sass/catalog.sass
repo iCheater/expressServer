@@ -1,14 +1,10 @@
 //catalog for client side
 
-
-
 .catalog
   display: flex
-  //justify-content: space-between
   &__category
     min-width: 200px
     margin-right: 10px
-    //background-color: rgba(0, 168, 255, 0.22)
     span
       font-weight: 600
     ul
@@ -23,15 +19,22 @@
       margin-top: 20px
       padding: 0
       display: block
+    .category-list
+      border-bottom: 1px solid #e6e6e6
+      .list-row
+        color: #3757c5
+        cursor: pointer
+      &:last-child
+        color: #202020
+
     .empty
       display: block
       height: 40px
-      border-bottom: 1px solid rgba(128, 128, 128, 0.37)
+      border-bottom: 1px solid #e6e6e6
 
 .catalog__bar
   padding: 0 0 10px
   width: 940px
-  //background-color: rgba(255, 119, 144, 0.22)
   display: flex
   justify-content: flex-start
   flex-wrap: wrap
@@ -41,16 +44,29 @@
     width: 100%
 
 .catalog__item
-  border: 1px solid rgba(0, 0, 0, 0.24)
-  padding: 10px 5px 0
-  //width: 33.3%
-  width: 33.3%
+  padding: 20px
+  width: 33.33333%
+  box-shadow: -1px 0 0 0 #e6e6e6 inset, 0 -1px 0 0 #e6e6e6 inset, -1px -1px 0 0 #e6e6e6, -1px 0 0 0 #e6e6e6, 0 -1px 0 0 #e6e6e6
+  position: relative
+  .item__to-favorite
+    position: absolute
+    top: 20px
+    right: 20px
+    cursor: pointer
+    -webkit-filter: drop-shadow(0px 0px 5px #f91155)
+    filter: drop-shadow(0px 0px 3px #f91155)
+    img
+      width: 30px
+      &:hover
+        -webkit-filter: drop-shadow(0px 0px 5px #ff1157)
+        filter: drop-shadow(0px 0px 10px #f90019)
+
   .item__img
     display: flex
     justify-content: space-between
     img
       margin: auto
-      height: 220px
+      width: 100%
   .item__name
     font-size: 16px
     margin: 5px 0
@@ -58,8 +74,9 @@
     text-align: center
   .item__price-container
     display: inline-flex
-    justify-content: space-evenly
+    justify-content: space-between
     align-items: center
+    width: 100%
   .item__to-basket
     background-color: #005bf8
     padding: 12px 25px
@@ -79,16 +96,12 @@
       margin: 0 0 5px
       text-align: left
 
-
-
 .item__price
   color: #b11a41
   font-weight: 600
-  font-size: 18px
-
+  font-size: 16px
   .price
     display: block
-
 
 //Category page
 .category__container
@@ -98,7 +111,8 @@
   justify-content: flex-start
   flex-wrap: wrap
   margin: 0
-  border: 1px solid rgba(128, 128, 128, 0.37)
+  box-shadow: -1px 0 0 0 #e6e6e6 inset, 0 -1px 0 0 #e6e6e6 inset, -1px -1px 0 0 #e6e6e6, -1px 0 0 0 #e6e6e6, 0 -1px 0 0 #e6e6e6
+  //border: 1px solid rgba(128, 128, 128, 0.37)
 .title__side-left
   width: 100%
   margin: 10px 0 10px 20px
@@ -107,7 +121,6 @@
   margin: 5px
   a
     color: #404040
-
   a:hover
     color: #555555
 
@@ -135,7 +148,6 @@
         background-color: rgba(205, 15, 0, 0.82)
   .item__info-name
     padding: 5px 0
-
 
 // page item
 .block__item
@@ -173,7 +185,6 @@
       margin-right: 20px
       text-align: center
 
-
 .block__shipping
   margin-top: 100px
   color: #555555
@@ -198,8 +209,6 @@
   h4
     margin: 0 0 10px
 
-
-//
 .product_other
   width: 100%
   display: flex
@@ -235,4 +244,16 @@
 .input-img
   width: 25px
 
-
+.filter-col
+  padding-top: 20px
+  legend
+    margin-bottom: 10px
+  fieldset
+    border: none
+    padding: 0
+    .filter-row
+      display: inline-flex
+      .input-field
+        width: 90px
+        display: block
+        margin-right: 10px

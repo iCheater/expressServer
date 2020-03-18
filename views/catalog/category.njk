@@ -7,7 +7,7 @@
 
  {% block preScript %}
      <script src="/scripts/addProductToCart.js"></script>
-{#     <script src="/scripts/cartCalculate.js"></script>#}
+     {#     <script src="/scripts/cartCalculate.js"></script>#}
      <script src="/scripts/inputQuantity.js"></script>
  {% endblock %}
 
@@ -15,7 +15,7 @@
     <div class="main__content">
         <!--   breadcrumb -->
 
-        <div class="container shadow">
+        <div class="container">
             <div class="breadcrumb_1">
                 <ul class="breadcrumb-path">
                     <li><a href="/">Главная</a></li>
@@ -28,15 +28,32 @@
                 <div class="catalog__category">
                     <span class="empty"> </span>
 
-                    <span class="category-title">Популярные категории</span>
-                    <ul>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-                        <li><a href="#">Обложки</a></li>
-
+                    <span class="category-title">Категории</span>
+                    <ul class="category-list">
+                        <li><a class="list-row" href="/catalog/">Каталог</a></li>
+                        <li><a href="/catalog/{{ category.name }}" disabled="disabled">{{ category.name }}</a></li>
                     </ul>
 
+                    <div class="filter-col">
+                        <fieldset>
+                            <legend>
+                                Цена, ₽
+                            </legend>
+                            <div class="filter-row">
+                                <input class="input-field" type="text" placeholder="от" name="Цена от">
+
+                                <input class="input-field" type="text" placeholder="до" name="Цена до">
+                            </div>
+                            <fieldset>
+                                <ul>
+                                    <li>
+
+                                    </li>
+                                </ul>
+                            </fieldset>
+
+                        </fieldset>
+                    </div>
 
                 </div>
 
@@ -48,34 +65,44 @@
                                 <img src=" {{ product.mURL }}">
                             </div>
 
+                            <a class="item__to-favorite" title="Избранное">
+                                <img src="/images/favorite.svg" alt="Добавить в избранное">
+                            </a>
+
                             <div class="item__info">
                                 <div class="item__name">
                                     <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
                                 </div>
                                 <div class="item__price-container">
                                     {% if product.quantity > 0 %}
-                                    <div class="product-qty" data-th="Quantity">
-                                        <button class="btnMinus" data-id="{{ product.id }}" onclick="decreaseValue(this.dataset.id)">-</button>
-                                        <input type="number" id="input{{ product.id }}" data-id="{{ product.id }}"
- class="quantityProduct " value="{{ product.quantity }}" min="0" onchange="quantityInput(this.dataset.id)">
-                                        <button class="btnPlus" data-id="{{ product.id }}" onclick="increaseValue(this.dataset.id)">+</button>
-                                    </div>
+                                        <div class="product-qty" data-th="Quantity">
+                                            <button class="btnMinus" data-id="{{ product.id }}"
+                                                    onclick="decreaseValue(this.dataset.id)">-
+                                            </button>
+                                            <input type="number" id="input{{ product.id }}" data-id="{{ product.id }}"
+                                                   class="quantityProduct " value="{{ product.quantity }}" min="0"
+                                                   onchange="quantityInput(this.dataset.id)">
+                                            <button class="btnPlus" data-id="{{ product.id }}"
+                                                    onclick="increaseValue(this.dataset.id)">+
+                                            </button>
+                                        </div>
                                     {% else %}
                                         <a class="item__to-basket" id="btn{{ product.id }}" data-id="{{ product.id }}"
-                                           type='button' title="Положить в корзину" onclick="requestAndElemSwap(this.dataset.id)">
+                                           type='button' title="Положить в корзину"
+                                           onclick="requestAndElemSwap(this.dataset.id)">
 
                                             В корзину
                                         </a>
                                     {% endif %}
                                     <div class="item__price">
-                                        <span class="price">{{ product.sellingPrice | addPennies  }} </span>
+                                        <span class="price">{{ product.sellingPrice | addPennies }} </span>
                                     </div>
                                 </div>
 
-                                <div class="item__other-info">
-                                    <p>В наличии {{ product.stock }} шт</p>
-                                    <p>Доставка сегодня</p>
-                                </div>
+                                {#                                <div class="item__other-info">#}
+                                {#                                    <p>В наличии {{ product.stock }} шт</p>#}
+                                {#                                    <p>Доставка сегодня</p>#}
+                                {#                                </div>#}
                             </div>
 
                         </div>

@@ -1,29 +1,20 @@
-{% extends "layout.njk" %}
-
-{#{% block preStylesheet %}#}
-{#    <link href="./css/profile.min.css" rel="stylesheet"/>#}
-{#    <link href="/css/catalog.min.css" rel="stylesheet">#}
-{#{% endblock %}#}
-
-{% block sidebar %}
-    <h2 class="profile-title">Профиль</h2>
-    <div class="menu__profile">
-        <h4>Личная информация</h4>
-        <div class="menu__block">
-            <a href="/profile" class="">Профиль</a>
-            <a href="/profile/favorites" class="">Адреса доставки</a>
-        </div>
-        <h4>Покупки</h4>
-        <div class="menu__block">
-            <a href="/cart" class="">Моя корзина</a>
-            <a href="profile/history" class="">История заказов</a>
-        </div>
-        <h4>Списки</h4>
-        <div class="menu__block">
-            <a href="/profile/favorites" class="">Избранное</a>
-            <a href="profile/history" class="">Купленные товары</a>
-            <a href="profile/" class="">Электронные чеки</a>
-            <a href="/profile/" class="">Мои возвраты</a>
-        </div>
+<h2 class="profile-title">Профиль</h2>
+<div class="menu__profile">
+    <h4>Личная информация</h4>
+    <div class="menu__block">
+        <a href="/profile" class="">Профиль</a>
+        <a href="/profile/favorites" class="">Адреса доставки</a>
     </div>
-{% endblock %}
+    <h4>Покупки</h4>
+    <div class="menu__block">
+        <a href="/cart" class="">Моя корзина</a>
+        <a href="profile/history" class="">История заказов</a>
+    </div>
+    <h4>Списки</h4>
+    <div class="menu__block">
+        <a href="/profile/favorites" class="">Избранное</a>
+        <a href="profile/history" class="">Купленные товары</a>
+        <a href="profile/" class="">Электронные чеки</a>
+        <a href="/profile/" class="">Мои возвраты</a>
+    </div>
+</div>

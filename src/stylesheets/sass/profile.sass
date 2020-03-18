@@ -1,15 +1,13 @@
 .main-panel
   width:  65%
+  min-height: 800px
   margin-bottom:  30px
 
 
 /*profile preview*/
 .profile-wrapper
-
   display: flex
-
   justify-content: flex-start
-
   flex-wrap: wrap
   width:  1170px
 
@@ -17,280 +15,94 @@
   width:  100%
   margin:  10px 0
 
-
 .menu__profile
   width:  25%
-
 
 .info-descr
   width:  40%
 
-
 .info-descr p
   width:  100%
 
-
 .menu__block
-
   display: flex
-
   flex-direction: column
   width:  100%
-
-
-.menu__block a
-
-  display: block
-  margin-bottom:  10px
-  color:  #000095
+  & a
+    display: block
+    margin-bottom:  10px
+    color:  #000095
 
 
 /*Edit*/
-.card
-  border-radius:  4px
-  box-shadow:  0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1)
-  background-color:  #FFFFFF
-  margin-bottom:  30px
+.edit
+  .title
+    width: 100%
+  .edit__inner
+    display: flex
+    justify-content: space-between
+    .edit-form
+      width: 80%
+      padding-right: 10px
+      .row
+        width: 100%
+        display: flex
+
+        margin-bottom: 20px
+        .row-cell
+          width: 100%
+          .input-address
+            width: 100%
+          .input-field
+            padding: 5px
+            width: 98%
+            font-size: 14px
+            -webkit-appearance: none
+            -moz-appearance: none
+            appearance: none
+            box-shadow: none
+            border: 1px solid #c5c5c5
+            margin: 10px 0
+
+          .input-field,
+          input[type~="text"],
+          input[type~="password"],
+          input[type~="select"],
+          textarea
+            font-size: 16px
+      .row-info
+        margin-bottom: 30px
+        .textarea-label
+          display: block
+          width: 750px
+          line-height: 30px
+          margin-bottom: 10px
+        .textarea
+          display: block
+
+    .edit-avatar
+      width: 20%
+      height: 250px
+      padding-left: 30px
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      align-items: center
+      .avatar
+        width: 130px
+        height: 130px
+      h4
+        text-align: center
+        margin: 0
+
+.btn-info
+  padding: 10px 35px
+  background-color: #005bff
+  font-size: 16px
+  color: #ffffff
+  border: none
 
 
-.card .image
-  width:  100%
-
-  overflow: hidden
-  height:  260px
-  border-radius:  4px 4px 0 0
-
-  position: relative
-
-  -webkit-transform-style: preserve-3d
-
-  -moz-transform-style: preserve-3d
-
-  transform-style: preserve-3d
-
-
-.card .image img
-  width:  100%
-
-
-.card .filter
-
-  position: absolute
-  z-index:  2
-  background-color:  rgba(0, 0, 0, 0.68)
-  top:  0
-  left:  0
-  width:  100%
-  height:  100%
-
-  text-align: center
-  opacity:  0
-  filter:  alpha(opacity=0)
-
-
-//.card .filter .btn
-//
-//  position: relative
-//  top:  50%
-//  -webkit-transform:  translateY(-50%)
-//  -ms-transform:  translateY(-50%)
-//  transform:  translateY(-50%)
-
-//
-//.card: hover .filter
-//  opacity:  1
-//  filter:  alpha(opacity=100)
-//
-//
-//.card .btn-hover
-//  opacity:  0
-//  filter:  alpha(opacity=0)
-//
-//
-//.card: hover .btn-hover
-//  opacity:  1
-//  filter:  alpha(opacity=100)
-//
-//
-//.card .content
-//  padding:  15px 15px 10px 15px
-//
-//
-//.card .header
-//  padding:  15px 15px 0
-//
-//
-//.card .category,
-//.card label
-//  font-size:  14px
-//  font-weight:  400
-//  color:  #9A9A9A
-//  margin-bottom:  0
-//
-//
-//.card .category i,
-//.card label i
-//  font-size:  16px
-//
-//
-//.card label
-//  font-size:  12px
-//  margin-bottom:  5px
-//
-//  text-transform: uppercase
-//
-//
-//.card .title
-//  margin:  0
-//  color:  #333333
-//  font-weight:  300
-//
-//
-//.card .avatar
-//  width:  30px
-//  height:  30px
-//
-//  overflow: hidden
-//  border-radius:  50%
-//  margin-right:  5px
-//
-//
-//.card .description
-//  font-size:  14px
-//  color:  #333
-//
-//
-//.card .footer
-//  padding:  0
-//
-//  background-color: transparent
-//  line-height:  30px
-//
-//
-//.card .footer .legend
-//  padding:  5px 0
-//
-//
-//.card .footer hr
-//  margin-top:  5px
-//  margin-bottom:  5px
-//
-//
-//.card .stats
-//  color:  #a9a9a9
-//
-//
-//.card .footer div
-//
-//  display: inline-block
-//
-//
-//.card .author
-//  font-size:  12px
-//  font-weight:  600
-//
-//  text-transform: uppercase
-//
-//
-//.card .author i
-//  font-size:  14px
-//
-//
-//.card h6
-//  font-size:  12px
-//  margin:  0
-//
-//
-//.card.card-separator: after
-//  height:  100%
-//  right:  -15px
-//  top:  0
-//  width:  1px
-//  background-color:  #DDDDDD
-//  content:  ""
-//
-//  position: absolute
-//
-//
-//.card .ct-chart
-//  margin:  30px 0 30px
-//  height:  245px
-//
-//
-//.card .table tbody td:first-child,
-//.card .table thead th:first-child
-//  padding-left:  15px
-//
-//
-//.card .table tbody td:last-child,
-//.card .table thead th:last-child
-//  padding-right:  15px
-//
-//
-//.card .alert
-//  border-radius:  4px
-//
-//  position: relative
-//
-//
-//.card .alert.alert-with-icon
-//  padding-left:  65px
-//
-//
-//.card-user .image
-//  height:  110px
-//
-//
-//.card-user .image-plain
-//  height:  0
-//  margin-top:  110px
-//
-//
-//.card-user .author
-//
-//  text-align: center
-//
-//  text-transform: none
-//  margin-top:  -70px
-//
-//
-//.card-user .avatar
-//  width:  124px
-//  height:  124px
-//  border:  5px solid #FFFFFF
-//
-//  position: relative
-//  margin-bottom:  15px
-//
-//
-//.card-user .avatar.border-gray
-//  border-color:  #EEEEEE
-//
-//
-//.card-user .title
-//  line-height:  24px
-//
-//
-//.card-user .content
-//  min-height:  240px
-//
-//
-//.card-user .footer,
-//.card-price .footer
-//  padding:  5px 15px 10px
-//
-//
-//.card-user hr,
-//.card-price hr
-//  margin:  5px 15px
-//
-//
-//.card-plain
-//
-//  background-color: transparent
-//
-//  box-shadow: none
-//  border-radius:  0
 
 
 /*preview profile*/
@@ -298,43 +110,34 @@
   padding-bottom:  20px
   border-bottom:  1px solid rgba(105, 105, 105, 0.69)
 
-
 .panel-section:last-child
   border-bottom: none
 
-
 .profile-info
   display: flex
-
   justify-content: flex-start
   margin-bottom:  20px
-
 
 .info-descr
   display: flex
   flex-direction: column
   width:  55%
 
-
 .info-descr p
   font-size:  12px
   color:  #333
-
 
 .info-subtitle
   font-size:  12px
   color:  #333
   margin-bottom:  5px
 
-
 .profile-edit
   font-size:  14px
-
   margin: auto 0
 
-
 .profile-exit
-  color:  #ca4056
+  color:  #f91155
   font-size:  14px
 
 

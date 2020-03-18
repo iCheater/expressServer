@@ -1,116 +1,93 @@
 {% extends "./layout.njk" %}
 
 {% block main_profile %}
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Edit Profile</h4>
+    <div class="edit">
+        <h4 class="title">Редактирование профиля</h4>
+        <div class="edit__inner">
+            <div class="edit-form">
+                <form>
+
+                    <div class="row">
+
+                        <div class="row-cell">
+                            <label>Никнейм</label>
+                            <input class="input-field" type="text" placeholder="Никнейм">
                         </div>
-                        <div class="content m-2">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Никнейм</label>
-                                            <input type="text" class="form-control" placeholder="Никнейм" value="Никнейм">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Email</label>
-                                            <input type="email" class="form-control" placeholder="Email">
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Имя</label>
-                                            <input type="text" class="form-control" placeholder="Имя" value="Имя">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Фамилия</label>
-                                            <input type="text" class="form-control" placeholder="Фамилия" value="Фамилия">
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="row-cell">
+                            <label for="exampleInputEmail1">Email</label>
+                            <input class="input-field" type="email" placeholder="Email">
+                        </div>
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Адрес</label>
-                                            <input type="text" class="form-control" placeholder="Адрес доставки" value="улица, дом, корпус, квартира">
-                                        </div>
-                                    </div>
-                                </div>
+                    </div>
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Город</label>
-                                            <input type="text" class="form-control" placeholder="Город" value="Город">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Страна</label>
-                                            <input type="text" class="form-control" placeholder="Страна" value="Страна">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Индекс</label>
-                                            <input type="number" class="form-control" placeholder="Индекс">
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="row-cell">
+                            <label>Имя</label>
+                            <input class="input-field" type="text" placeholder="Имя">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike">Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-info btn-fill pull-right m-1">Update Profile</button>
-                                <div class="clearfix"></div>
-                            </form>
+                        </div>
+                        <div class="row-cell">
+                            <label>Фамилия</label>
+                            <input class="input-field" type="text" placeholder="Фамилия">
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="card card-user">
-
-                        <div class="content">
-                            <div class="author">
-                                <a href="#">
-                                    <img class="avatar border-gray d-block mx-auto m-3" src="https://placehold.it/130x130" alt="..."/>
-                                    <button type="submit" class="btn btn-info btn-fill d-block mx-auto m-3 ">Change avatar</button>
-
-                                    <h4 class="title text-center">Mike Andrew<br />
-                                        <small>michael24</small>
-                                    </h4>
-                                </a>
+                    <div class="row">
+                            <div class="row-cell">
+                                <label>Адрес</label>
+                                <input class="input-field input-address" type="text" placeholder="Улица, дом, корпус, квартира">
                             </div>
-                            <p class="description text-center"> "Lamborghini Mercy <br>
-                                Your chick she so thirsty <br>
-                                I'm in that two seat Lambo"
-                            </p>
-                        </div>
 
                     </div>
-                </div>
+
+                    <div class="row">
+
+                            <div class="row-cell">
+                                <label>Город</label>
+                                <input class="input-field" type="text" placeholder="Город">
+                            </div>
+
+
+                            <div class="row-cell">
+                                <label>Страна</label>
+                                <input class="input-field" type="text" placeholder="Страна">
+                            </div>
+
+
+                            <div class="row-cell">
+                                <label>Индекс</label>
+                                <input class="input-field" type="number" placeholder="Индекс">
+                            </div>
+
+                    </div>
+
+                    <div class="row-info">
+
+                        <label class="textarea-label">About Me</label>
+
+                        <textarea class="textarea" rows="5" cols="70" placeholder="Here can be your description">
+                        </textarea>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-info">Сохранить изменения</button>
+                    <div class="clearfix"></div>
+                </form>
             </div>
 
+            <div class="edit-avatar">
+
+                <img class="avatar" src="https://placehold.it/130x130" alt="..."/>
+                <h4 class="title">Mike Andrew<br/>
+                    <small>michael24</small>
+                </h4>
+
+                <button class="btn btn-info" type="submit">Изменить</button>
+
+            </div>
         </div>
     </div>
+
+
 {% endblock %}
