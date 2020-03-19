@@ -32,6 +32,7 @@
 
 .logo
   display: flex
+  align-items: center
   //justify-content: center
   span
     display: inline-block
@@ -56,7 +57,7 @@
 
 
 #menu__sticky
-  padding: 20px 0
+  padding: 10px 0
   max-width: 100%
   align-items: center
   position: fixed
@@ -66,15 +67,35 @@
   background-color: #f8f8f8
   box-shadow: 0 3px 10px rgba(0,0,0, .2)
   display: none
-  .nav__link
-    list-style: none
-    color: #2f3f54
+  z-index: 10
+  .logo__text
+    font-size: 25px
+  .nav__wrapper
+    display: flex
+    flex-wrap: nowrap
+    align-items: center
+    margin-bottom: 5px
+    svg
+      width: 20px
+      path
+        fill: #333333
+    #cartLength
+      background-color: #005bf8
+      border-radius: 50%
+      padding: 4px 7px
+      margin-right: 5px
+      font-size: 12px
+      color: #ffffff
+    .nav__link
+      list-style: none
+      color: #2f3f54
+      margin-left: 10px
   .short_order
     display: flex
     flex-direction: column
     .short_order-link
       text-decoration: underline
-      color: #a83930
+      color: #f91155
 
 .sticky
   display: flex
