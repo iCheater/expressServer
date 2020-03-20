@@ -5,10 +5,10 @@
     <title>Shop</title>
     {% block stylesheet %}{% endblock %}
     <link rel="stylesheet" href="/css/style.min.css"/>
-{#    <link rel="stylesheet" href="/css/style.css.map"/>#}
+    {#    <link rel="stylesheet" href="/css/style.css.map"/>#}
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,900&display=swap">
-    <script src="/scripts/jQuery/jquery-3.4.1.min.js" ></script>
+    <script src="/scripts/jQuery/jquery-3.4.1.min.js"></script>
 
     {% block preStylesheet %}{% endblock %}
 
@@ -16,17 +16,17 @@
 </head>
 
 <body>
+
+{% block nav %}
+    {% include "navbar.njk" %}
+{% endblock nav %}
 <div class="main">
-    {% block nav %}
-        {% include "navbar.njk" %}
-    {% endblock nav %}
-
     {% block content %}{% endblock %}
-
-    {% block footer %}
-        {% include "footer.njk" %}
-    {% endblock footer %}
 </div>
+{% block footer %}
+    {% include "footer.njk" %}
+{% endblock footer %}
+
 
 
 {% block postScript %}

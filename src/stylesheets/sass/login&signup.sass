@@ -1,5 +1,7 @@
 .login
-  height: 1000px
+  max-height: 900px
+  min-height: 700px
+  height: 100%
   position: relative
 
   .form-title
@@ -9,29 +11,32 @@
   .form-check
     background-color: #fff
     box-shadow: 0 0 30px rgba(0,0,0,0.2)
-
     padding: 40px
     width: 35%
-
     display: block
     position: absolute
     top: 50%
     left: 50%
     margin-right: -50%
     transform: translate(-50%, -50%)
-    .form__row
+    .links-form
       display: flex
       justify-content: space-between
-      align-items: center
+
+    .form__row
+      display: flex
+      flex-direction: column
+      justify-content: flex-start
       width: 100%
       margin-bottom: 20px
       label
         font-size: 20px
         font-weight: 700
+        margin: 0
 
       .input-field
         padding: 15px 10px
-        width: 70%
+        width: 100%
         font-size: 14px
         -webkit-appearance: none
         -moz-appearance: none
@@ -48,7 +53,6 @@
 
     .form-link
       display: block
-      margin-top: 20px
       color: #005bff
 
 .btn-primary
