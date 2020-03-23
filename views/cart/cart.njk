@@ -28,7 +28,7 @@
                         </div>
 
                         {% for product in productsOutOFStock %}
-                            <h3>Нет в наличии</h3>
+                            <h3 class="cart-title">Нет в наличии</h3>
                             <div class="column-items">
                                 <div class="row row_grid-outstock">
                                     <div class="product-select" data-th="Product">
@@ -61,7 +61,7 @@
                             </div>
                         {% endfor %}
 
-                        <h3>В наличии</h3>
+                        <h3 class="cart-title">В наличии</h3>
                         <div class="column-items">
                             {% for product in productsWithAmount %}
                                 {#                        <div class="outOfStock">#}
@@ -161,8 +161,6 @@
 
                             {% endfor %}
                         </div>
-
-
                     </div>
 
                 </section>

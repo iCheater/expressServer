@@ -4,6 +4,7 @@
   margin-bottom:  30px
 
 
+
 /*profile preview*/
 .profile-wrapper
   display: flex
@@ -102,13 +103,13 @@
   color: #ffffff
   border: none
 
-
-
-
 /*preview profile*/
 .panel-section
-  padding-bottom:  20px
+  padding:  20px 0
   border-bottom:  1px solid rgba(105, 105, 105, 0.69)
+  &:first-child
+    padding-top: 0
+
 
 .panel-section:last-child
   border-bottom: none
@@ -137,8 +138,72 @@
   margin: auto 0
 
 .profile-exit
+  display: block
+  margin-top: 20px
   color:  #f91155
   font-size:  14px
+
+.panel-title
+  margin: 15px 0
+
+.btn-reset
+  display: block
+  width: 200px
+  text-align: center
+  padding: 10px 20px
+  margin-top: 10px
+  background-color: #005bff
+  font-size: 14px
+  color: #ffffff
+  border: none
+
+.section-title
+  margin-top: 10px
+
+.addresses_list
+  margin-top: 20px
+  &-item
+    width: 100%
+    border: 1px solid #999999
+    padding: 15px
+    display: flex
+    justify-content: space-between
+    flex-direction: row
+    align-items: center
+    .address-delete
+      width: 20px
+      margin-right: 15px
+      cursor: pointer
+      path:hover
+        fill: #f91155
+    .address-change
+      width: 45px
+      background-color: #005bff
+      border-radius: 5px
+      padding: 10px
+      cursor: pointer
+      &:hover
+        background-color: #0043a9
+
+      path
+        fill: #ffffff
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @media (min-width: 992px)

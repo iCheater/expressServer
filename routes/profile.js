@@ -55,7 +55,19 @@ router.get('/reviews/', (req, res) => {
       const rawData = data.map(e => e.get({ row: true }))
       console.log(rawData)
       res.render('profile/reviews', {
-        editOrAdd: 'reviews',
+        editOrAdd: 'Reviews',
+        user: rawData,
+      })
+    })
+})
+
+router.get('/addresses/', (req, res) => {
+  User.findAll()
+    .then(data => {
+      const rawData = data.map(e => e.get({ row: true }))
+      console.log(rawData)
+      res.render('profile/addresses', {
+        editOrAdd: 'Addresses',
         user: rawData,
       })
     })

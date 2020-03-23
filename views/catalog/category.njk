@@ -77,12 +77,40 @@
                             <li><a href="#">{{ subcategory.name }}</a></li>
                         {% endfor %}
 
-                    {% endfor %}
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <div class="catalog__bar">
                     <h2>{{ category.name }}</h2>
+                    <div class="popular__section">
+
+                        <div class="popular__section-item">
+                            <div class="item-img">
+                                <img src="https://placehold.it/130x130">
+                            </div>
+                            <div class="item-info">
+                                <div class="info-title">
+                                    Бестселлер
+                                </div>
+                                <div>product.name</div>
+                                <div class="info-price">
+                                    <span id="sellingPriceWithDiscount{{ product.id }}"
+                                          class="priceWithDisc"
+                                          data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}">
+                                       {{ product.sellingPriceWithDiscount | addPennies }}
+                                    </span>
+                                    <s id="rowTotal{{ product.id }}" data-id="{{ product.id }}">
+                                        {{ product.rowTotal | addPennies }}
+                                    </s>
+                                </div>
+                                <a class="btn__to-basket">
+                                    В корзину
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
                     {% for product in products %}
                         <div class="catalog__item">
                             <div class="item__img">
@@ -90,12 +118,14 @@
                             </div>
 
                             <div class="icon-favorite">
-                                <svg enable-background="new -0.709 -11.555 141.732 141.732" id="Livello_1" version="1.1" viewBox="-5 -11.555 152.732 141.732" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g id="Livello_82"><path d="M140.314,37.654C140.314,16.858,123.402,0,102.537,0c-13.744,0-25.77,7.317-32.379,18.255C63.549,7.317,51.521,0,37.777,0   C16.912,0,0,16.858,0,37.654c0,10.821,4.588,20.57,11.922,27.438h-0.01l54.084,51.584c0.992,1.188,2.48,1.945,4.148,1.945   c1.545,0,2.936-0.653,3.92-1.696l54.346-51.833h-0.016C135.729,58.225,140.314,48.476,140.314,37.654"/></g><g id="Livello_1_1_"/></svg>
+                                <svg enable-background="new -0.709 -11.555 141.732 141.732" id="Livello_1" version="1.1"
+                                     viewBox="-5 -11.555 152.732 141.732" xml:space="preserve"
+                                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g
+                                            id="Livello_82">
+                                        <path d="M140.314,37.654C140.314,16.858,123.402,0,102.537,0c-13.744,0-25.77,7.317-32.379,18.255C63.549,7.317,51.521,0,37.777,0   C16.912,0,0,16.858,0,37.654c0,10.821,4.588,20.57,11.922,27.438h-0.01l54.084,51.584c0.992,1.188,2.48,1.945,4.148,1.945   c1.545,0,2.936-0.653,3.92-1.696l54.346-51.833h-0.016C135.729,58.225,140.314,48.476,140.314,37.654"/>
+                                    </g>
+                                    <g id="Livello_1_1_"/></svg>
                             </div>
-
-{#                            <a class="item__to-favorite" title="Избранное">#}
-{#                                <img src="/images/favorite.svg" alt="Добавить в избранное">#}
-{#                            </a>#}
 
                             <div class="item__info">
                                 <div class="item__name">
@@ -127,10 +157,10 @@
                                     </div>
                                 </div>
 
-                                {#                                <div class="item__other-info">#}
-                                {#                                    <p>В наличии {{ product.stock }} шт</p>#}
-                                {#                                    <p>Доставка сегодня</p>#}
-                                {#                                </div>#}
+                                {#<div class="item__other-info">#}
+                                {#<p>В наличии {{ product.stock }} шт</p>#}
+                                {#<p>Доставка сегодня</p>#}
+                                {#</div>#}
                             </div>
 
                         </div>

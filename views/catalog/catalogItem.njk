@@ -89,31 +89,34 @@
         </div>
 
 
-        <h4>Похожие товары</h4>
-        <div class="product_other">
 
-            {% for product in products %}
-                <div class="other__item">
-                    <div class="other__item-img">
-                        <img src=" {{ product.mURL }}">
-                    </div>
-                    <div class="other__item-info">
-                        <div class="item__price">
-                            <span><span class="price">{{ product.sellingPrice | addPennies }} </span></span>
+        <div class="section-other">
+            <h4>Похожие товары</h4>
+            <div class="product_other">
+                {% for product in products %}
+                    <div class="other__item">
+                        <div class="other__item-img">
+                            <img src=" {{ product.mURL }}">
                         </div>
-                        <div class="item__info-name">
-                            <a href="#">{{ product.name }}</a>
+                        <div class="other__item-info">
+                            <div class="item__price">
+                                <span><span class="price">{{ product.sellingPrice | addPennies }} </span></span>
+                            </div>
+                            <div class="item__info-name">
+                                <a href="#">{{ product.name }}</a>
+                            </div>
+
+
+                            <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
+                               title="Положить в корзину">
+                                В корзину
+                            </a>
+
                         </div>
-
-
-                        <a class="btn__to-basket" data-id="{{ product.id }}" type='button'
-                           title="Положить в корзину">
-                            В корзину
-                        </a>
-
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+
         </div>
 
     </div>
