@@ -73,4 +73,8 @@ router.get('/addresses/', (req, res) => {
     })
 })
 
+router.get('/orderItem/', (req, res) => {
+  res.render('profile/orderItem')
+})
+
 module.exports = router

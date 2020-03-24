@@ -11,9 +11,45 @@
     <div class="orders-list">
 
         <div class="orders-item">
+            <div class="item-header">
+                <div class="item-block">
+                    <h3 class="item-title">
+                        Заказ от {дата}
+                    </h3>
+                    <a class="item-number" href="/profile/orderItem">{номер заказа}</a>
+                </div>
+                <div class="item-block">
+                    <h3 class="item-title total-order">
+                        {price}
+                    </h3>
+                    <span class="status-pay"> {оплачено/к оплате}</span>
+                    <span class="way__pay">{Картой онлайн/Наличными}</span>
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-block">
+                    <div class="day-shipping">
+                        Дата доставки: {дата}
+                    </div>
+                    <div class="status-shipping">
+                        {отменено, получено, доставка}
+                    </div>
+                </div>
+                <div class="ordered-block">
+
+                    <div class="ordered-item">
+                        <div class="preview__item-img">
+                            <a href="#">
+                                <img src="https://placehold.it/80x80">
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
         </div>
-        
+
     </div>
 
 {#    <div class="col-auto">#}
