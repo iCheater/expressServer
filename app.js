@@ -16,6 +16,7 @@ const nunjucks = require('nunjucks')
 // const winston = require('winston')
 const logger = require('./helpers/winstonLogger')
 const morgan = require('./helpers/morganHTTPLogger')
+const passport = require('./middleware/passport/passport')
 
 app.use(morgan({ stream: logger.stream }))
 
@@ -73,6 +74,9 @@ const session = expressSession({
     expires: 24 * 60 * 60 * 1000,
   },
 })
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 if (app.get('env') === 'production') {
   // app.set('trust proxy', 1) // trust first proxy

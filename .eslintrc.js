@@ -8,7 +8,7 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'standard'
+    'standard' // airbnb | google
   ],
   globals: {
     Atomics: 'readonly',

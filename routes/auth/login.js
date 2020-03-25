@@ -6,7 +6,7 @@ const logger = require(`${appRoot}/helpers/winstonLogger`)
 
 // /* GET loader page. */
 router.get('/', (req, res, next) => {
-  res.render('auth/login', { title: 'Express' })
+  res.render('auth/login')
 })
 
 router.post('/', (req, res, next) => {

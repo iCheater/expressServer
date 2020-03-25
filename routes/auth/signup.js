@@ -3,7 +3,6 @@ const router = express.Router()
 const { User } = require('../../models')
 
 router.get('/', (req, res, next) => {
-  console.log('signup get')
   res.render('auth/signup')
 })
 
