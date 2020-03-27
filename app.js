@@ -16,6 +16,7 @@ const nunjucks = require('nunjucks')
 // const winston = require('winston')
 const logger = require('./helpers/winstonLogger')
 const morgan = require('./helpers/morganHTTPLogger')
+const passport = require('./middleware/passport/passport')
 
 app.use(morgan({ stream: logger.stream }))
 
@@ -80,6 +81,8 @@ if (app.get('env') === 'production') {
 }
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session)
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.disable('x-powered-by')
 app.use('/', router)

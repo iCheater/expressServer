@@ -4,7 +4,6 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const products = await Product.findAll()
     const orders = await Order.findAll()
-    console.log('orders', orders)
 
     const orderItems = []
     const maxProductsPerItem = 20
@@ -25,8 +24,6 @@ module.exports = {
       obj.subTotal = obj.quantity * product.sellingPrice
       orderItems.push(obj)
     }
-    console.log(orderItems)
-
     return queryInterface.bulkInsert('OrderItems', orderItems, {})
   },
 
