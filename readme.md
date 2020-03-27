@@ -1,9 +1,27 @@
-The goal of this project is to create an online store using a modern technological stack.
-We use express, sequelize, redis, nunjucks.
-Soon administration panel will be migrated to vue.
-We adhere to the JSON.API standard.
+We learn how to make an online store.
+During creation, we encountered a problem:
+Github is full of “helloworld” level tutorials, there are no examples of PRODUCTION READY, a well-designed application on which you can understand how to make your application better.
+We want to make an application using the current best practices and share it with community. 
+We will accept any help with joy.
+
+We use trello as task tool (right now it has tasks only on Russian but we can start using english only)
+##### Current technological stack:
+- [x] express
+- [x] sequelize
+- [x] redis
+- [x] nunjucks
+##### Roadmap:
+###### Phase 1
+- [x] Fully working MVP of store
+
+###### Phase 2
+- [ ] split project into "frontend server and api server"
+- [ ] split "frontend server" and "administration section"(CRM\CMS) and rewrite it with vue.js
 
 
+We adhere to the JSON.API standard, but, you know...
+
+## How to run:
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
 
 example:
