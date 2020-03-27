@@ -268,7 +268,8 @@
     flex-direction: column
     .info-title
       width: 100%
-      display: block
+      display: flex
+      align-items: flex-start
     img
       width: 20px
       margin-right: 10px
@@ -284,6 +285,7 @@
       display: flex
       flex-direction: row
       justify-content: flex-start
+      align-items: flex-start
       img
         width: 25px
         margin-right: 10px
@@ -310,24 +312,62 @@
       border: none
       color: #ffffff
 
-.order-content
+.order__content
   box-shadow: 0 2px 10px 0 rgba(0,0,0,.12)
-  width: 350px
-  //display: flex
-  //flex-direction: column
-  .order_content-row
+  width: 100%
+  border-radius: 20px
+  display: flex
+  flex-direction: column
+  padding: 20px
+  .info__shipping-address
+    padding-left: 0
+  .order__content-row
     display: flex
     justify-content: space-between
     align-items: center
-    .row-item
-      width: 33.33333%
+
+
+.row-item
+  margin: 5px
+  display: flex
+  align-items: center
+  img
+    margin-right: 5px
 
 
 
+.content__main
+  padding: 20px
+  .content__main-item
+    padding-bottom: 20px
+    border-bottom: 1px solid #f2f3f5
+    display: grid
+    grid-column-gap: 5px
+    grid-template-columns: 1fr 6fr 1fr 2fr
+    grid-template-areas: "a b c d"
+    opacity: 0.7
+  .content__main-item:last-child
+    border-bottom: none
+    .item-img
+      grid-area: a
+    .item-main
+      grid-area: b
+    .item-qty
+      grid-area: c
+    .item-rowTotal
+      grid-area: d
+      display: flex
+      flex-direction: column
+      justify-content: flex-end
+      .item-price
+        color: #c5c5c5
+  .content__main-footer
+    display: flex
+    justify-content: space-between
+    margin-top: 20px
 
-
-
-
+.rub::after
+  content: ' ₽'
 
 
 
