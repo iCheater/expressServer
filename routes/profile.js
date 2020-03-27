@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const { User } = require('./../models')
-const sessionChecker = require('./../middleware/sessionChecker')
+const isLoggedIn = require('../middleware/isLoggedIn')
 
-router.use(sessionChecker)
+router.use(isLoggedIn)
 
 router.get('/', (req, res) => {
-  User.findByPk(req.session.user.id).then((user) => {
+  console.log(req.session)
+  User.findByPk(req.session.passport.user.id).then((user) => {
     res.render('profile/profile', {
       user: user,
     })

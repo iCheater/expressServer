@@ -9,9 +9,9 @@ const usersRouter = require('./users')
 const ordersRouter = require('./orders')
 const tagsRouter = require('./tags')
 
-const sessionChecker = require('../../middleware/sessionChecker')
+const isLoggedIn = require('../../middleware/isLoggedIn')
 
-router.use(sessionChecker)
+router.use(isLoggedIn)
 
 router.use('/', adminRouter)
 router.use('/categories/', categoriesRouter)

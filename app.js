@@ -74,9 +74,6 @@ const session = expressSession({
     expires: 24 * 60 * 60 * 1000,
   },
 })
-app.use(passport.initialize())
-app.use(passport.session())
-
 
 if (app.get('env') === 'production') {
   // app.set('trust proxy', 1) // trust first proxy
@@ -84,6 +81,8 @@ if (app.get('env') === 'production') {
 }
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session)
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.disable('x-powered-by')
 app.use('/', router)
