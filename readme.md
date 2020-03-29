@@ -1,3 +1,6 @@
+##### What is this:
+This is e-commerce project (online store)
+
 We learn how to make an online store.
 During creation, we encountered a problem:
 Github is full of “helloworld” level tutorials, there are no examples of PRODUCTION READY, a well-designed application on which you can understand how to make your application better.
@@ -17,9 +20,16 @@ We use trello as task tool (right now it has tasks only on Russian but we can st
 ###### Phase 2
 - [ ] split project into "frontend server and api server"
 - [ ] split "frontend server" and "administration section"(CRM\CMS) and rewrite it with vue.js
-
+###### Phase 3
+- [ ] add vue and SSR to frontend server
+- [ ] performance optimizations
 
 We adhere to the JSON.API standard, but, you know...
+
+##### Current features:
+- [x] session based cart, cart calculator
+- [x] mailing for new users, order and so on
+- [x] multi auth with passport.js
 
 ## How to run:
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
@@ -110,7 +120,11 @@ foo@bar:~$ npm run seed
 ```
 
 ___
+
+### Things to discuss:
+maybe switch sequelize to objection.js
 ### Usefull
+
 
 ###### G++
 ```console

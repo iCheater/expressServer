@@ -17,7 +17,7 @@ const local = new LocalStrategy(
       .then(async (user) => {
         if (!user) { return done(null, false) }
         if (!await user.validPassword(password)) { return done(null, false) }
-        req.session.user = user.dataValues
+        // req.session.user = user.dataValues
         return done(null, user)
       })
       .catch(err => {

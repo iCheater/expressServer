@@ -1,6 +1,6 @@
 const YandexStrategy = require('passport-yandex').Strategy
 const appRoot = require('app-root-path')
-const { User, Address, SocialAuth, sequelize } = require(`${appRoot}/models`)
+const { User, SocialAuth, sequelize } = require(`${appRoot}/models`)
 const config = require(`${appRoot}/config/passport`).yandex
 
 const yandexStrategy = new YandexStrategy({
@@ -35,7 +35,7 @@ async (accessToken, refreshToken, profile, done) => {
         username: profile.username,
       }, { transaction: t })
 
-      // why?
+      // why it is not working?
       // Executing (5f08461e-56d7-4199-9563-1643ad8a2d7c): INSERT INTO "users" ("id","username","email","verified","avatar_url","created_at","updated_at") VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING *;
       // Executing (5f08461e-56d7-4199-9563-1643ad8a2d7c): UPDATE "socialAuth" SET "user_id"=$1,"updatedAt"=$2 WHERE "id" IN ('[object Object]')
       // Executing (18cc5b71-21dc-47b2-911e-4c14d4496b45): ROLLBACK;

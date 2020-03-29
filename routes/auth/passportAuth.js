@@ -12,18 +12,39 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/login',
 }))
 
-router.get('/yandex', passport.authenticate('yandex'), (req, res) => {
-  // The request will be redirected to Yandex for authentication, so
-  // this function will not be called.
-})
-router.get('/yandex/callback', passport.authenticate('yandex', { failureRedirect: '/auth/login' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('/')
-  })
+router.get('/yandex', passport.authenticate('yandex'))
+router.get('/yandex/callback', passport.authenticate('yandex', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
+
+router.get('/vkontakte', passport.authenticate('vkontakte'))
+router.get('/vkontakte/callback', passport.authenticate('vkontakte', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
+
+router.get('/facebook', passport.authenticate('facebook'))
+router.get('/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
+
+router.get('/odnoklassniki', passport.authenticate('odnoklassniki'))
+router.get('/odnoklassniki/callback', passport.authenticate('odnoklassniki', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
+
+router.get('/google', passport.authenticate('google'))
+router.get('/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
 
 router.get('/logout', (req, res) => {
   req.session.destroy((err) => {
+    console.error(err)
     res.redirect('/')
   })
 })

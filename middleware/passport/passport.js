@@ -1,8 +1,13 @@
 const passport = require('passport')
-const localLogin = require('./local-login')
+const localLogin = require('./strategies/local-login')
 const yandex = require('./strategies/yandex')
-const appRoot = require('app-root-path')
-const { User, Address, SocialAuth } = require(`${appRoot}/models`)
+const twitter = require('./strategies/twitter')
+const vkontakte = require('./strategies/vkontakte')
+const facebook = require('./strategies/facebook')
+const odnoklassniki = require('./strategies/odnoklassniki')
+const google = require('./strategies/google')
+// const appRoot = require('app-root-path')
+// const { User, Address, SocialAuth } = require(`${appRoot}/models`)
 
 // criticaly usefull
 // https://stackoverflow.com/questions/45381931/basics-of-passport-session-expressjs-why-do-we-need-to-serialize-and-deseriali
@@ -40,5 +45,10 @@ passport.deserializeUser((user, done) => {
 
 passport.use(localLogin)
 passport.use(yandex)
+passport.use(twitter)
+passport.use(vkontakte)
+passport.use(facebook)
+passport.use(odnoklassniki)
+passport.use(google)
 
 module.exports = passport
