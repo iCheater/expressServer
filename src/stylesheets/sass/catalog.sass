@@ -1,14 +1,12 @@
 //catalog for client side
 
-
-
 .catalog
   display: flex
-  //justify-content: space-between
+  margin-bottom: 30px
+
   &__category
     min-width: 200px
     margin-right: 10px
-    //background-color: rgba(0, 168, 255, 0.22)
     span
       font-weight: 600
     ul
@@ -23,34 +21,72 @@
       margin-top: 20px
       padding: 0
       display: block
+    .category-list
+      border-bottom: 1px solid #e6e6e6
+      .list-row
+        color: #3757c5
+        cursor: pointer
+      &:last-child
+        color: #202020
+
     .empty
       display: block
       height: 40px
-      border-bottom: 1px solid rgba(128, 128, 128, 0.37)
+      border-bottom: 1px solid #e6e6e6
 
 .catalog__bar
   padding: 0 0 10px
   width: 940px
-  //background-color: rgba(255, 119, 144, 0.22)
   display: flex
   justify-content: flex-start
   flex-wrap: wrap
-  margin: 0 auto
+  margin: 0 auto 50px
   h2
     margin: 0 0 10px 0
     width: 100%
+  .popular__section
+    margin: 0 0 10px 0
+    padding: 30px 40px
+    width: 100%
+    background-color: #f2f3f5
+    border-radius: 10px
+    display: flex
+    .popular__section-item
+      width: 300px
+      padding: 5px
+      margin-right: 10px
+      display: flex
+      justify-content: space-between
+      align-items: center
+      border: 1px solid #FF8400
+      font-size: 14px
+      &:last-child
+        margin-right: 0
+      .item-info
+        height: 100%
+        display: flex
+        justify-content: space-around
+        flex-direction: column
+        .info-title
+          color:  #FF8400
+          margin-bottom: 5px
+        //.info-price
+        //  margin-bottom: 40px
+
 
 .catalog__item
-  border: 1px solid rgba(0, 0, 0, 0.24)
-  padding: 10px 5px 0
-  //width: 33.3%
-  width: 33.3%
+  padding: 20px
+  width: 33.33333%
+  box-shadow: -1px 0 0 0 #e6e6e6 inset, 0 -1px 0 0 #e6e6e6 inset, -1px -1px 0 0 #e6e6e6, -1px 0 0 0 #e6e6e6, 0 -1px 0 0 #e6e6e6
+  position: relative
+
+
   .item__img
     display: flex
     justify-content: space-between
     img
       margin: auto
-      height: 220px
+      width: 100%
   .item__name
     font-size: 16px
     margin: 5px 0
@@ -58,8 +94,10 @@
     text-align: center
   .item__price-container
     display: inline-flex
-    justify-content: space-evenly
+    justify-content: space-between
     align-items: center
+    width: 100%
+    height: 55px
   .item__to-basket
     background-color: #005bf8
     padding: 12px 25px
@@ -71,7 +109,7 @@
     display: flex
     justify-content: center
     &:hover
-      background-color: rgba(205, 15, 0, 0.82)
+      background-color: #f91155
   .item__other-info
     color: gray
     padding: 10px 40px
@@ -79,16 +117,12 @@
       margin: 0 0 5px
       text-align: left
 
-
-
 .item__price
-  color: #b11a41
+  color: #f91155
   font-weight: 600
-  font-size: 18px
-
+  font-size: 16px
   .price
     display: block
-
 
 //Category page
 .category__container
@@ -98,7 +132,7 @@
   justify-content: flex-start
   flex-wrap: wrap
   margin: 0
-  border: 1px solid rgba(128, 128, 128, 0.37)
+  box-shadow: -1px 0 0 0 #e6e6e6 inset, 0 -1px 0 0 #e6e6e6 inset, -1px -1px 0 0 #e6e6e6, -1px 0 0 0 #e6e6e6, 0 -1px 0 0 #e6e6e6
 .title__side-left
   width: 100%
   margin: 10px 0 10px 20px
@@ -107,7 +141,6 @@
   margin: 5px
   a
     color: #404040
-
   a:hover
     color: #555555
 
@@ -125,16 +158,17 @@
   .popular__price-container
     font-size: 14px
     line-height: 30px
-    .btn__to-basket
-      background-color: #005bf8
-      padding: 8px 15px
-      color: #fff
-      border-radius: 5px
-      cursor: pointer
-      &:hover
-        background-color: rgba(205, 15, 0, 0.82)
   .item__info-name
     padding: 5px 0
+
+.btn__to-basket
+  background-color: #005bf8
+  padding: 8px 15px
+  color: #fff
+  border-radius: 5px
+  cursor: pointer
+  &:hover
+    background-color: #f91155
 
 
 // page item
@@ -144,7 +178,7 @@
     img
       width: 40vw
   &-info
-    width: 48%
+    width: 40%
     margin-left: 30px
     color: #555555
     a
@@ -173,7 +207,6 @@
       margin-right: 20px
       text-align: center
 
-
 .block__shipping
   margin-top: 100px
   color: #555555
@@ -183,13 +216,15 @@
 
 #btn_cart
   background-color: #005bf8
-  padding: 8px 15px
+  padding: 15px 15px
   color: #fff
   border-radius: 5px
   margin-right: 20px
   cursor: pointer
+  width: 150px
+  text-align: center
   &:hover
-    background-color: rgba(205, 15, 0, 0.82)
+    background-color: #f91155
 
 .item__contain-descr
   margin-top: 20px
@@ -198,19 +233,22 @@
   h4
     margin: 0 0 10px
 
-
-//
+.section-other
+  h4
+    width: 100%
+    margin: 30px 0 10px
+    display: block
 .product_other
-  width: 100%
+  //width: 100%
   display: flex
-  justify-content: space-between
+  //justify-content: flex-start
   margin-bottom: 30px
   padding: 5px
   .other__item
     padding: 5px
-    width: 11vw
+    width: 150px
     height: 250px
-    background-color: rgba(12, 84, 96, 0.48)
+    border: 1px solid rgba(12, 84, 96, 0.48)
     margin: 0 10px
     .other__item-img
       img
@@ -221,7 +259,7 @@
       font-size: 14px
       .btn__to-basket
         display: block
-        margin-top: 30px
+        margin-top: 20px
         background-color: #005bf8
         padding: 8px 15px
         color: #fff
@@ -229,10 +267,58 @@
         text-align: center
         cursor: pointer
         &:hover
-          background-color: rgba(205, 15, 0, 0.82)
+          background-color: #f91155
 
 
 .input-img
   width: 25px
 
+.filter-col
+  padding-top: 20px
+  legend
+    font-weight: 700
+    //margin-bottom: 10px
+    padding: 10px 0
+  fieldset
+    border: none
+    padding: 0
+    .filter-row
+      display: inline-flex
+
+      margin: 10px 0 20px
+      .input-field
+        width: 90px
+        display: block
+        margin-right: 10px
+
+.checkbox-col
+  padding-top: 0
+  .checkbox-row
+    display: flex
+    align-items: center
+
+.btn-open
+  background: none
+  border: none
+  color: #005bf8
+  font-size: 14px
+  padding-left: 0
+  cursor: pointer
+  outline: none
+  &:hover
+    color: #f91155
+
+.icon-favorite
+  width: 30px
+  position: absolute
+  top: 20px
+  right: 20px
+  cursor: pointer
+  path
+    fill: transparent
+    stroke-width: 10
+    stroke: #ffffff
+    &:hover
+      fill: #f91155
+      stroke: #f91155
 

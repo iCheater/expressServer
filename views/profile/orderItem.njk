@@ -1,0 +1,131 @@
+{% extends "./layout.njk" %}
+
+
+{% block main_profile %}
+    <div class="order-details">
+        <a class="orders-return" href="/history/">
+            К списку заказов
+        </a>
+        <div class="order-info">
+
+            <div class="item-block">
+                <h2 class="item-title">
+                    Заказ от {дата}
+                </h2>
+                <span class="item-number">{номер заказа}</span>
+            </div>
+            <div class="item-block">
+                <div class="day-shipping row-item">
+                    <img src="/images/watch.svg">
+                    Дата доставки: {дата}
+                </div>
+                <div class="status-shipping">
+                    {отменено, получено, доставка}
+                </div>
+            </div>
+        </div>
+        <div class="info__shipping-address">
+            <h3 class="info-title">
+                <img src="/images/marker.svg">
+                Доставка на адрес
+            </h3>
+            <div class="shipping-address">
+                Москва, бульвар Матроса Железняка, 23, кв. 39, эт. 4, под. 2, код домофона 39
+            </div>
+        </div>
+
+        <div class="order_payment-box">
+            <div class="box-header">
+                <img src="/images/pay.svg">
+                <div>
+                    <h3>Сумма <span>{price}</span></h3>
+                    <span class="way__pay">{Картой онлайн/Наличными}</span>
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="content-row">
+                    <div class="row-title">
+                        Товары
+                    </div>
+                    <div class="row-total">
+                        {total}
+                    </div>
+                </div>
+                <div class="content-row">
+                    <div class="row-title">
+                        Доставка
+                    </div>
+                    <div class="row-total">
+                        {Доставка}
+                    </div>
+                </div>
+                <div class="content-row">
+                    <h3 class="row-title">
+                        Итого
+                    </h3>
+                    <h3 class="row-total">
+                        {Итого}
+                    </h3>
+                </div>
+
+            </div>
+        </div>
+        <button class="btn btn-repeat">
+            Повторить заказ
+        </button>
+
+        <div class="order__content">
+            <div class="order__content-row">
+                <h3 class="row-title">
+                    Заказ {номер заказа}
+                </h3>
+                <div class="row-item status-shipping">
+                    {отменено, получено, доставка}
+                </div>
+                <div class="row-item day-shipping">
+                    <img src="/images/watch.svg">
+                    Дата доставки: {дата}
+                </div>
+            </div>
+            <div class="info__shipping-address">
+                <h3 class="info-title">
+                    <img src="/images/marker.svg">
+                    Доставка на адрес
+                </h3>
+                <div class="shipping-address">
+                    Москва, бульвар Матроса Железняка, 23к1, кв. 39, эт. 4, под. 2, код домофона 39
+                </div>
+            </div>
+            <div class="content__main">
+                <div class="content__main-item">
+                    <div class="item-img">
+                        <img src="https://placehold.it/80x80">
+                    </div>
+                    <div class="item-main">
+                        {Название товара}
+                    </div>
+                    <div class="item-qty">
+                        {Кол-во}
+                    </div>
+                    <div class="item-rowTotal">
+                        <span class="rub" id="rowTotal">{Цена * кол-во}</span>
+                        <span class="item-price rub">{Цена}</span>
+                    </div>
+                </div>
+
+                <div class="content__main-footer">
+                    <div class="sum-qty">
+                        {Всего товаров в заказе}
+                    </div>
+                    <h4 class="sum-total rub">
+                        {Итого всего заказа}
+                    </h4>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+{% endblock %}

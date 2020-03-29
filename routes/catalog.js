@@ -57,7 +57,7 @@ router.get('/item/:idItem', (req, res, next) => {
       )
         .then(test => { console.log(test) })
       Product.findAll({
-        limit: 10,
+        limit: 7,
         where: {
           category_id: product.category_id,
         },

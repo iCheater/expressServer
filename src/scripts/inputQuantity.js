@@ -47,7 +47,7 @@ function productQantityRequest (data) {
   xhr.send(JSON.stringify(data))
 }
 function updateCartQuantity (cartLength) {
-  const cartLengthEl = document.getElementById('cartLength')
+  const cartLengthEl = document.getElementsByClassName('cartLength')
   console.log(cartLength)
   cartLengthEl.innerHTML = cartLength
 }

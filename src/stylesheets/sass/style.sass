@@ -3,8 +3,6 @@
 //@import "fonts"
 @import "global"
 
-//body
-//  background-color: black
 .header
   background-color: #f8f8f8
   .header__inner
@@ -12,15 +10,6 @@
     justify-content: space-between
     align-items: center
     height: 87px
-
-.main
-  position: absolute
-  bottom: 0
-  top: 0
-  right: 0
-  left: 0
-  min-height: 1200px
-
 
 .btn__menu
   width: 40px
@@ -32,6 +21,7 @@
 
 .logo
   display: flex
+  align-items: center
   //justify-content: center
   span
     display: inline-block
@@ -56,7 +46,7 @@
 
 
 #menu__sticky
-  padding: 20px 0
+  padding: 10px 0
   max-width: 100%
   align-items: center
   position: fixed
@@ -66,15 +56,38 @@
   background-color: #f8f8f8
   box-shadow: 0 3px 10px rgba(0,0,0, .2)
   display: none
-  .nav__link
-    list-style: none
-    color: #2f3f54
+  z-index: 10
+  .logo__text
+    font-size: 25px
+  .nav__wrapper
+    display: flex
+    flex-wrap: nowrap
+    align-items: center
+    margin-bottom: 5px
+    svg
+      width: 20px
+      path
+        fill: #333333
+    .cartLength
+      display: block
+      width: auto
+      height: 20px
+      background-color: #005bf8
+      border-radius: 50%
+      padding: 4px 7px
+      margin-right: 5px
+      font-size: 12px
+      color: #ffffff
+    .nav__link
+      list-style: none
+      color: #2f3f54
+      margin-left: 10px
   .short_order
     display: flex
     flex-direction: column
     .short_order-link
       text-decoration: underline
-      color: #a83930
+      color: #f91155
 
 .sticky
   display: flex
@@ -107,16 +120,13 @@
 
 //content home page
 .footer
-  padding-top: 45px
+  padding-top: 20px
   background-color: #f8f8f8
   font-size: 13px
-
+  display: block
   width: 100%
-  height: 150px
-  //position: absolute
-  //bottom: 0
-  //right: 0
-  //left: 0
+  height: 120px
+
 
   &__inner
     padding-bottom: 30px
@@ -306,10 +316,6 @@
 #sumTotal:after
   content: " ₽"
 
-//#sumTotal:before
-//  content: "Итого: "
-
-
 .services
   .services__inner
     display: flex
@@ -351,38 +357,38 @@
 
 
 //slider
-
 .slider
   display: flex
   justify-content: center
   margin: 0 auto
-  .slider__items
-    width: 100%
-    position: relative
-    .slider__title
+  .slider__wrapper
+    margin-top: 20px
+    .slider__items
       width: 100%
-      height: 150px
-      position: absolute
-      top: 30%
-      color: #fff
-      text-align: center
-      h1
-        margin-bottom: 50px
-        font-size: 40px
-      .slider__btn
-        background-color: rgb(0, 144, 0)
-        padding: 10px 50px
-        border-radius: 5px
+      position: relative
+      .slider__title
+        width: 100%
+        height: 150px
+        position: absolute
+        top: 30%
         color: #fff
-        font-weight: 600
-
-
-      margin: auto
-    .slider_img
-      //background-image: url("images/slider-bg.jpg")
-      //background-repeat: no-repeat
-      //width: 100%
-      //height: 100px
+        text-align: center
+        h1
+          margin-bottom: 50px
+          font-size: 40px
+        .slider__btn
+          background-color: rgb(0, 144, 0)
+          padding: 10px 50px
+          border-radius: 5px
+          color: #fff
+          font-weight: 600
+          margin: auto
+    //.slider_img
+    //  img
+    //    width: 100%
+    //  background-image: url("images/slider-bg.jpg")
+    //  background-repeat: no-repeat
+    //  height: 100px
 
 //preview__pages
 .preview__pages

@@ -1,0 +1,114 @@
+{% extends "layout.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/login&signup.min.css">
+{% endblock %}
+buihuibhkbuhiiu
+{% block content %}
+    <div class="login">
+        <div class="container">
+            <form class="form-check width-v2" action="/login" method="post">
+                <h2 class="form-title">Вход или регистрация </h2>
+                <div class="form-main">
+                    <div class="form-sidebar">
+                        <ul class="sidebar_list">
+                            <li class="sidebar_list-row">
+                                <a id="social-auth" href="#">
+                                    Социальные сети
+                                </a>
+                            </li>
+                            <li class="sidebar_list-row">
+                                <a id="phone-auth" href="#">
+                                    Телефон
+                                </a>
+                            </li>
+                            <li class="sidebar_list-row">
+                                <a id="mail-auth" href="#">
+                                    Почта
+                                </a>
+                            </li>
+                            <li class="sidebar_list-row">
+                                <a id="fast-auth" href="#">
+                                    Быстрая регистрация
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="form-content">
+                         {# Social#}
+                        <div class="form-content_social">
+                            <div class="social-row">
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-google.svg">
+                                </a>
+
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-vk.svg">
+                                </a>
+
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-fb.svg">
+                                </a>
+                            </div>
+
+                            <div class="social-row">
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-tw.svg">
+                                </a>
+
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-odnoklassniki.svg">
+                                </a>
+                                <a class="social__item" href="#">
+                                    <img src="/images/social/icon-ya.svg">
+                                </a>
+                            </div>
+                        </div>
+
+
+                        {# Phone#}
+                        <div class="form-content_phone">
+                            <input class="input-field phone" type="text" name="phone" placeholder="+ 7 "/>
+
+                            <a class="btn btn-auth">
+                                Получить код
+                            </a>
+                        </div>
+
+                        {# Email#}
+                        <div class="form-content_email">
+                            <input class="input-field email" type="text" name="email" placeholder="Почта"/>
+                            <input class="input-field password" type="password" name="password" placeholder="Пароль"/>
+                            <a class="btn btn-auth">
+                                Зарегистрироваться
+                            </a>
+                        </div>
+
+                        {# Fast-auth#}
+                        <div class="form-content_fast-auth">
+                            <div class="auth-text">
+                                <h3>
+                                    Добро пожаловать!
+                                </h3>
+                                <p>
+                                    Вы находитесь во вкладке быстрой регистрации.
+                                </p>
+                                <p>В случае регистрации логин и пароль от учетной
+                                    <br> записи
+                                    Вы сможете найти в Личном кабинете.</p>
+                            </div>
+                            <a class="btn btn-auth">
+                                Зарегистрироваться
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

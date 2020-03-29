@@ -1,37 +1,44 @@
 .login
-  height: 1000px
+  max-height: 900px
+  min-height: 700px
+  height: 100%
   position: relative
 
   .form-title
     text-align: center
     margin-bottom: 25px
-
+  .width-v1
+    min-width: 35%
+  .width-v2
+    min-width: 55%
   .form-check
     background-color: #fff
     box-shadow: 0 0 30px rgba(0,0,0,0.2)
-
     padding: 40px
-    width: 35%
-
     display: block
     position: absolute
     top: 50%
     left: 50%
     margin-right: -50%
     transform: translate(-50%, -50%)
-    .form__row
+    .links-form
       display: flex
       justify-content: space-between
-      align-items: center
+
+    .form__row
+      display: flex
+      flex-direction: column
+      justify-content: flex-start
       width: 100%
-      margin-bottom: 20px
+      margin: 20px 0
       label
         font-size: 20px
         font-weight: 700
+        margin: 0
 
       .input-field
         padding: 15px 10px
-        width: 70%
+        width: 100%
         font-size: 14px
         -webkit-appearance: none
         -moz-appearance: none
@@ -48,7 +55,6 @@
 
     .form-link
       display: block
-      margin-top: 20px
       color: #005bff
 
 .btn-primary
@@ -58,4 +64,154 @@
   border: none
   font-size: 18px
   color: #fff
+
+
+.auth-form_social
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding-bottom: 30px
+  border-bottom: 1px solid #f2f3f5
+
+  position: relative
+  .auth-separator
+    position: absolute
+    bottom: -10px
+    right: 50%
+    display: block
+    padding: 0 2px
+    background-color: #ffffff
+    color: #c5c5c5
+
+  .social__item
+    padding: 10px
+    border: 1px solid #f2f3f5
+    border-radius: 10px
+    display: flex
+    align-items: center
+    img
+      width: 30px
+      height: 30px
+    &:hover
+      box-shadow: 0 2px 10px 0 rgba(0,0,0,.12)
+      background-color: #f2f3f5
+
+
+
+//Version 2
+.form-main
+  display: flex
+  justify-content: flex-start
+  .form-sidebar
+    padding: 10px
+    width: 35%
+    .sidebar_list
+      .sidebar_list-row
+        margin-bottom: 20px
+        background-color: #c5c5c5
+        padding: 15px 10px
+        text-align: center
+        cursor: pointer
+        &:hover
+          background-color: #005bff
+        a
+          color: #ffffff
+          font-weight: 700
+
+
+  .form-content
+    width: 65%
+    //padding: 10px
+    border: 1px solid #f2f3f5
+    position: relative
+
+    .form-content_social
+      display: none
+      //display: flex
+      justify-content: center
+      flex-direction: column
+      padding: 30px
+      .social-row
+        display: flex
+        justify-content: center
+        align-items: center
+        .social__item
+          padding: 10px
+          margin: 10px
+          border: 1px solid #f2f3f5
+          border-radius: 10px
+          display: flex
+          align-items: center
+          img
+            width: 50px
+            height: 50px
+          &:hover
+            box-shadow: 0 2px 10px 0 rgba(0,0,0,.12)
+            background-color: #f2f3f5
+    .form-content_phone
+      width: 100%
+      height: 100%
+      padding: 40px
+      display: none
+      //display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+
+      .phone
+        padding: 15px
+        width: 100%
+        border: 1px solid #cccccc
+
+      input[name="phone"]
+        font-size: 18px
+
+    .btn-auth
+      display: block
+      background-color: #c5c5c5
+      width: 100%
+      color: #ffffff
+      //margin: 10px
+      padding: 15px
+      text-align: center
+      cursor: pointer
+      &:hover
+        background-color: #005bff
+
+    .form-content_email
+      width: 100%
+      height: 100%
+      padding: 40px
+      display: none
+      //display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      .email,
+      .password
+        padding: 15px
+        margin-bottom: 15px
+        width: 100%
+        border: 1px solid #cccccc
+
+      input[name="email"],
+      input[name="password"]
+        font-size: 18px
+
+
+    .form-content_fast-auth
+      width: 100%
+      height: 100%
+      padding: 35px
+      //display: none
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      .auth-text
+        margin-bottom: 15px
+        width: 100%
+        p
+          margin: 10px 0
+          font-size: 14px
 

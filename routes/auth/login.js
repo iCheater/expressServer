@@ -6,14 +6,14 @@ const logger = require(`${appRoot}/helpers/winstonLogger`)
 
 // /* GET loader page. */
 router.get('/', (req, res, next) => {
-  res.render('auth/login')
+  res.render('auth/loginV2')
 })
 
 router.post('/', (req, res, next) => {
   const { username, password } = req.body
   if (!username || !password) {
     logger.verbose({ private: true, message: `Req.body contains: username:[${username}] and password: [${password}]` })
-    return res.redirect(400, '/login')
+    return res.redirect(400, '/loginV2')
   }
   logger.verbose(`Login request with: [${username}] and password [${password}]`)
 
@@ -25,11 +25,11 @@ router.post('/', (req, res, next) => {
       if (!user) {
         logger.verbose(`Username [${username}] not found`)
         res.status(400)
-        res.redirect('/login')
+        res.redirect('/loginV2')
       } else if (!await user.validPassword(password)) {
         logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]` })
         res.status(400)
-        res.redirect('/login')
+        res.redirect('/loginV2')
       } else {
         logger.verbose('Login and password are valid')
         console.log('login ok. user')

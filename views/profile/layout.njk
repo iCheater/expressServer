@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-    <a href="/resetpassword/reset" type="button" >reset password</a>
+{#    <a href="/resetpassword/reset" type="button" >reset password</a>#}
 
     <div class="container">
         <div class="profile-wrapper">
@@ -17,8 +17,9 @@
                     <li><a href="/profile/">Профиль</a></li>
                 </ul>
             </div>
-
-            {% block sidebar %}{% endblock %}
+            {% block sidebar %}
+                {% include "./sidebar.njk" %}
+            {% endblock sidebar %}
 
             <div class="main-panel">
                 {% block main_profile %}{% endblock %}
