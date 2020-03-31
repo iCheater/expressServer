@@ -3,7 +3,11 @@
 {% block stylesheet %}
     <link rel="stylesheet" href="/css/login&signup.min.css">
 {% endblock %}
-buihuibhkbuhiiu
+
+{% block preScript %}
+    <script src="scripts/login.js"></script>
+{% endblock %}
+
 {% block content %}
     <div class="login">
         <div class="container">
@@ -11,33 +15,28 @@ buihuibhkbuhiiu
                 <h2 class="form-title">Вход или регистрация </h2>
                 <div class="form-main">
                     <div class="form-sidebar">
-                        <ul class="sidebar_list">
-                            <li class="sidebar_list-row">
-                                <a id="social-auth" href="#">
-                                    Социальные сети
-                                </a>
-                            </li>
-                            <li class="sidebar_list-row">
-                                <a id="phone-auth" href="#">
-                                    Телефон
-                                </a>
-                            </li>
-                            <li class="sidebar_list-row">
-                                <a id="mail-auth" href="#">
-                                    Почта
-                                </a>
-                            </li>
-                            <li class="sidebar_list-row">
-                                <a id="fast-auth" href="#">
-                                    Быстрая регистрация
-                                </a>
-                            </li>
-                        </ul>
+
+                        <a class="sidebar_list-row row-active" id="social-auth" href="#" data-content-id="form-content_social">
+                            Социальные сети
+                        </a>
+
+                        <a class="sidebar_list-row" id="phone-auth" href="#" data-content-id="form-content_phone">
+                            Телефон
+                        </a>
+
+                        <a class="sidebar_list-row" id="mail-auth" href="#" data-content-id="form-content_email">
+                            Почта
+                        </a>
+
+                        <a class="sidebar_list-row" id="fast-auth" href="#" data-content-id="form-content_fast-auth">
+                            Быстрая регистрация
+                        </a>
+
                     </div>
 
-                    <div class="form-content">
-                         {# Social#}
-                        <div class="form-content_social">
+                    <div class="form-content" id="form-content">
+                        {# Social#}
+                        <div class="form-content_social customForm active-content" id="form-content_social">
                             <div class="social-row">
                                 <a class="social__item" href="#">
                                     <img src="/images/social/icon-google.svg">
@@ -68,7 +67,7 @@ buihuibhkbuhiiu
 
 
                         {# Phone#}
-                        <div class="form-content_phone">
+                        <div class="form-content_phone  customForm inactive-content" id="form-content_phone">
                             <input class="input-field phone" type="text" name="phone" placeholder="+ 7 "/>
 
                             <a class="btn btn-auth">
@@ -77,7 +76,7 @@ buihuibhkbuhiiu
                         </div>
 
                         {# Email#}
-                        <div class="form-content_email">
+                        <div class="form-content_email customForm inactive-content" id="form-content_email">
                             <input class="input-field email" type="text" name="email" placeholder="Почта"/>
                             <input class="input-field password" type="password" name="password" placeholder="Пароль"/>
                             <a class="btn btn-auth">
@@ -86,7 +85,7 @@ buihuibhkbuhiiu
                         </div>
 
                         {# Fast-auth#}
-                        <div class="form-content_fast-auth">
+                        <div class="form-content_fast-auth customForm inactive-content" id="form-content_fast-auth">
                             <div class="auth-text">
                                 <h3>
                                     Добро пожаловать!
