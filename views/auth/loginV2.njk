@@ -2,10 +2,14 @@
 
 {% block stylesheet %}
     <link rel="stylesheet" href="/css/login&signup.min.css">
+    {#    <link rel="stylesheet" href="/css/intlTelInput.min.css">#}
+    <link rel="stylesheet" href="/css/intlTelInput.css">
+
 {% endblock %}
 
 {% block preScript %}
     <script src="scripts/login.js"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -16,7 +20,8 @@
                 <div class="form-main">
                     <div class="form-sidebar">
 
-                        <a class="sidebar_list-row row-active" id="social-auth" href="#" data-content-id="form-content_social">
+                        <a class="sidebar_list-row row-active" id="social-auth" href="#"
+                           data-content-id="form-content_social">
                             Социальные сети
                         </a>
 
@@ -68,8 +73,14 @@
 
                         {# Phone#}
                         <div class="form-content_phone  customForm inactive-content" id="form-content_phone">
-                            <input class="input-field phone" type="text" name="phone" placeholder="+ 7 "/>
-
+                            <div class="input-row">
+                                <input class="input-field phone" id="phone" name="tel" type="tel" autocorrect="off" autocomplete="tel" placeholder="" value="+7" min="11" max="12" required oninput="checkInputTel()"/>
+                                <a class="btn-input" id="clear-input" onclick="cleanInput()">
+                                    <img id="remove" src="images/remove.svg">
+                                </a>
+                            </div>
+                            <p id="auth-error">Номер телефона введен некорректно, пример +79008007060</p>
+                            <p id="length-error">Номер телефона слишком длинный, пример +79008007060</p>
                             <a class="btn btn-auth">
                                 Получить код
                             </a>
@@ -77,8 +88,21 @@
 
                         {# Email#}
                         <div class="form-content_email customForm inactive-content" id="form-content_email">
-                            <input class="input-field email" type="text" name="email" placeholder="Почта"/>
-                            <input class="input-field password" type="password" name="password" placeholder="Пароль"/>
+                            <div class="input-row">
+                                <input class="input-field email" id="email" type="text" name="email"
+                                       placeholder="Почта" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"/>
+                                <a class="btn-input" id="clear-input" onclick="cleanInput()">
+                                    <img src="images/remove.svg">
+                                </a>
+                            </div>
+
+                            <div class="input-row">
+                                <input class="input-field password" id="password" type="password" name="password"
+                                       placeholder="Пароль"/>
+                                <a class="btn-input" id="show-input" onclick="changeInputType()">
+                                    <img class="show-img" src="images/show.svg">
+                                </a>
+                            </div>
                             <a class="btn btn-auth">
                                 Зарегистрироваться
                             </a>
@@ -110,4 +134,12 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block postScript %}
+    <script src="scripts/intlTelInput.js"></script>
+    <script>
+      var input = document.querySelector('#phone')
+      window.intlTelInput(input)
+    </script>
 {% endblock %}
