@@ -1,19 +1,22 @@
 .order
   background-color: rgba(223, 223, 223, 0.2)
+  height: 100%
 
 .order__wrapper
   display: flex
   justify-content: space-between
+  margin-bottom: 30px
 
 .content
   background-color: #ffffff
-  padding: 10px
+  padding: 15px 10px
   border-radius: 10px
 
 .details__order
   width: 55%
   .head-title
     padding-left: 10px
+    margin: 15px 0
   .title-1:before
     content: '1'
     width: 30px
@@ -88,13 +91,22 @@
   .way_shipping-title
     font-size: 18px
     font-weight: 700
+    margin: 0 0 10px
+    p
+      margin: 10px 0
+      padding: 5px 0 10px
+      border-bottom: 1px solid #c5c5c5
+      font-size: 14px
+      font-weight: 400
+      color: #939da3
+
   .shipping-descr
     color: #939da3
     font-size: 14px
-    p
-      margin: 10px 0
-    .adress_info
+    .address_info
       color: #000000
+      h3
+        margin-bottom: 10px
       .change-place
         margin: 10px 0
         cursor: pointer
@@ -119,6 +131,8 @@
       color: #1e1e1e
 
 .way__pay
+  h3
+    margin: 15px 0
   form
     display: flex
     justify-content: space-between
@@ -159,6 +173,8 @@
       color: #8dc23c
     .icon
       grid-area: c
+      align-self: center
+      justify-self: center
 
   .method-changed
     border: 2px solid #005bff
@@ -167,24 +183,25 @@
 
 .payment
   width: 40%
-  margin-top: 68px
-  padding: 25px
-  height: 450px
+  margin-top: 55px
+  padding: 35px 25px
+  height: 400px
   .payment__row
     display: flex
     justify-content: space-between
     align-items: center
+    margin-bottom: 20px
     .title
       h4
-        margin-bottom: 10px
+        margin-bottom: 8px
       .descr
         color: #939da3
         font-size: 14px
 
   .total-row
     font-weight: 700
-    margin: 24px 0 0
-    padding-top: 16px
+    margin: 25px 0 10px
+    padding: 20px 0
     border-top: 2px solid #2d3133
     font-size: 20px
     line-height: 28px
@@ -214,7 +231,7 @@
   font-weight: 700
   font-size: 16px
   border: none
-  margin: 5px auto
+  margin: 0 auto
   padding: 20px
   text-align: center
   &:hover

@@ -9,235 +9,244 @@
 {% endblock %}
 
 {% block content %}
+
     <div class="cart">
         <div class="container ">
             <h2 class="section-title">Корзина</h2>
-            <div class="cart__wrapper">
-                <section class="cart__inner">
-                    <div class="table">
-                        <div class="column-items">
-                            <div class="row__menu">
-                                <label class="form-check-label cart-action">
-                                    <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)"
-                                            {{ "checked" if selectAllStatus }}>
-                                    Выбрать все
-                                </label>
-                                <a class="cart-delete cart-action">Удалить выделенное</a>
 
-                            </div>
-                        </div>
-
-                        {% for product in productsOutOFStock %}
-                            <h3 class="cart-title">Нет в наличии</h3>
+            {% if cartLength > 0 %}
+                <div class="cart__wrapper">
+                    <section class="cart__inner">
+                        <div class="table">
                             <div class="column-items">
-                                <div class="row row_grid-outstock">
-                                    <div class="product-select" data-th="Product">
-                                        <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
-                                               onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
-                                    </div>
+                                <div class="row__menu">
+                                    <label class="form-check-label cart-action">
+                                        <input type="checkbox" class="form-check" onclick="switchAllCheckbox(this)"
+                                                {{ "checked" if selectAllStatus }}>
+                                        Выбрать все
+                                    </label>
+                                    <a class="cart-delete cart-action">Удалить выделенное</a>
 
-                                    <div class="product-img">
-                                        <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
-                                    </div>
-
-                                    <div class="product-main">
-                                        <div class="prod-desc">
-                                            <h4>{{ product.name }}</h4>
-                                            <p>Нет в наличии</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="actions" data-th="">
-                                        <button class="btn-favorite" data-id="{{ product.id }}">
-                                            <img src="images/favorite.png">
-                                        </button>
-                                        <button href="/cart/{{ product.id }}" data-method="DELETE"
-                                                class="btn deleteBtn" onclick="requestRemoveProduct(this)"
-                                                data-id="{{ product.id }}">
-                                            <img src="images/remove.svg">
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
-                        {% endfor %}
 
-                        <h3 class="cart-title">В наличии</h3>
-                        <div class="column-items">
-                            {% for product in productsWithAmount %}
-                                {#                        <div class="outOfStock">#}
-                                {#                            {% if product.stock == 0 %}#}
-                                {#                                {{ product.name }} не в наличии#}
-                                {#                            {% endif %}#}
-                                {#                        </div>#}
+                            {% for product in productsOutOFStock %}
+                                <h3 class="cart-title">Нет в наличии</h3>
+                                <div class="column-items">
+                                    <div class="row row_grid-outstock">
+                                        <div class="product-select" data-th="Product">
+                                            <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
+                                                   onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
+                                        </div>
 
-                                {#                        <div class="outOfStock">#}
-                                {#                            {% if product.stock > 0 %}#}
-                                {#                                {{ product.name }} нормальный товар#}
-                                {#                            {% endif %}#}
-                                {#                        </div>#}
+                                        <div class="product-img">
+                                            <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
+                                        </div>
 
-                                <div class="row row-grid">
-                                    <div class="product-select" data-th="Product">
-                                        <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
-                                               onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
-                                    </div>
+                                        <div class="product-main">
+                                            <div class="prod-desc">
+                                                <h4>{{ product.name }}</h4>
+                                                <p>Нет в наличии</p>
+                                            </div>
+                                        </div>
 
-                                    <div class="product-img">
-                                        <img src=" {{ product.mURL }}" alt="..." class="product-img__img"/>
-                                    </div>
-
-                                    <div class="product-main">
-                                        <div class="prod-desc">
-                                            <h4>{{ product.name }} id: {{ product.id }}</h4>
-                                            <p>{{ product.description }}</p>
+                                        <div class="actions" data-th="">
+                                            <button class="btn-favorite" data-id="{{ product.id }}">
+                                                <img src="images/favorite.png">
+                                            </button>
+                                            <button href="/cart/{{ product.id }}" data-method="DELETE"
+                                                    class="btn deleteBtn" onclick="requestRemoveProduct(this)"
+                                                    data-id="{{ product.id }}">
+                                                <img src="images/remove.svg">
+                                            </button>
                                         </div>
                                     </div>
-
-                                    {#                                    <div class="product-price" data-th="Price">#}
-                                    {#                                        <span id="price{{ product.id }}"#}
-                                    {#                                              data-id="{{ product.id }}"#}
-                                    {#                                              class="price"#}
-                                    {#        #}{#                                      value="{{ product.sellingPrice }} "#}
-                                    {#                                        >{{ product.sellingPrice }} </span>#}
-                                    {#                                    </div>#}
-
-                                    <div class="product-qty" data-th="Quantity">
-                                        <button class="btnMinus" data-id="{{ product.id }}"
-                                                onclick="decreaseAndCalc(this.dataset.id)">-
-                                        </button>
-                                        <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
-                                               class="form-control text-center quantityProduct"
-                                               value="{{ product.quantity }}"
-                                               onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
-                                        <button class="btnPlus" data-id="{{ product.id }}"
-                                                onclick="increaseAndCalc(this.dataset.id)">+
-                                        </button>
-                                    </div>
-                                    {% if product.discountRate %}
-                                        <div data-th="Subtotal"
-{#                                             id="subtotal{{ product.id }}"#}
-{#                                             data-id="{{ product.id }}"#}
-{#                                             data-discount-rate="{{ product.discountRate }}"#}
-                                             class="subtotal ">
-                                            <span id="sellingPriceWithDiscount{{ product.id }}"
-                                                  class="priceWithDisc"
-                                                    data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}"
-                                                   >
-                                                {{ product.sellingPriceWithDiscount | addPennies }}
-                                            </span>
-                                            <s id="rowTotal{{ product.id }}"
-                                               class="rowTotal"
-                                               data-id="{{ product.id }}"
-                                               data-row-total="{{ product.rowTotal }}">
-                                                {{ product.rowTotal | addPennies }}
-                                            </s>
-
-                                        </div>
-                                        <div id="discountInMoney{{ product.id }}"
-                                             data-discount-in-money="{{ product.discountInMoney }}" class="sale">
-                                            {{ product.discountInMoney | addPennies }}
-                                        </div>
-                                    {% else %}
-                                        <div data-th="Subtotal" id="subtotal{{ product.id }}"
-                                             data-id="{{ product.id }}"
-                                             data-selling-price="{{ product.sellingPrice }}"
-                                             class="subtotal ">
-                                            {{ product.rowTotal }}
-                                        </div>
-                                    {% endif %}
-
-                                    <div class="actions" data-th="">
-                                        <button class="btn-favorite" data-id="{{ product.id }}">
-                                            <img src="images/favorite.png">
-                                        </button>
-                                        <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn"
-                                                onclick="requestRemoveProduct(this)"
-                                                data-id="{{ product.id }}">
-                                            <img src="images/remove.svg">
-                                        </button>
-                                    </div>
-
                                 </div>
-
                             {% endfor %}
-                        </div>
-                    </div>
 
-                </section>
+                            <h3 class="cart-title">В наличии</h3>
+                            <div class="column-items">
+                                {% for product in productsWithAmount %}
+                                    {#                        <div class="outOfStock">#}
+                                    {#                            {% if product.stock == 0 %}#}
+                                    {#                                {{ product.name }} не в наличии#}
+                                    {#                            {% endif %}#}
+                                    {#                        </div>#}
 
-                <section class="order">
-                    <div class="result__order">
-                        <a href="/order" class="btn-order">
-                            Перейти к оформлению
-                        </a>
-                        <div class="order-text">
-                            Доступные способы и время доставки можно выбрать при оформлении заказа
-                        </div>
+                                    {#                        <div class="outOfStock">#}
+                                    {#                            {% if product.stock > 0 %}#}
+                                    {#                                {{ product.name }} нормальный товар#}
+                                    {#                            {% endif %}#}
+                                    {#                        </div>#}
 
-                        <div class="cart__total">
-                            <h4>Ваша корзина</h4>
-                            <div class="cart__total-row">
-                                <div class="row__column">
-                                    Товары ({{ cartLength }})
-                                </div>
-                                <div id="sumTotal"> {{ sumRowTotal | addPennies }} </div>
-                            </div>
-                            <div class="cart__total-row row-sale">
-                                <div class="row__column">
-                                    Скидка
-                                </div>
-                                <div id="sumSale">{{ sumDiscountInMoney | addPennies }}</div>
-                            </div>
-                            <div class="cart__total-row">
-                                <div class="row__column">
-                                    Общая стоимость
-                                </div>
-                                <div id="total"> {{ sumRowTotal | addPennies }} </div>
-{#                                мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
-                            </div>
+                                    <div class="row row-grid">
+                                        <div class="product-select" data-th="Product">
+                                            <input class="form-check-input" type="checkbox" data-id="{{ product.id }}"
+                                                   onclick="swithOneCheckbox(this)" {{ "checked" if product.checked }}>
+                                        </div>
 
-                        </div>
-                    </div>
+                                        <div class="product-img">
+                                            <img src=" {{ product.mURL }}" alt="..." class="product-img__img"/>
+                                        </div>
 
-                    <div class="bonus">
-                        <div class="bonus__header">
-                            <h3 class="title">Комплименты</h3>
-                            <a class="bonus-btn" href="#">
-                                {#                                Подробнее#}
-                                <span class="arrow_down"></span>
-                                <span class="arrow_up"></span>
-                            </a>
-                        </div>
-                        <div class="bonus__body">
-                            <p class="bonus-text">
-                                До бесплатной доставки осталось 492 рубля
-                            </p>
+                                        <div class="product-main">
+                                            <div class="prod-desc">
+                                                <h4>{{ product.name }} id: {{ product.id }}</h4>
+                                                <p>{{ product.description }}</p>
+                                            </div>
+                                        </div>
 
+                                        {#                                    <div class="product-price" data-th="Price">#}
+                                        {#                                        <span id="price{{ product.id }}"#}
+                                        {#                                              data-id="{{ product.id }}"#}
+                                        {#                                              class="price"#}
+                                        {#        #}{#                                      value="{{ product.sellingPrice }} "#}
+                                        {#                                        >{{ product.sellingPrice }} </span>#}
+                                        {#                                    </div>#}
 
-                            <div class="progress__bar">
-                                {% for bonus in bonuses %}
-                                    <div class="circle">
-                                        <span class="label {{ bonus.class }}" id="bonusLevel_{{ bonus.id }}">...</span>
-                                        <span class="title">{{ bonus.title + ( bonus.bonusStart | addPennies ) }} ₽</span>
+                                        <div class="product-qty" data-th="Quantity">
+                                            <button class="btnMinus" data-id="{{ product.id }}"
+                                                    onclick="decreaseAndCalc(this.dataset.id)">-
+                                            </button>
+                                            <input type="number" data-id="{{ product.id }}" id="input{{ product.id }}"
+                                                   class="form-control text-center quantityProduct"
+                                                   value="{{ product.quantity }}"
+                                                   onchange="reqAndValidationAndCalc(this.dataset.id)" min="0">
+                                            <button class="btnPlus" data-id="{{ product.id }}"
+                                                    onclick="increaseAndCalc(this.dataset.id)">+
+                                            </button>
+                                        </div>
+                                        {% if product.discountRate %}
+                                            <div data-th="Subtotal"
+                                                    {#                                             id="subtotal{{ product.id }}"#}
+                                                    {#                                             data-id="{{ product.id }}"#}
+                                                    {#                                             data-discount-rate="{{ product.discountRate }}"#}
+                                                 class="subtotal ">
+                                                <span id="sellingPriceWithDiscount{{ product.id }}"
+                                                      class="priceWithDisc"
+                                                      data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}"
+                                                >
+                                                    {{ product.sellingPriceWithDiscount | addPennies }}
+                                                </span>
+                                                <s id="rowTotal{{ product.id }}"
+                                                   class="rowTotal"
+                                                   data-id="{{ product.id }}"
+                                                   data-row-total="{{ product.rowTotal }}">
+                                                    {{ product.rowTotal | addPennies }}
+                                                </s>
+
+                                            </div>
+                                            <div id="discountInMoney{{ product.id }}"
+                                                 data-discount-in-money="{{ product.discountInMoney }}" class="sale">
+                                                {{ product.discountInMoney | addPennies }}
+                                            </div>
+                                        {% else %}
+                                            <div data-th="Subtotal" id="subtotal{{ product.id }}"
+                                                 data-id="{{ product.id }}"
+                                                 data-selling-price="{{ product.sellingPrice }}"
+                                                 class="subtotal ">
+                                                {{ product.rowTotal }}
+                                            </div>
+                                        {% endif %}
+
+                                        <div class="actions" data-th="">
+                                            <button class="btn-favorite" data-id="{{ product.id }}">
+                                                <img src="images/favorite.png">
+                                            </button>
+                                            <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn"
+                                                    onclick="requestRemoveProduct(this)"
+                                                    data-id="{{ product.id }}">
+                                                <img src="images/remove.svg">
+                                            </button>
+                                        </div>
+
                                     </div>
+
                                 {% endfor %}
+                            </div>
+                        </div>
 
+                    </section>
 
-                                <div class="progress__line"></div>
+                    <section class="order">
+                        <div class="result__order">
+                            <a href="/order" class="btn-order">
+                                Перейти к оформлению
+                            </a>
+                            <div class="order-text">
+                                Доступные способы и время доставки можно выбрать при оформлении заказа
                             </div>
 
+                            <div class="cart__total">
+                                <h4>Ваша корзина</h4>
+                                <div class="cart__total-row">
+                                    <div class="row__column">
+                                        Товары ({{ cartLength }})
+                                    </div>
+                                    <div id="sumTotal"> {{ sumRowTotal | addPennies }} </div>
+                                </div>
+                                <div class="cart__total-row row-sale">
+                                    <div class="row__column">
+                                        Скидка
+                                    </div>
+                                    <div id="sumSale">{{ sumDiscountInMoney | addPennies }}</div>
+                                </div>
+                                <div class="cart__total-row">
+                                    <div class="row__column">
+                                        Общая стоимость
+                                    </div>
+                                    <div id="total"> {{ sumRowTotal | addPennies }} </div>
+                                    {#                                мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </div>
 
+                        <div class="bonus">
+                            <div class="bonus__header">
+                                <h3 class="title">Комплименты</h3>
+                                <a class="bonus-btn" href="#">
+                                    {#                                Подробнее#}
+                                    <span class="arrow_down"></span>
+                                    <span class="arrow_up"></span>
+                                </a>
+                            </div>
+                            <div class="bonus__body">
+                                <p class="bonus-text">
+                                    До бесплатной доставки осталось 492 рубля
+                                </p>
+
+                                <div class="progress__bar">
+                                    {% for bonus in bonuses %}
+                                        <div class="circle">
+                                            <span class="label {{ bonus.class }}" id="bonusLevel_{{ bonus.id }}">...</span>
+                                            <span class="title">{{ bonus.title + ( bonus.bonusStart | addPennies ) }} ₽</span>
+                                        </div>
+                                    {% endfor %}
+
+                                    <div class="progress__line"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            {% else %}
+                <div class="cart__empty">
+                    <div class="cart__empty-text">
+                        В корзине нет товаров
+                    </div>
+
+                    <a href="/catalog" class="btn-catalog">
+                        Перейти в каталог
+                    </a>
+                </div>
+            {% endif %}
 
         </div>
     </div>
 
-
 {% endblock %}
+
 {#<h3 class="">Оформление заказа</h3>#}
 {#<form class="form-group">#}
 {#    <p>Адрес доставки</p>#}
