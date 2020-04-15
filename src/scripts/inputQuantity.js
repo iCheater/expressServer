@@ -31,6 +31,7 @@ function quantityInput (id) {
   obj[id] = value
   productQantityRequest(obj)
 }
+
 function productQantityRequest (data) {
   // eslint-disable-next-line no-undef
   const xhr = new XMLHttpRequest()
@@ -46,8 +47,14 @@ function productQantityRequest (data) {
   xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send(JSON.stringify(data))
 }
+
 function updateCartQuantity (cartLength) {
   const cartLengthEl = document.getElementsByClassName('cartLength')
-  console.log(cartLength)
   cartLengthEl.innerHTML = cartLength
+  cartEmpty(cartLength)
 }
+
+// function cartEmpty (data) {
+//   console.log('data', data)
+//   if(cartLength <= 1)
+// }

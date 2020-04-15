@@ -5,7 +5,7 @@ module.exports = function (sequelize) {
     // address: DataTypes.STRING,
     promoCode: DataTypes.STRING,
     comment: DataTypes.STRING,
-    shipping: DataTypes.STRING,
+    // shipping: DataTypes.STRING,
     // email: DataTypes.STRING,
     // phone: DataTypes.STRING,
     status: {
@@ -16,6 +16,11 @@ module.exports = function (sequelize) {
     totalPrice: {
       type: DataTypes.INTEGER,
     },
+    shipping: {
+      type: DataTypes.ENUM('Самовывоз', 'Курьерская доставка'),
+      defaultValue: 'disabled',
+    },
+
     // items: {
     //   // structure: {product: {Product}, quantity: X, price: X}
     //   type: DataTypes.ARRAY(Sequelize.JSON),
