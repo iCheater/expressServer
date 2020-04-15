@@ -1,0 +1,40 @@
+{% extends "layout.njk" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="/css/login&signup.min.css">
+{% endblock %}
+{% block preScript %}
+    <script src="/scripts/cartCalculate.js"></script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="login">
+        <div class="container">
+            <form action="/auth/login" method="post" class="form-check">
+                Multy login page will be here
+                <h2 class="form-title">Войти по почте</h2>
+                    <div class="form__row">
+                        <label>Username:</label>
+                        <input class="input-field username" type="text" name="username" placeholder="Username"/>
+                    </div>
+                    <div class="form__row">
+                        <label>Password:</label>
+                        <input class="input-field password" type="password" name="password" placeholder="Password"/>
+                    </div>
+                    <div class="form__row">
+                        <input class="btn btn-primary" type="submit" value="Log In"/>
+                    </div>
+                    <a class="form-link" href="/signup">Регистрация</a>
+
+                </form>
+        </div>
+    </div>
+
+    <a id="yandexLink" href="/auth/yandex">yandex</a>
+    <a id="twitterLink" href="/auth/twitter">twitter</a>
+    <a id="twitterLink" href="/auth/vkontakte">vkontakte</a>
+    <a id="twitterLink" href="/auth/facebook">facebook</a>
+    <a id="twitterLink" href="/auth/google">google</a>
+    <a id="twitterLink" href="/auth/odnoklassniki">одноклассники</a>
+{% endblock %}

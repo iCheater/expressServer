@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     phone: {
       type: DataTypes.STRING,
@@ -35,11 +35,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    gender: {
+      type: DataTypes.ENUM('MALE', 'FEMALE'),
+      allowNull: true,
+    },
     avatarUrl: {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: 'urlToImage', // todo add default image
-
     },
 
   }, {

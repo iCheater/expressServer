@@ -1,20 +1,50 @@
-The goal of this project is to create an online store using a modern technological stack.
-We use express, sequelize, redis, nunjucks.
-Soon administration panel will be migrated to vue.
-We adhere to the JSON.API standard.
+##### What is this:
+This is e-commerce project (online store)
 
+We learn how to make an online store.
+During creation, we encountered a problem:
+Github is full of “helloworld” level tutorials, there are no examples of PRODUCTION READY, a well-designed application on which you can understand how to make your application better.
+We want to make an application using the current best practices and share it with community. 
+We will accept any help with joy.
 
+We use trello as task tool (right now it has tasks only on Russian but we can start using english only)
+##### Current technological stack:
+- [x] express
+- [x] sequelize
+- [x] redis
+- [x] nunjucks
+##### Roadmap:
+###### Phase 1
+- [x] Fully working MVP of store
+
+###### Phase 2
+- [ ] split project into "frontend server and api server"
+- [ ] split "frontend server" and "administration section"(CRM\CMS) and rewrite it with vue.js
+###### Phase 3
+- [ ] add vue and SSR to frontend server
+- [ ] performance optimizations
+
+We adhere to the JSON.API standard, but, you know...
+
+##### Current features:
+- [x] session based cart, cart calculator
+- [x] mailing for new users, order and so on
+- [x] multi auth with passport.js
+
+## How to run:
 ### 1. [Install postgres](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)
 
 example:
 login\password: shop_server\shop_server_db
 
 ```console
+foo@bar:~$ sudo apt update
+foo@bar:~$ sudo apt install postgresql postgresql-contrib
 foo@bar:~$ sudo -u postgres createuser --interactive // type shop_server
 Enter name of role to add: shop_server
 Shall the new role be a superuser? (y/n) y
 foo@bar:~$ sudo -u postgres createdb shop_server_db // creating db
-foo@bar:~$ sudo adduser shop_server //create linux user with password shop_server
+foo@bar:~$ sudo adduser shop_server //create linux user with password shop_server 
 Добавляется пользователь «shop_server» ...
 Добавляется новая группа «shop_server» (1001) ...
 Добавляется новый пользователь «shop_server» (1001) в группу «shop_server» ...
@@ -55,6 +85,9 @@ foo@bar:~$  sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applicati
 ```
 
 ### 4. Install [NVM]( https://github.com/nvm-sh/nvm )
+```
+foo@bar:~$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+```
 After NVM installation complete tell NVM to install current version:
 ```console
 foo@bar:~$  nvm install node
@@ -80,7 +113,10 @@ foo@bar:~$  npm ci
 ```
 ### 6. Install  [Gulp]( https://gulpjs.com/docs/en/getting-started/quick-start )
 ```console
-foo@bar:~$  npm install --global gulp-cli
+foo@bar:~$  npm install --global gulp
+```
+```in some cases Error: Missing binding :
+npm rebuild node-sass --force
 ```
 ### 7. Run Gulp!
 ```console
@@ -92,7 +128,11 @@ foo@bar:~$ npm run seed
 ```
 
 ___
+
+### Things to discuss:
+maybe switch sequelize to objection.js
 ### Usefull
+
 
 ###### G++
 ```console
