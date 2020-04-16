@@ -75,16 +75,21 @@
                     </div>
 
                     <h2 class="head-title title-3">Состав заказа</h2>
+/////////////
+                    {{ products | length }}
+                    {% for product in products %}
                     <div class="content order-row">
                         <div class="order__item">
 
                             <div class="order__item-img">
-                                <img src="https://placehold.it/90x90">
+                                <img src="{{ product.mURL }}">
                             </div>
 
                             <div class="order__item-qty">
                                 <span class="qty-num">1</span> шт.
-                                <span class="qty-weight">30</span> гр.
+                                <span class="qty-weight">
+                                    {{ product.name }}
+                                    30</span> гр.
                             </div>
 
                             <div class="order__item-day">
@@ -102,6 +107,7 @@
 
                         </div>
                     </div>
+                    {% endfor %}
 
                     <h2 class="head-title title-4">Оплата</h2>
                     <div class="content way__pay">
