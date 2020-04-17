@@ -96,13 +96,13 @@
                                             </div>
                                         </div>
 
-                                        {#                                    <div class="product-price" data-th="Price">#}
-                                        {#                                        <span id="price{{ product.id }}"#}
-                                        {#                                              data-id="{{ product.id }}"#}
-                                        {#                                              class="price"#}
-                                        {#        #}{#                                      value="{{ product.sellingPrice }} "#}
-                                        {#                                        >{{ product.sellingPrice }} </span>#}
-                                        {#                                    </div>#}
+                                        {#<div class="product-price" data-th="Price">#}
+                                        {#<span id="price{{ product.id }}"#}
+                                        {#data-id="{{ product.id }}"#}
+                                        {#class="price"#}
+                                        {#        #}{# value="{{ product.sellingPrice }} "#}
+                                        {#>{{ product.sellingPrice }} </span>#}
+                                        {# </div>#}
 
                                         <div class="product-qty" data-th="Quantity">
                                             <button class="btnMinus" data-id="{{ product.id }}"
@@ -118,14 +118,13 @@
                                         </div>
                                         {% if product.discountRate %}
                                             <div data-th="Subtotal"
-                                                    {#                                             id="subtotal{{ product.id }}"#}
-                                                    {#                                             data-id="{{ product.id }}"#}
-                                                    {#                                             data-discount-rate="{{ product.discountRate }}"#}
+                                               {#  id="subtotal{{ product.id }}"#}
+                                               {#  data-id="{{ product.id }}"#}
+                                               {#data-discount-rate="{{ product.discountRate }}"#}
                                                  class="subtotal ">
                                                 <span id="sellingPriceWithDiscount{{ product.id }}"
                                                       class="priceWithDisc"
-                                                      data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}"
-                                                >
+                                                      data-selling-price-with-discount="{{ product.sellingPriceWithDiscount }}">
                                                     {{ product.sellingPriceWithDiscount | addPennies }}
                                                 </span>
                                                 <s id="rowTotal{{ product.id }}"
@@ -195,8 +194,8 @@
                                     <div class="row__column">
                                         Общая стоимость
                                     </div>
-                                    <div id="total"> {{ sumRowTotal | addPennies }} </div>
-                                    {#                                мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
+                                    <div id="total"> {{ (sumRowTotal -sumDiscountInMoney) | addPennies }} </div>
+                                    {# мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
                                 </div>
 
                             </div>
@@ -206,7 +205,7 @@
                             <div class="bonus__header">
                                 <h3 class="title">Комплименты</h3>
                                 <a class="bonus-btn" href="#">
-                                    {#                                Подробнее#}
+                                    {# Подробнее#}
                                     <span class="arrow_down"></span>
                                     <span class="arrow_up"></span>
                                 </a>
@@ -246,31 +245,3 @@
     </div>
 
 {% endblock %}
-
-{#<h3 class="">Оформление заказа</h3>#}
-{#<form class="form-group">#}
-{#    <p>Адрес доставки</p>#}
-{#    <div class="input-form">#}
-{#        <input type="text" class="form-control input-address" placeholder="Адрес доставки"#}
-{#               aria-label="Address" oninput="getAndSendAddress(this)"#}
-{#               value="{{ session.order.address }}">#}
-{#    </div>#}
-
-{#    <div class="input-form">#}
-{#        <input type="text" class="form-control input-phone" placeholder="Номер телефона"#}
-{#               aria-label="Phone" onfocusout="getAndSendPhone(this)"#}
-{#               value="{{ session.user.phone or session.order.phone }}">#}
-{#    </div>#}
-
-
-{#    <div class="input-group mb-3">#}
-{#        <input type="text" class="form-control" placeholder="Введите свое имя"#}
-{#               aria-label="Name" onfocusout="getAndSendName(this)" value="{{ session.user.username }}">#}
-{#    </div>#}
-
-{#
-{#    </div>#}
-{#    <button class="btn btn-order">#}
-{#        <a href="#">Оформить заказ</a>#}
-{#    </button>#}
-{#</form>#}

@@ -5,7 +5,6 @@
 .order__wrapper
   display: flex
   justify-content: space-between
-  margin-bottom: 30px
 
 .content
   background-color: #ffffff
@@ -88,6 +87,8 @@
 
 .way__shipping
   margin-bottom: 20px
+  display: block
+  width: 100%
   .way_shipping-title
     font-size: 18px
     font-weight: 700
@@ -135,6 +136,7 @@
         color: #1e1e1e
 
 .way__pay
+  margin-bottom: 30px
   h3
     margin: 15px 0
   form
@@ -161,6 +163,10 @@
       border-color: transparent
   .payment-method
     padding: 15px 25px
+    margin-bottom: 10px
+
+    border: 1px solid #c5c5c5
+    border-radius: 10px
 
     display: grid
     grid-column-gap: 5px
@@ -170,11 +176,12 @@
       grid-area: a
       font-size: 16px
       font-weight: 700
-      margin: 10px 0
+      //margin: 10px 0
     .descr
       grid-area: b
       font-size: 14px
       color: #8dc23c
+      margin: 5px 0
     .icon
       grid-area: c
       align-self: center
@@ -184,6 +191,12 @@
     border: 2px solid #005bff
     border-radius: 10px
 
+.active-border
+  border: 2px solid #005bff
+  border-radius: 10px
+
+.inactive-border
+  border: none
 
 .payment
   width: 40%

@@ -58,6 +58,7 @@ router.get('/', async (req, res, next) => {
         }
       })
     }
+
     // todo IS IT BAD TO DO IT HERE?
     let lastBonusStart = null
     bonuses.forEach(bonus => {
@@ -68,7 +69,15 @@ router.get('/', async (req, res, next) => {
       }
       lastBonusStart = bonus.bonusStart
     })
-    console.log(templateData)
+
+    // save calculation in session
+    req.session.cart.calculation = {
+      sumRowTotal: templateData.sumRowTotal,
+      sumDiscountInMoney: templateData.sumDiscountInMoney,
+      sumSellingPriceWithDiscount: templateData.sumSellingPriceWithDiscount,
+    }
+
+    console.log(req.session.cart.calculation)
     res.render('cart/cart', templateData)
   } catch (err) {
     next(err)
