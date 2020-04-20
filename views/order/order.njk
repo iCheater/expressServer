@@ -111,8 +111,13 @@
                     <div class="content way__pay">
                         <form>
                             <input id="promocode" type="text" placeholder="Кодовое слово или сертификат">
-                            <button class="btn btn-promo" disabled="disabled">Активировать</button>
+                            <button class="btn btn-promo" id="btn-promo" disabled>Активировать</button>
                         </form>
+                        <p class="promo-text">
+                            <span id="promocodeReceived"></span>
+                            активирован
+                        </p>
+
                         <h3>Способы оплаты</h3>
                         {#  Подумала что тут будет неплохо сделать шаблон#}
                         <div class="payment-method method-changed">
