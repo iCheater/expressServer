@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Order, User, Address, OrderItem, Product, Mail } = require('../models')
+const { Order, User, Address, OrderItem, Product, Mail, Promocode } = require('../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/helpers/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
@@ -14,12 +14,15 @@ function isAuthorlessValid () {
 router.get('/', async (req, res, next) => {
   // получаю массив id для запроса на сервер
   const arrOrder = []
+  if (!req.session.cart) {
+    res.redirect('/')
+  }
   for (let id in req.session.cart.items) {
     if (req.session.cart.items[id].checked) {
       arrOrder.push(id)
     }
   }
-  console.log(arrOrder)
+  // console.log(arrOrder)
 
   //запрос на сервер
   try {
@@ -30,7 +33,7 @@ router.get('/', async (req, res, next) => {
       products: products,
       templateData: req.session.cart.calculation,
       //todo think about
-      sumShipping: 40000
+      sumShipping: 40000,
 
     })
   } catch (err) {
@@ -169,16 +172,58 @@ router.get('/neworder', async (req, res, next) => {
 
 router.post('/promocode/', async (req, res, next) => {
   console.log('promocode', req.body.promocode)
-  // сделать модель промокода
-  // добавить тестовый промокод в базу ручками
-  // смотришь как выгше ты искала продукты (через трай кетч) делаешь запрос в базу с УСЛОВИЯМИ
+  // req.body.promocode = 'testDataStart'
+  try {
+    let promocode = await Promocode.findOne({
+      where: {
+        name: req.body.promocode
+      }
+    })
+
+    if(promocode === null) {
+      console.log('promocodes is NULL')
+      return res.json({status: 'error', msg: 'promocode is not exist'})
+    }
+    console.log('before if', promocode)
+
+    // set promocode INACTIVE if time is gone
+    if(new Date() > promocode.finishAt) {
+      promocode.status = 'INACTIVE'
+      promocode.save()
+    }
+
+    if(promocode.status === 'INACTIVE') {
+      return res.json({status: 'error', msg: 'promocode is INACTIVE'})
+    }
+    console.log('promocode is ACTIVE')
+
+    if(new Date() <= promocode.startAt || new Date() >= promocode.finishAt) {
+      return res.json({status: 'error', msg: 'promocode invalid time range'})
+    }
+    console.log('promocode is in valid time range')
+
+    if(promocode.counter >= promocode.counterLimit) {
+      return res.json({status: 'error', msg: 'reached activation limit'})
+    }
+    console.log('promocode activation limit is ok')
+
+    return res.json({
+      status: 'ok',
+      msg: 'promocode is ok',
+      promocode: {
+        name: promocode.name,
+        discountPercent: promocode.discountPercent,
+        discountCurrency: promocode.discountCurrency,
+      }
+    })
+
+  } catch (e) {
+    next(e)
+  }
+
   // если промокод найден - отправляешь ОК и меняешь цвет инпута на зеленый,
   // если нет, то на красный, мол не найден
-
 })
-
-
-
 
 
 module.exports = router

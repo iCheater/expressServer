@@ -8,7 +8,7 @@ module.exports = {
     const users = await User.findAll()
 
     const orders = []
-    const shipping = ['курьером', 'почта']
+    const shipping = ['Самовывоз', 'Курьерская доставка']
     for (let i = 0; i < 50; i++) {
       const user = users[Math.floor(Math.random() * (users.length))]
       orders.push({

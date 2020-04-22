@@ -18,7 +18,7 @@ module.exports = function (sequelize) {
     },
     shipping: {
       type: DataTypes.ENUM('Самовывоз', 'Курьерская доставка'),
-      defaultValue: 'disabled',
+      defaultValue: 'Самовывоз',
     },
 
     // items: {
