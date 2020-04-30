@@ -138,33 +138,33 @@ function reqAndValidationAndCalc (id) {
   calcTotal()
 }
 
-function getAndSendAddress (input) {
-  sendOrderData({ address: input.value })
-}
-function getAndSendPhone (input) {
-  console.log('obj pnone', input.value)
-  sendOrderData({ phone: input.value })
-}
-function getAndSendName (input) {
-  console.log('obj name', input.value)
-  sendOrderData({ name: input.value })
-}
+// function getAndSendAddress (input) {
+//   sendOrderData({ address: input.value })
+// }
+// function getAndSendPhone (input) {
+//   console.log('obj pnone', input.value)
+//   sendOrderData({ phone: input.value })
+// }
+// function getAndSendName (input) {
+//   console.log('obj name', input.value)
+//   sendOrderData({ name: input.value })
+// }
 
-function sendOrderData (data) {
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
-  xhr.onload = function (e) {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      console.log(JSON.parse(xhr.response))
-    } else {
-      console.log('server not work')
-    }
-    // console.log('request', xhr.response)
-  }
-  xhr.open('POST', '/cart/order')
-  xhr.setRequestHeader('Content-type', 'application/json')
-  xhr.send(JSON.stringify(data))
-}
+// function sendOrderData (data) {
+//   // eslint-disable-next-line no-undef
+//   const xhr = new XMLHttpRequest()
+//   xhr.onload = function (e) {
+//     if (xhr.status >= 200 && xhr.status < 300) {
+//       console.log(JSON.parse(xhr.response))
+//     } else {
+//       console.log('server not work')
+//     }
+//     // console.log('request', xhr.response)
+//   }
+//   xhr.open('POST', '/cart/order')
+//   xhr.setRequestHeader('Content-type', 'application/json')
+//   xhr.send(JSON.stringify(data))
+// }
 
 function calcSubtotal (id) {
   const quantity = parseInt(document.getElementById('input' + id).value)

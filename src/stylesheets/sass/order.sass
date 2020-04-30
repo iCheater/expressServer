@@ -8,7 +8,7 @@
 
 .content
   background-color: #ffffff
-  padding: 15px 10px
+  padding: 20px
   border-radius: 10px
 
 .details__order
@@ -84,23 +84,69 @@
       font-size: 12px
       color: #999
       margin: 10px 0
+    .displayNone
+      display: none
+    .displayBlock
+      display: block
+    #new-recipient
+      border-top: 1px solid #c5c5c5
+      padding: 20px 0 0
+      font-size: 14px
+      line-height: 16px
+      .row
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin-bottom: 15px
+      .row-case
+        width: 100%
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin-bottom: 15px
+        .row-ceil
+          width: 50%
+          display: flex
+          justify-content: center
+          align-items: center
+          margin-right: 10px
+          label
+            margin-right: 10px
+          input
+            width: 85%
+        .row-ceil:last-child
+          margin-right: 0
+      .input-field
+        width: 80%
+        height: 25px
+        padding: 10px
 
 .way__shipping
   margin-bottom: 20px
   display: block
   width: 100%
-  .way_shipping-title
-    font-size: 18px
-    font-weight: 700
-    margin: 0 0 10px
-    p
-      margin: 10px 0
-      padding: 5px 0 10px
-      border-bottom: 1px solid #c5c5c5
+  .shipping-title
+    display: flex
+    justify-content: space-between
+    align-items: center
+  .empty
+    height: 20px
+    width: 100%
+    display: block
+  .input-address
+    margin-bottom: 10px
+    display: none
+    //display: flex
+    justify-content: space-between
+    align-items: center
+    label
       font-size: 14px
-      font-weight: 400
-      color: #939da3
-
+      margin-right: 10px
+    .input-field
+      width: 80%
+      height: 25px
+    .input-field::placeholder
+      padding: 10px
   .shipping-descr
     color: #939da3
     font-size: 14px
@@ -116,6 +162,18 @@
         padding: 5px 20px
         border-color: transparent
         font-size: 14px
+
+.way_shipping-title
+  font-size: 18px
+  font-weight: 700
+  margin: 0 0 10px
+  p
+    margin: 10px 0
+    padding: 5px 0 10px
+    border-bottom: 1px solid #c5c5c5
+    font-size: 14px
+    font-weight: 400
+    color: #939da3
 
 .order-row
   margin-bottom: 10px
@@ -184,7 +242,7 @@
     .descr
       grid-area: b
       font-size: 14px
-      color: #8dc23c
+      color: #3ac267
       margin: 5px 0
     .icon
       grid-area: c
@@ -205,7 +263,7 @@
   width: 40%
   margin-top: 55px
   padding: 35px 25px
-  height: 400px
+  height: 385px
   .payment__row
     display: flex
     justify-content: space-between
@@ -227,7 +285,7 @@
     line-height: 28px
 
 #sumSale
-  color: #a70000
+  color: #f91155
   font-weight: 700
   &:before
     content: '\2014'
@@ -235,7 +293,7 @@
     content: ' ₽'
 
 #sumShipping
-  color: #8dc23c
+  color: #3ac267
   font-weight: 700
   &:after
     content: ' ₽'
@@ -243,10 +301,12 @@
   &:after
     content: ' ₽'
 
+.qty-num:after
+  content: ' шт.'
 
 .btn-order
   width: 100%
-  background-color: #8dc23c
+  background-color: #3ac267
   color: #ffffff
   font-weight: 700
   font-size: 16px

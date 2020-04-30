@@ -77,7 +77,7 @@ router.get('/', async (req, res, next) => {
       sumSellingPriceWithDiscount: templateData.sumSellingPriceWithDiscount,
     }
 
-    console.log(req.session.cart.calculation)
+    // console.log(req.session.cart.calculation)
     res.render('cart/cart', templateData)
   } catch (err) {
     next(err)
@@ -166,6 +166,7 @@ router.post('/quantity', (req, res, next) => {
   res.json({ cart: req.session.cart })
 })
 
+//old cart
 router.post('/order', (req, res, next) => {
   console.log('order req.session', req.session)
   console.log('req.body address', req.body)

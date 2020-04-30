@@ -27,14 +27,29 @@ router.get('/', async (req, res, next) => {
   //запрос на сервер
   try {
     const products = await Product.findAll({ where: { id: arrOrder } })
+    let promocode = null
+    if(req.session.order && req.session.order.promocode) {
+      promocode = await Promocode.findOne({
+        where: {
+          name: req.session.order.promocode
+        }
+      })
+    }
     console.log('products', products)
-    console.log('123', req.session.cart.calculation)
+    console.log('req.session.cart.items', req.session.cart.items)
+
+    const rowProducts = products.map(product => product.get({ row: true }))
+
+    rowProducts.forEach(product => {
+      product.quantity = req.session.cart.items[product.id].quantity
+    })
+    console.log('rowProducts', rowProducts)
     res.render('order/order', {
-      products: products,
+      products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
       sumShipping: 40000,
-
+      promocode: promocode,
     })
   } catch (err) {
     next(err)
@@ -186,8 +201,8 @@ router.post('/promocode/', async (req, res, next) => {
     }
     console.log('before if', promocode)
 
-    // set promocode INACTIVE if time is gone
-    if(new Date() > promocode.finishAt) {
+
+    if((new Date() > promocode.finishAt) || (promocode.counter > promocode.counterLimit)) {
       promocode.status = 'INACTIVE'
       promocode.save()
     }
@@ -207,6 +222,11 @@ router.post('/promocode/', async (req, res, next) => {
     }
     console.log('promocode activation limit is ok')
 
+    if(!req.session.order){
+      req.session.order = {}
+    }
+    req.session.order.promocode = promocode.name
+
     return res.json({
       status: 'ok',
       msg: 'promocode is ok',
@@ -223,6 +243,42 @@ router.post('/promocode/', async (req, res, next) => {
 
   // если промокод найден - отправляешь ОК и меняешь цвет инпута на зеленый,
   // если нет, то на красный, мол не найден
+})
+
+router.post('/address/', async (req, res, next) => {
+  console.log('address', req.body.address)
+  try {
+    if(!req.session.order){
+      req.session.order = {}
+    }
+    req.session.order.address = address.name
+    return res.json({
+      status: 'ok',
+      msg: 'address is ok',
+      address: address,
+    })
+  } catch (e) {
+    next(e)
+  }
+})
+
+router.post('/wayShipping/', async (req, res, next) => {
+  console.log('wayShipping', req.body.wayShipping)
+  try {
+    if(!req.session.order){
+      req.session.order = {}
+    }
+    req.session.order.wayShipping = wayShipping.name
+    return res.json({
+      status: 'ok',
+      msg: 'address is ok',
+      wayShipping: wayShipping,
+    })
+
+  } catch (e) {
+    next(e)
+  }
+
 })
 
 
