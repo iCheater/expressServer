@@ -38,11 +38,13 @@ example:
 login\password: shop_server\shop_server_db
 
 ```console
+foo@bar:~$ sudo apt update
+foo@bar:~$ sudo apt install postgresql postgresql-contrib
 foo@bar:~$ sudo -u postgres createuser --interactive // type shop_server
 Enter name of role to add: shop_server
 Shall the new role be a superuser? (y/n) y
 foo@bar:~$ sudo -u postgres createdb shop_server_db // creating db
-foo@bar:~$ sudo adduser shop_server //create linux user with password shop_server
+foo@bar:~$ sudo adduser shop_server //create linux user with password shop_server 
 Добавляется пользователь «shop_server» ...
 Добавляется новая группа «shop_server» (1001) ...
 Добавляется новый пользователь «shop_server» (1001) в группу «shop_server» ...
@@ -83,6 +85,9 @@ foo@bar:~$  sudo ln -s /var/lib/snapd/desktop/applications/ /usr/share/applicati
 ```
 
 ### 4. Install [NVM]( https://github.com/nvm-sh/nvm )
+```
+foo@bar:~$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+```
 After NVM installation complete tell NVM to install current version:
 ```console
 foo@bar:~$  nvm install node
@@ -108,7 +113,10 @@ foo@bar:~$  npm ci
 ```
 ### 6. Install  [Gulp]( https://gulpjs.com/docs/en/getting-started/quick-start )
 ```console
-foo@bar:~$  npm install --global gulp-cli
+foo@bar:~$  npm install --global gulp
+```
+```in some cases Error: Missing binding :
+npm rebuild node-sass --force
 ```
 ### 7. Run Gulp!
 ```console
