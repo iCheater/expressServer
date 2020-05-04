@@ -1,0 +1,75 @@
+<div class="content way__shipping active-border" data-shipping="selfDelivery">
+    <div class="way_shipping-title">
+        Самовывоз со склада
+    </div>
+    {#                        <div class="empty"></div>#}
+    <div class="shipping-descr">
+        <p>Бесплатно</p>
+    </div>
+</div>
+
+<div class="content way__shipping" data-shipping="expressDelivery">
+    <div class="shipping-title">
+        <div class="way_shipping-title">
+            Курьерская доставка по Москве
+        </div>
+        <a class="link" id="change-address" href="#" onclick="showInputAddress ()">
+            Редактировать адрес
+        </a>
+        {% if address %}
+    </div>
+    <div class="row address">
+        <div id="address">Адрес доставки:
+            {{ address }} </div>
+    </div>
+    <div class="row input-address" id="address-block">
+        <label>Адрес доставки</label>
+        <input class="input-field" id="input-address" type="text"
+               placeholder="Улица, дом, корпус, квартира" oninput="addNewAddress ()"
+               value="{{ address }}">
+
+        <a class="btn-input" id="clear-input" onclick="cleanInput()">
+            <img src="images/remove.svg">
+        </a>
+    </div>
+
+    {% else %}
+
+
+</div>
+
+<div class="row input-address" id="address-block">
+    <label>Адрес доставки</label>
+    <input class="input-field" id="input-address" type="text"
+           placeholder="Улица, дом, корпус, квартира" oninput="addNewAddress ()"
+           value="{{ address }}">
+</div>
+{% endif %}
+<div class="shipping-descr">
+    <p>400 рублей</p>
+</div>
+</div>
+
+{#<div class="content way__shipping">#}
+{#    <div class="way_shipping-title">#}
+{#        Пункты выдачи и отделения Почты#}
+{#        <p>Скидка на доставку</p>#}
+{#    </div>#}
+{#    <div class="shipping-descr">#}
+{#        <div class="address_info">#}
+{#            <h3>Адрес доставки</h3>#}
+{#            <div class="way">#}
+{#                пункт Партнёра#}
+{#            </div>#}
+{#            <div class="address-place">#}
+{#                г. Москва, ул. Коптевская, д. 26 корп. 5#}
+{#            </div>#}
+{#            <div class="conditions">#}
+{#                Срок хранения заказа — 5 дней#}
+{#            </div>#}
+{#            <button class="change-place">#}
+{#                Изменить место#}
+{#            </button>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}

@@ -14,9 +14,10 @@ function isAuthorlessValid () {
 router.get('/', async (req, res, next) => {
   // получаю массив id для запроса на сервер
   const arrOrder = []
-  if (!req.session.cart) {
+  if (!req.session.cart && !req.session.order) {
     res.redirect('/')
   }
+
   for (let id in req.session.cart.items) {
     if (req.session.cart.items[id].checked) {
       arrOrder.push(id)
@@ -28,28 +29,29 @@ router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({ where: { id: arrOrder } })
     let promocode = null
-    if(req.session.order && req.session.order.promocode) {
+    if (req.session.order && req.session.order.promocode) {
       promocode = await Promocode.findOne({
         where: {
-          name: req.session.order.promocode
-        }
+          name: req.session.order.promocode,
+        },
       })
     }
-    console.log('products', products)
-    console.log('req.session.cart.items', req.session.cart.items)
+    // console.log('products', products)
+    // console.log('req.session.cart.items', req.session.cart.items)
 
     const rowProducts = products.map(product => product.get({ row: true }))
 
     rowProducts.forEach(product => {
       product.quantity = req.session.cart.items[product.id].quantity
     })
-    console.log('rowProducts', rowProducts)
+    // console.log('rowProducts', rowProducts)
     res.render('order/order', {
       products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
       sumShipping: 40000,
       promocode: promocode,
+      address: req.session.order.address,
     })
   } catch (err) {
     next(err)
@@ -191,38 +193,48 @@ router.post('/promocode/', async (req, res, next) => {
   try {
     let promocode = await Promocode.findOne({
       where: {
-        name: req.body.promocode
-      }
+        name: req.body.promocode,
+      },
     })
 
-    if(promocode === null) {
+    if (promocode === null) {
       console.log('promocodes is NULL')
-      return res.json({status: 'error', msg: 'promocode is not exist'})
+      return res.json({
+        status: 'error',
+        msg: 'promocode is not exist',
+      })
     }
-    console.log('before if', promocode)
 
-
-    if((new Date() > promocode.finishAt) || (promocode.counter > promocode.counterLimit)) {
+    if ((new Date() > promocode.finishAt) || (promocode.counter > promocode.counterLimit)) {
       promocode.status = 'INACTIVE'
       promocode.save()
     }
 
-    if(promocode.status === 'INACTIVE') {
-      return res.json({status: 'error', msg: 'promocode is INACTIVE'})
+    if (promocode.status === 'INACTIVE') {
+      return res.json({
+        status: 'error',
+        msg: 'promocode is INACTIVE',
+      })
     }
-    console.log('promocode is ACTIVE')
+    // console.log('promocode is ACTIVE')
 
-    if(new Date() <= promocode.startAt || new Date() >= promocode.finishAt) {
-      return res.json({status: 'error', msg: 'promocode invalid time range'})
+    if (new Date() <= promocode.startAt || new Date() >= promocode.finishAt) {
+      return res.json({
+        status: 'error',
+        msg: 'promocode invalid time range',
+      })
     }
-    console.log('promocode is in valid time range')
+    // console.log('promocode is in valid time range')
 
-    if(promocode.counter >= promocode.counterLimit) {
-      return res.json({status: 'error', msg: 'reached activation limit'})
+    if (promocode.counter >= promocode.counterLimit) {
+      return res.json({
+        status: 'error',
+        msg: 'reached activation limit',
+      })
     }
-    console.log('promocode activation limit is ok')
+    // console.log('promocode activation limit is ok')
 
-    if(!req.session.order){
+    if (!req.session.order) {
       req.session.order = {}
     }
     req.session.order.promocode = promocode.name
@@ -234,7 +246,7 @@ router.post('/promocode/', async (req, res, next) => {
         name: promocode.name,
         discountPercent: promocode.discountPercent,
         discountCurrency: promocode.discountCurrency,
-      }
+      },
     })
 
   } catch (e) {
@@ -245,27 +257,25 @@ router.post('/promocode/', async (req, res, next) => {
   // если нет, то на красный, мол не найден
 })
 
-router.post('/address/', async (req, res, next) => {
-  console.log('address', req.body.address)
-  try {
-    if(!req.session.order){
-      req.session.order = {}
-    }
-    req.session.order.address = address.name
-    return res.json({
-      status: 'ok',
-      msg: 'address is ok',
-      address: address,
-    })
-  } catch (e) {
-    next(e)
+router.post('/address/', (req, res) => {
+  const address = req.body.address
+
+  if (!req.session.order) {
+    req.session.order = {}
   }
+
+  req.session.order.address = address
+  return res.json({
+    status: 'ok',
+    msg: 'address is ok',
+    address: address,
+  })
 })
 
 router.post('/wayShipping/', async (req, res, next) => {
   console.log('wayShipping', req.body.wayShipping)
   try {
-    if(!req.session.order){
+    if (!req.session.order) {
       req.session.order = {}
     }
     req.session.order.wayShipping = wayShipping.name
@@ -280,6 +290,5 @@ router.post('/wayShipping/', async (req, res, next) => {
   }
 
 })
-
 
 module.exports = router

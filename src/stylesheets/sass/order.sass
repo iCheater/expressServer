@@ -73,7 +73,20 @@
     hr
       background-color: #b6b6b6
       height: 1px
-
+  form
+    padding: 15px 0
+    font-size: 14px
+    .row
+      display: flex
+      flex-direction: column
+      width: 70%
+      margin-bottom: 10px
+      font-size: 14px
+      label
+        margin-bottom: 5px
+      input
+        padding: 2px 5px
+        font-size: 14px
   .add-recipient
     padding-top: 20px
     border-top: 1px solid #c5c5c5
@@ -89,37 +102,32 @@
     .displayBlock
       display: block
     #new-recipient
-      border-top: 1px solid #c5c5c5
-      padding: 20px 0 0
+      //border-top: 1px solid #c5c5c5
+      padding: 10px 0 0
       font-size: 14px
       line-height: 16px
       .row
-        display: flex
-        justify-content: space-between
-        align-items: center
         margin-bottom: 15px
-      .row-case
-        width: 100%
         display: flex
-        justify-content: space-between
-        align-items: center
-        margin-bottom: 15px
-        .row-ceil
-          width: 50%
-          display: flex
-          justify-content: center
-          align-items: center
-          margin-right: 10px
-          label
-            margin-right: 10px
-          input
-            width: 85%
-        .row-ceil:last-child
-          margin-right: 0
-      .input-field
-        width: 80%
-        height: 25px
-        padding: 10px
+        flex-direction: column
+        width: 70%
+        label
+          margin-bottom: 5px
+        input
+          padding: 2px 5px
+
+.input-address
+  position: relative
+  #clear-input
+    position: absolute
+    z-index: 10
+    top: 5px
+    right: 5px
+    cursor: pointer
+    img
+      width: 15px
+      opacity: 0.7
+
 
 .way__shipping
   margin-bottom: 20px
@@ -133,6 +141,11 @@
     height: 20px
     width: 100%
     display: block
+  .address
+    width: 100%
+    #address
+      margin-bottom: 10px
+      font-size: 14px
   .input-address
     margin-bottom: 10px
     display: none
@@ -196,11 +209,20 @@
 .way__pay
   margin-bottom: 30px
   h3
-    margin: 15px 0
+    margin: 0 0 15px
   form
     display: flex
+    flex-direction: column
     justify-content: space-between
-    align-items: center
+    //align-items: center
+    .row
+      display: flex
+      justify-content: space-between
+      align-items: center
+    .promo
+      font-size: 14px
+      color: #3ac267
+      padding-left: 10px
     #promocode
       height: 30px
       width: 70%
@@ -212,6 +234,7 @@
       box-shadow: none
       border: 1px solid #c5c5c5
       margin: 10px 0
+
     .btn-promo
       height: 30px
       width: 29%
@@ -221,7 +244,7 @@
       border-color: transparent
   .promo-text
     font-size: 14px
-    color: #8dc23c
+    color: #3ac267
     display: none
   .payment-method
     padding: 15px 25px
@@ -248,6 +271,9 @@
       grid-area: c
       align-self: center
       justify-self: center
+      .icon-img
+        width: 30px
+        height: 30px
 
   .method-changed
     border: 2px solid #005bff

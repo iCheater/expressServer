@@ -13,229 +13,130 @@
             <div class="order__wrapper">
                 <div class="details__order">
                     <h2 class="head-title title-1">Ваши данные</h2>
-                    <div class="content user_info">
-                        <div class="user_info-name">
-                            <div class="title" id="nameCustomer">Jane Doe</div>
-                            <a class="link" href="/profile/edit">Редактировать</a>
-                        </div>
-                        <div class="add-recipient" id="add-recipient">
-                            <a class="link" href="#" onclick="addRecipient ()">
-                                Добавить получателя
-                            </a>
-                            <div class="explanations">
-                                Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал
-                                другой
-                                человек.
-                            </div>
-                            <div class="displayNone" id="new-recipient">
 
-                                <div class="row-case">
-                                    <div class="row-ceil">
-                                        <label>Имя</label>
-                                        <input class="input-field" type="text" placeholder="Имя">
-                                    </div>
-
-                                    <div class="row-ceil">
-                                        <label>Фамилия</label>
-                                        <input class="input-field" type="text" placeholder="Фамилия">
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <label>Телефон</label>
-                                    <input class="input-field" id="input-phone" type="text" placeholder="Телефон">
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
+                    {% include "./recipientInfo.njk" %}
 
                     <h2 class="head-title title-2">Способ получения</h2>
-                    <div class="content way__shipping active-border" data-shipping="selfDelivery">
-                        <div class="way_shipping-title">
-                            Самовывоз со склада
-                        </div>
-{#                        <div class="empty"></div>#}
-                        <div class="shipping-descr">
-                            <p>Бесплатно</p>
-                        </div>
-                    </div>
+                {% include "./shipping.njk" %}
 
-                    <div class="content way__shipping" data-shipping="expressDelivery">
-                        <div class="shipping-title">
-                            <div class="way_shipping-title">
-                                Курьерская доставка по Москве
+                <h2 class="head-title title-3">Состав заказа</h2>
+
+                {% for product in products %}
+                    <div class="content order-row">
+                        <div class="order__item">
+
+                            <div class="order__item-img">
+                                <img src="{{ product.mURL }}">
                             </div>
-                            <a class="link" id="change-address" href="#" onclick="changeAddress ()">Редактировать адрес</a>
-                        </div>
 
-                        <div class="row input-address" id="address-block">
-                            <label>Адрес доставки</label>
-                            <input class="input-field" id="input-address" type="text"
-                                   placeholder="Улица, дом, корпус, квартира">
-                        </div>
-
-                        <div class="shipping-descr">
-                            <p>400 рублей</p>
-                        </div>
-                    </div>
-
-                    {#                    <div class="content way__shipping">#}
-                    {#                        <div class="way_shipping-title">#}
-                    {#                            Пункты выдачи и отделения Почты#}
-                    {#                            <p>Скидка на доставку</p>#}
-                    {#                        </div>#}
-                    {#                        <div class="shipping-descr">#}
-                    {#                            <div class="address_info">#}
-                    {#                                <h3>Адрес доставки</h3>#}
-                    {#                                <div class="way">#}
-                    {#                                    пункт Партнёра#}
-                    {#                                </div>#}
-                    {#                                <div class="address-place">#}
-                    {#                                    г. Москва, ул. Коптевская, д. 26 корп. 5#}
-                    {#                                </div>#}
-                    {#                                <div class="conditions">#}
-                    {#                                    Срок хранения заказа — 5 дней#}
-                    {#                                </div>#}
-                    {#                                <button class="change-place">#}
-                    {#                                    Изменить место#}
-                    {#                                </button>#}
-                    {#                            </div>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-
-                    <h2 class="head-title title-3">Состав заказа</h2>
-
-                    {% for product in products %}
-                        <div class="content order-row">
-                            <div class="order__item">
-
-                                <div class="order__item-img">
-                                    <img src="{{ product.mURL }}">
-                                </div>
-
-                                <div class="order__item-qty">
+                            <div class="order__item-qty">
                                     <span class="qty-weight">
                                     {{ product.name }}
                                     </span>
-                                    <div class="qty-num">{{ product.quantity }}</div>
-{#                                    30 гр.#}
+                                <div class="qty-num">{{ product.quantity }}</div>
+                                {#                                    30 гр.#}
+                            </div>
+
+                            <div class="order__item-day">
+                                <h5>Доставим</h5>
+                                <div>
+                                    {16 марта}
                                 </div>
-
-                                <div class="order__item-day">
-                                    <h5>Доставим</h5>
-                                    <div>
-                                        16 марта
-                                    </div>
-                                    <div>
-                                        Стоимость доставки
-                                    </div>
-                                    <div>
-                                        {{ sumShipping | addPennies }} ₽
-                                    </div>
+                                <div>
+                                    Стоимость доставки
                                 </div>
-
+                                <div>
+                                    {{ sumShipping | addPennies }} ₽
+                                </div>
                             </div>
+
                         </div>
-                    {% endfor %}
-
-                    <h2 class="head-title title-4">Оплата</h2>
-                    <div class="content way__pay">
-                        <form>
-                            <input id="promocode" type="text" placeholder="Кодовое слово или сертификат" value="{{ promocode.name }}">
-                            <button class="btn btn-promo" id="btn-promo"
-                                    disabled
-{#                                    {% if promocode %}#}
-{#                                        enabled#}
-{#                                    {% else %}#}
-{#                                        disabled#}
-{#                                    {% endif %}#}
-                            >Активировать</button>
-                        </form>
-                        <p class="promo-text">
-                            <span id="promocodeReceived"></span>
-                            <span id="promocodeStatus"></span>
-                        </p>
-
-                        <h3>Способы оплаты</h3>
-                        {#  Подумала что тут будет неплохо сделать шаблон#}
-                        <div class="payment-method method-changed">
-                            <div class="title">
-                                Картой онлайн
-                            </div>
-                            <div class="descr">
-                                тут должны быть плюшки
-                            </div>
-                            <div class="icon">
-                                <img src="https://placehold.it/30x30">
-                            </div>
-                        </div>
-
-                        <div class="payment-method">
-                            <div class="title">
-                                Наличными
-                            </div>
-                            <div class="descr">
-                                тут должны быть плюшки
-                            </div>
-                            <div class="icon">
-                                <img src="https://placehold.it/30x30">
-                            </div>
-                        </div>
-
-
                     </div>
+                {% endfor %}
+
+                <h2 class="head-title title-4">Оплата</h2>
+                <div class="content way__pay">
+
+{#                    {% include "./promocode.njk" %}#}
+
+                    <h3>Способы оплаты</h3>
+
+                    <div class="payment-method method-changed">
+                        <div class="title">
+                            Картой онлайн
+                        </div>
+                        <div class="descr">
+                            тут должны быть плюшки
+                        </div>
+                        <div class="icon">
+                            <img class="icon-img" src="images/card.png">
+                        </div>
+                    </div>
+
+                    <div class="payment-method">
+                        <div class="title">
+                            Наличными
+                        </div>
+                        <div class="descr">
+                            тут должны быть плюшки
+                        </div>
+                        <div class="icon">
+                            <img class="icon-img" src="images/cash.png">
+                        </div>
+                    </div>
+
 
                 </div>
 
-                <div class="conent payment">
-                    <div class="payment__row">
-                        <div class="title">
-                            <h4>Товары</h4>
-                            <div class="descr">
-                                {{ products | length }} шт.
-                            </div>
+            </div>
+
+            <div class="content payment">
+                <div class="payment__row">
+                    <div class="title">
+                        <h4>Товары</h4>
+                        <div class="descr">
+                            {{ products | length }} шт.
                         </div>
-                        <div id="sumTotal"> {{ templateData.sumRowTotal | addPennies }} </div>
                     </div>
-
-                    <div class="payment__row row-sale">
-                        <div class="title">
-                            <h4>Скидка</h4>
-{#                            <div class="descr">#}
-{#                                <a class="link" id="sale-details" href="#">Подробнее</a>#}
-{#                            </div>#}
-
-                        </div>
-                        <div id="sumSale"> {{ templateData.sumDiscountInMoney | addPennies }} </div>
-                    </div>
-
-                    <div class="payment__row">
-                        <div class="title">
-                            <h4>Доставка</h4>
-                            <div class="descr">
-                                {{ products | length }} шт.
-                            </div>
-                        </div>
-                        <div id="sumShipping"> {{ sumShipping | addPennies }} </div>
-                    </div>
-
-                    <div class="payment__row total-row">
-                        <div class="title">
-                            <h2>Итого</h2>
-                        </div>
-                        <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney+sumShipping) | addPennies }} </div>
-                        {#мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
-                    </div>
-
-                    <button class="btn btn-order" onclick="collectData ()">
-                        Оформить заказ
-                    </button>
-
-
+                    <div id="sumTotal"> {{ templateData.sumRowTotal | addPennies }} </div>
                 </div>
+
+                <div class="payment__row row-sale">
+                    <div class="title">
+                        <h4>Скидка</h4>
+                        {#                            <div class="descr">#}
+                        {#                                <a class="link" id="sale-details" href="#">Подробнее</a>#}
+                        {#                            </div>#}
+
+                    </div>
+                    <div id="sumSale"> {{ templateData.sumDiscountInMoney | addPennies }} </div>
+                </div>
+
+                <div class="payment__row">
+                    <div class="title">
+                        <h4>Доставка</h4>
+                        <div class="descr">
+                            {{ products | length }} шт.
+                        </div>
+                    </div>
+                    <div id="sumShipping"> {{ sumShipping | addPennies }} </div>
+                </div>
+
+                <div class="payment__row total-row">
+                    <div class="title">
+                        <h2>Итого</h2>
+                    </div>
+                    <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney+sumShipping) | addPennies }} </div>
+                    {#мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
+                </div>
+
+                <button class="btn btn-order" onclick="collectData ()">
+                    Оформить заказ
+                </button>
+
+
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

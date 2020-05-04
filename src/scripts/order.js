@@ -69,27 +69,23 @@ function totalPromoDiscount (resServer) {
   if (resServer.status === 'error') {
     console.log('status: error')
   }
-
   if (resServer.status === 'ok') {
     let totalSale = document.getElementById('sumSale')
     let totalWithSale = document.getElementById('sumTotal')
     let totalWithoutSale = document.getElementById('total')
     const totalShipping = document.getElementById('sumShipping')
     let promocodeSale = 0
+    let discount = null
     if(resServer.promocode.discountPercent > 0){
       promocodeSale = resServer.promocode.discountPercent / 100
-      const totalPromo = Number(totalSale.innerHTML * promocodeSale)
-      const sumDiscountInMoney = Number(totalSale.innerHTML) + totalPromo
-      totalSale.innerHTML = sumDiscountInMoney
-      totalWithoutSale.innerHTML = Number(totalWithSale.innerHTML) + Number(totalShipping.innerHTML) - sumDiscountInMoney
+      discount = Number(totalSale.innerHTML * promocodeSale)
     }
-
     if(resServer.promocode.discountCurrency > 0) {
-      promocodeSale = Number(resServer.promocode.discountCurrency)
-      const sumDiscountInMoney = Number(totalSale.innerHTML) + promocodeSale
-      totalSale.innerHTML = sumDiscountInMoney
-      totalWithoutSale.innerHTML = Number(totalWithSale.innerHTML) + Number(totalShipping.innerHTML) - sumDiscountInMoney
+      discount = Number(resServer.promocode.discountCurrency)
     }
+    const sumDiscountInMoney = Number(totalSale.innerHTML) + discount
+    totalSale.innerHTML = sumDiscountInMoney
+    totalWithoutSale.innerHTML = Number(totalWithSale.innerHTML) + Number(totalShipping.innerHTML) - sumDiscountInMoney
   }
 }
 
@@ -141,28 +137,18 @@ function addRecipient () {
   // })
 }
 
-function changeAddress () {
-  const addressInput = document.getElementById('change-address')
+
+
+function showInputAddress () {
+  // const addressInput = document.getElementById('change-address')
   const blockInput = document.getElementById('address-block')
-  console.log('addressInput', addressInput)
-  console.log('blockInput', blockInput)
   blockInput.style.display = 'flex'
+}
+
+function addNewAddress () {
   const addressShipping = document.getElementById('input-address').value
   requestAddress({ address: addressShipping })
 }
-
-// document.addEventListener('change' e => {})
-// function collectData () {
-//   const nameCustomer = document.getElementById('nameCustomer').innerHTML
-//
-//   const blockShipping = document.getElementsByClassName('active-border')
-//   const wayShipping = blockShipping.dataset.shipping
-
-//   const orderData = {
-//     name: nameCustomer,
-//     wayShipping: wayShipping,
-//   }
-// }
 
 function wayShipping () {
   const blockShipping = document.getElementsByClassName('active-border')
@@ -200,7 +186,11 @@ function requestAddress (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      console.log(resServer)
+      console.log(resServer.address)
+
+      let valueInput = document.getElementById('input-address')
+      valueInput.value = resServer.address
+
     } else {
       console.log('server not work')
     }
@@ -209,4 +199,9 @@ function requestAddress (data) {
   xhr.open('POST', '/order/address')
   xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send(JSON.stringify(data))
+}
+
+function cleanInput () {
+  document.getElementById('input-address').value = ''
+  requestAddress(document.getElementById('input-address').value)
 }

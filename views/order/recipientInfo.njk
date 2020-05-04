@@ -1,0 +1,63 @@
+<div class="content user_info">
+    {% if user %}
+        <div class="user_info-name">
+            <div class="title" id="nameCustomer">{{ session.user.username }}</div>
+            <a class="link" href="/profile/edit">Редактировать</a>
+        </div>
+    {% else %}
+
+        <h3>
+            Новый пользователь
+        </h3>
+        <form>
+            <div class="row">
+                <label>Имя</label>
+                <input class="input-field" type="text" placeholder="Иван">
+            </div>
+
+            <div class="row">
+                <label>Фамилия</label>
+                <input class="input-field" type="text" placeholder="Иванов">
+            </div>
+
+            <div class="row">
+                <label>Телефон</label>
+                <input class="input-field" id="input-phone" type="text" placeholder="+79008007060">
+            </div>
+
+            <div class="row">
+                <label>Почта</label>
+                <input class="input-field" id="input-mail" type="text" placeholder="email@mail.com">
+            </div>
+        </form>
+
+    {% endif %}
+    <div class="add-recipient" id="add-recipient">
+        <a class="link" href="#" onclick="addRecipient ()">
+            Добавить получателя
+        </a>
+        <div class="explanations">
+            Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал
+            другой
+            человек.
+        </div>
+        <div class="displayNone" id="new-recipient">
+
+            <div class="row">
+                <label>Имя</label>
+                <input class="input-field" type="text" placeholder="Имя">
+            </div>
+
+            <div class="row">
+                <label>Фамилия</label>
+                <input class="input-field" type="text" placeholder="Фамилия">
+            </div>
+
+            <div class="row">
+                <label>Телефон</label>
+                <input class="input-field" id="input-phone" type="text" placeholder="Телефон">
+            </div>
+
+        </div>
+    </div>
+</div>

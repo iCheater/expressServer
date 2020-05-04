@@ -7,6 +7,7 @@ const mailer = require(`${appRoot}/helpers/mailer`)
 const { resetPasswordPage } = require(`${appRoot}/controllers/resetpassword`)
 
 router.get('/', resetPasswordPage)
+
 router.get('/forgot', (req, res, next) => {
   res.send('<form method="POST" action="/resetpassword/forgot"><label>введетная почта при регистрации</label><input type="text" name="email">  <input type="submit" value="Submit"> </form>') // todo нужна форма!
 })

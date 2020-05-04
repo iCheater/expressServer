@@ -1,0 +1,25 @@
+<form>
+    {% if promocode %}
+    <div class="row" >
+        <input id="promocode" type="text" placeholder="Кодовое слово или сертификат"
+               value="{{ promocode.name }}">
+        <button class="btn btn-promo" id="btn-promo"
+                disabled="disabled">Промокод активирован
+        </button>
+    </div>
+    <p class="promo">
+        <span id="promocodeReceived">{{ promocode.name }}</span>
+        <span id="promocodeStatus"> активен</span>
+    </p>
+    {% else %}
+    <input id="promocode" type="text" placeholder="Кодовое слово или сертификат"
+           value="{{ promocode.name }}">
+    <button class="btn btn-promo" id="btn-promo"
+            disabled>Активировать
+    </button>
+</form>
+<p class="promo-text">
+    <span id="promocodeReceived"></span>
+    <span id="promocodeStatus"></span>
+</p>
+{% endif %}
