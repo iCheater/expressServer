@@ -43,6 +43,10 @@
     <input class="input-field" id="input-address" type="text"
            placeholder="Улица, дом, корпус, квартира" oninput="addNewAddress ()"
            value="{{ address }}">
+
+    <a class="btn-input" id="clear-input" onclick="cleanInput()">
+        <img src="images/remove.svg">
+    </a>
 </div>
 {% endif %}
 <div class="shipping-descr">

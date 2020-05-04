@@ -2,15 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('order.js loaded')
 
   const arrShipping = document.getElementsByClassName('way__shipping')
-  console.log('arrShipping', arrShipping)
 
   for (let i = 0; i < arrShipping.length; i++) {
     arrShipping[i].addEventListener('click', (event, test2) => {
       for (let i = 0; i < arrShipping.length; i++) {
         arrShipping[i].classList.remove('active-border')
       }
-      console.log('click!!!!', event)
+      // console.log('click!!!!', event)
       event.target.closest('.way__shipping').classList.add('active-border')
+      wayShipping ()
     })
   }
 
@@ -23,26 +23,30 @@ document.addEventListener('DOMContentLoaded', () => {
         arrPayment[i].classList.remove('method-changed')
       }
       event.target.closest('.payment-method').classList.add('method-changed')
+      wayPay ()
     })
   }
 
-  const promocodeInput = document.getElementById('promocode')
-  const promocodeBtn = document.getElementById('btn-promo')
+  //promocode part
+  // const promocodeInput = document.getElementById('promocode')
+  // const promocodeBtn = document.getElementById('btn-promo')
+  //
+  // promocodeInput.addEventListener('input', evt => {
+  //   promocodeInput.classList.add('active-border')
+  //   promocodeBtn.disabled = false
+  //   promocodeBtn.style.background = '#005bff'
+  // })
+  // promocodeBtn.addEventListener('click', evt => {
+  //   evt.preventDefault()
+  //   const promocodeReceived = document.getElementById('promocodeReceived')
+  //   const promocodeText = document.querySelector('.promo-text')
+  //
+  //   promocodeText.style.display = 'block'
+  //   promocodeReceived.innerHTML = promocodeInput.value
+  //   requestPromocode({ promocode: promocodeReceived.innerHTML })
+  // })
 
-  promocodeInput.addEventListener('input', evt => {
-    promocodeInput.classList.add('active-border')
-    promocodeBtn.disabled = false
-    promocodeBtn.style.background = '#005bff'
-  })
-  promocodeBtn.addEventListener('click', evt => {
-    evt.preventDefault()
-    const promocodeReceived = document.getElementById('promocodeReceived')
-    const promocodeText = document.querySelector('.promo-text')
 
-    promocodeText.style.display = 'block'
-    promocodeReceived.innerHTML = promocodeInput.value
-    requestPromocode({ promocode: promocodeReceived.innerHTML })
-  })
 })
 
 function requestPromocode (data) {
@@ -140,7 +144,6 @@ function addRecipient () {
 
 
 function showInputAddress () {
-  // const addressInput = document.getElementById('change-address')
   const blockInput = document.getElementById('address-block')
   blockInput.style.display = 'flex'
 }
@@ -152,12 +155,12 @@ function addNewAddress () {
 
 function wayShipping () {
   const blockShipping = document.getElementsByClassName('active-border')
-  let dataShipping
+  console.log('blockShipping', blockShipping)
+  let dataShipping = null
   for (let i = 0; i < blockShipping.length; i++) {
     dataShipping = blockShipping[i].dataset.shipping
     console.log('dataShipping', dataShipping)
   }
-
   requestWayShipping({ wayShipping: dataShipping })
 }
 
@@ -202,6 +205,37 @@ function requestAddress (data) {
 }
 
 function cleanInput () {
-  document.getElementById('input-address').value = ''
-  requestAddress(document.getElementById('input-address').value)
+  let inputBlock = document.getElementById('input-address')
+  inputBlock.value = ''
+  requestAddress({ address: inputBlock.value })
+}
+
+function wayPay () {
+  const methodPay = document.getElementsByClassName('method-changed')
+  console.log('methodPay', methodPay)
+
+  let dataPay = null
+  for (let i = 0; i < methodPay.length; i++) {
+    dataPay = methodPay[i].dataset.pay
+    console.log('dataPay', dataPay)
+  }
+  requestMethodPay({ methodPay: dataPay })
+}
+
+function requestMethodPay (data) {
+// eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+  xhr.onload = function (e) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // console.log(JSON.parse(xhr.response))
+      const resServer = JSON.parse(xhr.response)
+      console.log(resServer)
+    } else {
+      console.log('server not work')
+    }
+    // console.log('request', xhr.response)
+  }
+  xhr.open('POST', '/order/methodPay')
+  xhr.setRequestHeader('Content-type', 'application/json')
+  xhr.send(JSON.stringify(data))
 }

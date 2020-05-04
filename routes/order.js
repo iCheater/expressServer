@@ -52,6 +52,8 @@ router.get('/', async (req, res, next) => {
       sumShipping: 40000,
       promocode: promocode,
       address: req.session.order.address,
+      wayShipping: req.session.order.wayShipping,
+      methodPay: req.session.order.methodPay,
     })
   } catch (err) {
     next(err)
@@ -259,11 +261,10 @@ router.post('/promocode/', async (req, res, next) => {
 
 router.post('/address/', (req, res) => {
   const address = req.body.address
-
+  console.log('address', address)
   if (!req.session.order) {
     req.session.order = {}
   }
-
   req.session.order.address = address
   return res.json({
     status: 'ok',
@@ -272,22 +273,33 @@ router.post('/address/', (req, res) => {
   })
 })
 
-router.post('/wayShipping/', async (req, res, next) => {
-  console.log('wayShipping', req.body.wayShipping)
-  try {
-    if (!req.session.order) {
-      req.session.order = {}
-    }
-    req.session.order.wayShipping = wayShipping.name
-    return res.json({
-      status: 'ok',
-      msg: 'address is ok',
-      wayShipping: wayShipping,
-    })
-
-  } catch (e) {
-    next(e)
+router.post('/wayShipping/', (req, res) => {
+  const wayShipping = req.body.wayShipping
+  console.log('wayShipping', wayShipping)
+  if (!req.session.order) {
+    req.session.order = {}
   }
+  req.session.order.wayShipping = wayShipping
+  return res.json({
+    status: 'ok',
+    msg: 'wayShipping is ok',
+    wayShipping: wayShipping,
+  })
+
+})
+
+router.post('/methodPay/', (req, res) => {
+  const methodPay = req.body.methodPay
+  console.log('methodPay', methodPay)
+  if (!req.session.order) {
+    req.session.order = {}
+  }
+  req.session.order.methodPay = methodPay
+  return res.json({
+    status: 'ok',
+    msg: 'methodPay is ok',
+    methodPay: methodPay,
+  })
 
 })
 
