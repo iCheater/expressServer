@@ -54,6 +54,7 @@ router.get('/', async (req, res, next) => {
       address: req.session.order.address,
       wayShipping: req.session.order.wayShipping,
       methodPay: req.session.order.methodPay,
+      newUser: req.session.order.newUser,
     })
   } catch (err) {
     next(err)
@@ -191,7 +192,6 @@ router.get('/neworder', async (req, res, next) => {
 
 router.post('/promocode/', async (req, res, next) => {
   console.log('promocode', req.body.promocode)
-  // req.body.promocode = 'testDataStart'
   try {
     let promocode = await Promocode.findOne({
       where: {
@@ -218,7 +218,6 @@ router.post('/promocode/', async (req, res, next) => {
         msg: 'promocode is INACTIVE',
       })
     }
-    // console.log('promocode is ACTIVE')
 
     if (new Date() <= promocode.startAt || new Date() >= promocode.finishAt) {
       return res.json({
@@ -226,7 +225,6 @@ router.post('/promocode/', async (req, res, next) => {
         msg: 'promocode invalid time range',
       })
     }
-    // console.log('promocode is in valid time range')
 
     if (promocode.counter >= promocode.counterLimit) {
       return res.json({
@@ -234,7 +232,6 @@ router.post('/promocode/', async (req, res, next) => {
         msg: 'reached activation limit',
       })
     }
-    // console.log('promocode activation limit is ok')
 
     if (!req.session.order) {
       req.session.order = {}
@@ -299,6 +296,26 @@ router.post('/methodPay/', (req, res) => {
     status: 'ok',
     msg: 'methodPay is ok',
     methodPay: methodPay,
+  })
+
+})
+
+router.post('/newUser/', (req, res) => {
+  const newUser = req.body.newUser
+  console.log('newUser', newUser)
+  if (!req.session.order) {
+    req.session.order = {}
+  }
+  req.session.order.newUser = newUser
+  return res.json({
+    status: 'ok',
+    msg: 'newUser is ok',
+    newUser: {
+      name: newUser.name,
+      lastname: newUser.lastname,
+      phone: newUser.phone,
+      mail: newUser.mail,
+    },
   })
 
 })

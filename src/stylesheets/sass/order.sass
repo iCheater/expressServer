@@ -82,11 +82,25 @@
       width: 70%
       margin-bottom: 10px
       font-size: 14px
+      position: relative
       label
         margin-bottom: 5px
       input
         padding: 2px 5px
         font-size: 14px
+    .done-input
+      &:after
+        content: ''
+        background-image: url('/images/done-order.svg')
+        background-size: 20px 20px
+        width: 20px
+        height: 20px
+        z-index: 10
+        display: block
+        position: absolute
+        right: -25px
+        top: 23px
+
   .add-recipient
     padding-top: 20px
     border-top: 1px solid #c5c5c5
@@ -343,5 +357,4 @@
   text-align: center
   &:hover
     background-color: #658728
-
 

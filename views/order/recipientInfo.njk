@@ -9,25 +9,28 @@
         <h3>
             Новый пользователь
         </h3>
-        <form>
+        <form onchange="registerNewUser()">
             <div class="row">
                 <label>Имя</label>
-                <input class="input-field" id="name"  type="text" placeholder="Иван">
+                <input class="input-field" id="name" type="text" placeholder="Иван" data-user="newUser" value="{{ newUser.name }}">
             </div>
 
             <div class="row">
                 <label>Фамилия</label>
-                <input class="input-field" id="lastname"  type="text" placeholder="Иванов">
+                <input class="input-field" id="lastname" type="text" placeholder="Иванов" data-user="newUser" value="{{ newUser.lastname }}">
             </div>
 
             <div class="row">
                 <label>Телефон</label>
-                <input class="input-field" id="phone" type="text" placeholder="+79008007060">
+                <input class="input-field" id="phone" type="text" placeholder="+79008007060" data-user="newUser" value="{{ newUser.phone }}">
             </div>
 
-            <div class="row">
+        <div class="row">
                 <label>Почта</label>
-                <input class="input-field" id="mail" type="text" placeholder="email@mail.com">
+                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com" data-user="newUser" value="{{ newUser.mail.mail }}" oninput="checkEmailNewUser ()">
+{#                <a class="done-input">#}
+{#                    <img src="images/done-order.svg">#}
+{#                </a>#}
             </div>
         </form>
 

@@ -40,7 +40,8 @@
                                         </div>
 
                                         <div class="product-img">
-                                            <img src=" {{ product.mURL }}" alt="..." class="img__product img-responsive"/>
+                                            <img src=" {{ product.mURL }}" alt="..."
+                                                 class="img__product img-responsive"/>
                                         </div>
 
                                         <div class="product-main">
@@ -118,9 +119,9 @@
                                         </div>
                                         {% if product.discountRate %}
                                             <div data-th="Subtotal"
-                                               {#  id="subtotal{{ product.id }}"#}
-                                               {#  data-id="{{ product.id }}"#}
-                                               {#data-discount-rate="{{ product.discountRate }}"#}
+                                                    {#  id="subtotal{{ product.id }}"#}
+                                                    {#  data-id="{{ product.id }}"#}
+                                                    {#data-discount-rate="{{ product.discountRate }}"#}
                                                  class="subtotal ">
                                                 <span id="sellingPriceWithDiscount{{ product.id }}"
                                                       class="priceWithDisc"
@@ -152,7 +153,8 @@
                                             <button class="btn-favorite" data-id="{{ product.id }}">
                                                 <img src="images/favorite.png">
                                             </button>
-                                            <button href="/cart/{{ product.id }}" data-method="DELETE" class="btn deleteBtn"
+                                            <button href="/cart/{{ product.id }}" data-method="DELETE"
+                                                    class="btn deleteBtn"
                                                     onclick="requestRemoveProduct(this)"
                                                     data-id="{{ product.id }}">
                                                 <img src="images/remove.svg">
@@ -218,7 +220,8 @@
                                 <div class="progress__bar">
                                     {% for bonus in bonuses %}
                                         <div class="circle">
-                                            <span class="label {{ bonus.class }}" id="bonusLevel_{{ bonus.id }}">...</span>
+                                            <span class="label {{ bonus.class }}"
+                                                  id="bonusLevel_{{ bonus.id }}">...</span>
                                             <span class="title">{{ bonus.title + ( bonus.bonusStart | addPennies ) }} ₽</span>
                                         </div>
                                     {% endfor %}
