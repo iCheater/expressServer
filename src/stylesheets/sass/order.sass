@@ -89,6 +89,8 @@
         padding: 2px 5px
         font-size: 14px
     .done-input
+      input
+        border: 1px solid #3ac267
       &:after
         content: ''
         background-image: url('/images/done-order.svg')
@@ -99,7 +101,23 @@
         display: block
         position: absolute
         right: -25px
-        top: 23px
+        top: 22px
+
+    .error-input
+      input
+        border: 1px solid #f91155
+      &:after
+        content: ''
+        background-image: url('/images/error-order.svg')
+        background-size: 20px 20px
+        width: 20px
+        height: 20px
+        z-index: 10
+        display: block
+        position: absolute
+        right: -25px
+        top: 22px
+
 
   .add-recipient
     padding-top: 20px

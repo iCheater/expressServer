@@ -44,7 +44,7 @@ router.get('/', async (req, res, next) => {
     rowProducts.forEach(product => {
       product.quantity = req.session.cart.items[product.id].quantity
     })
-    // console.log('rowProducts', rowProducts)
+    console.log('req.session.order', req.session.order)
     res.render('order/order', {
       products: rowProducts,
       templateData: req.session.cart.calculation,
@@ -301,22 +301,39 @@ router.post('/methodPay/', (req, res) => {
 })
 
 router.post('/newUser/', (req, res) => {
-  const newUser = req.body.newUser
-  console.log('newUser', newUser)
+  console.log('newUser', req.body.newUser)
   if (!req.session.order) {
     req.session.order = {}
   }
-  req.session.order.newUser = newUser
-  return res.json({
-    status: 'ok',
-    msg: 'newUser is ok',
-    newUser: {
-      name: newUser.name,
-      lastname: newUser.lastname,
-      phone: newUser.phone,
-      mail: newUser.mail,
+
+  req.session.order.newUser = {
+    name: req.body.newUser.name,
+    lastname: req.body.newUser.lastname,
+    phone: {
+      number: req.body.newUser.phone,
+      status: 'ok',
     },
-  })
+    mail: {
+      mail: req.body.newUser.mail,
+      status: 'ok',
+    },
+  }
+
+  const regPhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/
+  console.log('phone', regPhone.test(req.body.newUser.phone))
+
+  if(regPhone.test(req.body.newUser.phone) === false) {
+    req.session.order.newUser.phone.status = 'error'
+    console.log('phone error')
+  }
+
+  const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+  if(reg.test(req.body.newUser.mail) === false) {
+    req.session.order.newUser.mail.status = 'error'
+    console.log('Введите корректный e-mail')
+  }
+
+  return res.json(req.session.order.newUser)
 
 })
 

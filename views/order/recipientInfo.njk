@@ -1,66 +1,101 @@
 <div class="content user_info">
     {% if user %}
-        <div class="user_info-name">
-            <div class="title" id="nameCustomer">{{ session.user.username }}</div>
-            <a class="link" href="/profile/edit">Редактировать</a>
-        </div>
+    <div class="user_info-name">
+        <div class="title" id="nameCustomer">{{ session.user.username }}</div>
+        <a class="link" href="/profile/edit">Редактировать</a>
+    </div>
     {% else %}
 
-        <h3>
-            Новый пользователь
-        </h3>
-        <form onchange="registerNewUser()">
-            <div class="row">
-                <label>Имя</label>
-                <input class="input-field" id="name" type="text" placeholder="Иван" data-user="newUser" value="{{ newUser.name }}">
-            </div>
-
-            <div class="row">
-                <label>Фамилия</label>
-                <input class="input-field" id="lastname" type="text" placeholder="Иванов" data-user="newUser" value="{{ newUser.lastname }}">
-            </div>
-
-            <div class="row">
-                <label>Телефон</label>
-                <input class="input-field" id="phone" type="text" placeholder="+79008007060" data-user="newUser" value="{{ newUser.phone }}">
-            </div>
+    <h3>
+        Новый пользователь
+    </h3>
+    <form onchange="registerNewUser()">
+        <div class="row">
+            <label>Имя</label>
+            <input class="input-field" id="name" type="text" placeholder="Иван" data-user="newUser"
+                   value="{{ newUser.name }}">
+        </div>
 
         <div class="row">
-                <label>Почта</label>
-                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com" data-user="newUser" value="{{ newUser.mail.mail }}" oninput="checkEmailNewUser ()">
-{#                <a class="done-input">#}
-{#                    <img src="images/done-order.svg">#}
-{#                </a>#}
-            </div>
-        </form>
-
-    {% endif %}
-    <div class="add-recipient" id="add-recipient">
-        <a class="link" href="#" onclick="addRecipient ()">
-            Добавить получателя
-        </a>
-        <div class="explanations">
-            Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал
-            другой
-            человек.
+            <label>Фамилия</label>
+            <input class="input-field" id="lastname" type="text" placeholder="Иванов" data-user="newUser"
+                   value="{{ newUser.lastname }}">
         </div>
-        <div class="displayNone" id="new-recipient">
 
-            <div class="row">
-                <label>Имя</label>
-                <input class="input-field" type="text" placeholder="Имя">
-            </div>
-
-            <div class="row">
-                <label>Фамилия</label>
-                <input class="input-field" type="text" placeholder="Фамилия">
-            </div>
-
-            <div class="row">
-                <label>Телефон</label>
-                <input class="input-field" id="input-phone" type="text" placeholder="Телефон">
-            </div>
-
+        {% set className = "test" %}
+        {% if newUser.phone.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newUser.phone.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
+            <label>Телефон</label>
+            <input class="input-field" id="phone" type="text" placeholder="+79008007060" data-user="newUser"
+                   value="{{ newUser.phone.number }}">
         </div>
+
+
+{#        {% if newUser.mail.status == 'done' %}#}
+{#            <div class="row done-input">#}
+{#                <label>Почта</label>#}
+{#                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com"#}
+{#                       data-user="newUser" value="{{ newUser.mail.mail }}">#}
+{#            </div>#}
+{#        {% elseif  newUser.mail.status == 'error' %}#}
+{#            <div class="row error-input">#}
+{#                <label>Почта</label>#}
+{#                <input class="input-field" id="mail" type="email" name="mail"#}
+{#                       placeholder="email@mail.com" data-user="newUser" value="{{ newUser.mail.mail }}">#}
+{#            </div>#}
+{#        {% else %}#}
+{#            <div class="row">#}
+{#                <label>Почта</label>#}
+{#                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com"#}
+{#                       data-user="newUser" value="{{ newUser.mail.mail }}">#}
+{#            </div>#}
+{#        {% endif %}#}
+
+        {% set className = "test" %}
+        {% if newUser.mail.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newUser.mail.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
+            <label>Почта</label>
+            <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com"
+                   data-user="newUser" value="{{ newUser.mail.mail }}">
+        </div>
+
+</form>
+
+{% endif %}
+<div class="add-recipient" id="add-recipient">
+    <a class="link" href="#" onclick="addRecipient ()">
+        Добавить получателя
+    </a>
+    <div class="explanations">
+        Добавьте получателя, если вы покупаете не для себя, или хотите, чтобы товар забрал
+        другой
+        человек.
     </div>
+    <div class="displayNone" id="new-recipient">
+
+        <div class="row">
+            <label>Имя</label>
+            <input class="input-field" type="text" placeholder="Имя">
+        </div>
+
+        <div class="row">
+            <label>Фамилия</label>
+            <input class="input-field" type="text" placeholder="Фамилия">
+        </div>
+
+        <div class="row">
+            <label>Телефон</label>
+            <input class="input-field" id="input-phone" type="text" placeholder="Телефон">
+        </div>
+
+    </div>
+</div>
 </div>

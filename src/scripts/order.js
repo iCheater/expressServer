@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //   requestPromocode({ promocode: promocodeReceived.innerHTML })
   // })
 
-  statusMailNewUser()
+  // checkPhoneNewUser ()
 })
 
 function requestPromocode (data) {
@@ -240,25 +240,16 @@ function requestMethodPay (data) {
 
 function registerNewUser () {
   const name = document.getElementById('name').value
-  console.log('name', name)
-
   const lastname = document.getElementById('lastname').value
-  console.log('lastname', lastname)
-
   const phone = document.getElementById('phone').value
-  console.log('phone', phone)
-
   const mail = document.getElementById('mail').value
-  console.log('mail', mail)
 
   requestNewUser({
     newUser: {
       name: name,
       lastname: lastname,
       phone: phone,
-      mail: {
-        mail: mail
-      },
+      mail: mail,
     },
   })
 }
@@ -270,7 +261,8 @@ function requestNewUser (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      statusMailNewUser(resServer)
+      checkPhoneNewUser (resServer)
+      checkEmailNewUser (resServer)
     } else {
       console.log('server not work')
     }
@@ -281,63 +273,34 @@ function requestNewUser (data) {
   xhr.send(JSON.stringify(data))
 }
 
-function checkEmailNewUser () {
-  const emailNewUser = document.getElementById('mail').value
-  console.log('emailNewUser', emailNewUser)
-  // if(emailNewUser === ''){
-  //   console.log("Введите Адрес электронной почты.");
-  //   return false
-  // }
-  // if(emailNewUser.indexOf(".") === -1){
-  //   console.log("Нет символа\".\"");
-  //   return false
-  // }
-  // if((emailNewUser.indexOf(",")>=0)||(emailNewUser.indexOf(";")>=0)||(emailNewUser.indexOf(" ")>=0)){
-  //   console.log("Адрес электронной почты был введен неправильно.");
-  //   return false
-  // }
-  //
-  // const dog = emailNewUser.indexOf("@")
-  // if (dog === -1) {
-  //   console.log("Нет символа\"@\".")
-  //   return false
-  // }
-  //
-  // if ((dog < 1) || (dog > emailNewUser.length - 5)) {
-  //   console.log("Адрес электронной почты был введен неправильно.")
-  //   return false
-  // }
-  // if ((emailNewUser.charAt(dog - 1) === '.') || (emailNewUser.charAt(dog + 1) === '.')) {
-  //   console.log("Адрес электронной почты был введен неправильно.")
-  //   return false
-  // }
-  // console.log("Адрес электронной почты был введен ВЕРНО!")
-  let status = null
-  const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
-  if(reg.test(emailNewUser) === false) {
-    console.log('Введите корректный e-mail')
-    status = 'error'
-    console.log('status: ', status)
-    return false
-  }
+function checkEmailNewUser (resServer) {
   const nearDone =document.getElementById('mail')
-  nearDone.closest('.row').classList.add('done-input')
 
-  status = 'done'
+  if (resServer.mail.status === 'error') {
+    console.log('Введите корректный e-mail')
+    nearDone.closest('.row').classList.remove('done-input')
+    nearDone.closest('.row').classList.add('error-input')
+  }
 
-  requestNewUser({
-    newUser: {
-      mail: {
-        status: status
-      },
-    },
-  })
-
-  console.log(' корректный e-mail')
-
+  if (resServer.mail.status === 'ok') {
+    console.log('Корректный e-mail')
+    nearDone.closest('.row').classList.remove('error-input')
+    nearDone.closest('.row').classList.add('done-input')
+  }
 }
 
-function statusMailNewUser (resServer) {
-  console.log(resServer)
-  if(resServer){}
+function checkPhoneNewUser (resServer) {
+  const nearDone =document.getElementById('phone')
+
+  if (resServer.phone.status === 'error') {
+    console.log('phone error')
+    nearDone.closest('.row').classList.remove('done-input')
+    nearDone.closest('.row').classList.add('error-input')
+  }
+  if (resServer.phone.status === 'ok') {
+    console.log('phone ok')
+    nearDone.closest('.row').classList.remove('error-input')
+    nearDone.closest('.row').classList.add('done-input')
+  }
+
 }
