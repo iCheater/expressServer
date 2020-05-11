@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       // console.log('click!!!!', event)
       event.target.closest('.way__shipping').classList.add('active-border')
-      wayShipping ()
+      wayShipping()
     })
   }
 
-  const parentContainer = document.getElementsByClassName('way__pay')
+  // const parentContainer = document.getElementsByClassName('way__pay')
   const arrPayment = document.getElementsByClassName('payment-method')
 
   for (let i = 0; i < arrPayment.length; i++) {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         arrPayment[i].classList.remove('method-changed')
       }
       event.target.closest('.payment-method').classList.add('method-changed')
-      wayPay ()
+      wayPay()
     })
   }
 
@@ -56,9 +56,9 @@ function requestPromocode (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      console.log('resServer',resServer)
+      console.log('resServer', resServer)
       showPromocodeStatus(resServer)
-      totalPromoDiscount (resServer)
+      totalPromoDiscount(resServer)
     } else {
       console.log('server not work')
     }
@@ -80,11 +80,11 @@ function totalPromoDiscount (resServer) {
     const totalShipping = document.getElementById('sumShipping')
     let promocodeSale = 0
     let discount = null
-    if(resServer.promocode.discountPercent > 0){
+    if (resServer.promocode.discountPercent > 0) {
       promocodeSale = resServer.promocode.discountPercent / 100
       discount = Number(totalSale.innerHTML * promocodeSale)
     }
-    if(resServer.promocode.discountCurrency > 0) {
+    if (resServer.promocode.discountCurrency > 0) {
       discount = Number(resServer.promocode.discountCurrency)
     }
     const sumDiscountInMoney = Number(totalSale.innerHTML) + discount
@@ -116,29 +116,6 @@ function addRecipient () {
     showBlock.classList.remove('displayNone')
     showBlock.classList.add('displayBlock')
   })
-
-  // showBlock.classList.remove('displayNone')
-  // showBlock.classList.add('displayBlock')
-  // console.log('1')
-  //
-  // addRecipientOrder.addEventListener('click', e => {
-  //   const displayNone = document.getElementsByClassName('displayNone')
-  //   console.log('displayNone', displayNone)
-  //
-  //   const displayBlock = document.getElementsByClassName('displayNone')
-  //   console.log('displayBlock', displayBlock)
-  //
-  //   if(displayBlock) {
-  //     console.log('2')
-  //     showBlock.classList.remove('displayBlock')
-  //     showBlock.classList.add('displayNone')
-  //   }
-  //
-  // })
-
-  // addRecipientOrder.addEventListener('click', e => {
-  //   showBlock.style.display = 'none'
-  // })
 }
 
 function showInputAddress () {
@@ -261,8 +238,10 @@ function requestNewUser (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      checkPhoneNewUser (resServer)
-      checkEmailNewUser (resServer)
+      checkNameNewUser(resServer)
+      checkLastnameNewUser(resServer)
+      checkPhoneNewUser(resServer)
+      checkEmailNewUser(resServer)
     } else {
       console.log('server not work')
     }
@@ -273,8 +252,35 @@ function requestNewUser (data) {
   xhr.send(JSON.stringify(data))
 }
 
+function checkNameNewUser (resServer) {
+  const nameInput = document.getElementById('name')
+  if (resServer.name.status === 'error') {
+    console.log('name error')
+    nameInput.closest('.row').classList.remove('done-input')
+    nameInput.closest('.row').classList.add('error-input')
+  }
+  if (resServer.name.status === 'ok') {
+    nameInput.closest('.row').classList.remove('error-input')
+    nameInput.closest('.row').classList.add('done-input')
+  }
+  console.log('name ok')
+}
+
+function checkLastnameNewUser (resServer) {
+  const lastnameInput = document.getElementById('lastname')
+  if (resServer.lastname.status === 'error') {
+    console.log('name error')
+    lastnameInput.closest('.row').classList.remove('done-input')
+    lastnameInput.closest('.row').classList.add('error-input')
+  }
+  if (resServer.lastname.status === 'ok') {
+    lastnameInput.closest('.row').classList.remove('error-input')
+    lastnameInput.closest('.row').classList.add('done-input')
+  }
+}
+
 function checkEmailNewUser (resServer) {
-  const nearDone =document.getElementById('mail')
+  const nearDone = document.getElementById('mail')
 
   if (resServer.mail.status === 'error') {
     console.log('Введите корректный e-mail')
@@ -290,7 +296,7 @@ function checkEmailNewUser (resServer) {
 }
 
 function checkPhoneNewUser (resServer) {
-  const nearDone =document.getElementById('phone')
+  const nearDone = document.getElementById('phone')
 
   if (resServer.phone.status === 'error') {
     console.log('phone error')
@@ -301,6 +307,77 @@ function checkPhoneNewUser (resServer) {
     console.log('phone ok')
     nearDone.closest('.row').classList.remove('error-input')
     nearDone.closest('.row').classList.add('done-input')
+  }
+
+}
+
+function addDataRecipient () {
+  const name = document.getElementById('recipient-name').value
+  const lastname = document.getElementById('recipient-lastname').value
+  const phone = document.getElementById('recipient-phone').value
+  console.log(name, lastname, phone)
+  requestDataRecipient({
+    newRecipient: {
+      name: name,
+      lastname: lastname,
+      phone: phone,
+    },
+  })
+
+}
+
+function requestDataRecipient (data) {
+// eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+  xhr.onload = function (e) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // console.log(JSON.parse(xhr.response))
+      const resServer = JSON.parse(xhr.response)
+      checkDataRecipient (resServer)
+    } else {
+      console.log('server not work')
+    }
+    // console.log('request', xhr.response)
+  }
+  xhr.open('POST', '/order/newRecipient')
+  xhr.setRequestHeader('Content-type', 'application/json')
+  xhr.send(JSON.stringify(data))
+}
+
+function checkDataRecipient (resServer) {
+  console.log(resServer)
+  const nameInput = document.getElementById('recipient-name')
+  if (resServer.name.status === 'error') {
+    console.log('name error')
+    nameInput.closest('.row').classList.remove('done-input')
+    nameInput.closest('.row').classList.add('error-input')
+  }
+  if (resServer.name.status === 'ok') {
+    nameInput.closest('.row').classList.remove('error-input')
+    nameInput.closest('.row').classList.add('done-input')
+  }
+
+  const lastnameInput = document.getElementById('recipient-lastname')
+  if (resServer.lastname.status === 'error') {
+    console.log('name error')
+    lastnameInput.closest('.row').classList.remove('done-input')
+    lastnameInput.closest('.row').classList.add('error-input')
+  }
+  if (resServer.lastname.status === 'ok') {
+    lastnameInput.closest('.row').classList.remove('error-input')
+    lastnameInput.closest('.row').classList.add('done-input')
+  }
+
+  const phoneInput = document.getElementById('recipient-phone')
+  if (resServer.phone.status === 'error') {
+    console.log('phone error')
+    phoneInput.closest('.row').classList.remove('done-input')
+    phoneInput.closest('.row').classList.add('error-input')
+  }
+  if (resServer.phone.status === 'ok') {
+    console.log('phone ok')
+    phoneInput.closest('.row').classList.remove('error-input')
+    phoneInput.closest('.row').classList.add('done-input')
   }
 
 }

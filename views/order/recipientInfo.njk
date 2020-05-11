@@ -10,16 +10,28 @@
         Новый пользователь
     </h3>
     <form onchange="registerNewUser()">
-        <div class="row">
+
+{#        {% set className = "test" %}#}
+        {% if newUser.name.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newUser.name.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
             <label>Имя</label>
             <input class="input-field" id="name" type="text" placeholder="Иван" data-user="newUser"
-                   value="{{ newUser.name }}">
+                   value="{{ newUser.name.firstname }}">
         </div>
 
-        <div class="row">
+        {% if newUser.lastname.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newUser.lastname.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
             <label>Фамилия</label>
             <input class="input-field" id="lastname" type="text" placeholder="Иванов" data-user="newUser"
-                   value="{{ newUser.lastname }}">
+                   value="{{ newUser.lastname.lastname }}">
         </div>
 
         {% set className = "test" %}
@@ -33,27 +45,6 @@
             <input class="input-field" id="phone" type="text" placeholder="+79008007060" data-user="newUser"
                    value="{{ newUser.phone.number }}">
         </div>
-
-
-{#        {% if newUser.mail.status == 'done' %}#}
-{#            <div class="row done-input">#}
-{#                <label>Почта</label>#}
-{#                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com"#}
-{#                       data-user="newUser" value="{{ newUser.mail.mail }}">#}
-{#            </div>#}
-{#        {% elseif  newUser.mail.status == 'error' %}#}
-{#            <div class="row error-input">#}
-{#                <label>Почта</label>#}
-{#                <input class="input-field" id="mail" type="email" name="mail"#}
-{#                       placeholder="email@mail.com" data-user="newUser" value="{{ newUser.mail.mail }}">#}
-{#            </div>#}
-{#        {% else %}#}
-{#            <div class="row">#}
-{#                <label>Почта</label>#}
-{#                <input class="input-field" id="mail" type="email" name="mail" placeholder="email@mail.com"#}
-{#                       data-user="newUser" value="{{ newUser.mail.mail }}">#}
-{#            </div>#}
-{#        {% endif %}#}
 
         {% set className = "test" %}
         {% if newUser.mail.status == 'ok' %}
@@ -79,23 +70,42 @@
         другой
         человек.
     </div>
-    <div class="displayNone" id="new-recipient">
+    <form class="displayNone" id="new-recipient" onchange="addDataRecipient ()">
 
-        <div class="row">
+        {% set className = "test" %}
+        {% if newRecipient.name.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newRecipient.name.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
             <label>Имя</label>
-            <input class="input-field" type="text" placeholder="Имя">
+            <input class="input-field" id="recipient-name" type="text" placeholder="Имя"
+                   value="{{ newRecipient.name.firstname }}">
         </div>
 
-        <div class="row">
+        {% set className = "test" %}
+        {% if newRecipient.lastname.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newRecipient.lastname.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
             <label>Фамилия</label>
-            <input class="input-field" type="text" placeholder="Фамилия">
+            <input class="input-field" id="recipient-lastname" type="text" placeholder="Фамилия" value="{{ newRecipient.lastname.lastname }}">
         </div>
 
-        <div class="row">
+        {% set className = "test" %}
+        {% if newRecipient.phone.status == 'ok' %}
+            {% set className = "done-input" %}
+        {% elseif  newRecipient.phone.status == 'error' %}
+            {% set className = "error-input" %}
+        {% endif %}
+        <div class="row {{ className }}">
             <label>Телефон</label>
-            <input class="input-field" id="input-phone" type="text" placeholder="Телефон">
+            <input class="input-field" id="recipient-phone" type="text" placeholder="Телефон" value="{{ newRecipient.phone.number }}">
         </div>
 
-    </div>
+    </form>
 </div>
 </div>

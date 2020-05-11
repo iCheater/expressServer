@@ -14,8 +14,13 @@ function isAuthorlessValid () {
 router.get('/', async (req, res, next) => {
   // получаю массив id для запроса на сервер
   const arrOrder = []
-  if (!req.session.cart && !req.session.order) {
-    res.redirect('/')
+
+  if (!req.session.cart) {
+    return res.redirect('/')
+  }
+
+  if(!req.session.order) {
+    req.session.order = {}
   }
 
   for (let id in req.session.cart.items) {
@@ -23,12 +28,14 @@ router.get('/', async (req, res, next) => {
       arrOrder.push(id)
     }
   }
-  // console.log(arrOrder)
+  console.log(req.session.order)
 
   //запрос на сервер
   try {
     const products = await Product.findAll({ where: { id: arrOrder } })
     let promocode = null
+
+
     if (req.session.order && req.session.order.promocode) {
       promocode = await Promocode.findOne({
         where: {
@@ -45,16 +52,18 @@ router.get('/', async (req, res, next) => {
       product.quantity = req.session.cart.items[product.id].quantity
     })
     console.log('req.session.order', req.session.order)
+
     res.render('order/order', {
       products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
       sumShipping: 40000,
       promocode: promocode,
-      address: req.session.order.address,
-      wayShipping: req.session.order.wayShipping,
-      methodPay: req.session.order.methodPay,
-      newUser: req.session.order.newUser,
+      address: req.session.order.address || '',
+      wayShipping: req.session.order.wayShipping || '',
+      methodPay: req.session.order.methodPay || '',
+      newUser: req.session.order.newUser || {},
+      newRecipient: req.session.order.newRecipient || {},
     })
   } catch (err) {
     next(err)
@@ -307,8 +316,14 @@ router.post('/newUser/', (req, res) => {
   }
 
   req.session.order.newUser = {
-    name: req.body.newUser.name,
-    lastname: req.body.newUser.lastname,
+    name: {
+      firstname: req.body.newUser.name,
+      status: 'ok',
+    },
+    lastname: {
+      lastname: req.body.newUser.lastname,
+      status: 'ok',
+    },
     phone: {
       number: req.body.newUser.phone,
       status: 'ok',
@@ -319,8 +334,19 @@ router.post('/newUser/', (req, res) => {
     },
   }
 
+  const regName = /^[a-zа-яё]+(?: [a-zа-яё]+)?$/i
+  console.log('xc', regName.test(req.body.newUser.name))
+  if(regName.test(req.body.newUser.name) === false) {
+    req.session.order.newUser.name.status = 'error'
+    console.log('name error')
+  }
+
+  if(regName.test(req.body.newUser.lastname) === false) {
+    req.session.order.newUser.lastname.status = 'error'
+    console.log('name error')
+  }
+
   const regPhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/
-  console.log('phone', regPhone.test(req.body.newUser.phone))
 
   if(regPhone.test(req.body.newUser.phone) === false) {
     req.session.order.newUser.phone.status = 'error'
@@ -332,9 +358,48 @@ router.post('/newUser/', (req, res) => {
     req.session.order.newUser.mail.status = 'error'
     console.log('Введите корректный e-mail')
   }
-
   return res.json(req.session.order.newUser)
+})
 
+router.post('/newRecipient/', (req, res) => {
+  console.log('newRecipient', req.body.newRecipient)
+  if (!req.session.order) {
+    req.session.order = {}
+  }
+
+  req.session.order.newRecipient = {
+    name: {
+      firstname: req.body.newRecipient.name,
+      status: 'ok',
+    },
+    lastname: {
+      lastname: req.body.newRecipient.lastname,
+      status: 'ok',
+    },
+    phone: {
+      number: req.body.newRecipient.phone,
+      status: 'ok',
+    },
+  }
+
+  const regName = /^[a-zа-яё]+(?:[a-zа-яё]+)?$/i
+  if(regName.test(req.body.newRecipient.name) === false) {
+    req.session.order.newRecipient.name.status = 'error'
+    console.log('name error')
+  }
+
+  if(regName.test(req.body.newRecipient.lastname) === false) {
+    req.session.order.newRecipient.lastname.status = 'error'
+    console.log('last name error')
+  }
+
+  const regPhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/
+  if(regPhone.test(req.body.newRecipient.phone) === false) {
+    req.session.order.newRecipient.phone.status = 'error'
+    console.log('phone error')
+  }
+
+  return res.json(req.session.order.newRecipient)
 })
 
 module.exports = router
