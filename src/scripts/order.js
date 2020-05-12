@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //   requestPromocode({ promocode: promocodeReceived.innerHTML })
   // })
 
-  // checkPhoneNewUser ()
 })
 
 function requestPromocode (data) {
@@ -380,4 +379,8 @@ function checkDataRecipient (resServer) {
     phoneInput.closest('.row').classList.add('done-input')
   }
 
+}
+
+function createOrder () {
+  window.location.href = '/order/createOrder'
 }

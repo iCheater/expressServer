@@ -34,7 +34,7 @@
                                     {{ product.name }}
                                     </span>
                                 <div class="qty-num">{{ product.quantity }}</div>
-                                {#                                    30 гр.#}
+                                {#  30 гр.#}
                             </div>
 
                             <div class="order__item-day">
@@ -104,9 +104,9 @@
                 <div class="payment__row row-sale">
                     <div class="title">
                         <h4>Скидка</h4>
-                        {#                            <div class="descr">#}
-                        {#                                <a class="link" id="sale-details" href="#">Подробнее</a>#}
-                        {#                            </div>#}
+                        {# <div class="descr">#}
+                        {# <a class="link" id="sale-details" href="#">Подробнее</a>#}
+                        {# </div>#}
 
                     </div>
                     <div id="sumSale"> {{ templateData.sumDiscountInMoney | addPennies }} </div>
@@ -127,12 +127,10 @@
                         <h2>Итого</h2>
                     </div>
                     <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney+sumShipping) | addPennies }} </div>
-                    {#мб есть смысл сделать {{ (sumRowTotal -sumDiscountInMoney) | addPennies }}#}
+
                 </div>
 
-                <button class="btn btn-order"
-{#                        onclick="collectData ()"#}
-                >
+                <button class="btn btn-order" onclick="createOrder ()">
                     Оформить заказ
                 </button>
 

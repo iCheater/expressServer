@@ -402,4 +402,8 @@ router.post('/newRecipient/', (req, res) => {
   return res.json(req.session.order.newRecipient)
 })
 
+router.get('/createOrder/', (req, res) => {
+  res.render('order/createOrder')
+})
+
 module.exports = router

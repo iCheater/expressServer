@@ -1,0 +1,43 @@
+{% extends "./../layout.njk" %}
+
+{% block preScript %}{% endblock %}
+
+{#{% block preScript %}#}
+{#    <script src="/expressServer/src/scripts/order.js"></script>#}
+{#{% endblock %}#}
+
+{% block content %}
+    <div class="container">
+        <div class="new_order">
+
+            <fieldset>
+                <legend>Заказ № <span>{87076856453}</span> оформлен</legend>
+                <div class="info_order">
+                    <p>
+                        Благодарим вас за то, что воспользовались услугами нашего интернет-магазина.
+                    </p>
+                    <div class="info_order-txt">
+                        Стоимость заказа: <span>{ 1999 }</span>
+                    </div>
+
+
+
+                    <div class="btn-case">
+                        <a class="btn-order" href="/profile/history/{#order#}">
+                            Детали заказа
+                        </a>
+                        <a class="btn-order" href="/catalog/">
+                            Продолжить покупки
+                        </a>
+                    </div>
+
+                    <p>
+                        Если вы что-то забыли, измените заказ в <a href="/profile/history">личном кабинете</a>.
+                    </p>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+{% endblock %}
