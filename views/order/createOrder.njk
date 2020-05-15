@@ -17,7 +17,8 @@
                         Благодарим вас за то, что воспользовались услугами нашего интернет-магазина.
                     </p>
                     <div class="info_order-txt">
-                        Стоимость заказа: <span>{{ totalOrder }}</span>
+                        Стоимость заказа:
+                        <span>{{ order.totalOrder | addPennies }}</span>
                     </div>
 
 

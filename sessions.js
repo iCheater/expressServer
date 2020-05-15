@@ -5,80 +5,80 @@
 //     httpOnly: true
 //     path: /
 // }
+const obj = {
   cart: {
     items: {
       423: {
-        checked: 'true'
-        quantity: 1
-      }
+        checked: 'true',
+        quantity: 1,
+      },
       451: {
-        checked: 'false'
-        quantity: 1
-      }
+        checked: 'false',
+        quantity: 1,
+      },
       452: {
-        checked: 'true'
-        quantity: 1
-      }
-    }
-    cartLength: 3
+        checked: 'true',
+        quantity: 1,
+      },
+    },
+    cartLength: 3,
     calculation: {
-      sumRowTotal: 5218113
-      sumDiscountInMoney: 3139048.59
-      sumSellingPriceWithDiscount: 2079064.4100000001
-    }
-  }
+      sumRowTotal: 5218113,
+      sumDiscountInMoney: 3139048.59,
+      sumSellingPriceWithDiscount: 2079064.4100000001,
+    },
+  },
   order: {
     newUser: {
       name: {
-        firstname: 'Missi'
-        status: ok
-      }
+        firstname: 'Missi',
+        status: ok,
+      },
 
       lastname: {
-        lastname: 'Mause'
-        status: 'ok'
-      }
+        lastname: 'Mause',
+        status: 'ok',
+      },
 
       phone: {
-        number: '+79008007060'
-        status: 'ok'
-      }
+        number: '+79008007060',
+        status: 'ok',
+      },
 
       mail: {
-        mail: 'xc1@er.rr'
-        status: 'ok'
-      }
-    }
-    wayShipping: 'expressDelivery'
-    address: 'zZxzx'
-    methodPay: 'cashOffline'
-    totalOrder: 2079464.4100000001
+        mail: 'xc1@er.rr',
+        status: 'ok',
+      },
+    },
+    wayShipping: 'expressDelivery',
+    address: 'zZxzx',
+    methodPay: 'cashOffline',
+    totalOrder: 2079464.4100000001,
     products: [
       {
-        id: 423
-        quantity: 1
-      }
+        id: 423,
+        quantity: 1,
+      },
       {
-        id: 452
-        quantity: 1
-      }
-  }
-]
-  }
+        id: 452,
+        quantity: 1,
+      },
+    ],
+  },
 
   authorless: {
-    username: 'Missi Mause'
-    email: 'xc1@er.rr'
-    phone: '+79008007060'
+    username: 'Missi Mause',
+    email: 'xc1@er.rr',
+    phone: '+79008007060',
     order: {
-      address: zZxzx
-      shipping: expressDelivery
-      methodPay: cashOffline
-      totalOrder: totalOrder'
+      address: 'zZxzx',
+      shipping: 'expressDelivery',
+      methodPay: 'cashOffline',
+      totalOrder: totalOrder,
 
-
-  }
-  _locals: {
-  cartLength: 3
-}
+    },
+    _locals: {
+      cartLength: 3,
+    },
+  },
 }

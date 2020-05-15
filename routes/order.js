@@ -55,7 +55,8 @@ router.get('/', async (req, res, next) => {
       products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
-      sumShipping: 40000,
+
+      // sumShipping: 40000,
       // promocode: promocode,
       address: req.session.order.address || '',
       wayShipping: req.session.order.wayShipping || '',
@@ -63,6 +64,7 @@ router.get('/', async (req, res, next) => {
       newUser: req.session.order.newUser || {},
       newRecipient: req.session.order.newRecipient || {},
     })
+
   } catch (err) {
     next(err)
   }
@@ -406,7 +408,7 @@ router.get('/createOrder/', async (req, res, next) => {
   let totalShipping = 0
 
   if(req.session.order.wayShipping === 'expressDelivery'){
-    totalShipping = 400
+    totalShipping = 40000
     totalOrder = totalShipping + totalOrder
     console.log('курьер за 400')
 
@@ -438,6 +440,7 @@ router.get('/createOrder/', async (req, res, next) => {
     phone: req.session.order.newUser.phone.number,
 
     order: {
+      totalOrder: totalOrder,
       address: req.session.order.address,
       shipping: req.session.order.wayShipping,
       methodPay: req.session.order.methodPay,
@@ -445,8 +448,7 @@ router.get('/createOrder/', async (req, res, next) => {
       products: rowProducts,
     },
   }
-  res.render('order/createOrder', req.session.authorless)
-  console.log('req.session.authorless', req.session.authorless.order.products)
+
   //
   // try {
   //   let user = req.session.user || null
@@ -533,7 +535,10 @@ router.get('/createOrder/', async (req, res, next) => {
   //     user: user,
   //     password: nonSaltedPassword,
   //   })
-  //
+
+  res.render('order/createOrder', req.session.authorless)
+  console.log('req.session.authorless', req.session.authorless.order)
+
   // } catch (err) {
   //   next(err)
   // }

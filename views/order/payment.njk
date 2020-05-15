@@ -1,0 +1,76 @@
+{% if methodPay == 'cardOnline' %}
+    <div class="payment-method method-changed" data-pay="cardOnline">
+        <div class="title">
+            Картой онлайн
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/card.png">
+        </div>
+    </div>
+
+    <div class="payment-method" data-pay="cashOffline">
+        <div class="title">
+            Наличными
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/cash.png">
+        </div>
+    </div>
+
+{% elseif methodPay == 'cashOffline' %}
+    <div class="payment-method" data-pay="cardOnline">
+        <div class="title">
+            Картой онлайн
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/card.png">
+        </div>
+    </div>
+
+    <div class="payment-method method-changed" data-pay="cashOffline">
+        <div class="title">
+            Наличными
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/cash.png">
+        </div>
+    </div>
+{% else %}
+    <div class="payment-method method-changed" data-pay="cardOnline">
+        <div class="title">
+            Картой онлайн
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/card.png">
+        </div>
+    </div>
+
+    <div class="payment-method" data-pay="cashOffline">
+        <div class="title">
+            Наличными
+        </div>
+        <div class="descr">
+            тут должны быть плюшки
+        </div>
+        <div class="icon">
+            <img class="icon-img" src="images/cash.png">
+        </div>
+    </div>
+{% endif %}
+
+

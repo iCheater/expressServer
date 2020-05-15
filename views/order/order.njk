@@ -17,126 +17,113 @@
                     {% include "./recipientInfo.njk" %}
 
                     <h2 class="head-title title-2">Способ получения</h2>
-                {% include "./shipping.njk" %}
+                    {% include "./shipping.njk" %}
 
-                <h2 class="head-title title-3">Состав заказа</h2>
+                    <h2 class="head-title title-3">Состав заказа</h2>
 
-                {% for product in products %}
-                    <div class="content order-row">
-                        <div class="order__item">
+                    {% for product in products %}
+                        <div class="content order-row">
+                            <div class="order__item">
 
-                            <div class="order__item-img">
-                                <img src="{{ product.mURL }}">
-                            </div>
+                                <div class="order__item-img">
+                                    <img src="{{ product.mURL }}">
+                                </div>
 
-                            <div class="order__item-qty">
+                                <div class="order__item-qty">
                                     <span class="qty-weight">
                                     {{ product.name }}
                                     </span>
-                                <div class="qty-num">{{ product.quantity }}</div>
-                                {#  30 гр.#}
+                                    <div class="qty-num">{{ product.quantity }}</div>
+                                    {#  30 гр.#}
+                                </div>
+
+                                <div class="order__item-day">
+                                    <h5>Доставим</h5>
+                                    <div>
+                                        3 - 4 дня
+                                    </div>
+                                    <div>
+                                        Стоимость доставки
+                                    </div>
+                                    <div>
+                                        {{ sumShipping | addPennies }} ₽
+                                    </div>
+                                </div>
+
                             </div>
+                        </div>
+                    {% endfor %}
 
-                            <div class="order__item-day">
-                                <h5>Доставим</h5>
-                                <div>
-                                    3 - 4 дня
-                                </div>
-                                <div>
-                                    Стоимость доставки
-                                </div>
-                                <div>
-                                    {{ sumShipping | addPennies }} ₽
-                                </div>
+                    <h2 class="head-title title-4">Оплата</h2>
+                    <div class="content way__pay">
+
+                        {#                    {% include "./promocode.njk" %}#}
+
+                        <h3>Способы оплаты</h3>
+
+                        {% include "./payment.njk" %}
+
+                    </div>
+
+                </div>
+
+                <div class="content payment">
+                    <div class="payment__row">
+                        <div class="title">
+                            <h4>Товары</h4>
+                            <div class="descr">
+                                {{ products | length }} шт.
                             </div>
-
                         </div>
+                        <div id="sumTotal"> {{ templateData.sumRowTotal | addPennies }} </div>
                     </div>
-                {% endfor %}
 
-                <h2 class="head-title title-4">Оплата</h2>
-                <div class="content way__pay">
-
-{#                    {% include "./promocode.njk" %}#}
-
-                    <h3>Способы оплаты</h3>
-
-                    <div class="payment-method method-changed" data-pay="cardOnline">
+                    <div class="payment__row row-sale">
                         <div class="title">
-                            Картой онлайн
+                            <h4>Скидка</h4>
+                            {# <div class="descr">#}
+                            {# <a class="link" id="sale-details" href="#">Подробнее</a>#}
+                            {# </div>#}
+
                         </div>
-                        <div class="descr">
-                            тут должны быть плюшки
-                        </div>
-                        <div class="icon">
-                            <img class="icon-img" src="images/card.png">
-                        </div>
+                        <div id="sumSale"> {{ templateData.sumDiscountInMoney | addPennies }} </div>
                     </div>
 
-                    <div class="payment-method" data-pay="cashOffline">
+                    <div class="payment__row">
                         <div class="title">
-                            Наличными
+                            <h4>Доставка</h4>
+                            <div class="descr">
+                                {{ products | length }} шт.
+                            </div>
                         </div>
-                        <div class="descr">
-                            тут должны быть плюшки
-                        </div>
-                        <div class="icon">
-                            <img class="icon-img" src="images/cash.png">
-                        </div>
+
+                        {% if wayShipping === 'expressDelivery' %}
+                            <div id="sumShipping">
+                                400
+                                {# {{ sumShipping | addPennies }} #}
+                            </div>
+                        {% else %}
+                            <div id="sumShipping"> 0</div>
+                        {% endif %}
+
                     </div>
 
-
-                </div>
-
-            </div>
-
-            <div class="content payment">
-                <div class="payment__row">
-                    <div class="title">
-                        <h4>Товары</h4>
-                        <div class="descr">
-                            {{ products | length }} шт.
+                    <div class="payment__row total-row">
+                        <div class="title">
+                            <h2>Итого</h2>
                         </div>
+                        {% if wayShipping === 'expressDelivery' %}
+                        <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney + 40000) | addPennies }} </div>
+                        {% else %}
+                        <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney) | addPennies }} </div>
+                        {% endif %}
                     </div>
-                    <div id="sumTotal"> {{ templateData.sumRowTotal | addPennies }} </div>
+
+                    <button class="btn btn-order" onclick="createOrder ()">
+                        Оформить заказ
+                    </button>
                 </div>
-
-                <div class="payment__row row-sale">
-                    <div class="title">
-                        <h4>Скидка</h4>
-                        {# <div class="descr">#}
-                        {# <a class="link" id="sale-details" href="#">Подробнее</a>#}
-                        {# </div>#}
-
-                    </div>
-                    <div id="sumSale"> {{ templateData.sumDiscountInMoney | addPennies }} </div>
-                </div>
-
-                <div class="payment__row">
-                    <div class="title">
-                        <h4>Доставка</h4>
-                        <div class="descr">
-                            {{ products | length }} шт.
-                        </div>
-                    </div>
-                    <div id="sumShipping"> {{ sumShipping | addPennies }} </div>
-                </div>
-
-                <div class="payment__row total-row">
-                    <div class="title">
-                        <h2>Итого</h2>
-                    </div>
-                    <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney+sumShipping) | addPennies }} </div>
-
-                </div>
-
-                <button class="btn btn-order" onclick="createOrder ()">
-                    Оформить заказ
-                </button>
-
-
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}

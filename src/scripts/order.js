@@ -128,15 +128,23 @@ function addNewAddress () {
 }
 
 function wayShipping () {
+  const blockSumShipping = document.getElementById('sumShipping')
   const blockShipping = document.getElementsByClassName('active-border')
-  console.log('blockShipping', blockShipping)
   let dataShipping = null
   for (let i = 0; i < blockShipping.length; i++) {
     dataShipping = blockShipping[i].dataset.shipping
-    console.log('dataShipping', dataShipping)
+
+    if( dataShipping === 'expressDelivery') {
+      blockSumShipping.innerHTML = '400'
+    }
+    if( dataShipping === 'selfDelivery') {
+      blockSumShipping.innerHTML = '0'
+    }
+
   }
   requestWayShipping({ wayShipping: dataShipping })
 }
+
 
 function requestWayShipping (data) {
 // eslint-disable-next-line no-undef
@@ -145,7 +153,7 @@ function requestWayShipping (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      console.log(resServer)
+      savePreviousChoice (resServer)
     } else {
       console.log('server not work')
     }
@@ -154,6 +162,24 @@ function requestWayShipping (data) {
   xhr.open('POST', '/order/wayShipping')
   xhr.setRequestHeader('Content-type', 'application/json')
   xhr.send(JSON.stringify(data))
+}
+
+function savePreviousChoice (resServer) {
+//  хочу чтобы спрашиволо у сервера че было до обновления и ставило им рамку
+  console.log('res server', resServer)
+  // const arrShipping = document.getElementsByClassName('way__shipping')
+  // arrShipping.forEach( e => e.classList.remove('active-border'))
+
+  if (resServer.wayShipping === 'expressDelivery') {
+    const expressDelivery = document.getElementById('expressDelivery')
+    expressDelivery.classList.add('active-border')
+  }
+
+  if (resServer.wayShipping === 'selfDelivery') {
+    const expressDelivery = document.getElementById('selfDelivery')
+    expressDelivery.classList.add('active-border')
+  }
+
 }
 
 function requestAddress (data) {
