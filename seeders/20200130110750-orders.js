@@ -8,14 +8,14 @@ module.exports = {
     const users = await User.findAll()
 
     const orders = []
-    const shipping = ['Самовывоз', 'Курьерская доставка']
+    const shipping = ['selfDelivery', 'expressDelivery']
     for (let i = 0; i < 50; i++) {
       const user = users[Math.floor(Math.random() * (users.length))]
       orders.push({
         // userName: faker.name.findName(),
         // address: faker.address.streetAddress(),
         id: i + 1,
-        promoCode: 'xxx-xxx-xxx-xxx',
+        // promoCode: 'xxx-xxx-xxx-xxx',
         comment: 'comments',
         shipping: shipping[Math.round(Math.random())],
         // phone: faker.phone.phoneNumber(),

@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
     return res.redirect('/')
   }
 
-  if(!req.session.order) {
+  if (!req.session.order) {
     req.session.order = {}
   }
 
@@ -34,7 +34,6 @@ router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({ where: { id: arrOrder } })
     let promocode = null
-
 
     if (req.session.order && req.session.order.promocode) {
       promocode = await Promocode.findOne({
@@ -336,25 +335,25 @@ router.post('/newUser/', (req, res) => {
 
   const regName = /^[a-zа-яё]+(?: [a-zа-яё]+)?$/i
   console.log('xc', regName.test(req.body.newUser.name))
-  if(regName.test(req.body.newUser.name) === false) {
+  if (regName.test(req.body.newUser.name) === false) {
     req.session.order.newUser.name.status = 'error'
     console.log('name error')
   }
 
-  if(regName.test(req.body.newUser.lastname) === false) {
+  if (regName.test(req.body.newUser.lastname) === false) {
     req.session.order.newUser.lastname.status = 'error'
     console.log('name error')
   }
 
   const regPhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/
 
-  if(regPhone.test(req.body.newUser.phone) === false) {
+  if (regPhone.test(req.body.newUser.phone) === false) {
     req.session.order.newUser.phone.status = 'error'
     console.log('phone error')
   }
 
   const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
-  if(reg.test(req.body.newUser.mail) === false) {
+  if (reg.test(req.body.newUser.mail) === false) {
     req.session.order.newUser.mail.status = 'error'
     console.log('Введите корректный e-mail')
   }
@@ -383,18 +382,18 @@ router.post('/newRecipient/', (req, res) => {
   }
 
   const regName = /^[a-zа-яё]+(?:[a-zа-яё]+)?$/i
-  if(regName.test(req.body.newRecipient.name) === false) {
+  if (regName.test(req.body.newRecipient.name) === false) {
     req.session.order.newRecipient.name.status = 'error'
     console.log('name error')
   }
 
-  if(regName.test(req.body.newRecipient.lastname) === false) {
+  if (regName.test(req.body.newRecipient.lastname) === false) {
     req.session.order.newRecipient.lastname.status = 'error'
     console.log('last name error')
   }
 
   const regPhone = /^((8|\+7)[\- ]?)?(\(?\d{3,4}\)?[\- ]?)?[\d\- ]{5,10}$/
-  if(regPhone.test(req.body.newRecipient.phone) === false) {
+  if (regPhone.test(req.body.newRecipient.phone) === false) {
     req.session.order.newRecipient.phone.status = 'error'
     console.log('phone error')
   }
@@ -407,10 +406,12 @@ router.get('/createOrder/', async (req, res, next) => {
   let totalOrder = req.session.cart.calculation.sumSellingPriceWithDiscount
   let totalShipping = 0
 
-  if(req.session.order.wayShipping === 'expressDelivery'){
+  if (req.session.order.wayShipping === 'expressDelivery') {
     totalShipping = 40000
-    totalOrder = totalShipping + totalOrder
+    // totalOrder = Number(totalShipping) + Number(totalOrder.toFixed(0))
+    totalOrder = Number(totalShipping) + Number(Math.trunc(totalOrder))
     console.log('курьер за 400')
+    console.log('totalOrder', Math.trunc(totalOrder))
 
   }
   req.session.order.totalOrder = totalOrder
@@ -433,14 +434,13 @@ router.get('/createOrder/', async (req, res, next) => {
   })
   console.log('req.session.order', req.session.order)
 
-
   req.session.authorless = {
     username: req.session.order.newUser.name.firstname + ' ' + req.session.order.newUser.lastname.lastname,
     email: req.session.order.newUser.mail.mail,
     phone: req.session.order.newUser.phone.number,
+    totalOrder: totalOrder,
 
     order: {
-      totalOrder: totalOrder,
       address: req.session.order.address,
       shipping: req.session.order.wayShipping,
       methodPay: req.session.order.methodPay,
@@ -449,100 +449,118 @@ router.get('/createOrder/', async (req, res, next) => {
     },
   }
 
-  //
-  // try {
-  //   let user = req.session.user || null
-  //   let nonSaltedPassword = null
-  //   if (!req.session.cart) {
-  //     return next(new ErrorHandler(500, 'cart is empty'))
-  //   }
-  //
-  //   if (!req.session.user) {
-  //     // if (isAuthorlessValid(req.session.authorless)) {
-  //     //   return next(new ErrorHandler(500, 'user data is not valid'))
-  //     // }
-  //     nonSaltedPassword = User.generatePassword()
-  //     user = await User.create({
-  //       username: req.session.authorless.username,
-  //       email: req.session.authorless.email,
-  //       password: nonSaltedPassword,
-  //       phone: req.session.authorless.phone,
-  //       addresses: [{
-  //         textAddress: req.session.authorless.address,
-  //       }],
-  //     }, {
-  //       include: {
-  //         model: Address,
-  //         as: 'addresses',
-  //       },
-  //     })
-  //   }
-  //
-  //   const order = await Order.create({
-  //     comment: req.session.authorless.order.comment || null,
-  //     shipping: req.session.authorless.order.shipping || null,
-  //     status: 'CREATED',
-  //     // user_id: user === null ? null : user.id,
-  //     user_id: user.id,
-  //   })
-  //   const productIDs = Object.keys(req.session.cart)
-  //   // Should i check products in DB or its not my problem?
-  //   const cartItems = []
-  //   for (const productID of productIDs) {
-  //     const cartItem = {
-  //       quantity: req.session.cart[productID].quantity,
-  //       subTotal: req.session.cart[productID].subTotal,
-  //       product_id: productID,
-  //       order_id: order.id,
-  //     }
-  //     cartItems.push(cartItem)
-  //   }
-  //
-  //   await OrderItem.bulkCreate(cartItems, { returning: true })
-  //
-  //   const orderWithIncludes = await Order.findByPk(order.id, {
-  //     include: {
-  //       model: OrderItem,
-  //       as: 'items',
-  //       include: [{
-  //         model: Product,
-  //       }],
-  //     },
-  //   })
-  //
-  //   const mail = await Mail.create({
-  //     type: 'ORDER',
-  //     order_id: orderWithIncludes.id,
-  //     user_id: user.id,
-  //   })
-  //
-  //   // no await, because we want to create order, even if mail server is down
-  //   mailer.sendOrder({
-  //     order: orderWithIncludes,
-  //     user: user,
-  //     password: nonSaltedPassword,
-  //     mailId: mail.id,
-  //   })
-  //
-  //   // delete req.session.cart
-  //
-  //   // auth new user
-  //   if (!req.session.user) {
-  //     req.session.user = user.dataValues
-  //   }
-  //   res.render('order/createOrder', {
-  //     order: orderWithIncludes,
-  //     user: user,
-  //     password: nonSaltedPassword,
-  //   })
 
-  res.render('order/createOrder', req.session.authorless)
-  console.log('req.session.authorless', req.session.authorless.order)
+  console.log('req.session.authorless', req.session.authorless)
+  console.log('1')
+  //
+  try {
+    let user = req.session.user || null
+    let nonSaltedPassword = null
+    if (!req.session.cart) {
+      return next(new ErrorHandler(500, 'cart is empty'))
+    }
 
-  // } catch (err) {
-  //   next(err)
-  // }
+    if (!req.session.user) {
+      // if (isAuthorlessValid(req.session.authorless)) {
+      //   return next(new ErrorHandler(500, 'user data is not valid'))
+      // }
+      nonSaltedPassword = User.generatePassword()
+      user = await User.create({
+        username: req.session.authorless.username,
+        email: req.session.authorless.email,
+        password: nonSaltedPassword,
+        phone: req.session.authorless.phone,
+        addresses: [{
+          textAddress: req.session.authorless.address,
+        }],
+      }, {
+        include: {
+          model: Address,
+          as: 'addresses',
+        },
+      })
+    }
 
+    console.log('2')
+
+    const order = await Order.create({
+      comment: req.session.authorless.order.comment || null,
+      // shipping: req.session.authorless.order.shipping || null,
+      status: 'CREATED',
+      totalOrder: req.session.authorless.totalOrder,
+      address: req.session.authorless.address || req.session.order.address || null,
+      shipping: req.session.authorless.wayShipping || req.session.order.wayShipping,
+      methodPay: req.session.authorless.methodPay || req.session.order.methodPay,
+      // user_id: user === null ? null : user.id,
+      user_id: user.id,
+      //todo user id
+
+      // user.id,
+    })
+
+    console.log('order', order.dataValues)
+
+    const productIDs = Object.keys(req.session.cart.items)
+    // Should i check products in DB or its not my problem?
+    const cartItems = []
+    for (const productID of productIDs) {
+      const cartItem = {
+        quantity: req.session.cart.items[productID].quantity,
+        // subTotal: req.session.cart.items[productID].subTotal,
+        product_id: productID,
+        order_id: order.id,
+      }
+      cartItems.push(cartItem)
+    }
+
+    console.log('cartItems', cartItems)
+
+    await OrderItem.bulkCreate(cartItems, { returning: true })
+    console.log('OrderItem created')
+
+    const orderWithIncludes = await Order.findByPk(order.id, {
+      include: {
+        model: OrderItem,
+        as: 'items',
+        include: [{
+          model: Product,
+        }],
+      },
+    })
+    console.log('order 3')
+
+    // const mail = await Mail.create({
+    //   type: 'ORDER',
+    //   order_id: orderWithIncludes.id,
+    //   user_id: user.id,
+    // })
+    //
+    // // no await, because we want to create order, even if mail server is down
+    // mailer.sendOrder({
+    //   order: orderWithIncludes,
+    //   user: user,
+    //   password: nonSaltedPassword,
+    //   mailId: mail.id,
+    // })
+
+    // delete req.session.cart
+
+    // auth new user
+    // if (!req.session.user) {
+    //   req.session.user = user.dataValues
+    // }
+    // res.render('order/createOrder', {
+    //   order: orderWithIncludes,
+    //   user: user,
+    //   password: nonSaltedPassword,
+    // })
+
+    res.render('order/createOrder', req.session.authorless)
+    // console.log('req.session.authorless', req.session.authorless.order)
+
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router

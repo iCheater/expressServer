@@ -11,14 +11,14 @@
         <div class="new_order">
 
             <fieldset>
-                <legend>Заказ № <span>{87076856453}</span> оформлен</legend>
+                <legend>Заказ № <span>{{ order.id }}</span> оформлен</legend>
                 <div class="info_order">
                     <p>
                         Благодарим вас за то, что воспользовались услугами нашего интернет-магазина.
                     </p>
                     <div class="info_order-txt">
                         Стоимость заказа:
-                        <span>{{ order.totalOrder | addPennies }}</span>
+                        <span>{{ totalOrder | addPennies }}</span>
                     </div>
 
 

@@ -21,7 +21,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      obj.subTotal = obj.quantity * product.sellingPrice
+      // obj.subTotal = obj.quantity * product.sellingPrice
       orderItems.push(obj)
     }
     return queryInterface.bulkInsert('OrderItems', orderItems, {})

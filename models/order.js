@@ -2,8 +2,8 @@ const { DataTypes } = require('sequelize')
 module.exports = function (sequelize) {
   const Order = sequelize.define('Order', {
     // userName: DataTypes.STRING,
-    // address: DataTypes.STRING,
-    promoCode: DataTypes.STRING,
+    address: DataTypes.STRING,
+    // promoCode: DataTypes.STRING,
     comment: DataTypes.STRING,
     // shipping: DataTypes.STRING,
     // email: DataTypes.STRING,
@@ -13,13 +13,14 @@ module.exports = function (sequelize) {
       defaultValue: 'CREATED',
       allowNull: false,
     },
-    totalPrice: {
+    totalOrder: {
       type: DataTypes.INTEGER,
     },
     shipping: {
-      type: DataTypes.ENUM('Самовывоз', 'Курьерская доставка'),
-      defaultValue: 'Самовывоз',
+      type: DataTypes.ENUM('selfDelivery', 'expressDelivery'),
+      defaultValue: 'selfDelivery',
     },
+    methodPay: DataTypes.STRING,
 
     // items: {
     //   // structure: {product: {Product}, quantity: X, price: X}
