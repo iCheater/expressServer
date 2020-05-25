@@ -4,7 +4,7 @@ const appRoot = require('app-root-path')
 const passport = require('../../middleware/passport/passport')
 
 router.get('/login', (req, res) => {
-  res.render('auth/multiLogin', { link: 'login' })
+  res.render('auth/loginV2', { link: 'login' })
 })
 
 router.post('/login', passport.authenticate('local', {

@@ -15,7 +15,7 @@
 {% block content %}
     <div class="login">
         <div class="container">
-            <form class="form-check width-v2" action="/login" method="post">
+            <form class="form-check width-v2" action="/auth/login" method="post">
                 <h2 class="form-title">Вход или регистрация </h2>
                 <div class="form-main">
                     <div class="form-sidebar">
@@ -43,28 +43,28 @@
                         {# Social#}
                         <div class="form-content_social customForm active-content" id="form-content_social">
                             <div class="social-row">
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/google">
                                     <img src="/images/social/icon-google.svg">
                                 </a>
 
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/vkontakte">
                                     <img src="/images/social/icon-vk.svg">
                                 </a>
 
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/facebook">
                                     <img src="/images/social/icon-fb.svg">
                                 </a>
                             </div>
 
                             <div class="social-row">
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/twitter">
                                     <img src="/images/social/icon-tw.svg">
                                 </a>
 
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/odnoklassniki">
                                     <img src="/images/social/icon-odnoklassniki.svg">
                                 </a>
-                                <a class="social__item" href="#">
+                                <a class="social__item" href="/auth/yandex">
                                     <img src="/images/social/icon-ya.svg">
                                 </a>
                             </div>

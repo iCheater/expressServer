@@ -91,23 +91,23 @@ logger.stream = {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  // logger.error('error')
-  // logger.warn('warn')
-  // logger.info('info')
-  // logger.http('http')
-  // logger.verbose('verbose')
-  // logger.debug('debug')
-  // logger.silly('silly')
-  // logger.verbose({
-  //   private: false,
-  //   // level: 'error',
-  //   message: 'This is super secret - hidasde it.',
-  // })
-  // logger.log({
-  //   private: true,
-  //   level: 'error',
-  //   message: 'This is super secret - hidasde iast.',
-  // })
+  logger.error('error')
+  logger.warn('warn')
+  logger.info('info')
+  logger.http('http')
+  logger.verbose('verbose')
+  logger.debug('debug')
+  logger.silly('silly')
+  logger.verbose({
+    private: false,
+    // level: 'error',
+    message: 'This is super secret - hidasde it.',
+  })
+  logger.log({
+    private: true,
+    level: 'error',
+    message: 'This is super secret - hidasde iast.',
+  })
 }
 
 module.exports = logger
