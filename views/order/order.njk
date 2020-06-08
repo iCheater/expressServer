@@ -46,6 +46,7 @@
                                         Стоимость доставки
                                     </div>
                                     <div>
+                                        нужно найти писать ли здесь стоимость
                                         {{ sumShipping | addPennies }} ₽
                                     </div>
                                 </div>
@@ -113,9 +114,9 @@
                             <h2>Итого</h2>
                         </div>
                         {% if wayShipping === 'expressDelivery' %}
-                        <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney + 40000) | addPennies }} </div>
+                        <div id="total"> {{ (templateData.totalOrder + 40000) | addPennies }} </div>
                         {% else %}
-                        <div id="total"> {{ (templateData.sumRowTotal-templateData.sumDiscountInMoney) | addPennies }} </div>
+                        <div id="total"> {{ templateData.totalOrder | addPennies }} </div>
                         {% endif %}
                     </div>
 

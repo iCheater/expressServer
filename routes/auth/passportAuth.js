@@ -7,12 +7,13 @@ router.get('/login', (req, res) => {
   res.render('auth/loginV2', { link: 'login' })
 })
 
-router.post('/login', passport.authenticate('local', {
+router.post('/localauth', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
 }))
 
 router.get('/yandex', passport.authenticate('yandex'))
+
 router.get('/yandex/callback', passport.authenticate('yandex', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
@@ -26,6 +27,12 @@ router.get('/vkontakte/callback', passport.authenticate('vkontakte', {
 
 router.get('/facebook', passport.authenticate('facebook'))
 router.get('/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/auth/login',
+}))
+
+router.get('/twitter', passport.authenticate('twitter'))
+router.get('/twitter/callback', passport.authenticate('twitter', {
   successRedirect: '/',
   failureRedirect: '/auth/login',
 }))

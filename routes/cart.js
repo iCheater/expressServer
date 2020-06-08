@@ -28,11 +28,13 @@ router.get('/', async (req, res, next) => {
       bonuses,
     }
 
+
     if (products.length > 0) {
       const rowProducts = products.map(product => product.get({ row: true }))
       templateData.sumRowTotal = 0
       templateData.sumDiscountInMoney = 0
       templateData.sumSellingPriceWithDiscount = 0
+      templateData.totalOrder = 0
       templateData.selectAllStatus = true
       templateData.productsOutOFStock = []
       templateData.productsWithAmount = []
@@ -42,13 +44,32 @@ router.get('/', async (req, res, next) => {
           product.quantity = req.session.cart.items[product.id].quantity
           product.checked = req.session.cart.items[product.id].checked
           product.rowTotal = product.sellingPrice * product.quantity
-          product.sellingPriceWithDiscount = product.rowTotal * (100 - product.discountRate) / 100
+          product.sellingPriceWithDiscount = Number(Math.trunc(product.rowTotal * (100 - product.discountRate) / 100))
           product.discountInMoney = product.rowTotal - product.sellingPriceWithDiscount
+
+          console.log('rowTotal', product.rowTotal)
+          console.log('sellingPriceWithDiscount', product.sellingPriceWithDiscount)
+          console.log('//////////////////////////////')
+
+
           templateData.productsWithAmount.push(product)
 
           templateData.sumRowTotal = templateData.sumRowTotal + product.rowTotal
           templateData.sumDiscountInMoney = templateData.sumDiscountInMoney + product.discountInMoney
+
+          console.log('sumDiscountInMoney', templateData.sumDiscountInMoney)
+          console.log('discountInMoney', product.discountInMoney)
+          console.log('//////////////////////////////')
+
+
           templateData.sumSellingPriceWithDiscount = templateData.sumSellingPriceWithDiscount + product.sellingPriceWithDiscount
+
+          templateData.totalOrder = templateData.sumRowTotal-templateData.sumDiscountInMoney
+
+          console.log('totalOrder', templateData.totalOrder)
+          console.log('sumRowTotal', templateData.sumRowTotal)
+          console.log('sumDiscountInMoney', templateData.sumDiscountInMoney)
+          console.log('//////////////////////////////')
 
           if (!product.checked) {
             templateData.selectAllStatus = false
@@ -71,11 +92,16 @@ router.get('/', async (req, res, next) => {
     })
 
     // save calculation in session
+
     req.session.cart.calculation = {
       sumRowTotal: templateData.sumRowTotal,
       sumDiscountInMoney: templateData.sumDiscountInMoney,
       sumSellingPriceWithDiscount: templateData.sumSellingPriceWithDiscount,
+      totalOrder: templateData.totalOrder
+      // totalOrder: totalOrder,
     }
+
+    // totalOrder: templateData.sumRowTotal - templateData.sumDiscountInMoney,
 
     // console.log(req.session.cart.calculation)
     res.render('cart/cart', templateData)

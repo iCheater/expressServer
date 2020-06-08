@@ -40,29 +40,6 @@ function cleanInput () {
 }
 
 function checkInputTel () {
-  // let phoneString = document.getElementById('phone').value
-  // let isWrongPhone = false
-  //
-  // if (phoneString[0] === '+' && phoneString[1] === '7') {
-  //   phoneString = phoneString.substring(1)
-  // }
-  //
-  // for (let i = 0; i < phoneString.length; i++) {
-  //   const elem = parseInt(phoneString[i])
-  //   if (!Number.isInteger(elem)) {
-  //     isWrongPhone = true
-  //     break
-  //   }
-  // }
-  //
-  // const errorInput = document.getElementById('auth-error')
-  //
-  // if (isWrongPhone) {
-  //   errorInput.style.display = 'block'
-  // } else {
-  //   errorInput.style.display = 'none'
-  // }
-
   let phoneString = document.getElementById('phone').value
 
   if (phoneString[0] === '+' && phoneString[1] === '7') {
@@ -81,4 +58,9 @@ function checkInputTel () {
     const errorInputLenght = document.getElementById('length-error')
     errorInputLenght.style.display = 'block'
   }
+}
+
+function enterProfile () {
+  console.log('test')
+  // window.location.href = '/profile'
 }

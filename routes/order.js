@@ -432,7 +432,7 @@ router.get('/createOrder/', async (req, res, next) => {
   rowProducts.forEach(product => {
     product.quantity = req.session.cart.items[product.id].quantity
   })
-  console.log('req.session.order', req.session.order)
+  console.log('req.session.cart.calculation', req.session.cart.calculation)
 
   req.session.authorless = {
     username: req.session.order.newUser.name.firstname + ' ' + req.session.order.newUser.lastname.lastname,

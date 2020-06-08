@@ -63,22 +63,23 @@ router.get('/create', (req, res) => {
   // User.Addresses = User.hasMany(Address, {as: 'addresses'});
   User.create({
     username: 'admin2',
-    email: 'admin@admin.ru2',
+    email: 'admin@admin.r,',
     password: 'admin',
-    addresses: [{
-      type: '333asd',
-      line1: '100 Main St.',
-      line2: '112312312300 Main St.',
-      city: 'jopa',
-      state: 'TX',
-      zip: '78704',
-    }],
-  }, {
-    include: [{
-      // include: [ User.Addresses ],
-      association: User.Addresses,
-    }],
+    // addresses: [{
+    //   type: '333asd',
+    //   line1: '100 Main St.',
+    //   line2: '112312312300 Main St.',
+    //   city: 'jopa',
+    //   state: 'TX',
+    //   zip: '78704',
+    // }],
+    // }, {
+    //   include: [{
+    //     // include: [ User.Addresses ],
+    //     association: User.Addresses,
+    //   }],
   })
+
 
     // Project.User = Project.belongsTo(User, {as: 'user'});
     // User.Addresses = User.hasMany(Address, {as: 'addresses'});
@@ -107,4 +108,53 @@ router.get('/create', (req, res) => {
       res.json(dataFromDb)
     })
 })
+
+router.get('/takeUser', async (req, res, next) => {
+  try {
+    const user = await User.create({
+      username: 'admin2',
+      email: 'admin@admin.rehbh',
+    })
+
+    console.log('created')
+
+    await user.destroy()
+    console.log('done')
+    // User.findOne({
+    //
+    // })
+    res.json(user)
+  } catch (e) {
+    next(e)
+  }
+})
+
+router.get('/taketest', async (req, res, next) => {
+  try {
+    // const jane = await User.destroy({
+    //   where: {
+    //     username: {
+    //       [Op.like]: "%Jane%"
+    //     }
+    //   }
+    // })
+    // console.log('delete')
+
+    // const [user, created] = await User.findOrCreate({
+    //   where: { email: 'admin@admin.rehbh' },
+    //   defaults: {
+    //     username: 'sdepold',
+    //   }
+    // })
+    //
+    // if (created) {
+    //   console.log(user.username);
+    // }
+
+    res.json(user)
+  } catch (e) {
+    next(e)
+  }
+})
+
 module.exports = router
