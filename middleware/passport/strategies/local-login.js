@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy
 const appRoot = require('app-root-path')
-const { User, Address } = require(`${appRoot}/models`)
+const { User, Address, sequelize } = require(`${appRoot}/models`)
 
 const local = new LocalStrategy(
   {
@@ -37,29 +37,32 @@ const local = new LocalStrategy(
     console.log('passport-local')
     console.log('email', email)
     let user
-    let t
-
     try {
       user = await User.findOne({
         where: { email: email },
       })
 
-      if (!user) {
-        t = await sequelize.transaction()
-
+      if(!user) {
         user = await User.create({
           email: email,
           password: password,
-
-        }, { transaction: t })
-
-        await t.commit()
+          username: email,
+        })
+        console.log(`User [${user}] created`)
+        return done(null, user)
       }
-      return done(null, user)
+      else if (!await user.validPassword(password)){
+        console.log('User password is invalid')
+
+        return done(null, false)
+      }
+      else {
+        console.log('Login and password are valid')
+        return done(null, user)
+      }
+
+
     } catch( err) {
-        if (t) {
-          await t.rollback()
-        }
         return done(err)
       }
   },

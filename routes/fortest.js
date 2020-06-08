@@ -140,12 +140,13 @@ router.get('/taketest', async (req, res, next) => {
     // })
     // console.log('delete')
 
-    // const [user, created] = await User.findOrCreate({
-    //   where: { email: 'admin@admin.rehbh' },
-    //   defaults: {
-    //     username: 'sdepold',
-    //   }
-    // })
+    const [user, created] = await User.findOrCreate({
+      where: { email: 'admin@admin.ru' },
+      defaults: {
+        username: 'sdepold',
+        password: 'admin'
+      }
+    })
     //
     // if (created) {
     //   console.log(user.username);
