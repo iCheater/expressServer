@@ -4,13 +4,36 @@ const appRoot = require('app-root-path')
 const passport = require('../../middleware/passport/passport')
 
 router.get('/login', (req, res) => {
-  res.render('auth/loginV2', { link: 'login' })
+  res.render('auth/loginV2', {
+    link: 'login',
+    errPassword: req.flash('errPassword'),
+  })
 })
 
-router.post('/localauth', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/auth/login',
-}))
+// flash messages
+// router.post('/localauth', passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/auth/login',
+// failureFlash: true,
+// }))
+
+router.post('/localauth', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err)
+    }
+    if (!user) {
+      return res.json({ status: 'fail', message: info})
+    }
+    req.logIn(user,(err) => {
+      if (err) {
+        return next(err)
+      }
+      // return res.json({ status: 'success', message: 'user login and password valid'})
+      return res.json({ status: 'success', message: info})
+    })
+  })(req, res, next)
+})
 
 router.get('/yandex', passport.authenticate('yandex'))
 

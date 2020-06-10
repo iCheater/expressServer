@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const flash = require('connect-flash');
 const debug = require('debug')('express-server:server')
 const http = require('http')
 const path = require('path')
@@ -81,6 +82,7 @@ if (app.get('env') === 'production') {
 }
 // initialize express-session to allow us track the logged-in user across sessions.
 app.use(session)
+app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 

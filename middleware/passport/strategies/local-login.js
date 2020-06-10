@@ -52,9 +52,10 @@ const local = new LocalStrategy(
         return done(null, user)
       }
       else if (!await user.validPassword(password)){
-        console.log('User password is invalid')
-
-        return done(null, false)
+        // console.log('User password is invalid')
+        return done(null, false, "User password is invalid")
+        // return done(null, false, req.flash("errPassword","User or password is invalid."))
+        // return done(null, false, {message: 'User password is invalid'})
       }
       else {
         console.log('Login and password are valid')
@@ -62,7 +63,7 @@ const local = new LocalStrategy(
       }
 
 
-    } catch( err) {
+    } catch(err) {
         return done(err)
       }
   },

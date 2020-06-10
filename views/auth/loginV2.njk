@@ -119,6 +119,8 @@
                                 action="/auth/localauth"
                                 method="post" class="form-content_email customForm inactive-content" id="form-content_email">
                             <div class="input-row">
+                                {{ errPassword }}
+
                                 <input class="input-field email" id="email" type="email" name="email"
                                        placeholder="Почта" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" autocomplete="on"/>
                                 <a class="btn-input" id="clear-input" onclick="cleanInput()">
@@ -127,12 +129,16 @@
                             </div>
 
                             <div class="input-row">
+                                {{ errLogin }}
+
                                 <input class="input-field password" id="password" type="password" name="password" placeholder="Пароль"/>
 
                                 <a class="btn-input" id="show-input" onclick="changeInputType()">
                                     <img class="show-img" src="/images/show.svg">
                                 </a>
                             </div>
+
+
                             <input class="btn btn-auth" type="submit" value="Войти или зарегистрироваться"/>
 {#                               href="/profile"#}
 {#                            onclick="enterProfile ()"#}

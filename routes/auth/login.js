@@ -27,6 +27,7 @@ router.post('/', (req, res, next) => {
         res.status(400)
         res.redirect('/loginV2')
       } else if (!await user.validPassword(password)) {
+
         logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]` })
         res.status(400)
         res.redirect('/loginV2')
