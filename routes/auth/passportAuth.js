@@ -4,10 +4,15 @@ const appRoot = require('app-root-path')
 const passport = require('../../middleware/passport/passport')
 
 router.get('/login', (req, res) => {
-  res.render('auth/loginV2', {
-    link: 'login',
-    errPassword: req.flash('errPassword'),
-  })
+  // console.log('1dsd', req.session.states.loginForm)
+  const obj = {}
+
+  if(req.session.states && req.session.states.loginForm) {
+    obj.avatar = req.session.states.loginForm.avatar
+    obj.email = req.session.states.loginForm.email
+  }
+  console.log('log obj', obj)
+  res.render('auth/loginV2', obj)
 })
 
 // flash messages

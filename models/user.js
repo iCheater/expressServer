@@ -42,7 +42,9 @@ module.exports = (sequelize) => {
     avatarUrl: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: 'urlToImage', // todo add default image
+      // defaultValue: 'urlToImage', // todo add default image
+
+      //"/images/avatar-default.svg"
     },
 
   }, {

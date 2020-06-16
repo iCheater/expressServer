@@ -4,22 +4,28 @@ const { User, Address } = require('../../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/helpers/winstonLogger`)
 
-// /* GET loader page. */
-router.get('/', (req, res, next) => {
-  res.render('auth/loginV2')
-})
+// // /* GET loader page. */
+// router.get('/', (req, res, next) => {
+//   res.render('auth/loginV2')
+// })
 
 router.post('/', (req, res, next) => {
   const { username, password } = req.body
   if (!username || !password) {
-    logger.verbose({ private: true, message: `Req.body contains: username:[${username}] and password: [${password}]` })
+    logger.verbose({
+      private: true,
+      message: `Req.body contains: username:[${username}] and password: [${password}]`,
+    })
     return res.redirect(400, '/loginV2')
   }
   logger.verbose(`Login request with: [${username}] and password [${password}]`)
 
   User.findOne({
     where: { username: username },
-    include: { model: Address, as: 'addresses' },
+    include: {
+      model: Address,
+      as: 'addresses',
+    },
   })
     .then(async (user) => {
       if (!user) {
@@ -28,7 +34,10 @@ router.post('/', (req, res, next) => {
         res.redirect('/loginV2')
       } else if (!await user.validPassword(password)) {
 
-        logger.verbose({ private: true, message: `[${password}] is invalid password for user [${username}]` })
+        logger.verbose({
+          private: true,
+          message: `[${password}] is invalid password for user [${username}]`,
+        })
         res.status(400)
         res.redirect('/loginV2')
       } else {
@@ -43,6 +52,61 @@ router.post('/', (req, res, next) => {
     })
 })
 
+router.post('/email', async (req, res, next) => {
+  console.log('1', req.body.email)
+  if (!req.session.states) {
+    req.session.states = {}
+  }
+  let user
+  try {
+    user = await User.findOne({
+      where: { email: req.body.email },
+    })
 
+    console.log('user', user)
+
+    req.session.states.loginForm = {
+      email:  { email: req.body.email, }
+    }
+    console.log('22', req.session.states.loginForm)
+    if (user === null) {
+      console.log('artem')
+      req.session.states.loginForm.email.status = 'user does not exist'
+    }
+    console.log('333', req.session.states.loginForm)
+
+    if(user) {
+      req.session.states.loginForm.avatar = user.avatarUrl
+      console.log('req.session.states.loginForm.avatar', req.session.states.loginForm.avatar)
+      req.session.states.loginForm.email.status = 'user exists'
+    }
+
+    console.log('4444', req.session.states.loginForm)
+
+    // req.session.states.loginForm = {
+    //   avatar: user.avatarUrl,
+    //   email: {
+    //     email: req.body.email,
+    //     status: 'user exists',
+    //   }
+    // }
+
+    // if (!req.session.states.loginForm.email) {
+    //   req.session.states.loginForm.email.status = 'error'
+    //   console.log('Введите корректный e-mail')
+    // }
+    // if (!req.session.states.loginForm.avatar) {
+    //   req.session.states.loginForm.avatar.status = 'error'
+    //   console.log('Введите корректный e-mail')
+    // }
+
+
+
+    return res.json(req.session.states.loginForm)
+  } catch (err) {
+    next(err)
+  }
+
+})
 
 module.exports = router
