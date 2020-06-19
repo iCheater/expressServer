@@ -41,8 +41,7 @@ const local = new LocalStrategy(
       user = await User.findOne({
         where: { email: email },
       })
-
-      if(!user) {
+      if (!user) {
         user = await User.create({
           email: email,
           password: password,
@@ -50,22 +49,18 @@ const local = new LocalStrategy(
         })
         console.log(`User [${user}] created`)
         return done(null, user)
-      }
-      else if (!await user.validPassword(password)){
+      } else if (!await user.validPassword(password)) {
         // console.log('User password is invalid')
-        return done(null, false, "User password is invalid")
+        return done(null, false, 'User password is invalid')
         // return done(null, false, req.flash("errPassword","User or password is invalid."))
         // return done(null, false, {message: 'User password is invalid'})
-      }
-      else {
+      } else {
         console.log('Login and password are valid')
         return done(null, user)
       }
-
-
-    } catch(err) {
-        return done(err)
-      }
+    } catch (err) {
+      return done(err)
+    }
   },
 )
 

@@ -4,14 +4,11 @@ const appRoot = require('app-root-path')
 const passport = require('../../middleware/passport/passport')
 
 router.get('/login', (req, res) => {
-  // console.log('1dsd', req.session.states.loginForm)
   const obj = {}
-
   if(req.session.states && req.session.states.loginForm) {
     obj.avatar = req.session.states.loginForm.avatar
     obj.email = req.session.states.loginForm.email
   }
-  console.log('log obj', obj)
   res.render('auth/loginV2', obj)
 })
 
@@ -23,6 +20,7 @@ router.get('/login', (req, res) => {
 // }))
 
 router.post('/localauth', (req, res, next) => {
+  console.log('1213', req.body)
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err)
@@ -34,14 +32,12 @@ router.post('/localauth', (req, res, next) => {
       if (err) {
         return next(err)
       }
-      // return res.json({ status: 'success', message: 'user login and password valid'})
       return res.json({ status: 'success', message: info})
     })
   })(req, res, next)
 })
 
 router.get('/yandex', passport.authenticate('yandex'))
-
 router.get('/yandex/callback', passport.authenticate('yandex', {
   successRedirect: '/',
   failureRedirect: '/auth/login',

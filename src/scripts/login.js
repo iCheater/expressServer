@@ -24,10 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const inputEmail = document.getElementById('email')
-  console.log('inputEmailValue', inputEmail)
   inputEmail.addEventListener('input', () => {
     checkEmailInput()
   })
+
+  changeActionForm ()
 })
 
 function changeInputType () {
@@ -83,8 +84,8 @@ function requestEmailInput (data) {
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(JSON.parse(xhr.response))
       const resServer = JSON.parse(xhr.response)
-      console.log(resServer)
       avatarPaste(resServer)
+      btnChange(resServer)
     } else {
       console.log('server not work')
     }
@@ -96,18 +97,6 @@ function requestEmailInput (data) {
 }
 
 function avatarPaste (resServer) {
-  console.log('status', resServer.email.status)
-  // if(resServer.email.status === 'user exists') {
-  //   const newImg = document.createElement("img")
-  //   newImg.id = 'input-img'
-  //   newImg.src = resServer.avatar
-  //   const tagAfterImg = document.getElementById("clear-input")
-  //   const parentDiv = tagAfterImg.parentNode
-  //   parentDiv.insertBefore(newImg, tagAfterImg)
-  // } else if(resServer.email.status === 'user does not exist' && document.getElementById('input-img')) {
-  //   document.getElementById('input-img').remove()
-  // }
-
   switch (resServer.email.status) {
     case 'user exists': {
       const newImg = document.createElement('img')
@@ -119,7 +108,7 @@ function avatarPaste (resServer) {
       break
     }
     case 'user does not exist': {
-      if(document.getElementById('input-img')){
+      if (document.getElementById('input-img')) {
         document.getElementById('input-img').remove()
       }
       break
@@ -130,3 +119,83 @@ function avatarPaste (resServer) {
   }
 }
 
+function btnChange (resServer) {
+  const btnForm = document.getElementById('btn-auth')
+  switch (resServer.email.status) {
+    case 'user exists': {
+      btnForm.value = 'Войти'
+      break
+    }
+    case 'user does not exist': {
+      btnForm.value = 'Зарегистрироваться'
+      break
+    }
+    default: {
+      console.log('wrong data')
+    }
+  }
+}
+
+function changeActionForm () {
+  const btnSubmit = document.getElementById('btn-auth')
+  btnSubmit.addEventListener('click', (e) => {
+    e.preventDefault()
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
+    requestAuthStatusForm ({email: email, password: password})
+    // console.log('close event')
+  }, false)
+}
+
+function requestAuthStatusForm (data) {
+// eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+  xhr.onload = function (e) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // console.log(JSON.parse(xhr.response))
+      const resServer = JSON.parse(xhr.response)
+      showMsg (resServer)
+    } else {
+      console.log('server not work')
+    }
+    // console.log('request', xhr.response)
+  }
+  console.log('data', data)
+  xhr.open('POST', '/auth/localauth')
+  xhr.setRequestHeader('Content-type', 'application/json')
+  xhr.send(JSON.stringify(data))
+}
+
+function showMsg (resServer) {
+  console.log('resServer', resServer)
+  const inputPassword = document.getElementById('password')
+  const msg = document.getElementById('auth-msg')
+  switch (resServer.status) {
+    case 'success': {
+      inputPassword.style.border = "1px solid #3ac267"
+      // inputEmail.classList.add('success')
+      // inputPassword.classList.add("success")
+      console.log('1')
+      // timer
+      setTimeout(
+        () => {
+          console.log('Hello after 2 seconds')
+          window.location.href = '/'
+        },
+        2 * 1000
+      )
+      break
+    }
+    case 'fail': {
+      inputPassword.style.border = "1px solid #f91155"
+      msg.style.display = 'block'
+      // inputEmail.classList.add('fail')
+      // inputPassword.classList.add("fail")
+      console.log('2')
+      break
+    }
+    default: {
+      console.log('wrong data')
+    }
+  }
+}

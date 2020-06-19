@@ -62,51 +62,20 @@ router.post('/email', async (req, res, next) => {
     user = await User.findOne({
       where: { email: req.body.email },
     })
-
-    console.log('user', user)
-
     req.session.states.loginForm = {
-      email:  { email: req.body.email, }
+      email: { email: req.body.email },
     }
-    console.log('22', req.session.states.loginForm)
     if (user === null) {
-      console.log('artem')
       req.session.states.loginForm.email.status = 'user does not exist'
     }
-    console.log('333', req.session.states.loginForm)
-
-    if(user) {
+    if (user) {
       req.session.states.loginForm.avatar = user.avatarUrl
-      console.log('req.session.states.loginForm.avatar', req.session.states.loginForm.avatar)
       req.session.states.loginForm.email.status = 'user exists'
     }
-
-    console.log('4444', req.session.states.loginForm)
-
-    // req.session.states.loginForm = {
-    //   avatar: user.avatarUrl,
-    //   email: {
-    //     email: req.body.email,
-    //     status: 'user exists',
-    //   }
-    // }
-
-    // if (!req.session.states.loginForm.email) {
-    //   req.session.states.loginForm.email.status = 'error'
-    //   console.log('Введите корректный e-mail')
-    // }
-    // if (!req.session.states.loginForm.avatar) {
-    //   req.session.states.loginForm.avatar.status = 'error'
-    //   console.log('Введите корректный e-mail')
-    // }
-
-
-
     return res.json(req.session.states.loginForm)
   } catch (err) {
     next(err)
   }
-
 })
 
 module.exports = router

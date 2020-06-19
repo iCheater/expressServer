@@ -15,50 +15,45 @@
 {% block content %}
     <div class="login">
         <div class="container">
-
             <div class="form-check width-v2">
                 <h2 class="form-title">Вход или регистрация </h2>
                 <div class="form-main">
                     {# Sidebar menu #}
                     <div class="form-sidebar">
-
                         <a class="sidebar_list-row row-active" id="social-auth" href="#"
                            data-content-id="form-content_social">
                             Социальные сети
                         </a>
 
-                        {#                        <a class="sidebar_list-row" id="phone-auth" href="#" data-content-id="form-content_phone">#}
-                        {#                            Телефон#}
-                        {#                        </a>#}
+                        {#<a class="sidebar_list-row" id="phone-auth" href="#" data-content-id="form-content_phone">#}
+                        {#Телефон#}
+                        {# </a>#}
 
-                        {#                        <a class="sidebar_list-row" id="login-auth" href="#" data-content-id="form-content_login">#}
-                        {#                            Логин#}
-                        {#                        </a>#}
+                        {#<a class="sidebar_list-row" id="login-auth" href="#" data-content-id="form-content_login">#}
+                        {#Логин#}
+                        {# </a>#}
 
                         <a class="sidebar_list-row" id="mail-auth" href="#" data-content-id="form-content_email">
                             Почта
                         </a>
 
-                        {#                        <a class="sidebar_list-row" id="fast-auth" href="#" data-content-id="form-content_fast-auth">#}
-                        {#                            Быстрая регистрация#}
-                        {#                        </a>#}
-
+                        {# <a class="sidebar_list-row" id="fast-auth" href="#" data-content-id="form-content_fast-auth">#}
+                        {#Быстрая регистрация#}
+                        {#</a>#}
                     </div>
 
                     <div class="form-content" id="form-content">
                         {# Social #}
                         <div
-                                {#                                action="/auth/login"#}
+                                {# action="/auth/login"#}
                                 class="form-content_social customForm active-content" id="form-content_social">
                             <div class="social-row">
                                 <a class="social__item" href="/auth/google">
                                     <img src="/images/social/icon-google.svg">
                                 </a>
-
                                 <a class="social__item" href="/auth/vkontakte">
                                     <img src="/images/social/icon-vk.svg">
                                 </a>
-
                                 <a class="social__item" href="/auth/facebook">
                                     <img src="/images/social/icon-fb.svg">
                                 </a>
@@ -68,7 +63,6 @@
                                 <a class="social__item" href="/auth/twitter">
                                     <img src="/images/social/icon-tw.svg">
                                 </a>
-
                                 <a class="social__item" href="/auth/odnoklassniki">
                                     <img src="/images/social/icon-odnoklassniki.svg">
                                 </a>
@@ -80,39 +74,38 @@
 
 
                         {# Phone #}
-                        {#                        <form#}
-                        {#                                action="/auth/login"#}
-                        {#                                class="form-content_phone  customForm inactive-content" id="form-content_phone">#}
-                        {#                            <div class="input-row">#}
-                        {#                                <input class="input-field phone" id="phone" name="tel" type="tel" autocorrect="off" autocomplete="tel" placeholder="" value="+7" min="11" max="12" required oninput="checkInputTel()"/>#}
-                        {#                                <a class="btn-input" id="clear-input" onclick="cleanInput()">#}
-                        {#                                    <img id="remove" src="/images/remove.svg">#}
-                        {#                                </a>#}
-                        {#                            </div>#}
-                        {#                            <p id="auth-error">Номер телефона введен некорректно, пример +79008007060</p>#}
-                        {#                            <p id="length-error">Номер телефона слишком длинный, пример +79008007060</p>#}
-                        {#                            <input class="btn btn-auth" type="submit" value="Получить код"/>#}
-                        {#                        </form>#}
+                        {# <form#}
+                        {#  action="/auth/login"#}
+                        {#class="form-content_phone  customForm inactive-content" id="form-content_phone">#}
+                        {# <div class="input-row">#}
+                        {#<input class="input-field phone" id="phone" name="tel" type="tel" autocorrect="off" autocomplete="tel" placeholder="" value="+7" min="11" max="12" required oninput="checkInputTel()"/>#}
+                        {# <a class="btn-input" id="clear-input" onclick="cleanInput()">#}
+                        {# <img id="remove" src="/images/remove.svg">#}
+                        {# </a>#}
+                        {# </div>#}
+                        {# <p id="auth-error">Номер телефона введен некорректно, пример +79008007060</p>#}
+                        {# <p id="length-error">Номер телефона слишком длинный, пример +79008007060</p>#}
+                        {# <input class="btn btn-auth" type="submit" value="Получить код"/>#}
+                        {# </form>#}
 
                         {# Login #}
-                        {#                        <form#}
-                        {#                                action="/auth/login"#}
-                        {#                                class="form-content_login  customForm inactive-content" id="form-content_login">#}
-                        {#                            <div class="input-row">#}
-                        {#                                <input class="input-field login-auth" id="login" name="login" type="text" autocorrect="off" placeholder="" />#}
-                        {#                                <a class="btn-input" id="clear-input" onclick="cleanInput()">#}
-                        {#                                    <img id="remove" src="/images/remove.svg">#}
-                        {#                                </a>#}
-                        {#                            </div>#}
-
-                        {#                            <div class="input-row">#}
-                        {#                                <input class="input-field password" id="password" type="password" name="password" placeholder="Пароль"/>#}
-                        {#                                <a class="btn-input" id="show-input" onclick="changeInputType()">#}
-                        {#                                    <img class="show-img" src="/images/show.svg">#}
-                        {#                                </a>#}
-                        {#                            </div>#}
-                        {#                            <input class="btn btn-auth" type="submit" value="Войти или зарегистрироваться"/>#}
-                        {#                        </form>#}
+                        {# <form#}
+                        {# action="/auth/login"#}
+                        {# class="form-content_login  customForm inactive-content" id="form-content_login">#}
+                        {# <div class="input-row">#}
+                        {#<input class="input-field login-auth" id="login" name="login" type="text" autocorrect="off" placeholder="" />#}
+                        {# <a class="btn-input" id="clear-input" onclick="cleanInput()">#}
+                        {# <img id="remove" src="/images/remove.svg">#}
+                        {# </a>#}
+                        {# </div>#}
+                        {#  <div class="input-row">#}
+                        {# <input class="input-field password" id="password" type="password" name="password" placeholder="Пароль"/>#}
+                        {# <a class="btn-input" id="show-input" onclick="changeInputType()">#}
+                        {# <img class="show-img" src="/images/show.svg">#}
+                        {# </a>#}
+                        {# </div>#}
+                        {#<input class="btn btn-auth" type="submit" value="Войти или зарегистрироваться"/>#}
+                        {# </form>#}
 
                         {# Email #}
                         <form
@@ -137,54 +130,50 @@
                             </div>
 
                             <div class="input-row">
-                                {{ errLogin }}
-
-                                <input class="input-field password" id="password" type="password" name="password"
-                                       placeholder="Пароль"/>
-
+{#                                {{ errLogin }}#}
+                                <input class="input-field password" id="password" type="password" name="password" placeholder="Пароль"/>
                                 <a class="btn-input" id="show-input" onclick="changeInputType()">
                                     <img class="show-img" src="/images/show.svg">
                                 </a>
                             </div>
 
+                            <p id="auth-msg">Неверный пароль</p>
+
                             {% if email.status == 'user exists' %}
-                                <input class="btn btn-auth" type="submit" value="Войти"/>
+                                <input class="btn btn-auth" id="btn-auth" type="submit" value="Войти"/>
                             {% elseif email.status == 'user does not exist' %}
-                                <input class="btn btn-auth" type="submit" value="Зарегистрироваться"/>
+                                <input class="btn btn-auth" id="btn-auth" type="submit" value="Зарегистрироваться"/>
                             {% else %}
-                                <input class="btn btn-auth" type="submit" value="Войти или зарегистрироваться"/>
+                                <input class="btn btn-auth" id="btn-auth" type="submit" value="Войти или зарегистрироваться"/>
                             {% endif %}
 
-
-                            {#                               href="/profile"#}
-                            {#                            onclick="enterProfile ()"#}
-
+                            <div class="links">
+                                <a class="link-reset" id="link-reset" href="#">Забыли пароль?</a>
+                            </div>
+                            {# href="/profile"#}
+                            {# onclick="enterProfile ()"#}
                         </form>
 
                         {# Fast-auth #}
-                        {#                        <form#}
-                        {#                                action="/auth/login"#}
-                        {#                                class="form-content_fast-auth customForm inactive-content" id="form-content_fast-auth">#}
-                        {#                            <div class="auth-text">#}
-                        {#                                <h3>#}
-                        {#                                    Добро пожаловать!#}
-                        {#                                </h3>#}
-                        {#                                <p>#}
-                        {#                                    Вы находитесь во вкладке быстрой регистрации.#}
-                        {#                                </p>#}
-                        {#                                <p>В случае регистрации логин и пароль от учетной#}
-                        {#                                    <br>#}
-                        {#                                    записи#}
-                        {#                                    Вы сможете найти в Личном кабинете.</p>#}
-                        {#                            </div>#}
-
-                        {#                            <input class="btn btn-auth" type="submit" value="Зарегистрироваться"/>#}
-                        {#                        </form>#}
-
+                        {# <form#}
+                        {# action="/auth/login"#}
+                        {#class="form-content_fast-auth customForm inactive-content" id="form-content_fast-auth">#}
+                        {#<div class="auth-text">#}
+                        {#<h3>#}
+                        {#Добро пожаловать!#}
+                        {#</h3>#}
+                        {#<p>#}
+                        {# Вы находитесь во вкладке быстрой регистрации.#}
+                        {#  </p>#}
+                        {#<p>В случае регистрации логин и пароль от учетной#}
+                        {# <br>#}
+                        {#  записи#}
+                        {#Вы сможете найти в Личном кабинете.</p>#}
+                        {#</div>#}
+                        {#<input class="btn btn-auth" type="submit" value="Зарегистрироваться"/>#}
+                        {# </form>#}
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
