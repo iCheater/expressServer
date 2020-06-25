@@ -53,7 +53,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/email', async (req, res, next) => {
-  console.log('1', req.body.email)
   if (!req.session.states) {
     req.session.states = {}
   }

@@ -91,31 +91,65 @@ const email = new Email({
 })
 
 module.exports = {
-  sendResetPassword: ({ email, username, token }) => {
-    // console.log({ email, username, token })
-    // const message = {
-    //   from: config.auth.user,
-    //   to: email,
-    //   subject: 'Восстановление пароля',
-    //   text: 'RESET PASSWORD тут какой-то текст, но я не понял куда он идет',
-    //   html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
-    //   Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
-    // }
-    // transporter.sendMail(message)
+  // sendResetPassword: ({ email, username, token }) => {
+  // console.log({ email, username, token })
+  // const message = {
+  //   from: config.auth.user,
+  //   to: email,
+  //   subject: 'Восстановление пароля',
+  //   text: 'RESET PASSWORD тут какой-то текст, но я не понял куда он идет',
+  //   html: `<p>Здравствуйте ${username} ! Вы или кто-то другой запросили восстановление пароля. Если Вы считаете, что получили письмо по ошибке, просто проигнорируйте его.
+  //   Для восстановления пароля нажмите на кнопку <a href="http://localhost:3000/resetpassword/approve/${token}">СБРОСИТЬ ПАРОЛЬ</a> и в открывшемся окне введите новый пароль. Ссылка действует 24 часа.</p>`,
+  // }
+  // transporter.sendMail(message)
 
+  //   email.send({
+  //     template: 'resetPassword',
+  //     message: {
+  //       from: config.auth.user,
+  //       to: email
+  //     },
+  //     locals: {
+  //       username: username,
+  //       token: token
+  //     },
+  //   })
+  //     .then(() => console.log('email has been send!'))
+  //     .catch(err => console.log(err))
+  // },
+
+  sendResetPassword: ({  user, token, mailId }) => {
+    // console.log(user)
+    console.log("token sendResetPassword:", token)
     email.send({
       template: 'resetPassword',
-      message: { from: config.auth.user, to: email },
-      locals: { username: username, token: token },
+      message: {
+        from: config.auth.user,
+        to: user.email,
+      },
+      locals: {
+        user: user,
+        token: token,
+      },
     })
-      .then(() => console.log('email has been send!'))
+      .then(() => {
+        // Mail.update(
+        //   { status: 'SENT' },
+        //   { where: { id: mailId } },
+        // )
+        console.log('email has been send!')
+      })
       .catch(err => console.log(err))
   },
+
   sendOrder: ({ order, user, nonSaltedPassword, mailId }) => {
     console.log(user)
     email.send({
       template: 'order',
-      message: { from: config.auth.user, to: user.email },
+      message: {
+        from: config.auth.user,
+        to: user.email,
+      },
       locals: {
         order: order,
         user: user,

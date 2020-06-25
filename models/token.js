@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
             break
           }
           default : {
-            console.error('toke must have type!')
+            console.error('token must have type!')
           }
         }
       },

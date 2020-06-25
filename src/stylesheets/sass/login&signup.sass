@@ -7,11 +7,12 @@
   .form-title
     text-align: center
     margin-bottom: 25px
-  .width-v1
-    min-width: 35%
-  .width-v2
-    min-width: 55%
+  //.width-v1
+  //  min-width: 35%
+  //.width-v2
+  //  min-width: 55%
   .form-check
+    width: 55%
     background-color: #fff
     box-shadow: 0 0 30px rgba(0,0,0,0.2)
     padding: 40px
@@ -191,10 +192,8 @@
       input[name="login"],
       input[name="password"]
         font-size: 18px
-
-    .btn-auth
+    .btn
       display: block
-      background-color: #c5c5c5
       width: 100%
       color: #ffffff
       border: none
@@ -203,8 +202,19 @@
       text-align: center
       cursor: pointer
       font-size: 16px
+    .btn-auth
+      background-color: #c5c5c5
       &:hover
         background-color: #005bff
+    .btn-enter
+      background-color: #005bff
+      &:hover
+        background-color: #6200ff
+    .btn-register
+      background-color: #3ac267
+      &:hover
+        background-color: #c2bb3a
+
 
     .form-content_email
       width: 100%
@@ -238,6 +248,33 @@
         p
           margin: 10px 0
           font-size: 14px
+
+    .form-content_reset
+      width: 100%
+      height: 100%
+      padding: 35px
+
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      p
+        margin-bottom: 20px
+        color: #999999
+        span
+          color: #005bff
+      .input-field
+        padding: 15px
+        margin-bottom: 15px
+        width: 100%
+        border: 1px solid #cccccc
+      .btn-reset
+        background-color: #005bff
+        &:hover
+          background-color: #f91155
+
+      input[name="email"],
+      input[name="password"]
+        font-size: 18px
 
     .active-content
       display: flex
@@ -308,5 +345,65 @@
   font-size: 14px
   .link-reset
     color: #c5c5c5
+    &:hover
+      text-decoration: underline
 
+
+//{# Form reset#}
+
+.form_content-reset
+  width: 40%
+  background-color: #fff
+  box-shadow: 0 0 30px rgba(0,0,0,0.2)
+  padding: 40px
+  position: absolute
+  top: 50%
+  left: 50%
+  margin-right: -50%
+  transform: translate(-50%, -50%)
+  .reset-title
+    text-align: center
+    margin-bottom: 25px
+  .form-reset
+    display: flex
+    flex-direction: column
+    width: 80%
+    margin: 0 auto
+    label
+      margin-bottom: 10px
+    .input-row
+      margin-bottom: 5px
+      position: relative
+      width: 100%
+      .input-field
+        width: 100%
+        padding: 15px
+        margin-bottom: 15px
+        border: 1px solid #cccccc
+        font-size: 16px
+      a
+        position: absolute
+        z-index: 10
+        top: 10px
+        right: 5px
+        cursor: pointer
+        img
+          width: 25px
+          opacity: 0.7
+        .show-img
+          opacity: 0.5
+          margin-right: 3px
+    .btn-change
+      background-color: #c5c5c5
+      display: block
+      width: 100%
+      color: #ffffff
+      border: none
+      margin-top: 10px
+      padding: 15px
+      text-align: center
+      cursor: pointer
+      font-size: 16px
+      &:hover
+        background-color: #005bff
 

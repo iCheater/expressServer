@@ -60,9 +60,9 @@
                             </div>
 
                             <div class="social-row">
-                                <a class="social__item" href="/auth/twitter">
-                                    <img src="/images/social/icon-tw.svg">
-                                </a>
+{#                                <a class="social__item" href="/auth/twitter">#}
+{#                                    <img src="/images/social/icon-tw.svg">#}
+{#                                </a>#}
                                 <a class="social__item" href="/auth/odnoklassniki">
                                     <img src="/images/social/icon-odnoklassniki.svg">
                                 </a>
@@ -130,7 +130,7 @@
                             </div>
 
                             <div class="input-row">
-{#                                {{ errLogin }}#}
+                                {# {{ errLogin }}#}
                                 <input class="input-field password" id="password" type="password" name="password" placeholder="Пароль"/>
                                 <a class="btn-input" id="show-input" onclick="changeInputType()">
                                     <img class="show-img" src="/images/show.svg">
@@ -140,19 +140,48 @@
                             <p id="auth-msg">Неверный пароль</p>
 
                             {% if email.status == 'user exists' %}
-                                <input class="btn btn-auth" id="btn-auth" type="submit" value="Войти"/>
+                                <input class="btn btn-enter" id="btn-auth" type="submit" value="Войти"/>
+                                <div class="links">
+                                    <a class="link-reset" id="link-reset" href="#" onclick="openFormResetPassword ()">Забыли пароль?</a>
+                                </div>
                             {% elseif email.status == 'user does not exist' %}
-                                <input class="btn btn-auth" id="btn-auth" type="submit" value="Зарегистрироваться"/>
+                                <input class="btn btn-register" id="btn-auth" type="submit" value="Зарегистрироваться"/>
                             {% else %}
                                 <input class="btn btn-auth" id="btn-auth" type="submit" value="Войти или зарегистрироваться"/>
+                                <div class="links">
+                                    <a class="link-reset" id="link-reset" href="#" onclick="openFormResetPassword ()">Забыли пароль?</a>
+                                </div>
                             {% endif %}
 
-                            <div class="links">
-                                <a class="link-reset" id="link-reset" href="#">Забыли пароль?</a>
-                            </div>
                             {# href="/profile"#}
                             {# onclick="enterProfile ()"#}
                         </form>
+
+
+                        {# Form reset#}
+                        <form action="/auth/forgot" method="post" class="form-content_reset customForm  inactive-content" id="form-reset">
+                            <p>
+                                Введите адрес электронной почты, указанный при регистрации
+                            </p>
+                            <input class="input-field email" id="email-reset" type="email" name="email" placeholder="Почта" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                   autocomplete="on" value="{{ email.email }}"/>
+                            <input class="btn btn-reset" id="btn-reset" type="submit" value="Сбросить пароль" onclick="resetPassword ()"/>
+                        </form>
+
+                        {# Form with messege#}
+{#                        {% if status == 'reset' %}#}
+                        <form
+                            {# action="/auth/forgot" method="post"#}
+                                class="form-content_reset customForm  inactive-content" id="msg-reset">
+                            <p>
+                                На вашу почту
+                                <span>{{ email.email }}</span>
+                                направлено письмо, содержащее ссылку для востановления пароля.
+                            </p>
+
+                        </form>
+{#                        {% endif %}#}
+
 
                         {# Fast-auth #}
                         {# <form#}

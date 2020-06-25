@@ -28,6 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
     checkEmailInput()
   })
 
+  const btnSubmit = document.getElementById('btn-reset')
+  btnSubmit.addEventListener('click', (e) => {
+    e.preventDefault()
+    console.log('close event form')
+  }, false)
+
   changeActionForm ()
 })
 
@@ -121,13 +127,22 @@ function avatarPaste (resServer) {
 
 function btnChange (resServer) {
   const btnForm = document.getElementById('btn-auth')
+  const linkReset = document.getElementById('link-reset')
   switch (resServer.email.status) {
     case 'user exists': {
+      // btnForm.style.backgroundColor = '#005bff'
+
       btnForm.value = 'Войти'
+      btnForm.classList.remove('btn-register')
+      btnForm.classList.add('btn-enter')
+      linkReset.style.display = 'block'
       break
     }
     case 'user does not exist': {
       btnForm.value = 'Зарегистрироваться'
+      btnForm.classList.remove('btn-enter')
+      btnForm.classList.add('btn-register')
+      linkReset.style.display = 'none'
       break
     }
     default: {
@@ -198,4 +213,56 @@ function showMsg (resServer) {
       console.log('wrong data')
     }
   }
+}
+
+function openFormResetPassword () {
+  const formBlock = document.getElementById('form-content_email')
+  formBlock.classList.remove('active-content')
+  formBlock.classList.add('inactive-content')
+
+  const formReset = document.getElementById('form-reset')
+  formReset.classList.remove('inactive-content')
+  formReset.classList.add('active-content')
+}
+
+function resetPassword () {
+  console.log('zapusheno')
+  const email = document.getElementById('email-reset').value
+  requestResetPassword ({email: email, status: 'reset'})
+
+  const btnReset = document.getElementById('btn-reset')
+  // btnReset.addEventListener('click', (e) => {
+    const formReset = document.getElementById('form-reset')
+    formReset.classList.remove('active-content')
+    formReset.classList.add('inactive-content')
+
+    const msgReset = document.getElementById('msg-reset')
+    msgReset.classList.remove('inactive-content')
+    msgReset.classList.add('active-content')
+  // })
+}
+
+function requestResetPassword (data) {
+// eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+  xhr.onload = function (e) {
+    if (xhr.status >= 200 && xhr.status < 300) {
+      // console.log(JSON.parse(xhr.response))
+      const resServer = JSON.parse(xhr.response)
+      showMsgReset(resServer)
+    } else {
+      console.log('server not work')
+    }
+    // console.log('request', xhr.response)
+  }
+  console.log('req', data)
+  xhr.open('POST', '/resetpassword/forgot')
+  xhr.setRequestHeader('Content-type', 'application/json')
+  xhr.send(JSON.stringify(data))
+}
+
+function showMsgReset (resServer) {
+  console.log('resServer reset', resServer)
+
+
 }
