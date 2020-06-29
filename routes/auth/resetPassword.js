@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User,Mail,  Token } = require('../../models')
+const { User, Mail, Token } = require('../../models')
 const appRoot = require('app-root-path')
 const logger = require(`${appRoot}/helpers/winstonLogger`)
 const mailer = require(`${appRoot}/helpers/mailer`)
@@ -49,22 +49,22 @@ router.post('/forgot', async (req, res, next) => {
     })
 
     if (!user) {
-      return res.json({status: 'fail', msg: 'User with this mail is not registered'})
+      return res.json({
+        status: 'fail',
+        msg: 'User with this mail is not registered',
+      })
     }
 
     if (user) {
-      // req.session.states.resetForm.msg = 'User with this mail registered'
-      // if (req.session.states.resetForm.status === 'reset') {
       if (req.body.status === 'reset') {
         console.log('reset')
-        //тут отправляем письмо со ссылкой на почту
 
         const tokenObj = await Token.create({
           type: 'resetPassword',
           user_id: user.id,
         })
         const tokenRow = tokenObj.get({ row: true })
-        console.log('tokenRow',tokenRow)
+        console.log('tokenRow', tokenRow)
 
         const mail = await Mail.create({
           type: 'PASSWORD_RESET',
@@ -72,14 +72,16 @@ router.post('/forgot', async (req, res, next) => {
           token: tokenRow.token,
         })
 
-
         // // no await, because we want to create order, even if mail server is down
         mailer.sendResetPassword({
           user: user,
           mailId: mail.id,
-          token: token,
+          token: tokenRow.token,
         })
-        return res.json({status: 'success', msg: 'User with this mail registered'})
+        return res.json({
+          status: 'success',
+          msg: 'User with this mail registered',
+        })
       }
     }
   } catch (err) {
@@ -91,7 +93,26 @@ router.post('/forgot', async (req, res, next) => {
 router.post('/newpassword', async (req, res, next) => {
   console.log('newpassw', req.body)
   try {
+    const token = await Token.findOne({
+      where: { token: req.body.token },
+      include: {
+        model: User,
+      },
+    })
 
+    if (req.body.inputValueId1 !== req.body.inputValueId2) {
+      console.log('not ')
+      return res.json({ msg: 'Different passwords' })
+    }
+
+    const passw = req.body.inputValueId1
+    const user = await User.findOne({
+      where: {id: token.dataValues.user_id}
+    })
+    user.password = passw
+    user.save()
+
+    return res.json({ msg: 'Passwords is identical' })
   } catch (err) {
     next(err)
   }
@@ -154,52 +175,59 @@ router.post('/newpassword', async (req, res, next) => {
 // })
 
 // http://localhost:5000/resetpassword/approve/:token
-router.get('/approve/:token', (req, res, next) => {
-  Token.findOne({
-    where: { token: req.params.token },
-    include: {
-      model: User,
-    },
-  })
-    .then(token => {
-      console.log('token', token)
-      if (!token) {
-        return res.send('<span>такой ссылки не существует!</span>') // todo 404 !
-      }
+router.get('/approve/:token', async (req, res, next) => {
 
-      if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
-        return res.send('<span>ссылка просрочена!</span>')
-      }
-      res.render('auth/resetpassword')
-      // todo нужна форма!
+  try {
+    const token = await Token.findOne({
+      where: { token: req.params.token },
+      include: {
+        model: User,
+      },
     })
-    .catch(err => {
-      res.json(err)
-    })
+
+    if (!token) {
+      return res.render('auth/resetPasswordMsg',{ msg: 'Такой ссылки не существует!'})
+
+      // todo 404 !
+    }
+    if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
+      return res.render('auth/resetPasswordMsg',{ msg: 'Ссылка просрочена!'})
+    }
+    // console.log('token11',token)
+    res.render('auth/resetpassword',
+      { token:token.dataValues.token }
+      )
+    // todo нужна форма!
+  } catch (err) {
+    next(err)
+  }
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   console.log(req.body)
-  Token.findOne({
-    where: { token: req.body.token },
-    include: {
-      model: User,
-    },
-  })
-    .then(token => {
-      if (!token) {
-        return res.json({ err: 'токен не найден!' }) // todo 404 !
-      }
 
-      if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
-        return res.json({ err: 'ссылка просрочена' }) // todo 404 !
-      }
-      token.User.update({ password: req.body.password })
+  try {
+    const token = await Token.findOne({
+      where: { token: req.body.token },
+      include: {
+        model: User,
+      },
+    })
 
-      return res.json({ token: token }) // todo 404 !
-    }).catch(err => {
-    res.json(err)
-  })
+    if (!token) {
+      return res.json({ err: 'токен не найден!' }) // todo 404 !
+    }
+
+    if (token.expirationDate === null || Date.parse(token.expirationDate) < Date.now()) {
+      return res.json({ err: 'ссылка просрочена' }) // todo 404 !
+    }
+    token.User.update({ password: req.body.password })
+
+    return res.json({ token: token }) // todo 404 !
+
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router

@@ -47,6 +47,36 @@ module.exports = (sequelize) => {
       //"/images/avatar-default.svg"
     },
 
+    //new strings
+    // name: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
+    // surname: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
+    // address: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    // city:{
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    // country:{
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    // postcode:{
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    // infoAbout:{
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // }
+
   }, {
     underscored: true,
     hooks: {

@@ -263,6 +263,4 @@ function requestResetPassword (data) {
 
 function showMsgReset (resServer) {
   console.log('resServer reset', resServer)
-
-
 }

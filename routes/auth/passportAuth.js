@@ -73,11 +73,10 @@ router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/auth/login',
 }))
 
-router.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    console.error(err)
-    res.redirect('/')
-  })
+router.get('/logout/', (req, res) => {
+  console.log('logout')
+  req.logout()
+  res.redirect('/')
 })
 
 module.exports = router

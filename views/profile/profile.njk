@@ -23,7 +23,7 @@
         </div>
         <a class="btn btn-reset" href="/resetpassword/reset" type="button" >Востановление пароля</a>
 
-        <a class="profile-exit" href="#">Выйти на всех устройствах</a>
+        <a class="profile-exit" href="/auth/logout">Выйти на этом устройстве</a>
     </div>
 
     <div class="panel-section">
@@ -33,7 +33,7 @@
                 <span class="info-subtitle">
                     ФИО
                  </span>
-                <span class="">{{ user.lastname }}{{ user.name }}</span>
+                <span class="">{{ user.lastname }}{{ user.username }}</span>
             </div>
         </div>
         <div class="profile-info">
@@ -71,7 +71,7 @@
                 <span class="info-subtitle">
                     Имя
                  </span>
-                <span class="">{{ user.name }}</span>
+                <span class="">{{ user.username }}</span>
             </div>
         </div>
         <div class="profile-info">

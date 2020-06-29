@@ -8,15 +8,14 @@
                 <form>
 
                     <div class="row">
-
                         <div class="row-cell">
-                            <label>Никнейм</label>
-                            <input class="input-field" type="text" placeholder="Никнейм">
+                            <label>Номер телефона</label>
+                            <input class="input-field" type="text" placeholder="Номер телефона" value="{{ user.phone }}">
                         </div>
 
                         <div class="row-cell">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="input-field" type="email" placeholder="Email">
+                            <input class="input-field" type="email" placeholder="Email" value="{{ user.email }}">
                         </div>
 
                     </div>
@@ -56,13 +55,21 @@
 
                             <div class="row-cell">
                                 <label>Индекс</label>
-                                <input class="input-field" type="number" placeholder="Индекс">
+                                <input class="input-field" type="text" placeholder="Индекс">
                             </div>
 
                     </div>
 
-                    <div class="row-info">
+                    <div class="row">
+                        <div class="form-gender" >
+                            <label for="gender">Укажите пол: </label>
+                            <input class="gender" type="radio" name="gender" value="male">Мужской<br>
+                            <input class="gender" type="radio" name="gender" value="female"> Женский<br>
+                            <input class="gender" type="radio" name="gender" value="other" checked> Другой
+                        </div>
+                    </div>
 
+                    <div class="row-info">
                         <label class="textarea-label">About Me</label>
 
                         <textarea class="textarea" rows="5" cols="70" placeholder="Here can be your description">
@@ -71,7 +78,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-info">Сохранить изменения</button>
-                    <div class="clearfix"></div>
+{#                    <div class="clearfix"></div>#}
                 </form>
             </div>
 

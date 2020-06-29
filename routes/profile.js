@@ -82,4 +82,8 @@ router.get('/purchases/', (req, res) => {
   res.render('profile/purchases')
 })
 
+
+
+
+
 module.exports = router
