@@ -48,14 +48,14 @@ module.exports = (sequelize) => {
     },
 
     //new strings
-    // name: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
-    // surname: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    // },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    surname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     // address: {
     //   type: DataTypes.STRING,
     //   allowNull: true,
@@ -72,10 +72,10 @@ module.exports = (sequelize) => {
     //   type: DataTypes.STRING,
     //   allowNull: true,
     // },
-    // infoAbout:{
-    //   type: DataTypes.STRING,
-    //   allowNull: true,
-    // }
+    infoAbout:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
 
   }, {
     underscored: true,

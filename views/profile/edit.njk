@@ -10,12 +10,12 @@
                     <div class="row">
                         <div class="row-cell">
                             <label>Номер телефона</label>
-                            <input class="input-field" type="text" placeholder="Номер телефона" value="{{ user.phone }}">
+                            <input class="input-field" id="phone" type="text" placeholder="Номер телефона"  value="{{ user.phone }}" onfocusout="collectData ()">
                         </div>
 
                         <div class="row-cell">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="input-field" type="email" placeholder="Email" value="{{ user.email }}">
+                            <input class="input-field" id="email" type="email" placeholder="Email" value="{{ user.email }}" onfocusout="collectData ()">
                         </div>
 
                     </div>
@@ -23,45 +23,46 @@
                     <div class="row">
                         <div class="row-cell">
                             <label>Имя</label>
-                            <input class="input-field" type="text" placeholder="Имя">
+                            <input class="input-field" id="name" type="text" placeholder="Имя" value="{{ user.name }}" onfocusout="collectData ()">
 
                         </div>
                         <div class="row-cell">
                             <label>Фамилия</label>
-                            <input class="input-field" type="text" placeholder="Фамилия">
+                            <input class="input-field" id="surname" type="text" placeholder="Фамилия" value="{{ user.surname }}" onfocusout="collectData ()">
                         </div>
                     </div>
 
+{#                    {% for address in addresses %}#}
+
                     <div class="row">
-                            <div class="row-cell">
-                                <label>Адрес</label>
-                                <input class="input-field input-address" type="text" placeholder="Улица, дом, корпус, квартира">
-                            </div>
+                        <div class="row-cell">
+                            <label>Адрес #{{loop.index}}</label>
+                            <input class="input-field input-address" id="address" type="text"
+                                   placeholder="Улица, дом, корпус, квартира" value="{{ address.address }}" onfocusout="collectData ()">
+                        </div>
                     </div>
 
+
                     <div class="row">
+                        <div class="row-cell">
+                            <label>Город</label>
+                            <input class="input-field" id="city" type="text" placeholder="Город" value="{{ user.city }}" onfocusout="collectData ()">
+                        </div>
 
-                            <div class="row-cell">
-                                <label>Город</label>
-                                <input class="input-field" type="text" placeholder="Город">
-                            </div>
+                        <div class="row-cell">
+                            <label>Страна</label>
+                            <input class="input-field" id="country" type="text" placeholder="Страна" value="{{ user.country }}" onfocusout="collectData ()">
+                        </div>
 
-
-                            <div class="row-cell">
-                                <label>Страна</label>
-                                <input class="input-field" type="text" placeholder="Страна">
-                            </div>
-
-
-                            <div class="row-cell">
-                                <label>Индекс</label>
-                                <input class="input-field" type="text" placeholder="Индекс">
-                            </div>
-
+                        <div class="row-cell">
+                            <label>Индекс</label>
+                            <input class="input-field" id="postcode" type="text" placeholder="Индекс" value="{{ user.postcode }}" onfocusout="collectData ()">
+                        </div>
                     </div>
+{#                    {% endfor %}#}
 
                     <div class="row">
-                        <div class="form-gender" >
+                        <div class="form-gender">
                             <label for="gender">Укажите пол: </label>
                             <input class="gender" type="radio" name="gender" value="male">Мужской<br>
                             <input class="gender" type="radio" name="gender" value="female"> Женский<br>
@@ -72,13 +73,13 @@
                     <div class="row-info">
                         <label class="textarea-label">About Me</label>
 
-                        <textarea class="textarea" rows="5" cols="70" placeholder="Here can be your description">
+                        <textarea class="textarea" id="textarea" rows="5" cols="70" placeholder="Here can be your description" onfocusout="collectData ()">
                         </textarea>
 
                     </div>
 
                     <button type="submit" class="btn btn-info">Сохранить изменения</button>
-{#                    <div class="clearfix"></div>#}
+                    {#                    <div class="clearfix"></div>#}
                 </form>
             </div>
 

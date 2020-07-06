@@ -9,11 +9,11 @@ module.exports = {
     const addresses = []
     for (let i = 0; i < users.length; i++) {
       addresses.push({
-        type: 'самовывоз',
-        textAddress: faker.address.streetAddress(),
+        // type: 'самовывоз',
+        address: faker.address.streetAddress(),
         city: faker.address.city(),
-        state: faker.address.state(),
-        zip: faker.address.zipCode(),
+        country: faker.address.country(),
+        postcode: faker.address.zipCode(),
         createdAt: new Date(),
         updatedAt: new Date(),
         user_id: users[i].id,

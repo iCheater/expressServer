@@ -16,6 +16,15 @@ module.exports = {
         phone: faker.phone.phoneNumber(),
         verified: true,
         avatarUrl: faker.image.avatar(),
+
+        //new strings
+        name: faker.name.firstName(),
+        surname: faker.name.lastName(),
+        address: faker.address.streetAddress(),
+        city: faker.address.city(),
+        country: faker.address.country(),
+        postcode: faker.address.zipCode(),
+        infoAbout: 'about me',
         created_at: new Date(),
         updated_at: new Date(),
       })

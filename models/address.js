@@ -1,12 +1,25 @@
 const { DataTypes } = require('sequelize')
 
-module.exports = function (sequelize) {
+module.exports =  (sequelize) => {
   const Address = sequelize.define('Address', {
-    type: DataTypes.STRING,
-    textAddress: DataTypes.STRING,
-    city: DataTypes.STRING,
-    state: DataTypes.STRING,
-    zip: DataTypes.STRING,
+    //new strings
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    city:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    country:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    postcode:{
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
   }, {
     //
   })
