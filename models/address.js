@@ -21,7 +21,11 @@ module.exports =  (sequelize) => {
     },
 
   }, {
+    // hooks: {
+    //   beforeCreate: async (address) => {
     //
+    //   },
+    // },
   })
 
   return Address

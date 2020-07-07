@@ -11,6 +11,7 @@ const { logErrors, clientErrorHandler, errorHandler } = require(`${appRoot}/help
 const homeRouter = require('./home')
 
 const adminRouter = require('./admin/')
+const api = require('./api/')
 const catalogRouter = require('./catalog')
 const testRouter = require('./fortest')
 const profileRouter = require('./profile')
@@ -29,6 +30,8 @@ router.use(clearCookie)
 
 router.use('/', homeRouter)
 router.use('/', authRouter)
+
+router.use('/api/', api)
 
 router.use('/profile/', profileRouter)
 router.use('/catalog/', catalogRouter)

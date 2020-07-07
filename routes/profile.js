@@ -24,6 +24,7 @@ router.get('/edit/', async (req, res, next) => {
       }
     })
     const rowAddresses = user.addresses.map(address => address.get({ row: true }))
+    // console.log(user)
     console.log('addresses', rowAddresses[0])
 
     res.render('profile/edit', {
@@ -47,6 +48,8 @@ router.get('/edit/', async (req, res, next) => {
   //     })
   //   })
 })
+// const addressController = require('../../controllers/addresses')
+// router.put('/editUser/:id', addressController.update)
 
 router.post('/editUser/', async (req, res, next) => {
   console.log('user', req.user.id)
@@ -65,16 +68,16 @@ router.post('/editUser/', async (req, res, next) => {
       console.log('dfg')
     }
 
-    user.username = req.body.name + req.body.surname
-    user.phone = req.body.phone
-    user.email = req.body.email
-    user.name = req.body.name
-    user.surname = req.body.surname
-    user.address = req.body.address
-    user.city = req.body.city
-    user.country = req.body.country
-    user.postcode = req.body.postcode
-    user.infoAbout = req.body.infoAbout
+    // user.username = req.body.name + req.body.surname
+    // user.phone = req.body.phone
+    // user.email = req.body.email
+    // user.name = req.body.name
+    // user.surname = req.body.surname
+    // user.address = req.body.address
+    // user.city = req.body.city
+    // user.country = req.body.country
+    // user.postcode = req.body.postcode
+    // user.infoAbout = req.body.infoAbout
 
     await user.save()
 

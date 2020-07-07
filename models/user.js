@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
       defaultValue: false,
     },
     gender: {
-      type: DataTypes.ENUM('MALE', 'FEMALE'),
+      type: DataTypes.ENUM('MALE', 'FEMALE', 'OTHER'),
       allowNull: true,
     },
     avatarUrl: {

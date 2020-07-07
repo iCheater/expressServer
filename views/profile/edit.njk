@@ -5,40 +5,57 @@
         <h4 class="title">Редактирование профиля</h4>
         <div class="edit__inner">
             <div class="edit-form">
-                <form>
-
+                <form id="user-info">
+                    <input type="hidden"  name="id" value="{{ user.id }}">
                     <div class="row">
                         <div class="row-cell">
                             <label>Номер телефона</label>
-                            <input class="input-field" id="phone" type="text" placeholder="Номер телефона"  value="{{ user.phone }}" onfocusout="collectData ()">
+                            <input class="input-field" id="phone" type="text" name="phone" placeholder="Номер телефона"  value="{{ user.phone }}" onfocusout="collectData ()">
                         </div>
 
                         <div class="row-cell">
                             <label for="exampleInputEmail1">Email</label>
-                            <input class="input-field" id="email" type="email" placeholder="Email" value="{{ user.email }}" onfocusout="collectData ()">
+                            <input class="input-field" id="email" type="email" name="email" placeholder="Email" value="{{ user.email }}" onfocusout="collectData ()">
                         </div>
-
                     </div>
 
                     <div class="row">
                         <div class="row-cell">
                             <label>Имя</label>
-                            <input class="input-field" id="name" type="text" placeholder="Имя" value="{{ user.name }}" onfocusout="collectData ()">
+                            <input class="input-field" id="name" type="text" name="name" placeholder="Имя" value="{{ user.name }}" onfocusout="collectData ()">
 
                         </div>
                         <div class="row-cell">
                             <label>Фамилия</label>
-                            <input class="input-field" id="surname" type="text" placeholder="Фамилия" value="{{ user.surname }}" onfocusout="collectData ()">
+                            <input class="input-field" id="surname" type="text"  name="surname" placeholder="Фамилия" value="{{ user.surname }}" onfocusout="collectData ()">
                         </div>
                     </div>
 
-{#                    {% for address in addresses %}#}
+                    <div class="row">
+                        <div class="form-gender" id="form-gender" onfocusout="collectData ()">
+                            <label for="gender">Укажите пол: </label>
+                            <input class="gender" type="radio" name="gender" value="male">Мужской<br>
+                            <input class="gender" type="radio" name="gender" value="female"> Женский<br>
+                            <input class="gender" type="radio" name="gender" value="OTHER" CHECKED> Другой
+                        </div>
+                    </div>
 
+                    <div class="row-info">
+                        <label class="textarea-label">About Me</label>
+                        <textarea class="textarea" id="textarea" rows="5" cols="70" name="textarea" placeholder="Here can be your description" onfocusout="collectData ()">
+                        </textarea>
+
+                    </div>
+                    <button type="submit" class="btn btn-info">Сохранить изменения</button>
+                </form>
+{#                    {% for address in addresses %}#}
+                <form id="address-info">
+                    <input type="hidden"  name="id" value="{{ addresses.id }}">
                     <div class="row">
                         <div class="row-cell">
-                            <label>Адрес #{{loop.index}}</label>
-                            <input class="input-field input-address" id="address" type="text"
-                                   placeholder="Улица, дом, корпус, квартира" value="{{ address.address }}" onfocusout="collectData ()">
+                            <label>Адрес {{loop.index}}</label>
+                            <input class="input-field input-address" id="address" type="text"  name="address"
+                                   placeholder="Улица, дом, корпус, квартира" value="{{ addresses.address }}" onfocusout="collectDataAddress ()">
                         </div>
                     </div>
 
@@ -46,38 +63,20 @@
                     <div class="row">
                         <div class="row-cell">
                             <label>Город</label>
-                            <input class="input-field" id="city" type="text" placeholder="Город" value="{{ user.city }}" onfocusout="collectData ()">
+                            <input class="input-field" id="city" type="text"  name="city" placeholder="Город" value="{{ addresses.city }}" onfocusout="collectDataAddress ()">
                         </div>
 
                         <div class="row-cell">
                             <label>Страна</label>
-                            <input class="input-field" id="country" type="text" placeholder="Страна" value="{{ user.country }}" onfocusout="collectData ()">
+                            <input class="input-field" id="country" type="text"  name="country" placeholder="Страна" value="{{ addresses.country }}" onfocusout="collectDataAddress ()">
                         </div>
 
                         <div class="row-cell">
                             <label>Индекс</label>
-                            <input class="input-field" id="postcode" type="text" placeholder="Индекс" value="{{ user.postcode }}" onfocusout="collectData ()">
+                            <input class="input-field" id="postcode" type="text"  name="postcode" placeholder="Индекс" value="{{ addresses.postcode }}" onfocusout="collectDataAddress ()">
                         </div>
                     </div>
 {#                    {% endfor %}#}
-
-                    <div class="row">
-                        <div class="form-gender">
-                            <label for="gender">Укажите пол: </label>
-                            <input class="gender" type="radio" name="gender" value="male">Мужской<br>
-                            <input class="gender" type="radio" name="gender" value="female"> Женский<br>
-                            <input class="gender" type="radio" name="gender" value="other" checked> Другой
-                        </div>
-                    </div>
-
-                    <div class="row-info">
-                        <label class="textarea-label">About Me</label>
-
-                        <textarea class="textarea" id="textarea" rows="5" cols="70" placeholder="Here can be your description" onfocusout="collectData ()">
-                        </textarea>
-
-                    </div>
-
                     <button type="submit" class="btn btn-info">Сохранить изменения</button>
                     {#                    <div class="clearfix"></div>#}
                 </form>
