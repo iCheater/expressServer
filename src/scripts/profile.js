@@ -1,109 +1,97 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('profile page work')
-})
+function edit (ctx) {
+  console.log('functon edit')
+  const parent = document.getElementById(ctx.dataset.section)
+  const inputs = parent.querySelectorAll('.info-input')
+  const spans = parent.querySelectorAll('.info-span')
+  changeButtonState(ctx)
+  changeVisibility(inputs)
+  changeVisibility(spans)
+}
 
-//home profile
-function changeData (data) {
-  const block = (data.parentNode).parentNode
-  const blockInfoChildren = block.querySelectorAll('.info')
+async function save (ctx) {
+  console.log('functon save')
+  const parent = document.getElementById(ctx.dataset.section)
+  const inputs = parent.querySelectorAll('.info-input')
+  const spans = parent.querySelectorAll('.info-span')
+  const values = getInputValueAndInsertToSpans(inputs,spans)
+  console.log('values', values)
+  const id =  document.getElementById('user-id').value
+  const response = await sendValuesToServer(values, `/api/${ctx.dataset.url}/${id}`)
 
-  for (let i = 0; i < blockInfoChildren.length; i++) {
-    let element = blockInfoChildren[i]
-    replaceTag(element, 'input')
-  }
-  const link = block.querySelectorAll('.profile-edit')
-  link[0].innerHTML = 'Сохранить'
-  console.log('link', link)
-
-  if(block.id === 'data-personal') {
-    console.log('sdfasd', block)
-    const lastInfo = document.getElementById('info-gender')
-    lastInfo.remove()
-    const lastChild = document.getElementById('row-gender')
-    lastChild.style.display = 'flex'
+  if(response) {
+    changeButtonState(ctx)
+    changeVisibility(inputs)
+    changeVisibility(spans)
+  } else {
+    // showError()
   }
 }
 
-function replaceTag (element, input) {
-  const newTag = document.createElement('input')
-  element.parentElement.insertBefore(newTag, element)
-  for (let i = 0, attrs = element.attributes, count = attrs.length; i < count; ++i) {
-    const content = element.innerHTML
-    newTag.setAttribute(attrs[i].name, attrs[i].value)
-    newTag.value = content
+function changeButtonState(ctx) {
+  console.log('ctx', ctx)
+  console.log('state', ctx.dataset.state)
+  switch (ctx.dataset.state) {
+    case 'edit': {
+      ctx.innerHTML = 'Сохранить'
+      ctx.dataset.state = 'save'
+      ctx.style.color = '#3ac267'
+      ctx.setAttribute( "onClick", "save(this)" );
+      break
+    }
+    case 'save': {
+      ctx.innerHTML = 'Изменить'
+      ctx.dataset.state = 'edit'
+      ctx.style.color = '#999'
+      ctx.setAttribute( "onClick", "edit(this)" );
+      break
+    }
+    default : {
+      console.error('i do not suppose to be here')
+    }
   }
-  let childNodes = element.childNodes
-  while (childNodes.length > 0) {
-    newTag.appendChild(childNodes[0])
-  }
-  element.parentElement.removeChild(element)
 }
 
-//edit
-function collectData () {
-  const formId = document.getElementById('user-info')
-  const form = new FormData(formId)
-
-  requestCollectData({
-    id: form.get('id'),
-    phone: form.get('phone'),
-    email: form.get('email'),
-    name: form.get('name'),
-    surname: form.get('surname'),
-    gender: form.get('gender'),
-    infoAbout: form.get('textarea'),
+function changeVisibility(elems) {
+  elems.forEach((elem)=> {
+    elem.hidden = !elem.hidden
   })
 }
-
-function requestCollectData (data) {
-// eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
-  xhr.onload = function (e) {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      // console.log(JSON.parse(xhr.response))
-      const resServer = JSON.parse(xhr.response)
-      console.log(resServer)
-    } else {
-      console.log('server not work')
-    }
-    // console.log('request', xhr.response)
-  }
-  console.log(data)
-  xhr.open('PUT', '/api/user/' + data.id)
-  xhr.setRequestHeader('Content-type', 'application/json')
-  xhr.send(JSON.stringify(data))
-}
-
-function collectDataAddress () {
-  const formId = document.getElementById('address-info')
-  const form = new FormData(formId)
-  requestCollectDataAddress({
-    id: form.get('id'),
-    address: form.get('address'),
-    city: form.get('city'),
-    country: form.get('country'),
-    postcode: form.get('postcode'),
+function getInputValueAndInsertToSpans (inputs) {
+  const result = {}
+  inputs.forEach((input) => {
+    result[input.name] = input.value
+    const span = document.getElementById(input.name)
+    span.innerHTML = input.value
   })
+  return result
+}
+function sendValuesToServer (values, url) {
+  return request(values,url, 'PUT', )
 }
 
-function requestCollectDataAddress (data) {
-// eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
-  xhr.onload = function (e) {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      // console.log(JSON.parse(xhr.response))
-      const resServer = JSON.parse(xhr.response)
-      console.log(resServer)
-    } else {
-      console.log('server not work')
+function request (data, url, method) {
+  return new Promise( (resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.onload = function (e) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        const resServer = JSON.parse(xhr.response)
+        resolve(resServer);
+        console.log(resServer)
+      }  else {
+        reject({
+          status: xhr.status,
+          statusText: xhr.statusText
+        });
+      }
     }
-    // console.log('request', xhr.response)
-  }
-  xhr.open('PUT', '/api/address/' + data.id)
-  xhr.setRequestHeader('Content-type', 'application/json')
-  xhr.send(JSON.stringify(data))
+    xhr.onerror = () => {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      });
+    };
+    xhr.open(method, url)
+    xhr.setRequestHeader('Content-type', 'application/json')
+    xhr.send(JSON.stringify(data))
+  });
 }
-
-
-
-

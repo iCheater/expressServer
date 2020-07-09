@@ -14,6 +14,8 @@ router.get('/', (req, res) => {
   })
 })
 
+
+
 router.get('/edit/', async (req, res, next) => {
   try {
     const user = await User.findOne({
@@ -36,56 +38,6 @@ router.get('/edit/', async (req, res, next) => {
     next(err)
   }
 
-
-  // console.log('edit', req.body)
-  // User.findAll()
-  //   .then(data => {
-  //     const rawData = data.map(e => e.get({ row: true }))
-  //     console.log(rawData)
-  //     res.render('profile/edit', {
-  //       // editOrAdd: 'Edit',
-  //       // user: rawData,
-  //     })
-  //   })
-})
-// const addressController = require('../../controllers/addresses')
-// router.put('/editUser/:id', addressController.update)
-
-router.post('/editUser/', async (req, res, next) => {
-  console.log('user', req.user.id)
-
-  try {
-    let user = await User.findOne({
-      where: { id: req.user.id },
-      include: {
-        model: Address,
-        as: 'addresses',
-      },
-    })
-    console.log('user', user)
-
-    if(!user) {
-      console.log('dfg')
-    }
-
-    // user.username = req.body.name + req.body.surname
-    // user.phone = req.body.phone
-    // user.email = req.body.email
-    // user.name = req.body.name
-    // user.surname = req.body.surname
-    // user.address = req.body.address
-    // user.city = req.body.city
-    // user.country = req.body.country
-    // user.postcode = req.body.postcode
-    // user.infoAbout = req.body.infoAbout
-
-    await user.save()
-
-    res.render('profile/edit', user)
-    // res.json(userData)
-  } catch (err) {
-    next(err)
-  }
 })
 
 router.get('/favorites/', (req, res) => {
