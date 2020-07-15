@@ -1,35 +1,31 @@
 function edit (ctx) {
   console.log('functon edit')
   const parent = document.getElementById(ctx.dataset.section)
-  const inputs = parent.querySelectorAll('.info-input')
-  const spans = parent.querySelectorAll('.info-span')
+  const hideSwitchElems = parent.querySelectorAll('.hide-switcher')
   changeButtonState(ctx)
-  changeVisibility(inputs)
-  changeVisibility(spans)
+  changeVisibility(hideSwitchElems)
 }
 
 async function save (ctx) {
   console.log('functon save')
   const parent = document.getElementById(ctx.dataset.section)
-  const inputs = parent.querySelectorAll('.info-input')
-  const spans = parent.querySelectorAll('.info-span')
-  const values = getInputValueAndInsertToSpans(inputs,spans)
-  console.log('values', values)
+  const hideSwitchElems = parent.querySelectorAll('.hide-switcher')
+  const values = getInputValueAndInsertToSpans(parent)
+
   const id =  document.getElementById('user-id').value
   const response = await sendValuesToServer(values, `/api/${ctx.dataset.url}/${id}`)
 
   if(response) {
     changeButtonState(ctx)
-    changeVisibility(inputs)
-    changeVisibility(spans)
+    changeVisibility(hideSwitchElems)
   } else {
-    // showError()
+    console.error('oooh')
   }
+
 }
 
 function changeButtonState(ctx) {
   console.log('ctx', ctx)
-  console.log('state', ctx.dataset.state)
   switch (ctx.dataset.state) {
     case 'edit': {
       ctx.innerHTML = 'Сохранить'
@@ -56,15 +52,32 @@ function changeVisibility(elems) {
     elem.hidden = !elem.hidden
   })
 }
-function getInputValueAndInsertToSpans (inputs) {
+
+function getInputValueAndInsertToSpans (parent) {
+  const inputs = parent.querySelectorAll('.info-input')
+  console.log('inputs', inputs)
+  const gendersVocabulary = {
+    'MALE' :'Мужской',
+    'FEMALE': 'Женский',
+    'OTHER': 'Другой',
+  }
   const result = {}
   inputs.forEach((input) => {
+    if(input.name === "gender" && !input.checked) {
+      return
+    }
     result[input.name] = input.value
     const span = document.getElementById(input.name)
-    span.innerHTML = input.value
+    if(input.type === 'radio') {
+      console.log(input.type)
+      span.innerHTML = gendersVocabulary[input.value]
+    } else {
+      span.innerHTML = input.value
+    }
   })
   return result
 }
+
 function sendValuesToServer (values, url) {
   return request(values,url, 'PUT', )
 }
@@ -75,23 +88,24 @@ function request (data, url, method) {
     xhr.onload = function (e) {
       if (xhr.status >= 200 && xhr.status < 300) {
         const resServer = JSON.parse(xhr.response)
-        resolve(resServer);
+        resolve(resServer)
         console.log(resServer)
       }  else {
         reject({
           status: xhr.status,
           statusText: xhr.statusText
-        });
+        })
       }
     }
     xhr.onerror = () => {
       reject({
         status: this.status,
         statusText: xhr.statusText
-      });
-    };
+      })
+    }
+    console.log('url', url)
     xhr.open(method, url)
     xhr.setRequestHeader('Content-type', 'application/json')
     xhr.send(JSON.stringify(data))
-  });
+  })
 }

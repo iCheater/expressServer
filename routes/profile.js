@@ -76,16 +76,28 @@ router.get('/reviews/', (req, res) => {
     })
 })
 
-router.get('/addresses/', (req, res) => {
-  User.findAll()
-    .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
-      res.render('profile/addresses', {
-        editOrAdd: 'Addresses',
-        user: rawData,
-      })
+router.get('/addresses/', async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: { id: req.user.id },
+        include: {
+          model: Address,
+          as: 'addresses',
+        }
     })
+      // const us
+    const rowAddresses = user.addresses.map(address => address.get({ row: true }))
+    // console.log(user)
+    console.log('addresses', rowAddresses)
+
+    res.render('profile/addresses', {
+      user: user,
+      addresses: rowAddresses,
+    })
+
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/orderItem/', (req, res) => {

@@ -6,7 +6,41 @@
     <form class="panel-section" id="data-auth">
         <div class="title-inner">
             <h4 class="panel-title">Профиль пользователя</h4>
-            <button class="profile-edit"  type="button" data-state="edit" data-url="user" data-section="data-auth"  onclick="edit (this)">
+            <button class="profile-edit" type="button" data-state="edit" data-url="user" data-section="data-auth"
+                    onclick="edit (this)">
+                <img src="/images/edit.svg">
+                Изменить
+            </button>
+        </div>
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Телефон
+                 </span>
+                <span class="hide-switcher" id="phone">{{ user.phone }}</span>
+                <input class="info-input hide-switcher" placeholder="Телефон" name="phone" value="{{ user.phone }}" hidden>
+            </div>
+        </div>
+
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Почта
+                 </span>
+                <span class="hide-switcher" id="email">{{ user.email }}</span>
+                <input class="info-input hide-switcher" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="Почта" value="{{ user.email }}" hidden>
+            </div>
+        </div>
+        <a class="btn btn-reset" href="/resetpassword/reset" type="button">Востановление пароля</a>
+
+        <a class="profile-exit" href="/auth/logout">Выйти на этом устройстве</a>
+    </form>
+
+    <div class="panel-section" id="data-personal">
+        <div class="title-inner">
+            <h4 class="panel-title">Личные данные</h4>
+            <button class="profile-edit" type="button" data-state="edit" data-url="user" data-section="data-personal"
+                    onclick="edit (this)">
                 <img src="/images/edit.svg">
                 Изменить
             </button>
@@ -16,224 +50,128 @@
         <div class="profile-info">
             <div class="info-descr">
                 <span class="info-subtitle">
-                    Телефон
+                    Фамилия
                  </span>
-                <span class="info-span" id="phone">{{ user.phone }}</span>
-                <input class="info-input" name="phone" value="{{ user.phone }}" hidden>
-            </div>
-        </div>
+                <span class="hide-switcher" id="lastname">{{ user.surname }} </span>
 
-        <div class="profile-info">
-            <div class="info-descr">
-                <span class="info-subtitle">
-                    Почта
-                 </span>
-                <span class="info-span" id="email">{{ user.email }}</span>
-                <input class="info-input" name="email" value="{{ user.email }}" hidden>
-            </div>
-        </div>
-        <a class="btn btn-reset" href="/resetpassword/reset" type="button">Востановление пароля</a>
-
-        <a class="profile-exit" href="/auth/logout">Выйти на этом устройстве</a>
-    </form>
-
-    <div class="panel-section"  id="data-personal">
-        <div class="title-inner">
-            <h4 class="panel-title">Личные данные</h4>
-            <a
-                    {#                    href="/profile/edit" #}
-                    class="profile-edit" onclick="changeData (this)">
-                <img src="/images/edit.svg">
-                Изменить
-            </a>
-        </div>
-
-
-        <div class="profile-info">
-            <div class="info-descr">
-                <span class="info-subtitle">
-                    ФИО
-                 </span>
-                <span class="info">{{ user.lastname }} {{ user.username }}</span>
+                <input class="info-input hide-switcher" name="lastname" placeholder="Фамилия" value="{{ user.surname }}" hidden>
             </div>
         </div>
         <div class="profile-info">
             <div class="info-descr">
                 <span class="info-subtitle">
-                    Дата рождения
+                    Имя
                  </span>
-                <span class="info">Не указано</span>
+                <span class="hide-switcher" id="name">{{ user.name }}</span>
+                <input class="info-input hide-switcher" name="name" placeholder="Имя" value="{{ user.name }}" hidden>
             </div>
         </div>
-        <div class="profile-info">
-            <div class="info-descr">
-                <span class="info-subtitle">
-                    Пол
-                 </span>
-                <span class="info" id="info-gender">Мужской</span>
-
-                <div class="row-gender" id="row-gender" >
-                    <div class="form-gender" id="form-gender" onfocusout="collectData ()">
-                        <label for="gender">Укажите пол: </label>
-                        <input class="gender" type="radio" name="gender" value="MALE">Мужской<br>
-                        <input class="gender" type="radio" name="gender" value="FEMALE"> Женский<br>
-                        <input class="gender" type="radio" name="gender" value="OTHER" CHECKED> Другой
-                    </div>
-                </div>
-            </div>
-
-        </div>
-{#        <a href="/profile/edit" class="profile-edit">Изменить личные данные</a>#}
-    </div>
-
-
-{#    <div class="panel-section" id="data-auth">#}
-{#        <div class="title-inner">#}
-{#            <h4 class="panel-title">Профиль пользователя</h4>#}
-{#            <a#}
-{#                    href="/profile/edit" #}
-{#                    class="profile-edit" onclick="changeData (this)">#}
-{#                <img src="/images/edit.svg">#}
-{#                Изменить#}
-{#            </a>#}
-{#        </div>#}
-
-{#        <input type="hidden" id="user-id" name="id" value="{{ user.id }}">#}
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Телефон#}
-{#                 </span>#}
-{#                <span class="info" id="phone">{{ user.phone }}</span>#}
-{#            </div>#}
-{#        </div>#}
-
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Почта#}
-{#                 </span>#}
-{#                <span class="info" id="email">{{ user.email }}</span>#}
-{#            </div>#}
-{#        </div>#}
-{#        <a class="btn btn-reset" href="/resetpassword/reset" type="button">Востановление пароля</a>#}
-
-{#        <a class="profile-exit" href="/auth/logout">Выйти на этом устройстве</a>#}
-{#    </div>#}
-
-{#    <div class="panel-section"  id="data-personal">#}
-{#        <div class="title-inner">#}
-{#            <h4 class="panel-title">Личные данные</h4>#}
-{#            <a#}
-{#                    #}{#                    href="/profile/edit" #}
-{#                    class="profile-edit" onclick="changeData (this)">#}
-{#                <img src="/images/edit.svg">#}
-{#                Изменить#}
-{#            </a>#}
-{#        </div>#}
-
-
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    ФИО#}
-{#                 </span>#}
-{#                <span class="info">{{ user.lastname }} {{ user.username }}</span>#}
-{#            </div>#}
-{#        </div>#}
 {#        <div class="profile-info">#}
 {#            <div class="info-descr">#}
 {#                <span class="info-subtitle">#}
 {#                    Дата рождения#}
 {#                 </span>#}
-{#                <span class="info">Не указано</span>#}
+{#                <span class="hide-switcher">Не указано</span>#}
+{#                <input class="info-input hide-switcher" placeholder="Дата рождения" name="birthday" value="{{ user.birthday }}"#}
+{#                       hidden>#}
 {#            </div>#}
 {#        </div>#}
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Пол#}
-{#                 </span>#}
-{#                <span class="info" id="info-gender">Мужской</span>#}
 
-{#                <div class="row-gender" id="row-gender" >#}
-{#                    <div class="form-gender" id="form-gender" onfocusout="collectData ()">#}
-{#                        <label for="gender">Укажите пол: </label>#}
-{#                        <input class="gender" type="radio" name="gender" value="MALE">Мужской<br>#}
-{#                        <input class="gender" type="radio" name="gender" value="FEMALE"> Женский<br>#}
-{#                        <input class="gender" type="radio" name="gender" value="OTHER" CHECKED> Другой#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Пол
+                 </span>
+                <span class="hide-switcher" id="gender">{{ user.gender }}</span>
+                <div class="row-gender hide-switcher" id="row-gender" hidden>
+                    <input class="info-input gender" type="radio" name="gender" value="MALE" >Мужской
+                    <input class="info-input gender" type="radio" name="gender" value="FEMALE"> Женский
+                    <input class="info-input gender" type="radio" name="gender" value="OTHER" CHECKED > Другой
+                </div>
+            </div>
 
-{#        </div>#}
-{#        <a href="/profile/edit" class="profile-edit">Изменить личные данные</a>#}
-{#    </div>#}
+        </div>
+        {#        <a href="/profile/edit" class="profile-edit">Изменить личные данные</a>#}
+    </div>
 
-{#    <div class="panel-section" id="data-public">#}
 
-{#        <div class="title-inner">#}
-{#            <h4 class="panel-title">Публичные данные</h4>#}
-{#            <a#}
-{#                    #}{#                    href="/profile/edit" #}
-{#                    class="profile-edit" onclick="changeData (this)">#}
-{#                <img src="/images/edit.svg">#}
-{#                Изменить#}
-{#            </a>#}
-{#        </div>#}
 
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <p>#}
-{#                    Информация, которая вы укажите в этом разделе, публичная. Она указывается рядом с отзывами и видна#}
-{#                    другим пользователям.#}
-{#                </p>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Имя#}
-{#                 </span>#}
-{#                <span class="info">{{ user.name }}</span>#}
-{#            </div>#}
-{#        </div>#}
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Страна, город#}
-{#                 </span>#}
-{#                <span class="info">Не указано#}
-{#                {{ user.country }} {{ user.city }}#}
-{#                </span>#}
-{#            </div>#}
+    <div class="panel-section" id="data-public">
 
-{#        </div>#}
-{#        <a href="/profile/edit" class="profile-edit">Изменить публичные данные</a>#}
-{#    </div>#}
+        <div class="title-inner">
+            <h4 class="panel-title">Публичные данные</h4>
+            <button class="profile-edit" type="button" data-state="edit" data-url="user" data-section="data-public"
+                    onclick="edit (this)">
+                <img src="/images/edit.svg">
+                Изменить
+            </button>
+        </div>
 
-{#    <div class="panel-section" id="data-social">#}
+        <div class="profile-info">
+            <div class="info-descr">
+                <p>
+                    Информация, которая вы укажите в этом разделе, публичная. Она указывается рядом с отзывами и видна
+                    другим пользователям.
+                </p>
+            </div>
+        </div>
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Имя
+                 </span>
+                <span class="hide-switcher" id="nickname">{{ user.name }}</span>
+                <input class="info-input hide-switcher" name="nickname" placeholder="Имя" value="{{ user.name }}" hidden>
+            </div>
+        </div>
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Страна
+                 </span>
+                <span class="hide-switcher"  id="country">Не указано
+                {{ user.country }}
+                </span>
+                <input class="info-input hide-switcher" name="country" placeholder="Страна" value="{{ user.country }}" hidden>
 
-{#        <div class="title-inner">#}
-{#            <h4 class="panel-title">Социальные сети</h4>#}
-{#            <a#}
-{#                    #}{#                    href="/profile/edit" #}
-{#                    class="profile-edit" onclick="changeData (this)">#}
-{#                <img src="/images/edit.svg">#}
-{#                Изменить#}
-{#            </a>#}
-{#        </div>#}
+            </div>
 
-{#        <div class="profile-info">#}
-{#            <div class="info-descr">#}
-{#                <span class="info-subtitle">#}
-{#                    Инстаграм#}
-{#                 </span>#}
-{#                <span class="info">Не указано</span>#}
-{#            </div>#}
-{#        </div>#}
-{#        <a href="/profile/edit" class="profile-edit">Изменить данные социальных сетей</a>#}
-{#    </div>#}
+        </div>
+        <div class="profile-info">
+            <div class="info-descr">
+                <span class="info-subtitle">
+                    Город
+                 </span>
+                <span class="hide-switcher"  id="city">Не указано
+                 {{ user.city }}
+                </span>
+                <input class="info-input hide-switcher" name="city" placeholder="Город" value="{{ user.city }}" hidden>
+            </div>
+
+        </div>
+        {#        <a href="/profile/edit" class="profile-edit">Изменить публичные данные</a>#}
+    </div>
+
+    {#    <div class="panel-section" id="data-social">#}
+
+    {#        <div class="title-inner">#}
+    {#            <h4 class="panel-title">Социальные сети</h4>#}
+    {#            <button class="profile-edit"  type="button" data-state="edit" data-url="user" data-section="data-social"  onclick="edit (this)">#}
+    {#                <img src="/images/edit.svg">#}
+    {#                Изменить#}
+    {#            </button>#}
+    {#        </div>#}
+
+    {#        <div class="profile-info">#}
+    {#            <div class="info-descr">#}
+    {#                <span class="info-subtitle">#}
+    {#                    Инстаграм#}
+    {#                 </span>#}
+    {#                <span class="hide-switcher">Не указано</span>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <a href="/profile/edit" class="profile-edit">Изменить данные социальных сетей</a>#}
+    {#    </div>#}
 
 
 {% endblock %}
