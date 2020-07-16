@@ -131,6 +131,7 @@
   font-size: 16px
   color: #ffffff
   border: none
+  width: 100%
 
 /*preview profile*/
 .panel-section
@@ -217,11 +218,10 @@
   margin-top: 20px
   &-item
     border: 1px solid #999999
+    margin-bottom: 20px
     .addresses_item-inner
       width: 100%
-
       padding: 15px
-      margin-bottom: 20px
       display: flex
       justify-content: space-between
       flex-direction: row
@@ -244,6 +244,7 @@
             fill: #f91155
       .address-change
         width: 45px
+        height: 45px
         background-color: #005bff
         border-radius: 5px
         padding: 10px
@@ -253,67 +254,94 @@
         border: none
         &:hover
           background-color: #0043a9
+        .btn_img-arrow
+          display: none
+          width: 20px
+          height: 20px
         path
           fill: #ffffff
 
-  .addresses_new-item
-    width: 100%
-    font-size: 16px
-    background-color: rgba(0, 91, 255, 0.05)
-    padding: 25px
-    border: 1px dashed #999999
-    cursor: pointer
+
+
+
+.addresses_new-item
+  width: 100%
+  font-size: 16px
+  background-color: rgba(0, 91, 255, 0.05)
+  padding: 25px
+  border: 1px dashed #999999
+  cursor: pointer
+  display: flex
+  align-items: center
+  justify-content: center
+  outline: none
+  svg
+    width: 20px
+    height: 20px
+    margin-right: 10px
+  &:hover
+    background-color: #005bff
+    color: #ffffff
+    path
+      fill: #ffffff
+
+.address-form
+  background-color:  rgba(0, 91, 255, 0.05)
+  padding: 20px
+  width: 100%
+  //display: flex
+  //display: none
+  flex-direction: column
+  //margin-bottom: 20px
+  .row
     display: flex
+    justify-content: space-between
     align-items: center
-    justify-content: center
-    outline: none
-    svg
-      width: 20px
-      height: 20px
-      margin-right: 10px
-    &:hover
-      background-color: #005bff
-      color: #ffffff
-      path
-        fill: #ffffff
-    #address-form
-      background-color:  rgba(0, 91, 255, 0.05)
-      padding: 20px
-      width: 100%
-      //display: flex
-      display: none
-      flex-direction: column
-      margin-bottom: 20px
-      .row
-        display: flex
-        margin-bottom: 20px
-        .row-cell
-          display: flex
-          justify-content: center
-          align-items: center
-          label
-            margin: 0 10px
-          .input-field
-            padding: 5px
-            width: 98%
-            font-size: 14px
-            -webkit-appearance: none
-            -moz-appearance: none
-            appearance: none
-            box-shadow: none
-            border: 1px solid #c5c5c5
-            margin: 10px 0
-          input
-            outline: none
-          input:-webkit-autofill
-            -webkit-box-shadow: inset 0 0 0 50px #fff !important
-          //-webkit-text-fill-color: #999 !important
-          //color: #999 !important
+    margin-bottom: 20px
+    label
+      margin: 0 10px
+    .input-address
+      padding: 5px
+      width: 98%
+      font-size: 16px
+      -webkit-appearance: none
+      -moz-appearance: none
+      appearance: none
+      box-shadow: none
+      border: 1px solid #c5c5c5
+      margin: 10px 0
+    .row-cell
+      display: flex
+      justify-content: center
+      align-items: center
+      label
+        margin: 0 10px
+      .input-field
+        padding: 5px
+        width: 98%
+        font-size: 14px
+        -webkit-appearance: none
+        -moz-appearance: none
+        appearance: none
+        box-shadow: none
+        border: 1px solid #c5c5c5
+        margin: 10px 0
+      input
+        outline: none
+      input:-webkit-autofill
+        -webkit-box-shadow: inset 0 0 0 50px #fff !important
+      //-webkit-text-fill-color: #999 !important
+      //color: #999 !important
 
+      .input-field,
+      input[type~="text"]
+        font-size: 16px
 
-          .input-field,
-          input[type~="text"]
-            font-size: 16px
+.block
+  display: none
+.show-block
+  display: block
+
 
 //history
 .orders-list
