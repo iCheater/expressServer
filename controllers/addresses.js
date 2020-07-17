@@ -9,7 +9,7 @@ exports.create = async (req, res, next) => {
       city: req.body.city,
       country: req.body.country,
       postcode: req.body.postcode,
-      // user_id: req.user.id,
+      user_id: req.user.id,
     })
     res.json(addressInstance)
   }
