@@ -32,16 +32,17 @@ router.get('/', async (req, res, next) => {
 
   //запрос на сервер
   try {
+    const user = await User.findOne({where: {id: req.session.passport.user.id}})
     const products = await Product.findAll({ where: { id: arrOrder } })
-    let promocode = null
+    // let promocode = null
 
-    if (req.session.order && req.session.order.promocode) {
-      promocode = await Promocode.findOne({
-        where: {
-          name: req.session.order.promocode,
-        },
-      })
-    }
+    // if (req.session.order && req.session.order.promocode) {
+    //   promocode = await Promocode.findOne({
+    //     where: {
+    //       name: req.session.order.promocode,
+    //     },
+    //   })
+    // }
 
     const rowProducts = products.map(product => product.get({ row: true }))
 
@@ -49,8 +50,8 @@ router.get('/', async (req, res, next) => {
       product.quantity = req.session.cart.items[product.id].quantity
     })
     console.log('req.session.order', req.session.order)
-
     res.render('order/order', {
+      user: user,
       products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
@@ -432,6 +433,7 @@ router.get('/createOrder/', async (req, res, next) => {
   rowProducts.forEach(product => {
     product.quantity = req.session.cart.items[product.id].quantity
   })
+
   console.log('req.session.cart.calculation', req.session.cart.calculation)
 
   req.session.authorless = {

@@ -28,7 +28,6 @@ router.get('/', async (req, res, next) => {
       bonuses,
     }
 
-
     if (products.length > 0) {
       const rowProducts = products.map(product => product.get({ row: true }))
       templateData.sumRowTotal = 0

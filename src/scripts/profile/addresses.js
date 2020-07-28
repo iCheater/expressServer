@@ -28,7 +28,6 @@ async function changeAddress (ctx) {
   const parent = ctx.parentNode.parentNode
   const formClass = parent.querySelector('.address-form')
 
-  console.log('formClass23',formClass)
   const form = new FormData(formClass)
   const req = await request({
     method: 'PUT',
@@ -45,7 +44,7 @@ async function changeAddress (ctx) {
   changeStrAddr (parent,req)
 }
 
-function changeStrAddr (parent,req){
+function changeStrAddr (parent, req){
   const addr = parent.querySelector('.address')
   addr.innerHTML = req.country + ', ' + req.city + ', ' + req.address
 }
@@ -104,14 +103,12 @@ function addNewAddress (ctx) {
 function showOrHideForm (form) {
   const btn = document.getElementById('new-address')
   const span = btn.querySelector('span')
-
   const imgAdd = document.getElementById('img-add')
   const imgArrow = document.getElementById('img-arrow')
   if (form.classList.contains('show-block')) {
     form.classList.remove('show-block')
     form.classList.add('block')
     span.innerText = 'Добавить новый адрес'
-
     imgArrow.classList.remove('show-block')
     imgArrow.classList.add('block')
     imgAdd.classList.remove('block')
@@ -120,7 +117,6 @@ function showOrHideForm (form) {
     form.classList.remove('block')
     form.classList.add('show-block')
     span.innerText = 'Свернуть'
-
     imgAdd.classList.remove('show-block')
     imgAdd.classList.add('block')
     imgArrow.classList.remove('block')
@@ -132,7 +128,6 @@ async function createNewAddress (ctx) {
   const parent = ctx.parentNode.parentNode
   const formClass = parent.querySelector('.address-form')
   const form = new FormData(formClass)
-
   const req = await request({
     method: 'POST',
     url: ctx.dataset.url,
@@ -154,7 +149,6 @@ function createStrAddr (req) {
   const elem = document.querySelector('.hidden')
   const newElem = elem.cloneNode(true)
   parentItems.insertBefore(newElem, formCreateItems)
-  // newElem.style.display = 'block'
   newElem.classList.remove('hidden')
   newElem.classList.add('unhidden')
 
@@ -180,15 +174,9 @@ function changeCloneRowVal (req, addrRow) {
     const inp = addrRow.querySelector('#' + idInput)
     inp.value = req[idInput]
   }
-  console.log(
-    'req', req,
-    'addrRow', addrRow
-  )
   addrRow.dataset.id = req.id
   addrRow.id = req.id
-
   changeUrlBtnClonedRow (addrRow,req)
-  // changeAddressClonedRow (addrRow,req)
 }
 
 function changeUrlBtnClonedRow (addrRow,req) {

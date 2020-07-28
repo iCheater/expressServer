@@ -1,7 +1,9 @@
 <div class="content user_info">
+
     {% if user %}
     <div class="user_info-name">
-        <div class="title" id="nameCustomer">{{ session.user.username }}</div>
+
+        <div class="title" id="nameCustomer">{{ user.name }}  {{ user.surname }}</div>
         <a class="link" href="/profile/edit">Редактировать</a>
     </div>
     {% else %}

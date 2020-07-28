@@ -11,6 +11,11 @@ module.exports = {
       users.push({
         // id: i + 2,
         username: faker.name.findName(),
+        //new strings
+        name: faker.name.firstName(),
+        surname: faker.name.lastName(),
+        //new strings
+
         email: faker.internet.email(),
         password: faker.name.findName(),
         phone: faker.phone.phoneNumber(),
@@ -18,8 +23,9 @@ module.exports = {
         avatarUrl: faker.image.avatar(),
 
         //new strings
-        name: faker.name.firstName(),
-        surname: faker.name.lastName(),
+        // name: faker.name.firstName(),
+        // surname: faker.name.lastName(),
+
         address: faker.address.streetAddress(),
         city: faker.address.city(),
         country: faker.address.country(),
@@ -29,7 +35,9 @@ module.exports = {
         updated_at: new Date(),
       })
     }
-    users[0].username = 'admin'
+    users[0].username = 'admin admin'
+    users[0].name = 'admin'
+    users[0].surname = 'admin'
     users[0].email = 'admin@admin.com'
     users[0].password = 'admin'
     users[1].username = 'test'
