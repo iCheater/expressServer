@@ -82,6 +82,8 @@ Token.belongsTo(User, { foreignKey: 'user_id' })
 User.hasMany(Order, { as: 'orders', foreignKey: 'user_id' })
 Order.belongsTo(User, { as: 'user', foreignKey: 'user_id' })
 
+
+
 // Order.belongsToMany(Product, { through: 'order_product', foreignKey: 'order_id' })
 // Product.belongsToMany(Order, { through: 'order_product', foreignKey: 'product_id' })
 

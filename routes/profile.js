@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User, Address } = require('./../models')
+const { User, Address, Order, OrderItem, Product } = require('./../models')
 const isLoggedIn = require('../middleware/isLoggedIn')
 
 router.use(isLoggedIn)
@@ -85,9 +85,7 @@ router.get('/addresses/', async (req, res, next) => {
           as: 'addresses',
         }
     })
-      // const us
     const rowAddresses = user.addresses.map(address => address.get({ row: true }))
-    // console.log(user)
     console.log('addresses', rowAddresses)
 
     res.render('profile/addresses', {
@@ -104,8 +102,52 @@ router.get('/orderItem/', (req, res) => {
   res.render('profile/orderItem')
 })
 
-router.get('/purchases/', (req, res) => {
-  res.render('profile/purchases')
+router.get('/purchases/', async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({
+      where: { user_id: req.user.id },
+      include: {
+        attributes: ['product_id', ],
+        model: OrderItem,
+        as: 'items',
+        include: {
+          model: Product,
+          attributes: ['id', 'name', 'mURL', 'sellingPrice' ],
+        }
+
+      }
+    })
+
+    const items = []
+
+    orders.forEach(order => {
+      order.items.forEach(item => {
+        items.push(item.Product.dataValues)
+      })
+    })
+
+    console.log('items',items)
+
+    for(let i = 0; i < items.length; i++) {
+      const productId = items[i].id
+      for (let j = i + 1; j < items.length; j++) {
+        if(productId === items[j].id ) {
+          items.splice(j, 1)
+        }
+      }
+    }
+    console.log('items for', items)
+
+
+
+    res.render('profile/purchases', {
+      orders: orders,
+      items: items,
+    })
+
+  } catch (err) {
+    next(err)
+  }
 })
 
 module.exports = router

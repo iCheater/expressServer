@@ -5,10 +5,11 @@
     <h3 class="section-title">
         Купленные товары
     </h3>
-    {% for product in products %}
+    <div id="purchases">
+    {% for item in items %}
         <div class="catalog__item">
             <div class="item__img">
-                <img src=" {{ product.mURL }}">
+                <img src=" {{ item.mURL }}">
             </div>
 
             <div class="icon-favorite">
@@ -22,15 +23,16 @@
 
             <div class="item__info">
                 <div class="item__name">
-                    <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
+                    {{ item.product_id }}
+                    <a href="/catalog/item/{{ item.product_id }}">{{ item.name }}</a>
                 </div>
                 <div class="item__price-container">
                     {% if product.quantity > 0 %}
                         <div class="product-qty" data-th="Quantity">
-                            <button class="btnMinus" data-id="{{ product.id }}"
+                            <button class="btnMinus" data-id="{{ item.id }}"
                                     onclick="decreaseValue(this.dataset.id)">-
                             </button>
-                            <input type="number" id="input{{ product.id }}" data-id="{{ product.id }}"
+                            <input type="number" id="input{{ product.id }}" data-id="{{ item.id }}"
                                    class="quantityProduct " value="{{ product.quantity }}" min="0"
                                    onchange="quantityInput(this.dataset.id)">
                             <button class="btnPlus" data-id="{{ product.id }}"
@@ -38,14 +40,14 @@
                             </button>
                         </div>
                     {% else %}
-                        <a class="item__to-basket" id="btn{{ product.id }}" data-id="{{ product.id }}"
+                        <a class="item__to-basket" id="btn{{ item.id }}" data-id="{{ item.id }}"
                            type='button' title="Положить в корзину"
                            onclick="requestAndElemSwap(this.dataset.id)">
                             В корзину
                         </a>
                     {% endif %}
                     <div class="item__price">
-                        <span class="price">{{ product.sellingPrice | addPennies }} </span>
+                        <span class="price">{{ item.sellingPrice | addPennies }} </span>
                     </div>
                 </div>
 
@@ -57,4 +59,5 @@
 
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
