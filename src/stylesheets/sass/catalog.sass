@@ -308,16 +308,32 @@
     color: #f91155
 
 .icon-favorite
-  width: 30px
+  background-color: transparent
+  border: none
+  width: 40px
+  height: 40px
   position: absolute
   top: 20px
   right: 20px
   cursor: pointer
-  path
-    fill: transparent
-    stroke-width: 10
-    stroke: #ffffff
-    &:hover
+  outline: none
+  svg
+    width: 30px
+    margin: auto
+    path
+      fill: transparent
+      stroke-width: 10
+      stroke: rgba(0, 26, 51, 1)
+      &:hover
+        fill: #f91155
+        stroke: #f91155
+
+.selected
+  svg
+    path
       fill: #f91155
       stroke: #f91155
-
+      &:hover
+        fill: transparent
+        stroke-width: 10
+        stroke: rgba(0, 26, 51, 1)

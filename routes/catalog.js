@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Product, Tag, Category, Sequelize: { Op } } = require('./../models')
+const { Product, User, Tag, Favorite, Category, Sequelize: { Op } } = require('./../models')
 
 router.get('/', (req, res, next) => {
   const promises = [
@@ -55,7 +55,9 @@ router.get('/item/:idItem', (req, res, next) => {
       product.update(
         { visitCounter: product.visitCounter + 1 },
       )
-        .then(test => { console.log(test) })
+        .then(test => {
+          console.log(test)
+        })
       Product.findAll({
         limit: 7,
         where: {
@@ -150,43 +152,65 @@ router.get('/items', (req, res) => {
     .then(products => {
       res.json(products)
     }).catch(err => {
-      res.json(err)
-    })
+    res.json(err)
+  })
 })
 
-router.get('/:categoryID', (req, res, next) => {
-  Category.findByPk(parseInt(req.params.categoryID))
-    .then(category => {
-      if (category.length === 0) {
-        return res.json({ category: 'not found' })
+router.get('/:categoryID', async (req, res, next) => {
+  console.log('req.params.categoryID', req.params.categoryID)
+  try {
+    const category = await Category.findByPk(parseInt(req.params.categoryID))
+    if (category.length === 0) {
+      return res.json({ category: 'not found' })
+    }
+    category.update(
+      { visitCounter: category.visitCounter + 1 },
+    )
+
+    const products = await Product.findAll({
+      include: [{
+        model: Category,
+        where: { id: parseInt(req.params.categoryID) },
+      }],
+    })
+
+    const favorites = await Favorite.findAll({
+      where: { user_id: req.user.id },
+    })
+    // const arrFavorites = []
+    // for(let i = 0; i < favorites.length; i++) {
+    //   arrFavorites.push(favorites[i].dataValues.product_id)
+    // }
+    // console.log('arrFavorites', arrFavorites)
+
+    const rowProducts = products.map(product => product.get({ row: true }))
+    const productsWithData = rowProducts.map((product) => {
+
+      if (req.session.cart && req.session.cart.items[product.id]) {
+        product.quantity = req.session.cart.items[product.id].quantity
       }
-      category.update(
-        { visitCounter: category.visitCounter + 1 },
-      )
-      Product.findAll({
-        include: [{
-          model: Category,
-          where: { id: parseInt(req.params.categoryID) },
-        }],
-      })
-        .then(products => {
-          // res.json(products)
-          const rowProducts = products.map(product => product.get({ row: true }))
-          const productsWithQuantity = rowProducts.map((product) => {
-            if (req.session.cart && req.session.cart.items[product.id]) {
-              product.quantity = req.session.cart.items[product.id].quantity
-            }
-            return product
-          })
-          res.render('catalog/category', {
-            products: productsWithQuantity,
-            category: category,
-          })
-        })
+
+      for (let favorite of favorites) {
+          if (product.id === favorite.dataValues.product_id) {
+            // console.log('coincidence')
+
+            product.favorite = favorite.dataValues
+            console.log('123',product.favorite)
+
+          }
+      }
+
+      return product
     })
-    .catch(err => {
-      res.json(err)
+    res.render('catalog/category', {
+      products: productsWithData,
+      category: category,
     })
+
+  } catch (err) {
+    next(err)
+  }
+
 })
 
 // promise chain example

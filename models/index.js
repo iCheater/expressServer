@@ -47,6 +47,7 @@ const {
   OrderItem,
   Mail,
   SocialAuth,
+  Favorite,
 } = db
 
 Category.hasMany(Product, { as: 'products', foreignKey: 'category_id' })
@@ -69,6 +70,12 @@ Mail.belongsTo(User, { foreignKey: 'user_id' })
 
 User.hasMany(SocialAuth, { as: 'socialAuth', foreignKey: 'user_id' })
 SocialAuth.belongsTo(User, { foreignKey: 'user_id' })
+
+//new
+User.hasMany(Favorite, { as: 'Favorite', foreignKey: 'user_id' })
+Favorite.belongsTo(Product, { foreignKey: 'product_id' })
+Favorite.belongsTo(User, { foreignKey: 'user_id' })
+//new
 
 Product.belongsToMany(Tag, { through: 'product_tag', foreignKey: 'product_id' })
 Tag.belongsToMany(Product, { through: 'product_tag', foreignKey: 'tag_id' })

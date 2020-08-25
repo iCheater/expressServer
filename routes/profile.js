@@ -64,17 +64,17 @@ router.get('/history/', (req, res) => {
     })
 })
 
-router.get('/reviews/', (req, res) => {
-  User.findAll()
-    .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
-      res.render('profile/reviews', {
-        editOrAdd: 'Reviews',
-        user: rawData,
-      })
-    })
-})
+// router.get('/reviews/', (req, res) => {
+//   User.findAll()
+//     .then(data => {
+//       const rawData = data.map(e => e.get({ row: true }))
+//       console.log(rawData)
+//       res.render('profile/reviews', {
+//         editOrAdd: 'Reviews',
+//         user: rawData,
+//       })
+//     })
+// })
 
 router.get('/addresses/', async (req, res, next) => {
     try {
@@ -86,13 +86,10 @@ router.get('/addresses/', async (req, res, next) => {
         }
     })
     const rowAddresses = user.addresses.map(address => address.get({ row: true }))
-    console.log('addresses', rowAddresses)
-
     res.render('profile/addresses', {
       user: user,
       addresses: rowAddresses,
     })
-
   } catch (err) {
     next(err)
   }

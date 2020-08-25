@@ -32,7 +32,6 @@ exports.read = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-
   try {
     const address = await Address.findOne({
       where : { id: req.params.id }
