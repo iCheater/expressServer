@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { User, Address, Order, OrderItem, Product } = require('./../models')
+const { User, Address, Order, OrderItem, Product, Favorite } = require('./../models')
 const isLoggedIn = require('../middleware/isLoggedIn')
 
 router.use(isLoggedIn)
@@ -14,8 +14,6 @@ router.get('/', (req, res) => {
   })
 })
 
-
-
 router.get('/edit/', async (req, res, next) => {
   try {
     const user = await User.findOne({
@@ -23,7 +21,7 @@ router.get('/edit/', async (req, res, next) => {
       include: {
         model: Address,
         as: 'addresses',
-      }
+      },
     })
     const rowAddresses = user.addresses.map(address => address.get({ row: true }))
     // console.log(user)
@@ -40,16 +38,42 @@ router.get('/edit/', async (req, res, next) => {
 
 })
 
-router.get('/favorites/', (req, res) => {
-  User.findAll()
-    .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
-      res.render('profile/favorites', {
-        editOrAdd: 'Favorites',
-        user: rawData,
-      })
+router.get('/favorites/', async (req, res, next) => {
+  // User.findAll()
+  //   .then(data => {
+  //     const rawData = data.map(e => e.get({ row: true }))
+  //     console.log(rawData)
+  //     res.render('profile/favorites', {
+  //       editOrAdd: 'Favorites',
+  //       user: rawData,
+  //     })
+  //   })
+  try {
+
+    ////////
+    const favorites = await Favorite.findAll({
+      where: { user_id: req.user.id },
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+      }]
     })
+
+    const arrFavorites = []
+    for(let i = 0; i < favorites.length; i++) {
+      arrFavorites.push(favorites[i].dataValues)
+      console.log('123',favorites[i].dataValues.Product.dataValues)
+    }
+    // console.log('arrFavorites', arrFavorites[0])
+
+/////
+    res.render('profile/favorites', {
+      favorites: favorites,
+    })
+    // res.json({'123': favorites})
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/history/', (req, res) => {
@@ -77,13 +101,13 @@ router.get('/history/', (req, res) => {
 // })
 
 router.get('/addresses/', async (req, res, next) => {
-    try {
-      const user = await User.findOne({
-        where: { id: req.user.id },
-        include: {
-          model: Address,
-          as: 'addresses',
-        }
+  try {
+    const user = await User.findOne({
+      where: { id: req.user.id },
+      include: {
+        model: Address,
+        as: 'addresses',
+      },
     })
     const rowAddresses = user.addresses.map(address => address.get({ row: true }))
     res.render('profile/addresses', {
@@ -104,15 +128,15 @@ router.get('/purchases/', async (req, res, next) => {
     const orders = await Order.findAll({
       where: { user_id: req.user.id },
       include: {
-        attributes: ['product_id', ],
+        attributes: ['product_id'],
         model: OrderItem,
         as: 'items',
         include: {
           model: Product,
-          attributes: ['id', 'name', 'mURL', 'sellingPrice' ],
-        }
+          attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+        },
 
-      }
+      },
     })
 
     const items = []
@@ -123,19 +147,17 @@ router.get('/purchases/', async (req, res, next) => {
       })
     })
 
-    console.log('items',items)
+    console.log('items', items)
 
-    for(let i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       const productId = items[i].id
       for (let j = i + 1; j < items.length; j++) {
-        if(productId === items[j].id ) {
+        if (productId === items[j].id) {
           items.splice(j, 1)
         }
       }
     }
     console.log('items for', items)
-
-
 
     res.render('profile/purchases', {
       orders: orders,

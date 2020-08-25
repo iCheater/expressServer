@@ -192,14 +192,10 @@ router.get('/:categoryID', async (req, res, next) => {
 
       for (let favorite of favorites) {
           if (product.id === favorite.dataValues.product_id) {
-            // console.log('coincidence')
-
             product.favorite = favorite.dataValues
             console.log('123',product.favorite)
-
           }
       }
-
       return product
     })
     res.render('catalog/category', {

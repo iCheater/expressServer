@@ -5,13 +5,13 @@
         {#        вставить каталог с сердечками#}
 
         <h3 class="section-title">Избранное</h3>
-    {% for product in products %}
+    {% for favorite in favorites %}
         <div class="catalog__item">
             <div class="item__img">
-                <img src=" {{ product.mURL }}">
+                <img src=" {{ favorite.dataValues.Product.dataValues.mURL }}">
             </div>
             <button class="icon-favorite {{ "selected" if product.favorite  }}"
-                    data-id="{{ product.id }}"
+                    data-id="{{ favorite.dataValues.Product.dataValues.id }}"
                     {% if product.favorite %}
                         data-favorite="{{ product.favorite.id }}"
                     {% endif %}
@@ -34,23 +34,23 @@
 
             <div class="item__info">
                 <div class="item__name">
-                    <a href="/catalog/item/{{ product.id }}">{{ product.name }}</a>
+                    <a href="/catalog/item/{{ favorite.dataValues.Product.dataValues.id }}">{{ favorite.dataValues.Product.dataValues.name }}</a>
                 </div>
                 <div class="item__price-container">
                     {% if product.quantity > 0 %}
                         <div class="product-qty" data-th="Quantity">
-                            <button class="btnMinus" data-id="{{ product.id }}"
+                            <button class="btnMinus" data-id="{{ favorite.dataValues.Product.dataValues.id }}"
                                     onclick="decreaseValue(this.dataset.id)">-
                             </button>
-                            <input type="number" id="input{{ product.id }}" data-id="{{ product.id }}"
-                                   class="quantityProduct " value="{{ product.quantity }}" min="0"
+                            <input type="number" id="input{{ favorite.dataValues.Product.dataValues.id }}" data-id="{{ favorite.dataValues.Product.dataValues.id }}"
+                                   class="quantityProduct " value="{{ favorite.dataValues.Product.dataValues.quantity }}" min="0"
                                    onchange="quantityInput(this.dataset.id)">
-                            <button class="btnPlus" data-id="{{ product.id }}"
+                            <button class="btnPlus" data-id="{{ favorite.dataValues.Product.dataValues.id }}"
                                     onclick="increaseValue(this.dataset.id)">+
                             </button>
                         </div>
                     {% else %}
-                        <a class="item__to-basket" id="btn{{ product.id }}" data-id="{{ product.id }}"
+                        <a class="item__to-basket" id="btn{{ favorite.dataValues.Product.dataValues.id }}" data-id="{{ favorite.dataValues.Product.dataValues.id }}"
                            type='button' title="Положить в корзину"
                            onclick="requestAndElemSwap(this.dataset.id)">
 
@@ -58,7 +58,7 @@
                         </a>
                     {% endif %}
                     <div class="item__price">
-                        <span class="price">{{ product.sellingPrice | addPennies }} </span>
+                        <span class="price">{{ favorite.dataValues.Product.dataValues.sellingPrice | addPennies }} </span>
                     </div>
                 </div>
 
