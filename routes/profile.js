@@ -39,18 +39,7 @@ router.get('/edit/', async (req, res, next) => {
 })
 
 router.get('/favorites/', async (req, res, next) => {
-  // User.findAll()
-  //   .then(data => {
-  //     const rawData = data.map(e => e.get({ row: true }))
-  //     console.log(rawData)
-  //     res.render('profile/favorites', {
-  //       editOrAdd: 'Favorites',
-  //       user: rawData,
-  //     })
-  //   })
   try {
-
-    ////////
     const favorites = await Favorite.findAll({
       where: { user_id: req.user.id },
       include: [{
@@ -58,15 +47,11 @@ router.get('/favorites/', async (req, res, next) => {
         attributes: ['id', 'name', 'mURL', 'sellingPrice'],
       }]
     })
-
     const arrFavorites = []
     for(let i = 0; i < favorites.length; i++) {
       arrFavorites.push(favorites[i].dataValues)
-      console.log('123',favorites[i].dataValues.Product.dataValues)
+      console.log('123',favorites[i].dataValues)
     }
-    // console.log('arrFavorites', arrFavorites[0])
-
-/////
     res.render('profile/favorites', {
       favorites: favorites,
     })
@@ -124,49 +109,102 @@ router.get('/orderItem/', (req, res) => {
 })
 
 router.get('/purchases/', async (req, res, next) => {
+  // try {
+  //   const orders = await Order.findAll({
+  //     where: { user_id: req.user.id },
+  //     include: {
+  //       attributes: ['product_id'],
+  //       model: OrderItem,
+  //       as: 'items',
+  //       include: {
+  //         model: Product,
+  //         attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+  //       },
+  //
+  //     },
+  //   })
+  //
+  //   const items = []
+  //
+  //   orders.forEach(order => {
+  //     order.items.forEach(item => {
+  //       items.push(item.Product.dataValues)
+  //     })
+  //   })
+  //
+  //   console.log('items', items)
+  //
+  //   for (let i = 0; i < items.length; i++) {
+  //     const productId = items[i].id
+  //     for (let j = i + 1; j < items.length; j++) {
+  //       if (productId === items[j].id) {
+  //         items.splice(j, 1)
+  //       }
+  //     }
+  //   }
+  //   console.log('items for', items)
+  //
+  //   res.render('profile/purchases', {
+  //     orders: orders,
+  //     items: items,
+  //   })
+  //
+  // } catch (err) {
+  //   next(err)
+  // }
   try {
     const orders = await Order.findAll({
       where: { user_id: req.user.id },
-      include: {
-        attributes: ['product_id'],
+      include: [{
         model: OrderItem,
         as: 'items',
-        include: {
+        include: [{
           model: Product,
           attributes: ['id', 'name', 'mURL', 'sellingPrice'],
-        },
-
-      },
+        }]
+      }],
     })
 
-    const items = []
-
-    orders.forEach(order => {
-      order.items.forEach(item => {
-        items.push(item.Product.dataValues)
-      })
+    const favorites = await Favorite.findAll({
+      where: { user_id: req.user.id },
+      include: [{
+        model: Product,
+        attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+      }]
     })
 
-    console.log('items', items)
+    const arrItems = []
+    for(let order of orders) {
+      for(let item of order.items) {
+        arrItems.push(item.Product)
+      }
+    }
 
-    for (let i = 0; i < items.length; i++) {
-      const productId = items[i].id
-      for (let j = i + 1; j < items.length; j++) {
-        if (productId === items[j].id) {
-          items.splice(j, 1)
+    const arrFavorites = []
+    for(let i = 0; i < favorites.length; i++) {
+      arrFavorites.push(favorites[i].dataValues.product_id)
+    }
+    console.log('favorites',arrFavorites)
+
+    for(let i = 0; i < arrFavorites.length; i++) {
+      for(let j = 0; j < arrItems.length; j++){
+        if(arrFavorites[i] === arrItems[j].dataValues.id){
+          arrItems[j].favorite = arrFavorites[i]
+          console.log('considence', arrFavorites[i])
         }
       }
     }
-    console.log('items for', items)
+
+    console.log('orderItems',arrItems[5])
 
     res.render('profile/purchases', {
-      orders: orders,
-      items: items,
+      orderItems: arrItems,
+      favorites: favorites,
     })
-
   } catch (err) {
     next(err)
   }
+
 })
 
 module.exports = router
