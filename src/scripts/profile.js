@@ -109,3 +109,4 @@ function request (data, url, method) {
     xhr.send(JSON.stringify(data))
   })
 }
+

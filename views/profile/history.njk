@@ -1,101 +1,121 @@
 {% extends "./layout.njk" %}
 
 {% block preScript %}
-{#    $('.collapse').on('show.bs.collapse', function () {#}
-{#    $('.collapse.in').collapse('hide');#}
-{#    });#}
+    {#    $('.collapse').on('show.bs.collapse', function () {#}
+    {#    $('.collapse.in').collapse('hide');#}
+    {#    });#}
 {% endblock %}
 
 {% block main_profile %}
     <h3 class="section-title">Заказы</h3>
     <div class="orders-list">
-
-        <div class="orders-item">
-            <div class="item-header">
-                <div class="item-block">
-                    <h3 class="item-title">
-                        Заказ от {дата}
-                    </h3>
-                    <a class="item-number" href="/profile/orderItem">{номер заказа}</a>
-                </div>
-                <div class="item-block">
-                    <h3 class="item-title total-order">
-                        {price}
-                    </h3>
-                    <span class="status-pay"> {оплачено/к оплате}</span>
-                    <span class="way__pay">{Картой онлайн/Наличными}</span>
-                </div>
-            </div>
-            <div class="item-content">
-                <div class="item-block">
-                    <div class="day-shipping">
-                        Дата доставки: {дата}
+        {% for order in orders %}
+            <div class="orders-item">
+                <div class="item-header">
+                    <div class="item-block">
+                        <h3 class="item-title">
+                            Заказ от {{ order.dataCreated }}
+                        </h3>
+                        <a class="item-number" href="/profile/orderItem/{{ order.id }}" data-orderId="{{ order.id }}" onclick = "sendIdOrder (this)">0000-00{{ order.id }}</a>
                     </div>
-                    <div class="status-shipping">
-                        {отменено, получено, доставка}
+                    <div class="item-block">
+                        <h3 class="item-title total-order">
+                            {{ order.totalOrder | addPennies }}
+                        </h3>
+                        <span class="status-pay">
+{#                            {оплачено/к оплате}#}
+                        {% if order.methodPay === "cardOnline" %}
+                            {делать проверку}
+                        {% elseif order.methodPay === "cashOffline" %}
+                            к оплате
+                        {% endif %}
+                        </span>
+                        <span class="way__pay">
+{#                            {Картой онлайн/Наличными}#}
+                            {% if order.methodPay === "cardOnline" %}
+                                Картой онлайн
+                            {% elseif order.methodPay === "cashOffline" %}
+                                Наличными
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
-                <div class="ordered-block">
+                <div class="item-content">
+                    <div class="item-block">
+                        <div class="day-shipping">
+                            Дата доставки: {дата}
+                            {% if order.shipping === "selfDelivery" %}
+                                Самовывоз
+                            {% elseif order.shipping === "expressDelivery" %}
+                                Доставка по адресу
+                            {% endif %}
+                        </div>
+                        <div class="status-shipping">
+                            {отменено, получено, доставка}
 
-                    <div class="ordered-item">
-                        <div class="preview__item-img">
-                            <a href="#">
-                                <img src="https://placehold.it/80x80">
-                            </a>
                         </div>
                     </div>
+{#                    <div class="ordered-block">#}
 
+{#                        <div class="ordered-item">#}
+{#                            <div class="preview__item-img">#}
+{#                                <a href="#">#}
+{#                                    <img src="https://placehold.it/80x80">#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+
+{#                    </div>#}
                 </div>
+
             </div>
-
-        </div>
-
+        {% endfor %}
     </div>
 
-{#    <div class="col-auto">#}
-{#        <table class="table table-condensed ml-5 " style="border-collapse:collapse;">#}
-{#            <thead>#}
-{#            <tr>#}
-{#                <th>Номер заказа</th>#}
-{#                <th>Дата заказа</th>#}
-{#                <th>Статус заказа</th>#}
-{#                <th>Сумма заказа</th>#}
-{#                <th></th>#}
+    {#    <div class="col-auto">#}
+    {#        <table class="table table-condensed ml-5 " style="border-collapse:collapse;">#}
+    {#            <thead>#}
+    {#            <tr>#}
+    {#                <th>Номер заказа</th>#}
+    {#                <th>Дата заказа</th>#}
+    {#                <th>Статус заказа</th>#}
+    {#                <th>Сумма заказа</th>#}
+    {#                <th></th>#}
 
-{#            </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            <tr data-toggle="collapse" data-target="#demo1">#}
-{#                <td>1</td>#}
-{#                <td>05 May 2013</td>#}
-{#                <td class="text-success">Выполнен</td>#}
-{#                <td class="text-success">$150.00</td>#}
-{#                <th>#}
-{#                    <button type="submit" class="btn btn-info">Повторить</button>#}
-{#                </th>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <td colspan="6" class="hiddenRow">#}
-{#                    <div id="demo1" class="collapse">Demo1</div>#}
-{#                </td>#}
-{#            </tr>#}
+    {#            </tr>#}
+    {#            </thead>#}
+    {#            <tbody>#}
+    {#            <tr data-toggle="collapse" data-target="#demo1">#}
+    {#                <td>1</td>#}
+    {#                <td>05 May 2013</td>#}
+    {#                <td class="text-success">Выполнен</td>#}
+    {#                <td class="text-success">$150.00</td>#}
+    {#                <th>#}
+    {#                    <button type="submit" class="btn btn-info">Повторить</button>#}
+    {#                </th>#}
+    {#            </tr>#}
+    {#            <tr>#}
+    {#                <td colspan="6" class="hiddenRow">#}
+    {#                    <div id="demo1" class="collapse">Demo1</div>#}
+    {#                </td>#}
+    {#            </tr>#}
 
-{#            <tr data-toggle="collapse" data-target="#demo2">#}
-{#                <td>2</td>#}
-{#                <td>05 May 2013</td>#}
-{#                <td class="text-success">Выполнен</td>#}
-{#                <td class="text-success">$150.00</td>#}
-{#                <th>#}
-{#                    <button type="submit" class="btn btn-info">Повторить</button>#}
-{#                </th>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <td colspan="6" class="hiddenRow">#}
-{#                    <div id="demo2" class="collapse">Demo2</div>#}
-{#                </td>#}
-{#            </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
+    {#            <tr data-toggle="collapse" data-target="#demo2">#}
+    {#                <td>2</td>#}
+    {#                <td>05 May 2013</td>#}
+    {#                <td class="text-success">Выполнен</td>#}
+    {#                <td class="text-success">$150.00</td>#}
+    {#                <th>#}
+    {#                    <button type="submit" class="btn btn-info">Повторить</button>#}
+    {#                </th>#}
+    {#            </tr>#}
+    {#            <tr>#}
+    {#                <td colspan="6" class="hiddenRow">#}
+    {#                    <div id="demo2" class="collapse">Demo2</div>#}
+    {#                </td>#}
+    {#            </tr>#}
+    {#            </tbody>#}
+    {#        </table>#}
+    {#    </div>#}
 
 {% endblock %}

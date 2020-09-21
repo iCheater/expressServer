@@ -3,16 +3,18 @@
 
 {% block main_profile %}
     <div class="order-details">
-        <a class="orders-return" href="/history/">
+        <a class="orders-return" href="/profile/history/">
             К списку заказов
         </a>
         <div class="order-info">
 
             <div class="item-block">
                 <h2 class="item-title">
-                    Заказ от {дата}
+                    Заказ от {{ order.dataCreated }}
                 </h2>
-                <span class="item-number">{номер заказа}</span>
+                <span class="item-number">
+                    0000-00{{ order.id }}
+                </span>
             </div>
             <div class="item-block">
                 <div class="day-shipping row-item">
@@ -30,7 +32,7 @@
                 Доставка на адрес
             </h3>
             <div class="shipping-address">
-                Москва, бульвар Матроса Железняка, 23, кв. 39, эт. 4, под. 2, код домофона 39
+                {{ order.address }}
             </div>
         </div>
 
@@ -77,7 +79,7 @@
         <div class="order__content">
             <div class="order__content-row">
                 <h3 class="row-title">
-                    Заказ {номер заказа}
+                    Заказ 0000-00{{ order.id }}
                 </h3>
                 <div class="row-item status-shipping">
                     {отменено, получено, доставка}
@@ -97,21 +99,31 @@
                 </div>
             </div>
             <div class="content__main">
+                {% for item in order.items %}
                 <div class="content__main-item">
                     <div class="item-img">
-                        <img src="https://placehold.it/80x80">
+                        <img class="item__img-order" src="{{ item.Product.mURL }}">
                     </div>
                     <div class="item-main">
-                        {Название товара}
+{#                        {Название товара}#}
+                        {{ item.Product.name }}
                     </div>
                     <div class="item-qty">
-                        {Кол-во}
+                        {{ item.quantity }} шт.
                     </div>
                     <div class="item-rowTotal">
-                        <span class="rub" id="rowTotal">{Цена * кол-во}</span>
-                        <span class="item-price rub">{Цена}</span>
+                        <span class="rub" id="rowTotal">
+{#                            {Цена * кол-во}#}
+                            {{ item.quantity }} шт. * {{ item.Product.sellingPrice | addPennies }}
+                        </span>
+                        <span class="item-price rub">
+{#                            {Цена}#}
+
+                        </span>
                     </div>
                 </div>
+
+                {% endfor %}
 
                 <div class="content__main-footer">
                     <div class="sum-qty">

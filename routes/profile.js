@@ -61,16 +61,34 @@ router.get('/favorites/', async (req, res, next) => {
   }
 })
 
-router.get('/history/', (req, res) => {
-  User.findAll()
-    .then(data => {
-      const rawData = data.map(e => e.get({ row: true }))
-      console.log(rawData)
-      res.render('profile/history', {
-        editOrAdd: 'History',
-        user: rawData,
-      })
+router.get('/history/', async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({
+      where: { user_id: req.user.id },
+      include: [{
+        model: OrderItem,
+        as: 'items',
+        include: [{
+          model: Product,
+          attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+        }]
+      }],
     })
+    for(let order of  orders) {
+      const dataStr = (order.dataValues.createdAt).toLocaleDateString()
+      // .toLocaleString()); // 15.04.2019, 18:43:59
+      // .toLocaleDateString()); // 15.04.2019
+      order.dataCreated = dataStr
+    }
+
+    res.render('profile/history', {
+      orders: orders,
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
 })
 
 // router.get('/reviews/', (req, res) => {
@@ -104,8 +122,33 @@ router.get('/addresses/', async (req, res, next) => {
   }
 })
 
-router.get('/orderItem/', (req, res) => {
-  res.render('profile/orderItem')
+router.get('/orderItem/:id', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: OrderItem,
+        as: 'items',
+        include: [{
+          model: Product,
+          attributes: ['id', 'name', 'mURL', 'sellingPrice'],
+        }]
+      }],
+    })
+    console.log('order', order.items[0])
+
+      const dataStr = (order.dataValues.createdAt).toLocaleDateString()
+      // .toLocaleString()); // 15.04.2019, 18:43:59
+      // .toLocaleDateString()); // 15.04.2019
+      order.dataCreated = dataStr
+
+    res.render('profile/orderItem', {
+      order: order
+    })
+    // res.json(order)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/purchases/', async (req, res, next) => {
@@ -184,18 +227,14 @@ router.get('/purchases/', async (req, res, next) => {
     for(let i = 0; i < favorites.length; i++) {
       arrFavorites.push(favorites[i].dataValues.product_id)
     }
-    console.log('favorites',arrFavorites)
 
     for(let i = 0; i < arrFavorites.length; i++) {
       for(let j = 0; j < arrItems.length; j++){
         if(arrFavorites[i] === arrItems[j].dataValues.id){
           arrItems[j].favorite = arrFavorites[i]
-          console.log('considence', arrFavorites[i])
         }
       }
     }
-
-    console.log('orderItems',arrItems[5])
 
     res.render('profile/purchases', {
       orderItems: arrItems,

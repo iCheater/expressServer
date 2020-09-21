@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
 
   //запрос на сервер
   try {
-    const user = await User.findOne({where: {id: req.session.passport.user.id}})
+    // const user = await User.findOne({where: {id: req.session.passport.user.id}})
     const products = await Product.findAll({ where: { id: arrOrder } })
     // let promocode = null
 
@@ -51,7 +51,7 @@ router.get('/', async (req, res, next) => {
     })
     console.log('req.session.order', req.session.order)
     res.render('order/order', {
-      user: user,
+      // user: user,
       products: rowProducts,
       templateData: req.session.cart.calculation,
       //todo think about
@@ -61,7 +61,7 @@ router.get('/', async (req, res, next) => {
       address: req.session.order.address || '',
       wayShipping: req.session.order.wayShipping || '',
       methodPay: req.session.order.methodPay || '',
-      newUser: req.session.order.newUser || {},
+      // newUser: req.session.order.newUser || {},
       newRecipient: req.session.order.newRecipient || {},
     })
 
@@ -403,132 +403,125 @@ router.post('/newRecipient/', (req, res) => {
 })
 
 router.get('/createOrder/', async (req, res, next) => {
-  console.log(req.session.cart)
-  let totalOrder = req.session.cart.calculation.sumSellingPriceWithDiscount
-  let totalShipping = 0
-
-  if (req.session.order.wayShipping === 'expressDelivery') {
-    totalShipping = 40000
-    // totalOrder = Number(totalShipping) + Number(totalOrder.toFixed(0))
-    totalOrder = Number(totalShipping) + Number(Math.trunc(totalOrder))
-    console.log('курьер за 400')
-    console.log('totalOrder', Math.trunc(totalOrder))
-
-  }
-  req.session.order.totalOrder = totalOrder
-
-  // res.render('order/createOrder', {
-  //   totalOrder: totalOrder
-  // })
-
-  const arrOrder = []
-  for (let id in req.session.cart.items) {
-    if (req.session.cart.items[id].checked) {
-      arrOrder.push(id)
-    }
-  }
-  const products = await Product.findAll({ where: { id: arrOrder } })
-  const rowProducts = products.map(product => product.get({ row: true }))
-
-  rowProducts.forEach(product => {
-    product.quantity = req.session.cart.items[product.id].quantity
-  })
-
-  console.log('req.session.cart.calculation', req.session.cart.calculation)
-
-  req.session.authorless = {
-    username: req.session.order.newUser.name.firstname + ' ' + req.session.order.newUser.lastname.lastname,
-    email: req.session.order.newUser.mail.mail,
-    phone: req.session.order.newUser.phone.number,
-    totalOrder: totalOrder,
-
-    order: {
-      address: req.session.order.address,
-      shipping: req.session.order.wayShipping,
-      methodPay: req.session.order.methodPay,
-      // products: req.session.cart.items,
-      products: rowProducts,
-    },
-  }
-
-
-  console.log('req.session.authorless', req.session.authorless)
-  console.log('1')
-  //
   try {
-    let user = req.session.user || null
-    let nonSaltedPassword = null
-    if (!req.session.cart) {
-      return next(new ErrorHandler(500, 'cart is empty'))
+
+    let totalOrder = req.session.cart.calculation.sumSellingPriceWithDiscount
+    let totalShipping = 0
+
+    if (req.session.order.wayShipping === 'expressDelivery') {
+      totalShipping = 40000
+      totalOrder = Number(totalShipping) + Number(Math.trunc(totalOrder))
+      req.session.order.totalOrder = totalOrder
     }
 
-    if (!req.session.user) {
-      // if (isAuthorlessValid(req.session.authorless)) {
-      //   return next(new ErrorHandler(500, 'user data is not valid'))
-      // }
-      nonSaltedPassword = User.generatePassword()
-      user = await User.create({
-        username: req.session.authorless.username,
-        email: req.session.authorless.email,
-        password: nonSaltedPassword,
-        phone: req.session.authorless.phone,
-        addresses: [{
-          textAddress: req.session.authorless.address,
-        }],
-      }, {
-        include: {
-          model: Address,
-          as: 'addresses',
-        },
-      })
-    }
-
-    console.log('2')
-
-    const order = await Order.create({
-      comment: req.session.authorless.order.comment || null,
-      // shipping: req.session.authorless.order.shipping || null,
-      status: 'CREATED',
-      totalOrder: req.session.authorless.totalOrder,
-      address: req.session.authorless.address || req.session.order.address || null,
-      shipping: req.session.authorless.wayShipping || req.session.order.wayShipping,
-      methodPay: req.session.authorless.methodPay || req.session.order.methodPay,
-      // user_id: user === null ? null : user.id,
-      user_id: user.id,
-      //todo user id
-
-      // user.id,
-    })
-
-    console.log('order', order.dataValues)
-
-    const productIDs = Object.keys(req.session.cart.items)
-    // Should i check products in DB or its not my problem?
-    const cartItems = []
-    for (const productID of productIDs) {
-      const cartItem = {
-        quantity: req.session.cart.items[productID].quantity,
-        // subTotal: req.session.cart.items[productID].subTotal,
-        product_id: productID,
-        order_id: order.id,
+    const arrOrder = []
+    for (let id in req.session.cart.items) {
+      if (req.session.cart.items[id].checked) {
+        arrOrder.push(id)
       }
-      cartItems.push(cartItem)
     }
+    const products = await Product.findAll({ where: { id: arrOrder } })
+    const rowProducts = products.map(product => product.get({ row: true }))
 
-    console.log('cartItems', cartItems)
-
-    await OrderItem.bulkCreate(cartItems, { returning: true })
-    console.log('OrderItem created')
-
-    const orderWithIncludes = await Order.findByPk(order.id, {
-      include: {
-        model: OrderItem,
-        as: 'items',
-        include: [{
-          model: Product,
-        }],
-      },
+    rowProducts.forEach(product => {
+      product.quantity = req.session.cart.items[product.id].quantity
     })
+
+    console.log('ывапавп', req.session.order)
+
+    // req.session.authorless = {
+    //   username: req.session.order.newUser.name.firstname + ' ' + req.session.order.newUser.lastname.lastname,
+    //   email: req.session.order.newUser.mail.mail,
+    //   phone: req.session.order.newUser.phone.number,
+    //   totalOrder: totalOrder,
+    //
+    //   order: {
+    //     address: req.session.order.address,
+    //     shipping: req.session.order.wayShipping,
+    //     methodPay: req.session.order.methodPay,
+    //     // products: req.session.cart.items,
+    //     products: rowProducts,
+    //   },
+    // }
+    // console.log('124567', req.session.order)
+    //
+    // // console.log('req.session.authorless', req.session.authorless)
+    // console.log('1')
+    // //
+    //
+    // let user = req.session.user || null
+    // let nonSaltedPassword = null
+    // if (!req.session.cart) {
+    //   return next(new ErrorHandler(500, 'cart is empty'))
+    // }
+    //
+    // if (!req.session.user) {
+    //   // if (isAuthorlessValid(req.session.authorless)) {
+    //   //   return next(new ErrorHandler(500, 'user data is not valid'))
+    //   // }
+    //   nonSaltedPassword = User.generatePassword()
+    //   user = await User.create({
+    //     username: req.session.authorless.username,
+    //     email: req.session.authorless.email,
+    //     password: nonSaltedPassword,
+    //     phone: req.session.authorless.phone,
+    //     addresses: [{
+    //       textAddress: req.session.authorless.address,
+    //     }],
+    //   }, {
+    //     include: {
+    //       model: Address,
+    //       as: 'addresses',
+    //     },
+    //   })
+    // }
+    //
+    // console.log('2')
+    //
+    // const order = await Order.create({
+    //   comment: req.session.authorless.order.comment || null,
+    //   // shipping: req.session.authorless.order.shipping || null,
+    //   status: 'CREATED',
+    //   totalOrder: req.session.authorless.totalOrder,
+    //   address: req.session.authorless.address || req.session.order.address || null,
+    //   shipping: req.session.authorless.wayShipping || req.session.order.wayShipping,
+    //   methodPay: req.session.authorless.methodPay || req.session.order.methodPay,
+    //   // user_id: user === null ? null : user.id,
+    //   user_id: user.id,
+    //   //todo user id
+    //
+    //   // user.id,
+    // })
+    //
+    // console.log('order', order.dataValues)
+    //
+    // const productIDs = Object.keys(req.session.cart.items)
+    // // Should i check products in DB or its not my problem?
+    // const cartItems = []
+    // for (const productID of productIDs) {
+    //   const cartItem = {
+    //     quantity: req.session.cart.items[productID].quantity,
+    //     // subTotal: req.session.cart.items[productID].subTotal,
+    //     product_id: productID,
+    //     order_id: order.id,
+    //   }
+    //   cartItems.push(cartItem)
+    // }
+    //
+    // console.log('cartItems', cartItems)
+    //
+    // await OrderItem.bulkCreate(cartItems, { returning: true })
+    // console.log('OrderItem created')
+    //
+    // const orderWithIncludes = await Order.findByPk(order.id, {
+    //   include: {
+    //     model: OrderItem,
+    //     as: 'items',
+    //     include: [{
+    //       model: Product,
+    //     }],
+    //   },
+    // })
     console.log('order 3')
 
     // const mail = await Mail.create({
